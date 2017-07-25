@@ -1,0 +1,13 @@
+{
+  "name": "OctoPrint",
+  "version": "0.0.3",
+  "slug": "octo_print",
+  "description": "OctoPrint for hassio",
+  "startup": "before",
+  "boot": "auto",
+  "options": {},
+  "schema": {},
+  "ports": {
+    "5000/tcp": 5000
+  }
+}
