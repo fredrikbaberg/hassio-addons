@@ -1,1 +1,1 @@
-/usr/bin/octoprint
+echo "Hello Octoprint!"

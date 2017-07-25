@@ -1,6 +1,6 @@
 {
   "name": "OctoPrint",
-  "version": "0.0.3",
+  "version": "0.0.1",
   "slug": "octo_print",
   "description": "OctoPrint for hassio",
   "startup": "before",
