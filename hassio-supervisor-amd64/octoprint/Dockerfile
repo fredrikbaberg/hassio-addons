@@ -1,4 +1,4 @@
-FROM %%BASE_IMAGE%%
+FROM homeassistant/amd64-base:latest
 # FROM alpine
 # FROM homeassistant/amd64-base:latest
 # LABEL io.hass.version="0.1"
@@ -78,3 +78,4 @@ ADD run.sh ./
 RUN sudo chown -R octoprint:octoprint run.sh
 RUN chmod +x run.sh
 ENTRYPOINT ./run.sh
+LABEL io.hass.version="0.1" io.hass.arch="amd64" io.hass.type="addon"
