@@ -10,5 +10,5 @@
   "ports": {
       "5000/tcp": 5000
   },
-  "image": "fredrikbaberg/homeassistant-private/image-{arch}-addon-name"
+  "image": "fredrikbaberg/octoprint-{arch}-image"
 }

@@ -7,5 +7,5 @@ before_install:
 env:
   - ADDON="octoprint"
 script:
-  - sudo docker login -u $DOCKER_USER -p $DOCKER_PASS
+  - docker login -u $DOCKER_USER -p $DOCKER_PASS
   - ./build.sh $ADDON
