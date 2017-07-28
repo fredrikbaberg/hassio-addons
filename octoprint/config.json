@@ -1,13 +1,13 @@
 {
-  "name": "OctoPrint",
-  "version": "0.0.1",
-  "slug": "octo_print",
-  "description": "OctoPrint for hassio",
+  "name": "Octoprint",
+  "version": "v0.0.2",
+  "slug": "octoprint",
+  "description": "My first attempt at octoprint add-on! Includes CuraEngine.",
   "startup": "before",
   "boot": "auto",
   "options": {},
   "schema": {},
   "ports": {
-    "5000/tcp": 5000
+      "5000/tcp": 5000
   }
 }

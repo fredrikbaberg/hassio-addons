@@ -1,1 +1,2 @@
-echo "Hello Octoprint!"
+#!/bin/sh
+/home/octoprint/OctoPrint/venv/bin/octoprint
