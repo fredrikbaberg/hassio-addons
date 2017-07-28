@@ -3,6 +3,7 @@ services:
   - docker
 before_install:
   - sudo apt-get install jq
+  - chmod +x build.sh
 env:
   - ADDON="octoprint"
 script:
