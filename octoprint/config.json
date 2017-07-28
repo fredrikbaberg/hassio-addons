@@ -1,0 +1,14 @@
+{
+  "name": "Octoprint",
+  "version": "0.1",
+  "slug": "octoprint",
+  "description": "My first attempt at octoprint add-on! Includes CuraEngine.",
+  "startup": "before",
+  "boot": "auto",
+  "options": {},
+  "schema": {},
+  "ports": {
+      "5000/tcp": 5000
+  },
+  "image": "fredrikbaberg/octoprint-{arch}-image"
+}
