@@ -1,2 +1,2 @@
 #!/bin/sh
-/home/octoprint/OctoPrint/venv/bin/octoprint
+/home/octoprint/OctoPrint/venv/bin/octoprint serve
