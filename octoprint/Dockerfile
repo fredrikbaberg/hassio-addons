@@ -8,6 +8,9 @@ RUN apk update && \
     echo "octoprint ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     addgroup octoprint dialout && \
     addgroup octoprint tty
+ADD run.sh /home/octoprint/run.sh
+RUN sudo chown -R octoprint:octoprint /home/octoprint/run.sh
+RUN sudo chmod +x /home/octoprint/run.sh
 USER octoprint
 # Now run all commands for pre-build, build, and cleanup.
 # Use apk add --virtual build-dependencies <packages>, and then
@@ -18,22 +21,22 @@ RUN sudo apk add --virtual build-dependencies \
     git \
     tree \
     cmake \
-    && \
-    sudo apk add \
-    py2-pip \
-    python-dev \
+    linux-headers \
+    yaml-dev \
     py-setuptools \
     py-virtualenv \
-    yaml-dev \
-    linux-headers \
-    avahi-compat-libdns_sd \
-    python3-dev \
-    py-numpy \
     protobuf-dev \
-    py3-sip \
     py3-sip-dev \
     avahi \
     libexecinfo-dev \
+    python3-dev \
+    avahi-compat-libdns_sd \
+    py2-pip \
+    py-numpy \
+    py3-sip \
+    && \
+    sudo apk add \
+    python-dev \
     && \
     # Install OctoPrint
     cd /home/octoprint/ && \
@@ -83,8 +86,5 @@ RUN sudo apk add --virtual build-dependencies \
 VOLUME /home/octoprint/Cura
 VOLUME /home/octoprint/OctoPrint
 WORKDIR /home/octoprint
-ADD run.sh ./
-# RUN sudo chown -R octoprint:octoprint run.sh
-RUN sudo chmod +x run.sh
-ENTRYPOINT /bin/sh
-# ENTRYPOINT ./run.sh
+# ENTRYPOINT /bin/sh
+ENTRYPOINT ./run.sh
