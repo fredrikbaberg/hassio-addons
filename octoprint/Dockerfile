@@ -1,5 +1,5 @@
-# FROM %%BASE_IMAGE%%
-FROM homeassistant/amd64-base:latest
+FROM %%BASE_IMAGE%%
+# FROM homeassistant/amd64-base:latest
 RUN apk update && \
     apk add sudo && \
     # Add user, and make sure to have sudo access.
@@ -85,6 +85,6 @@ VOLUME /home/octoprint/OctoPrint
 WORKDIR /home/octoprint
 ADD run.sh ./
 # RUN sudo chown -R octoprint:octoprint run.sh
-RUN chmod +x run.sh
-# ENTRYPOINT /bin/sh
-ENTRYPOINT ./run.sh
+RUN sudo chmod +x run.sh
+ENTRYPOINT /bin/sh
+# ENTRYPOINT ./run.sh
