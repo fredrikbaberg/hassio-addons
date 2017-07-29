@@ -11,13 +11,12 @@
       "5000/tcp": 5000
   },
   "devices": "/dev/ttyUSB0:/dev/ttyUSB0:rwm",
-  // "map":
+  "map": ["config:ro"],
   "options": {
     "message": "test_message"
   },
   "schema": {
     "message": "str"
   },
-  "image": "fredrikbaberg/octoprint-{arch}-image",
-  "timeout": "10"
+  "image": "fredrikbaberg/octoprint-{arch}-image"
 }

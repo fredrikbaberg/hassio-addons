@@ -85,6 +85,7 @@ RUN sudo apk add --virtual build-dependencies \
     sudo apk del build-dependencies
 VOLUME /home/octoprint/Cura
 VOLUME /home/octoprint/OctoPrint
+EXPOSE 5000
 WORKDIR /home/octoprint
 # ENTRYPOINT /bin/sh
 ENTRYPOINT ./run.sh
