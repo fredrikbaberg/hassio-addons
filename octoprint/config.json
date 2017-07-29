@@ -18,6 +18,6 @@
   "schema": {
     "message": "str"
   },
-  // "image": "fredrikbaberg/octoprint-{arch}-image",
+  "image": "fredrikbaberg/octoprint-{arch}-image",
   "timeout": "10"
 }
