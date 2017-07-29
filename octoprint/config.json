@@ -1,14 +1,23 @@
 {
   "name": "Octoprint",
-  "version": "0.1",
+  "version": "0.1.5",
   "slug": "octoprint",
-  "description": "My first attempt at octoprint add-on! Includes CuraEngine.",
-  "startup": "before",
-  "boot": "auto",
-  "options": {},
-  "schema": {},
+  "description": "Beta version of octoprint add-on.",
+  "url": "https://github.com/fredrikbaberg/hassio-addons",
+  "startup": "after",
+  "webui": "http://[HOST]:[PORT:5000]",
+  "boot": "manual",
   "ports": {
       "5000/tcp": 5000
   },
-  "image": "fredrikbaberg/octoprint-{arch}-image"
+  "devices": "/dev/ttyUSB0:/dev/ttyUSB0:rwm",
+  // "map":
+  "options": {
+    "message": "test_message"
+  },
+  "schema": {
+    "message": "str"
+  },
+  // "image": "fredrikbaberg/octoprint-{arch}-image",
+  "timeout": "10"
 }
