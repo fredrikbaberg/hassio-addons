@@ -19,7 +19,7 @@ RUN sudo apk add --virtual build-dependencies \
     build-base \
     alpine-sdk \
     git \
-    tree \
+    # tree \
     cmake \
     linux-headers \
     yaml-dev \
@@ -87,5 +87,5 @@ VOLUME /home/octoprint/Cura
 VOLUME /home/octoprint/OctoPrint
 EXPOSE 5000
 WORKDIR /home/octoprint
-ENTRYPOINT /home/octoprint/run.sh
+ENTRYPOINT ./run.sh
 # ENTRYPOINT /bin/sh

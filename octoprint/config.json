@@ -11,7 +11,7 @@
       "5000/tcp": 5000
   },
   "devices": ["/dev/ttyUSB0:/dev/ttyUSB0:rwm"],
-  "map": ["config:ro"],
+  "map": ["config:rw"],
   "options": {
     "message": "test_message"
   },
