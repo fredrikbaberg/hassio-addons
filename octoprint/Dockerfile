@@ -87,5 +87,5 @@ VOLUME /home/octoprint/Cura
 VOLUME /home/octoprint/OctoPrint
 EXPOSE 5000
 WORKDIR /home/octoprint
+ENTRYPOINT /home/octoprint/run.sh
 # ENTRYPOINT /bin/sh
-ENTRYPOINT ./run.sh
