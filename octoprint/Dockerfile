@@ -66,6 +66,15 @@ RUN sudo apk add --virtual build-dependencies \
     cd /home/octoprint/Cura && \
     git clone -b legacy https://github.com/Ultimaker/CuraEngine.git && \
     make -C CuraEngine && \
+    # Make sure that the command for restarting octoprint is short
+    echo 'alias octoprint_run="/home/octoprint/OctoPrint/venv/bin/octoprint serve --config /config/octoprint/config.yaml --basedir /config/octoprint"' >> /home/octoprint/.profile && \
+    echo "server:" >> /home/octoprint/.octoprint/config.yaml && \
+    echo "  commands:" >> /home/octoprint/.octoprint/config.yaml && \
+    echo "    serverRestartCommand: octoprint_run" >> /home/octoprint/.octoprint/config.yaml && \
+    echo "devel:" >> /home/octoprint/.octoprint/config.yaml && \
+    echo "  virtualPrinter:" >> /home/octoprint/.octoprint/config.yaml && \
+    echo "    enabled: true" >> /home/octoprint/.octoprint/config.yaml && \
+    # octoprint config
     echo "plugins:" >> /home/octoprint/.octoprint/config.yaml && \
     echo "  cura:" >> /home/octoprint/.octoprint/config.yaml && \
     echo "    # path to the CuraEngine <= 15.04 binary to use" >> /home/octoprint/.octoprint/config.yaml && \
@@ -76,6 +85,10 @@ RUN sudo apk add --virtual build-dependencies \
     echo "" >> /home/octoprint/.octoprint/config.yaml && \
     echo "    # identifier of the default profile to use for slicing" >> /home/octoprint/.octoprint/config.yaml && \
     echo "    default_profile: some_profile" >> /home/octoprint/.octoprint/config.yaml && \
+    # Make sure the config file is accessible, and copy generated config to that folder.
+    sudo mkdir -p /config/octoprint && \
+    sudo chown -R octoprint:octoprint /config/octoprint && \
+    sudo cp /home/octoprint/.octoprint/config.yaml /config/octoprint/octoprint.yaml && \
     # Cleanup after installing CuraEngine
     cd /home/octoprint/Cura/libArcus/build && \
     make clean && \
@@ -83,8 +96,8 @@ RUN sudo apk add --virtual build-dependencies \
     find . -not -name 'build' -not -name '.' -not -name '..' -maxdepth 1 -exec rm -rf {} + && \
     # Remove packages from building
     sudo apk del build-dependencies
-VOLUME /home/octoprint/Cura
-VOLUME /home/octoprint/OctoPrint
+# VOLUME /home/octoprint/Cura
+# VOLUME /home/octoprint/OctoPrint
 EXPOSE 5000
 WORKDIR /home/octoprint
 ENTRYPOINT ./run.sh
