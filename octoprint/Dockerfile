@@ -1,69 +1,81 @@
 FROM %%BASE_IMAGE%%
-# FROM alpine
 # FROM homeassistant/amd64-base:latest
-# LABEL io.hass.version="0.1"
-RUN apk update
-# Needed for compiling octoprint.
-RUN apk add \
+RUN apk update && \
+    apk add sudo && \
+    # Add user, and make sure to have sudo access.
+    addgroup -S octoprint && \
+    adduser -G octoprint -g "octoprint user" -s /bin/sh -D octoprint && \
+    echo "octoprint ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    addgroup octoprint dialout && \
+    addgroup octoprint tty
+ADD run.sh /home/octoprint/run.sh
+RUN sudo chown -R octoprint:octoprint /home/octoprint/run.sh
+RUN sudo chmod +x /home/octoprint/run.sh
+USER octoprint
+# Now run all commands for pre-build, build, and cleanup.
+# Use apk add --virtual build-dependencies <packages>, and then
+# apk del build-dependencies to remove at end. Creates a group.
+RUN sudo apk add --virtual build-dependencies \
     build-base \
     alpine-sdk \
     git \
-    py2-pip \
-    python-dev \
+    # tree \
+    cmake \
+    linux-headers \
+    yaml-dev \
     py-setuptools \
     py-virtualenv \
-    yaml-dev \
-    linux-headers \
-    tree
-RUN addgroup -S octoprint
-RUN adduser -G octoprint -g "octoprint user" -s /bin/sh -D octoprint
-RUN echo "octoprint ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-RUN cd /home/octoprint/ && \
-    git clone https://github.com/foosel/OctoPrint.git
-RUN chown -R octoprint:octoprint /home/octoprint/OctoPrint
-USER octoprint
-WORKDIR /home/octoprint/OctoPrint
-RUN virtualenv venv && \
-    ./venv/bin/pip install pip --upgrade && \
-    ./venv/bin/python setup.py install
-RUN mkdir ~/.octoprint
-# Install CURA
-RUN sudo apk add \
-    python3-dev \
-    py-numpy \
     protobuf-dev \
-    py3-sip \
     py3-sip-dev \
-    cmake
-RUN mkdir /home/octoprint/Cura
-WORKDIR /home/octoprint/Cura
-# Install libArcus (required for CuraEngine).
-RUN git clone https://github.com/Ultimaker/libArcus.git
-RUN cd libArcus && \
+    avahi \
+    libexecinfo-dev \
+    python3-dev \
+    avahi-compat-libdns_sd \
+    py2-pip \
+    py-numpy \
+    py3-sip \
+    && \
+    sudo apk add \
+    python-dev \
+    && \
+    # Install OctoPrint
+    cd /home/octoprint/ && \
+    git clone https://github.com/foosel/OctoPrint.git && \
+    cd /home/octoprint/OctoPrint && \
+    virtualenv venv && \
+    ./venv/bin/pip install pip --upgrade && \
+    # Install Pybonjour issue solution: https://github.com/hauckwill/linconnect-server/issues/88
+    ./venv/bin/pip install -e git+https://github.com/Eichhoernchen/pybonjour.git#egg=pybonjour && \
+    ./venv/bin/python setup.py install && \
+    mkdir ~/.octoprint && \
+    # Cleanup after compiling octoprint
+    cd /home/octoprint/OctoPrint && \
+    # ./venv/bin/python setup.py clean && \
+    find . -not -name 'venv' -not -name '.' -not -name '..' -maxdepth 1 -exec rm -rf {} + && \
+    # Install CuraEngine
+    mkdir -p /home/octoprint/Cura && \
+    cd /home/octoprint/Cura && \
+    git clone https://github.com/Ultimaker/libArcus.git && \
+    cd libArcus && \
     mkdir build && \
     cd build && \
     cmake .. && \
     make && \
-    sudo make install
-# Install CuraEngine
-RUN sudo apk add \
-    libexecinfo-dev
-WORKDIR /home/octoprint/Cura
-## Need to use Cura <= 15.0.4, for OctoPrint to work.
-# RUN git clone https://github.com/Ultimaker/CuraEngine.git
-# RUN cd CuraEngine && \
-#     mkdir build && \
-#     cd build && \
-#     cmake .. && \
-#     make && \
-#     cd .. && \
-#     cmake . -G "CodeBlocks - Unix Makefiles"
-# Create volumes, so this does not have to be done again.
-RUN git clone -b legacy https://github.com/Ultimaker/CuraEngine.git
-RUN make -C CuraEngine
-VOLUME /home/octoprint/Cura
-VOLUME /home/octoprint/OctoPrint
-RUN echo "plugins:" >> /home/octoprint/.octoprint/config.yaml && \
+    sudo make install && \
+    # Need to use Cura <= 15.0.4, for OctoPrint to work.
+    cd /home/octoprint/Cura && \
+    git clone -b legacy https://github.com/Ultimaker/CuraEngine.git && \
+    make -C CuraEngine && \
+    # Make sure that the command for restarting octoprint is short
+    echo 'alias octoprint_run="/home/octoprint/OctoPrint/venv/bin/octoprint serve --config /config/octoprint/config.yaml --basedir /config/octoprint"' >> /home/octoprint/.profile && \
+    echo "server:" >> /home/octoprint/.octoprint/config.yaml && \
+    echo "  commands:" >> /home/octoprint/.octoprint/config.yaml && \
+    echo "    serverRestartCommand: octoprint_run" >> /home/octoprint/.octoprint/config.yaml && \
+    echo "devel:" >> /home/octoprint/.octoprint/config.yaml && \
+    echo "  virtualPrinter:" >> /home/octoprint/.octoprint/config.yaml && \
+    echo "    enabled: true" >> /home/octoprint/.octoprint/config.yaml && \
+    # octoprint config
+    echo "plugins:" >> /home/octoprint/.octoprint/config.yaml && \
     echo "  cura:" >> /home/octoprint/.octoprint/config.yaml && \
     echo "    # path to the CuraEngine <= 15.04 binary to use" >> /home/octoprint/.octoprint/config.yaml && \
     echo "    cura_engine: /home/octoprint/Cura/CuraEngine/build/CuraEngine" >> /home/octoprint/.octoprint/config.yaml && \
@@ -72,9 +84,21 @@ RUN echo "plugins:" >> /home/octoprint/.octoprint/config.yaml && \
     echo "    debug_logging: false" >> /home/octoprint/.octoprint/config.yaml && \
     echo "" >> /home/octoprint/.octoprint/config.yaml && \
     echo "    # identifier of the default profile to use for slicing" >> /home/octoprint/.octoprint/config.yaml && \
-    echo "    default_profile: some_profile" >> /home/octoprint/.octoprint/config.yaml
+    echo "    default_profile: some_profile" >> /home/octoprint/.octoprint/config.yaml && \
+    # Make sure the config file is accessible, and copy generated config to that folder.
+    sudo mkdir -p /config/octoprint && \
+    sudo chown -R octoprint:octoprint /config/octoprint && \
+    sudo cp /home/octoprint/.octoprint/config.yaml /config/octoprint/octoprint.yaml && \
+    # Cleanup after installing CuraEngine
+    cd /home/octoprint/Cura/libArcus/build && \
+    make clean && \
+    cd /home/octoprint/Cura/CuraEngine && \
+    find . -not -name 'build' -not -name '.' -not -name '..' -maxdepth 1 -exec rm -rf {} + && \
+    # Remove packages from building
+    sudo apk del build-dependencies
+# VOLUME /home/octoprint/Cura
+# VOLUME /home/octoprint/OctoPrint
+EXPOSE 5000
 WORKDIR /home/octoprint
-ADD run.sh ./
-RUN sudo chown -R octoprint:octoprint run.sh
-RUN chmod +x run.sh
 ENTRYPOINT ./run.sh
+# ENTRYPOINT /bin/sh
