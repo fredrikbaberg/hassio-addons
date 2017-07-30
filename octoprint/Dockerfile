@@ -1,7 +1,8 @@
 FROM %%BASE_IMAGE%%
 # FROM homeassistant/amd64-base:latest
 RUN apk update && \
-    apk add sudo && \
+    apk add sudo \
+    --no-cache  && \
     # Add user, and make sure to have sudo access.
     addgroup -S octoprint && \
     adduser -G octoprint -g "octoprint user" -s /bin/sh -D octoprint && \
@@ -9,17 +10,17 @@ RUN apk update && \
     addgroup octoprint dialout && \
     addgroup octoprint tty
 ADD run.sh /home/octoprint/run.sh
-RUN sudo chown -R octoprint:octoprint /home/octoprint/run.sh
-RUN sudo chmod +x /home/octoprint/run.sh
+RUN sudo chown -R octoprint:octoprint /home/octoprint/run.sh && \
+    sudo chmod +x /home/octoprint/run.sh
+ADD octoprint_run.sh /usr/local/bin/octoprint
+RUN sudo chmod +x /usr/local/bin/octoprint
 USER octoprint
-# Now run all commands for pre-build, build, and cleanup.
-# Use apk add --virtual build-dependencies <packages>, and then
-# apk del build-dependencies to remove at end. Creates a group.
+# Now run all commands for pre-build, build, and cleanup, in one run (to make image smaller).
+# Use apk add --virtual build-dependencies <packages> to be able to remove the group build-dependencies when done.
 RUN sudo apk add --virtual build-dependencies \
     build-base \
     alpine-sdk \
     git \
-    # tree \
     cmake \
     linux-headers \
     yaml-dev \
@@ -34,9 +35,11 @@ RUN sudo apk add --virtual build-dependencies \
     py2-pip \
     py-numpy \
     py3-sip \
+    --no-cache \
     && \
     sudo apk add \
     python-dev \
+    --no-cache \
     && \
     # Install OctoPrint
     cd /home/octoprint/ && \
@@ -66,29 +69,17 @@ RUN sudo apk add --virtual build-dependencies \
     cd /home/octoprint/Cura && \
     git clone -b legacy https://github.com/Ultimaker/CuraEngine.git && \
     make -C CuraEngine && \
-    # Make sure that the command for restarting octoprint is short
-    echo 'alias octoprint_run="/home/octoprint/OctoPrint/venv/bin/octoprint serve --config /config/octoprint/config.yaml --basedir /config/octoprint"' >> /home/octoprint/.profile && \
+    # Write octoprint config
     echo "server:" >> /home/octoprint/.octoprint/config.yaml && \
     echo "  commands:" >> /home/octoprint/.octoprint/config.yaml && \
-    echo "    serverRestartCommand: octoprint_run" >> /home/octoprint/.octoprint/config.yaml && \
+    echo "    serverRestartCommand: sudo octoprint restart" >> /home/octoprint/.octoprint/config.yaml && \
     echo "devel:" >> /home/octoprint/.octoprint/config.yaml && \
     echo "  virtualPrinter:" >> /home/octoprint/.octoprint/config.yaml && \
     echo "    enabled: true" >> /home/octoprint/.octoprint/config.yaml && \
-    # octoprint config
     echo "plugins:" >> /home/octoprint/.octoprint/config.yaml && \
     echo "  cura:" >> /home/octoprint/.octoprint/config.yaml && \
-    echo "    # path to the CuraEngine <= 15.04 binary to use" >> /home/octoprint/.octoprint/config.yaml && \
     echo "    cura_engine: /home/octoprint/Cura/CuraEngine/build/CuraEngine" >> /home/octoprint/.octoprint/config.yaml && \
-    echo "" >> /home/octoprint/.octoprint/config.yaml && \
-    echo "    # whether to log the slicing output to plugin_cura_engine.log" >> /home/octoprint/.octoprint/config.yaml && \
     echo "    debug_logging: false" >> /home/octoprint/.octoprint/config.yaml && \
-    echo "" >> /home/octoprint/.octoprint/config.yaml && \
-    echo "    # identifier of the default profile to use for slicing" >> /home/octoprint/.octoprint/config.yaml && \
-    echo "    default_profile: some_profile" >> /home/octoprint/.octoprint/config.yaml && \
-    # Make sure the config file is accessible, and copy generated config to that folder.
-    sudo mkdir -p /config/octoprint && \
-    sudo chown -R octoprint:octoprint /config/octoprint && \
-    sudo cp /home/octoprint/.octoprint/config.yaml /config/octoprint/octoprint.yaml && \
     # Cleanup after installing CuraEngine
     cd /home/octoprint/Cura/libArcus/build && \
     make clean && \
@@ -96,8 +87,8 @@ RUN sudo apk add --virtual build-dependencies \
     find . -not -name 'build' -not -name '.' -not -name '..' -maxdepth 1 -exec rm -rf {} + && \
     # Remove packages from building
     sudo apk del build-dependencies
-# VOLUME /home/octoprint/Cura
-# VOLUME /home/octoprint/OctoPrint
+VOLUME /home/octoprint/Cura
+VOLUME /home/octoprint/OctoPrint
 EXPOSE 5000
 WORKDIR /home/octoprint
 ENTRYPOINT ./run.sh
