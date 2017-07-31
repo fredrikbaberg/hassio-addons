@@ -1,11 +1,12 @@
 #!/bin/sh
 # Add this file to somewhere in PATH, to be able to start/stop/restart/status octoprint.
-sudo mkdir -p /config/octoprint
-sudo chown -R octoprint:octoprint /config/octoprint
-if [ ! -f /config/octoprint/config.yaml ]; then
-    cp /home/octoprint/.octoprint/config.yaml /config/octoprint/config.yaml
-fi
-sudo -u octoprint /home/octoprint/OctoPrint/venv/bin/octoprint serve --config /config/octoprint/config.yaml --basedir /config/octoprint
+# sudo mkdir -p /config/octoprint
+# sudo chown -R octoprint:octoprint /config/octoprint
+# if [ ! -f /config/octoprint/config.yaml ]; then
+#     cp /home/octoprint/.octoprint/config.yaml /config/octoprint/config.yaml
+# fi
+# sudo -u octoprint /home/octoprint/OctoPrint/venv/bin/octoprint serve --config /config/octoprint/config.yaml --basedir /config/octoprint
+
 # # sudo -u octoprint /home/octoprint/OctoPrint/venv/bin/octoprint daemon --config /config/octoprint/config.yaml --basedir /config/octoprint $1
 
 # # Kill process, if running.
