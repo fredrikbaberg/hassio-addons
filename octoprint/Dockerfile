@@ -1,23 +1,21 @@
 FROM %%BASE_IMAGE%%
 # FROM homeassistant/amd64-base:latest
-RUN apk update && \
-    apk add sudo \
-    --no-cache  && \
+RUN apk add --update --no-cache \
+    sudo && \
     # Add user, and make sure to have sudo access.
     addgroup -S octoprint && \
     adduser -G octoprint -g "octoprint user" -s /bin/sh -D octoprint && \
-    echo "octoprint ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     addgroup octoprint dialout && \
-    addgroup octoprint tty
+    addgroup octoprint tty && \
+    echo "octoprint ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 ADD run.sh /home/octoprint/run.sh
-RUN sudo chown -R octoprint:octoprint /home/octoprint/run.sh && \
-    sudo chmod +x /home/octoprint/run.sh
 ADD octoprint_run.sh /usr/local/bin/octoprint
-RUN sudo chmod +x /usr/local/bin/octoprint
+RUN chown -R octoprint:octoprint /home/octoprint/run.sh && \
+    chmod +x /home/octoprint/run.sh && \
+    chmod +x /usr/local/bin/octoprint
 USER octoprint
 # Now run all commands for pre-build, build, and cleanup, in one run (to make image smaller).
-# Use apk add --virtual build-dependencies <packages> to be able to remove the group build-dependencies when done.
-RUN sudo apk add --virtual build-dependencies \
+RUN sudo apk add --update --no-cache --virtual build-dependencies \
     build-base \
     alpine-sdk \
     git \
@@ -35,11 +33,10 @@ RUN sudo apk add --virtual build-dependencies \
     py2-pip \
     py-numpy \
     py3-sip \
-    --no-cache \
     && \
-    sudo apk add \
+    # The above will be uninstalled at the end, the following will not.
+    sudo apk add --update --no-cache \
     python-dev \
-    --no-cache \
     && \
     # Install OctoPrint
     cd /home/octoprint/ && \
@@ -53,9 +50,8 @@ RUN sudo apk add --virtual build-dependencies \
     mkdir ~/.octoprint && \
     # Cleanup after compiling octoprint
     cd /home/octoprint/OctoPrint && \
-    # ./venv/bin/python setup.py clean && \
     find . -not -name 'venv' -not -name '.' -not -name '..' -maxdepth 1 -exec rm -rf {} + && \
-    # Install CuraEngine
+    # Install CuraEngine dependencies
     mkdir -p /home/octoprint/Cura && \
     cd /home/octoprint/Cura && \
     git clone https://github.com/Ultimaker/libArcus.git && \
@@ -65,7 +61,7 @@ RUN sudo apk add --virtual build-dependencies \
     cmake .. && \
     make && \
     sudo make install && \
-    # Need to use Cura <= 15.0.4, for OctoPrint to work.
+    # Need to use Cura <= 15.0.4, for OctoPrint integration.
     cd /home/octoprint/Cura && \
     git clone -b legacy https://github.com/Ultimaker/CuraEngine.git && \
     make -C CuraEngine && \
@@ -78,7 +74,8 @@ RUN sudo apk add --virtual build-dependencies \
     echo "    enabled: true" >> /home/octoprint/.octoprint/config.yaml && \
     echo "plugins:" >> /home/octoprint/.octoprint/config.yaml && \
     echo "  cura:" >> /home/octoprint/.octoprint/config.yaml && \
-    echo "    cura_engine: /home/octoprint/Cura/CuraEngine/build/CuraEngine" >> /home/octoprint/.octoprint/config.yaml && \
+    echo "    cura_engine: /data/Cura/CuraEngine/build/CuraEngine" >> /home/octoprint/.octoprint/config.yaml && \
+    # echo "    cura_engine: /home/octoprint/Cura/CuraEngine/build/CuraEngine" >> /home/octoprint/.octoprint/config.yaml && \
     echo "    debug_logging: false" >> /home/octoprint/.octoprint/config.yaml && \
     # Cleanup after installing CuraEngine
     cd /home/octoprint/Cura/libArcus/build && \
