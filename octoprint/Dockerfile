@@ -11,7 +11,6 @@ RUN apk add --update --no-cache \
 ADD run.sh /home/octoprint/run.sh
 ADD octoprint_run.sh /usr/local/bin/octoprint
 RUN chown -R octoprint:octoprint /home/octoprint/run.sh && \
-    chown -R octoprint:octoprint /home/octoprint/octoprint_run.sh && \
     chmod +x /home/octoprint/run.sh && \
     chmod +x /usr/local/bin/octoprint
 USER octoprint
