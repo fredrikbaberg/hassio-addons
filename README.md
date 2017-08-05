@@ -2,5 +2,6 @@
 Intended home for hassio addons, if time allows.
 
 ## octoprint
-Work in progess.
 The docker image for octoprint is also available on docker hub (fredrikbaberg). Image size is roughly 136MB.
+
+Please report issues here, or through the following [thread](https://community.home-assistant.io/t/repository-octoprint-wip/22883).
