@@ -1,5 +1,5 @@
-# FROM %%BASE_IMAGE%%
-FROM homeassistant/amd64-base:latest
+FROM %%BASE_IMAGE%%
+# FROM homeassistant/amd64-base:latest
 RUN apk add --update --no-cache \
     sudo && \
     # Add user, and make sure to have sudo access.
@@ -26,7 +26,6 @@ RUN sudo apk add --update --no-cache --virtual build-dependencies \
     py3-sip-dev \
     avahi \
     libexecinfo-dev \
-    python3-dev \
     avahi-compat-libdns_sd \
     py2-pip \
     py-numpy \
@@ -34,6 +33,7 @@ RUN sudo apk add --update --no-cache --virtual build-dependencies \
     && \
     sudo apk add --update --no-cache --virtual run-dependencies \
     python-dev \
+    python3-dev \
     && \
     # OctoPrint
     git clone https://github.com/foosel/OctoPrint.git /home/octoprint/OctoPrint && \
@@ -43,20 +43,18 @@ RUN sudo apk add --update --no-cache --virtual build-dependencies \
     # Install Pybonjour issue solution: https://github.com/hauckwill/linconnect-server/issues/88
     ./venv/bin/pip install -e git+https://github.com/Eichhoernchen/pybonjour.git#egg=pybonjour && \
     ./venv/bin/python setup.py install && \
-    # Cleanup
-    cd /home/octoprint/OctoPrint && find . -not -name 'venv' -not -name '.' -not -name '..' -maxdepth 1 -exec rm -rf {} + && \
     # CuraEngine
     mkdir -p /home/octoprint/Cura && \
     git clone https://github.com/Ultimaker/libArcus.git /home/octoprint/Cura/libArcus && \
     mkdir -p /home/octoprint/Cura/libArcus/build && \
     cd /home/octoprint/Cura/libArcus/build && \
     cmake .. && make && sudo make install && \
-    # Cleanup
     # Need to use Cura <= 15.0.4, for OctoPrint integration.
     git clone -b legacy https://github.com/Ultimaker/CuraEngine.git /home/octoprint/Cura/CuraEngine && \
     cd /home/octoprint/Cura && \
     make -C CuraEngine && \
     # Cleanup
+    cd /home/octoprint/OctoPrint && find . -not -name 'venv' -not -name '.' -not -name '..' -maxdepth 1 -exec rm -rf {} + && \
     cd /home/octoprint/Cura/CuraEngine && find . -not -name 'build' -not -name '.' -not -name '..' -maxdepth 1 -exec rm -rf {} + && \
     sudo apk del build-dependencies
     # Write octoprint config
