@@ -1,6 +1,6 @@
 {
   "name": "Octoprint",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "slug": "octoprint",
   "description": "Beta version of octoprint add-on.",
   "url": "https://github.com/fredrikbaberg/hassio-addons",
@@ -10,9 +10,9 @@
   "ports": {
       "5000/tcp": 5000
   },
-  "devices": ["/dev/ttyUSB0:/dev/ttyUSB0:rwm"],
   "map": ["config:rw"],
   "options": {},
-  "schema": {},
-  "image": "fredrikbaberg/octoprint-{arch}-image"
+  "schema": {}
 }
+// "devices": ["/dev/ttyUSB0:/dev/ttyUSB0:rwm"],
+// "image": "fredrikbaberg/octoprint-{arch}-image"
