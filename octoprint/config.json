@@ -1,6 +1,6 @@
 {
   "name": "Octoprint",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "slug": "octoprint",
   "description": "Beta version of octoprint add-on for Hass.io",
   "url": "https://github.com/fredrikbaberg/hassio-addons",
