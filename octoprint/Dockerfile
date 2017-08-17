@@ -47,7 +47,7 @@ RUN sudo apk add --update --no-cache --virtual build-dependencies \
     echo "    enabled: true" >> .octoprint/config.yaml && \
     echo "plugins:" >> .octoprint/config.yaml && \
     echo "  cura:" >> .octoprint/config.yaml && \
-    echo "    cura_engine: /data/Cura/CuraEngine/build/CuraEngine" >> .octoprint/config.yaml && \
+    echo "    cura_engine: /data/CuraEngine/build/CuraEngine" >> .octoprint/config.yaml && \
     echo "    debug_logging: false" >> .octoprint/config.yaml && \
     sudo apk del build-dependencies && \
     sudo apk add --update --no-cache --virtual run-dependencies \
