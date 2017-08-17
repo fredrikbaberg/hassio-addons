@@ -1,6 +1,6 @@
 {
   "name": "Octoprint",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "slug": "octoprint",
   "description": "Beta version of octoprint add-on for Hass.io",
   "url": "https://github.com/fredrikbaberg/hassio-addons",
@@ -13,6 +13,6 @@
   "map": ["config:rw"],
   "options": {},
   "schema": {},
-  "image": "fredrikbaberg/octoprint-{arch}-image",
-  "devices": ["/dev/ttyUSB0:/dev/ttyUSB0:rwm"]
+  "image": "fredrikbaberg/octoprint-{arch}-image"
+  // "devices": ["/dev/ttyUSB0:/dev/ttyUSB0:rwm"]
 }
