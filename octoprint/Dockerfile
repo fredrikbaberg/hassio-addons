@@ -1,4 +1,6 @@
-FROM %%BASE_IMAGE%%
+# FROM %%BASE_IMAGE%%
+ARG BUILD_FROM
+FROM $BUILD_FROM
 # FROM homeassistant/amd64-base:latest
 RUN apk add --update --no-cache sudo python && \
     # Add user, and make sure to have sudo access.
