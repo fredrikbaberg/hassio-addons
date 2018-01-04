@@ -14,22 +14,19 @@ RUN apk add --update --no-cache sudo python && \
     echo "octoprint ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 USER octoprint
 # Make sure all files are built for the path /data. Will copy files away from there, and back when running.
-# Not a nice solution, but might work.
 RUN sudo mkdir -p /data && sudo chown -R octoprint:octoprint /data
 WORKDIR /data
 RUN sudo apk add --update --no-cache --virtual build-dependencies \
-    build-base alpine-sdk git py-virtualenv python-dev linux-headers \
-    avahi-compat-libdns_sd \
-    cmake protobuf-dev python3-dev py3-sip-dev py3-sip \
-    libexecinfo-dev \
-    yaml-dev && \
+    build-base alpine-sdk python-dev linux-headers cmake protobuf-dev curl git python3-dev py3-sip-dev py3-sip libexecinfo-dev && \
+    curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
+    sudo python get-pip.py && \
+    sudo pip install virtualenv && \
     cd /data && git clone https://github.com/foosel/OctoPrint.git && \
     cd /data && git clone https://github.com/Ultimaker/libArcus.git && \
     cd /data && git clone -b legacy https://github.com/Ultimaker/CuraEngine.git && \
-    # Install OctoPrint
+# #     # Install OctoPrint
     cd /data/OctoPrint && \
     virtualenv venv --quiet && \
-    ./venv/bin/pip install -e git+https://github.com/Eichhoernchen/pybonjour.git#egg=pybonjour --quiet && \
     ./venv/bin/python setup.py install --quiet && \
     ./venv/bin/python setup.py clean --all --quiet && \
     rm -rf .git && \
@@ -42,7 +39,7 @@ RUN sudo apk add --update --no-cache --virtual build-dependencies \
     cd /data && make -C CuraEngine --quiet && \
     rm -rf CuraEngine/.git && \
     cd CuraEngine/ && find . -not -name 'build' -not -name '.' -not -name '..' -maxdepth 1 -exec rm -rf {} + && \
-    # Setup configuration file for octoprint.
+#     # Setup configuration file for octoprint.
     mkdir -p /home/octoprint/.octoprint && cd /home/octoprint && \
     echo "server:" >> .octoprint/config.yaml && \
     echo "  commands:" >> .octoprint/config.yaml && \
@@ -59,7 +56,7 @@ RUN sudo apk add --update --no-cache --virtual build-dependencies \
     python && \
     mv /data/* /home/octoprint/
 
-# Copy data
+# # Copy data
 COPY run.sh /home/octoprint/octoprint.sh
 # Make script have correct permissions and is executable.
 RUN sudo chown -R octoprint:octoprint /home/octoprint/octoprint.sh && \
