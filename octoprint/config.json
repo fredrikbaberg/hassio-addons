@@ -13,6 +13,6 @@
   "map": ["config:rw"],
   "options": {},
   "schema": {},
-  "devices": ["/dev/ttyUSB*:/dev/ttyUSB*:rwm"],
+  "devices": ["/dev/ttyUSB0:/dev/ttyUSB0:rwm"],
   "image": "fredrikbaberg/octoprint-{arch}-image"
 }
