@@ -7,8 +7,6 @@ setup() {
     if [ ! -f /config/octoprint/config.yaml ]; then
         sudo cp -a $HOME/.octoprint/config.yaml /config/octoprint/config.yaml
         echo "Copy .octoprint/config.yaml"
-    # else
-    #     sed 's+^    serverRestartCommand.*+    serverRestartCommand: /home/octoprint/octoprint.sh+' /config/octoprint/config.yaml
     fi
     sudo chown -R octoprint:octoprint /data/
     if [ ! -d /data/CuraEngine ]; then
@@ -27,6 +25,3 @@ setup() {
 
 setup
 /data/OctoPrint/venv/bin/octoprint daemon restart --basedir /config/octoprint >> /home/octoprint/log_octo.txt
-# /data/OctoPrint/venv/bin/octoprint serve --basedir /config/octoprint
-# --config /config/octoprint/config.yaml  # Should be enough with basedir.
-# >> /home/octoprint/log_octo.txt
