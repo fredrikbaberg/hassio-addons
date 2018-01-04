@@ -1,7 +1,10 @@
-# FROM %%BASE_IMAGE%%
 ARG BUILD_FROM
 FROM $BUILD_FROM
-# FROM homeassistant/amd64-base:latest
+
+# Add env
+ENV LANG C.UTF-8
+
+# Setup
 RUN apk add --update --no-cache sudo python && \
     # Add user, and make sure to have sudo access.
     addgroup -S octoprint && \
@@ -11,22 +14,18 @@ RUN apk add --update --no-cache sudo python && \
     echo "octoprint ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 USER octoprint
 # Make sure all files are built for the path /data. Will copy files away from there, and back when running.
-# Not a nice solution, but might work.
 RUN sudo mkdir -p /data && sudo chown -R octoprint:octoprint /data
 WORKDIR /data
 RUN sudo apk add --update --no-cache --virtual build-dependencies \
-    build-base alpine-sdk git py-virtualenv python-dev linux-headers \
-    avahi-compat-libdns_sd \
-    cmake protobuf-dev python3-dev py3-sip-dev py3-sip \
-    libexecinfo-dev \
-    yaml-dev && \
+    build-base alpine-sdk python-dev linux-headers cmake protobuf-dev curl git python3-dev py3-sip-dev py3-sip libexecinfo-dev && \
+    curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
+    sudo python get-pip.py && sudo pip install virtualenv && \
     cd /data && git clone https://github.com/foosel/OctoPrint.git && \
     cd /data && git clone https://github.com/Ultimaker/libArcus.git && \
     cd /data && git clone -b legacy https://github.com/Ultimaker/CuraEngine.git && \
     # Install OctoPrint
     cd /data/OctoPrint && \
     virtualenv venv --quiet && \
-    ./venv/bin/pip install -e git+https://github.com/Eichhoernchen/pybonjour.git#egg=pybonjour --quiet && \
     ./venv/bin/python setup.py install --quiet && \
     ./venv/bin/python setup.py clean --all --quiet && \
     rm -rf .git && \
@@ -55,10 +54,13 @@ RUN sudo apk add --update --no-cache --virtual build-dependencies \
     sudo apk add --update --no-cache --virtual run-dependencies \
     python && \
     mv /data/* /home/octoprint/
-COPY octoprint.sh /home/octoprint/octoprint.sh
+
+# Copy data
+COPY run.sh /home/octoprint/octoprint.sh
 # Make script have correct permissions and is executable.
 RUN sudo chown -R octoprint:octoprint /home/octoprint/octoprint.sh && \
     sudo chmod +x /home/octoprint/octoprint.sh
+
 EXPOSE 5000
 WORKDIR /home/octoprint
 ENTRYPOINT /home/octoprint/octoprint.sh && tail -f /dev/null
