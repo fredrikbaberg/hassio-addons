@@ -19,12 +19,11 @@ WORKDIR /data
 RUN sudo apk add --update --no-cache --virtual build-dependencies \
     build-base alpine-sdk python-dev linux-headers cmake protobuf-dev curl git python3-dev py3-sip-dev py3-sip libexecinfo-dev && \
     curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
-    sudo python get-pip.py && \
-    sudo pip install virtualenv && \
+    sudo python get-pip.py && sudo pip install virtualenv && \
     cd /data && git clone https://github.com/foosel/OctoPrint.git && \
     cd /data && git clone https://github.com/Ultimaker/libArcus.git && \
     cd /data && git clone -b legacy https://github.com/Ultimaker/CuraEngine.git && \
-# #     # Install OctoPrint
+    # Install OctoPrint
     cd /data/OctoPrint && \
     virtualenv venv --quiet && \
     ./venv/bin/python setup.py install --quiet && \
@@ -56,7 +55,7 @@ RUN sudo apk add --update --no-cache --virtual build-dependencies \
     python && \
     mv /data/* /home/octoprint/
 
-# # Copy data
+# Copy data
 COPY run.sh /home/octoprint/octoprint.sh
 # Make script have correct permissions and is executable.
 RUN sudo chown -R octoprint:octoprint /home/octoprint/octoprint.sh && \
