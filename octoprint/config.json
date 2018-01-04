@@ -1,6 +1,6 @@
 {
   "name": "Octoprint",
-  "version": "latest",
+  "version": "0.2.5",
   "slug": "octoprint",
   "description": "Octoprint add-on for Hass.io",
   "url": "https://github.com/fredrikbaberg/hassio-addons",
