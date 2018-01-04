@@ -1,18 +1,18 @@
 {
   "name": "Octoprint",
-  "version": "0.2.3",
+  "version": "0.2.5",
   "slug": "octoprint",
-  "description": "Beta version of octoprint add-on for Hass.io",
+  "description": "Octoprint add-on for Hass.io",
   "url": "https://github.com/fredrikbaberg/hassio-addons",
   "startup": "after",
-  "webui": "http://[HOST]:[PORT:5000]",
   "boot": "manual",
+  "webui": "http://[HOST]:[PORT:5000]",
   "ports": {
       "5000/tcp": 5000
   },
   "map": ["config:rw"],
   "options": {},
   "schema": {},
-  "devices": ["/dev/ttyUSB0:/dev/ttyUSB0:rwm"],
+  "devices": ["/dev/ttyUSB*:/dev/ttyUSB*:rwm"],
   "image": "fredrikbaberg/octoprint-{arch}-image"
 }
