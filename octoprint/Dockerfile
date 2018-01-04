@@ -1,5 +1,10 @@
-FROM %%BASE_IMAGE%%
-# FROM homeassistant/amd64-base:latest
+ARG BUILD_FROM
+FROM $BUILD_FROM
+
+# Add env
+ENV LANG C.UTF-8
+
+# Setup
 RUN apk add --update --no-cache sudo python && \
     # Add user, and make sure to have sudo access.
     addgroup -S octoprint && \
@@ -53,10 +58,13 @@ RUN sudo apk add --update --no-cache --virtual build-dependencies \
     sudo apk add --update --no-cache --virtual run-dependencies \
     python && \
     mv /data/* /home/octoprint/
-COPY octoprint.sh /home/octoprint/octoprint.sh
+
+# Copy data
+COPY run.sh /home/octoprint/octoprint.sh
 # Make script have correct permissions and is executable.
 RUN sudo chown -R octoprint:octoprint /home/octoprint/octoprint.sh && \
     sudo chmod +x /home/octoprint/octoprint.sh
+
 EXPOSE 5000
 WORKDIR /home/octoprint
 ENTRYPOINT /home/octoprint/octoprint.sh && tail -f /dev/null

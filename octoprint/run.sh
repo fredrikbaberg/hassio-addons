@@ -1,4 +1,6 @@
 #!/bin/sh
+set -e
+
 setup() {
     sudo mkdir -p /config/octoprint
     sudo chown -R octoprint:octoprint /config/octoprint
