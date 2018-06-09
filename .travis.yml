@@ -6,6 +6,7 @@ branches:
     - build
 before_install:
   - sudo apt-get install jq
+  - sudo chmod +x ./build.sh
 env:
   - ADDON="octoprint"
 script:
