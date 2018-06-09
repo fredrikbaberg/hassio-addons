@@ -38,7 +38,7 @@ RUN sudo apk add --update --no-cache --virtual build-dependencies \
     cd /data && make -C CuraEngine --quiet && \
     rm -rf CuraEngine/.git && \
     cd CuraEngine/ && find . -not -name 'build' -not -name '.' -not -name '..' -maxdepth 1 -exec rm -rf {} + && \
-    # Setup configuration file for octoprint.
+#     # Setup configuration file for octoprint.
     mkdir -p /home/octoprint/.octoprint && cd /home/octoprint && \
     echo "server:" >> .octoprint/config.yaml && \
     echo "  commands:" >> .octoprint/config.yaml && \
