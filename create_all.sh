@@ -6,4 +6,3 @@ do
     ./create_hassio_addon.sh -a $arch "$@" &
 done
 wait
-
