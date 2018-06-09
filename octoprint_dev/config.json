@@ -1,0 +1,25 @@
+{
+  "name": "Octoprint Dev",
+  "version": "0.0.7",
+  "slug": "octoprint_dev",
+  "description": "Octoprint (dev) add-on for Hass.io",
+  "url": "https://github.com/fredrikbaberg/hassio-addons",
+  "startup": "application",
+  "boot": "auto",
+  "ports": {
+      "5000/tcp": 5000
+  },
+  "map": ["config:rw"],
+  "options": {
+      "ssl": false,
+      "device": "ttyUSB0",
+      "port": 5000
+  },
+  "schema": {
+      "ssl": "bool",
+      "device": "str",
+      "port": "int"
+  },
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:5000]",
+  "auto_uart": true
+}
