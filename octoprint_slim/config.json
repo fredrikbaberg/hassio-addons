@@ -8,7 +8,7 @@
     "startup": "application",
     "boot": "auto",
     "ports": {
-        "80/tcp": 5000
+        "80/tcp": 5000,
         "80/udp": 5000
     },
     "map": ["config:rw"],
