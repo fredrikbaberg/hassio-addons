@@ -8,8 +8,8 @@ before_install:
   - sudo apt-get install jq
   - sudo chmod +x ./build.sh
 env:
-  - ADDON="octoprint_dev"
-  - ADDON="octoprint_slim"
+  - ADDON=octoprint_dev ARCH=amd64
+  - ADDON=octoprint_slim ARCH=amd64
 script:
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
   - ./build.sh $ADDON
