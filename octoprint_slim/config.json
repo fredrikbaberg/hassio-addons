@@ -1,6 +1,6 @@
 {
     "name": "Octoprint Slim",
-    "version": "0.0.3",
+    "version": "0.0.3.1",
     "slug": "octoprint-slim",
     "description": "Octoprint add-on for Hass.io, slimmed version (untested).",
     "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
@@ -8,6 +8,7 @@
     "startup": "application",
     "boot": "auto",
     "ports": {
+        "80/tcp": 5000,
         "80/udp": 5000
     },
     "map": ["config:rw"],
