@@ -9,6 +9,8 @@ before_install:
   - sudo chmod +x ./build.sh
 env:
   - ADDON="octoprint"
+  - ADDON="octoprint_dev"
+  - ADDON="octoprint_slim"
 script:
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
   - ./build.sh $ADDON
