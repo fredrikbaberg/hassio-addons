@@ -3,6 +3,7 @@
     "version": "0.2.6",
     "slug": "octoprint",
     "description": "Octoprint add-on for Hass.io",
+    "arch": [],
     "url": "https://github.com/fredrikbaberg/hassio-addons",
     "startup": "application",
     "boot": "manual",
