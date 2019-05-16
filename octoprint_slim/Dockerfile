@@ -3,7 +3,7 @@ FROM $BUILD_FROM
 
 ENV LANG C.UTF-8
 
-ENV OCTOPRINT_VERSION=1.3.9
+ENV OCTOPRINT_VERSION=1.3.11
 # To have Python packages persistently installed.
 ENV PYTHONPATH=/data/python
 ENV PATH=${PATH}:/data/python/bin
@@ -39,6 +39,6 @@ COPY run.sh /
 RUN chmod a+x /run.sh
 COPY supervisord.conf /etc/supervisord.conf
 
-EXPOSE 80
+EXPOSE 5000
 WORKDIR /
 CMD [ "/run.sh" ]
