@@ -16,9 +16,7 @@
     },
     "host_network": false,
     "auto_uart": true,
-    "map": [
-        "config:rw"
-    ],
+    "map": ["config:rw"],
     "options": {},
     "schema": {}
 }
