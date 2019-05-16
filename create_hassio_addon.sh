@@ -26,11 +26,9 @@ help () {
     cat << EOF
 Script for hassio addon docker build
 create_hassio_addon [options]
-
 Options:
     -h, --help
         Display this help and exit.
-
     -r, --repository https://.../addons
         Set git repository to load addon from.
     -b, --branch branch_name
@@ -39,7 +37,6 @@ Options:
         Load addon from a local folder
     -s, --slug addon_slug
         Name of folder/slug
-
     -a, --arch armhf|aarch64|i386|amd64
         Arch for addon build.
     -t, --test
@@ -168,4 +165,4 @@ cd "$BUILD_DIR"
 rm -rf "$WORKSPACE"
 
 cleanup "okay"
-exit 0
+exit 0 
