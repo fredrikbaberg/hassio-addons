@@ -61,7 +61,7 @@ create_config() {
 
 copy_data
 create_config
-create_homeassistant_user
+# create_homeassistant_user
 echo "Launch"
 /usr/bin/supervisord -c /etc/supervisord.conf
 tail -f /tmp/octoprint-stdout*
