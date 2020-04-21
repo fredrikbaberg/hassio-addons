@@ -1,14 +1,15 @@
 {
     "name": "Octoprint",
-    "version": "0.2.6",
+    "version": "0.2.7",
     "slug": "octoprint",
     "description": "Octoprint add-on for Hass.io",
-    "arch": [],
+    "arch": ["armv7"],
     "url": "https://github.com/fredrikbaberg/hassio-addons",
     "startup": "application",
-    "boot": "manual",
+    "boot": "auto",
     "ports": {
-        "5000/tcp": 5000
+        "80/tcp": 5000,
+        "80/udp": 5000
     },
     "map": ["config:rw"],
     "options": {},
