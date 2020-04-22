@@ -1,6 +1,5 @@
 #!/usr/bin/with-contenv bashio
 
-bashio::log.info "Ingress entry URL: ${ingress_entry}"
 ingress_enabled=$(bashio::addon.ingress)
 ingress_entry=$(bashio::addon.ingress_entry)
 ingress_url=$(bashio::addon.ingress_url)
