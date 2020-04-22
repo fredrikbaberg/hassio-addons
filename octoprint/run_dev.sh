@@ -1,6 +1,8 @@
-#!/usr/bin/with-contenv bashio
-# #!/bin/sh
-# set -e
+#!/bin/sh
+set -e
+# #!/usr/bin/with-contenv bashio
+
+# Mostly the same as run.sh, but without bashio calls.
 
 copy_data() {
     if [ ! -d /data/python ]; then
@@ -56,9 +58,9 @@ create_logging() {
 }
 
 set_ingress_entry() {
-    ingress_entry=$(bashio::addon.ingress_entry)
-    sed -i "s#%%base_path%%#${ingress_entry}#g" /etc/haproxy/haproxy.cfg
-    # sed -e '/http-request set-header X-Script-Name/s/^/#/g' -i /etc/haproxy/haproxy.cfg
+    # ingress_entry=$(bashio::addon.ingress_entry)
+    # sed -i "s#%%base_path%%#${ingress_entry}#g" /etc/haproxy/haproxy.cfg
+    sed -e '/http-request set-header X-Script-Name/s/^/#/g' -i /etc/haproxy/haproxy.cfg
 }
 
 copy_data

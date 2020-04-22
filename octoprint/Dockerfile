@@ -8,12 +8,13 @@ ENV INSTALL_OCTOPRINT=1
 ENV INSTALL_CURA_LEGACY=0
 ENV INSTALL_MJPEG=0
 
-# If version has to be specified, do so here.Set version number here instead of in code.
+# Specify versions here instead of in code.
 ENV OCTOPRINT_VERSION=1.4.0
 
-# To slice on OctoPrint using CURA we need to use this legacy version.
+# To slice in OctoPrint using CURA we need this legacy version (and a plugin).
 ENV CURA_VERSION=15.04.6
 
+# Environment variables for build and run
 # ENV CAMERA_DEV /dev/video0
 # ENV STREAMER_FLAGS -y -n
 
@@ -26,25 +27,32 @@ ENV PYTHONUSERBASE=/data/python
 WORKDIR /tmp
 
 # Install requirements for add-on
-RUN if [ "${INSTALL_OCTOPRINT}" != "0" ]; then \
-        echo "Installing OctoPrint" && \
-        apk add --no-cache py-pip supervisor haproxy avahi-compat-libdns_sd dbus avahi && \
-        apk add --no-cache --virtual .build-dependencies build-base linux-headers python-dev && \
-        # pip install --user https://goo.gl/SxQZ06 --quiet && \
-        pip install --user octoprint && \
-        apk del --no-cache .build-dependencies \
+RUN apk add --no-cache --virtual .necessary supervisor haproxy avahi-compat-libdns_sd dbus avahi python \
+    && apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libjpeg-turbo-dev python-dev libexecinfo-dev py-pip \
+    && if [ "${INSTALL_OCTOPRINT}" != "0" ]; then \
+        echo "Installing OctoPrint" \
+        && pip install virtualenv \
+        && virtualenv /data/python \
+        && source /data/python/bin/activate \
+        && pip install OctoPrint \
+        && pip install --user https://goo.gl/SxQZ06 --quiet \
+        && cp -R /data/python /root/ \
     ; fi \
+    # && if [ "${INSTALL_MJPEG}" != "0" ]; then \
+    #     echo "Installing mjpeg" && \
+    # ; fi \
+    # && if [ "${INSTALL_CURA_LEGACY}}" != "0" ]; then \
+    #     echo "Installing CuraLegacy" && \
+    # ; fi \
     # # Cleanup
-    && cp -R /data/python /root/ \
+    && apk del --no-cache .build-dependencies \
     && rm -rf /tmp
 
 # Copy data for add-on
 COPY haproxy.cfg /etc/haproxy/haproxy.cfg
 COPY supervisord.conf /etc/supervisord.conf
-COPY run.sh /
+COPY run.sh /run.sh
+# COPY run_test.sh /run.sh
 RUN chmod a+x /run.sh
-COPY debug.sh /
-RUN chmod a+x /debug.sh
 WORKDIR /
 CMD [ "/run.sh" ]
-# CMD [ "/debug.sh" ]

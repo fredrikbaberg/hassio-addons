@@ -1,5 +1,10 @@
 # Changelog
 
+[0.3.0-alpha]
+- Support for Ingress
+- Rewritten install, using pip
+- Only OctoPrint (no mjpeg, Cura, etc) for now
+
 [0.2.7]
 - Works with HassOS
 - Bonjour enabled
