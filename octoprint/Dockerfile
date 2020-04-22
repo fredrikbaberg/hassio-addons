@@ -28,12 +28,14 @@ WORKDIR /tmp
 # Install requirements for add-on
 RUN if [ "${INSTALL_OCTOPRINT}" != "0" ]; then \
         echo "Installing OctoPrint" && \
-        apk add --no-cache py-pip supervisor haproxy nginx && \
-        apk add --no-cache --virtual build-dependencies build-base linux-headers python-dev && \
+        apk add --no-cache py-pip supervisor haproxy nginx avahi-compat-libdns_sd dbus avahi && \
+        apk add --no-cache --virtual .build-dependencies build-base linux-headers python-dev && \
         # pip install --user https://goo.gl/SxQZ06 --quiet && \
         pip install --user octoprint && \
-        apk del --no-cache build-dependencies \
+        apk del --no-cache .build-dependencies \
     ; fi \
+    # Nginx preparation
+    && mkdir -p /run/nginx \
     # # Cleanup
     && cp -R /data/python /root/ \
     && rm -rf /tmp
