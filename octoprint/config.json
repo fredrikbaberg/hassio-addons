@@ -7,6 +7,10 @@
     "url": "https://github.com/fredrikbaberg/hassio-addons",
     "startup": "application",
     "boot": "auto",
+    "ports": {
+        "8099/tcp": 5000,
+        "8099/udp": 5000
+    },
     "auto_uart": true,
     "map": ["config:rw"],
     "options": {},
