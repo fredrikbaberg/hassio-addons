@@ -32,7 +32,6 @@ RUN if [ "${INSTALL_OCTOPRINT}" != "0" ]; then \
         apk add --no-cache --virtual build-dependencies build-base linux-headers python-dev && \
         # pip install --user https://goo.gl/SxQZ06 --quiet && \
         pip install --user octoprint && \
-        octoprint user add homeassistant --password octoprint && \
         apk del --no-cache build-dependencies \
     ; fi \
     # apk add --no-cache jq supervisor ffmpeg py-pip \
