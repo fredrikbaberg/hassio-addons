@@ -34,40 +34,7 @@ RUN if [ "${INSTALL_OCTOPRINT}" != "0" ]; then \
         pip install --user octoprint && \
         apk del --no-cache build-dependencies \
     ; fi \
-    # apk add --no-cache jq supervisor ffmpeg py-pip \
-    # && \
-    # # Get code for installation, install.
-    # wget -qO- https://github.com/foosel/OctoPrint/archive/${OCTOPRINT_VERSION}.tar.gz | tar xz && \
-    # wget -qO- https://github.com/jacksonliam/mjpg-streamer/archive/master.tar.gz | tar xz && \
-    # wget -qO- https://github.com/Ultimaker/CuraEngine/archive/${CURA_VERSION}.tar.gz | tar xz \
-    # && \
-    # # Compile and install
-    # apk add --no-cache --virtual build-dependencies \
-    # build-base cmake linux-headers libjpeg-turbo-dev python-dev libexecinfo-dev \
-    # && \
-    # # mjpeg-streamer
-    # apk add --no-cache haproxy \
-    # && cd /tmp/mjpg-streamer-master/mjpg-streamer-experimental/ \
-    # && make --quiet \
-    # && make install --quiet \
-    # && \
-    # # Cura
-    # cd /tmp/CuraEngine-${CURA_VERSION} \
-    # && mkdir -p build \
-    # && make --quiet \
-    # && cp build/CuraEngine /sbin/CuraEngine \
-    # && \
-    # # Octoprint
-    # apk add --no-cache avahi-compat-libdns_sd dbus avahi \
-    # && cd /tmp/OctoPrint-${OCTOPRINT_VERSION} \
-    # && pip install --upgrade pip --user --quiet \
-    # && pip install --user https://goo.gl/SxQZ06 --quiet \
-    # && pip install -r requirements.txt --user --quiet \
-    # && python setup.py install --user --quiet \
-    # && ls /data \
-    # && \
     # # Cleanup
-    # apk del --no-cache build-dependencies \
     && cp -R /data/python /root/ \
     && rm -rf /tmp
 
@@ -77,6 +44,5 @@ RUN chmod a+x /run.sh
 COPY haproxy.cfg /etc/haproxy/haproxy.cfg
 COPY supervisord.conf /etc/supervisord.conf
 
-# EXPOSE 80
 WORKDIR /
 CMD [ "/run.sh" ]
