@@ -17,7 +17,7 @@ Some notes regarding the software and versions.
 Not all software is installed for all images.
 
 - OctoPrint
-Installed in a virtualenv from pypi. It is (most likely) not possible to update OctoPrint version from the add-on. A new image has to be built, this is manually triggered by the developer.
+Installed in a virtualenv from pypi. Image is built with a pre-defined version of OctoPrint, this is set and triggered by the developer. However, it should now be possible to update from within OctoPrint.
 
 - Cura
 Legacy version is needed in order to use Cura as slicer in OctoPrint. There is a plugin in OctoPrint for legacy Cura, which probably has to be installed for this to work.

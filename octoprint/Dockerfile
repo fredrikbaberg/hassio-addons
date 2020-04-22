@@ -27,14 +27,14 @@ ENV PYTHONUSERBASE=/data/python
 WORKDIR /tmp
 
 # Install requirements for add-on
-RUN apk add --no-cache --virtual .necessary supervisor haproxy avahi-compat-libdns_sd dbus avahi python \
-    && apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libjpeg-turbo-dev python-dev libexecinfo-dev py-pip \
+RUN apk add --no-cache --virtual .necessary supervisor haproxy avahi-compat-libdns_sd dbus avahi python2 \
+    && apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libjpeg-turbo-dev python2-dev libexecinfo-dev py2-pip \
     && if [ "${INSTALL_OCTOPRINT}" != "0" ]; then \
         echo "Installing OctoPrint" \
         && pip install virtualenv \
         && virtualenv /data/python \
         && source /data/python/bin/activate \
-        && pip install OctoPrint \
+        && pip install OctoPrint==${OCTOPRINT_VERSION} \
         && pip install --user https://goo.gl/SxQZ06 --quiet \
         && cp -R /data/python /root/ \
     ; fi \
@@ -52,7 +52,7 @@ RUN apk add --no-cache --virtual .necessary supervisor haproxy avahi-compat-libd
 COPY haproxy.cfg /etc/haproxy/haproxy.cfg
 COPY supervisord.conf /etc/supervisord.conf
 COPY run.sh /run.sh
-# COPY run_test.sh /run.sh
+# COPY run_dev.sh /run.sh
 RUN chmod a+x /run.sh
 WORKDIR /
 CMD [ "/run.sh" ]
