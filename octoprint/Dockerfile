@@ -28,7 +28,7 @@ WORKDIR /tmp
 # Install requirements for add-on
 RUN if [ "${INSTALL_OCTOPRINT}" != "0" ]; then \
         echo "Installing OctoPrint" && \
-        apk add --no-cache py-pip supervisor haproxy && \
+        apk add --no-cache py-pip supervisor haproxy nginx && \
         apk add --no-cache --virtual build-dependencies build-base linux-headers python-dev && \
         # pip install --user https://goo.gl/SxQZ06 --quiet && \
         pip install --user octoprint && \
@@ -43,6 +43,7 @@ COPY run.sh /
 RUN chmod a+x /run.sh
 COPY haproxy.cfg /etc/haproxy/haproxy.cfg
 COPY supervisord.conf /etc/supervisord.conf
+COPY ingress.conf /etc/nginx/conf.d/ingress.conf
 
 WORKDIR /
 CMD [ "/run.sh" ]
