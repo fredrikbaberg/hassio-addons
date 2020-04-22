@@ -8,8 +8,9 @@ This version has been unavailabe for some time due to an old configuration. Inst
 ## Setup
 
 No configuration is passed through from the options.
-First configuration should be done using Ingress, a user is created so no credentials should be needed.
-For external access, specify a port and make sure to set a password or create a new user.
+Preferred method is through Ingress, which does not require you to enter credentials.
+A default user is created, and will be re-created if removed/renamed, but the password should be changed if you allow external access.
+For external access, make sure to set a password and then specify a port.
 
 ## Versions
 
