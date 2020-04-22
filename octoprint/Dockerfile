@@ -77,6 +77,6 @@ RUN chmod a+x /run.sh
 COPY haproxy.cfg /etc/haproxy/haproxy.cfg
 COPY supervisord.conf /etc/supervisord.conf
 
-EXPOSE 80
+# EXPOSE 80
 WORKDIR /
 CMD [ "/run.sh" ]

@@ -10,7 +10,7 @@ copy_data() {
 
 create_homeassistant_user() {
     echo "Create ingress user"
-    octoprint --basedir /data --config /config/octoprint/config.yaml user add homeassistant --password octoprint --admin
+    octoprint --basedir /data --config /config/octoprint/config.yaml user add homeassistant --password octoprint --admin 2> /dev/null
 }
 
 create_config() {
@@ -64,6 +64,7 @@ create_config() {
 
 copy_data
 create_config
+create_homeassistant_user # Ensure user exist.
 echo "Launch"
 /usr/bin/supervisord -c /etc/supervisord.conf
 tail -f /tmp/octoprint-stdout*

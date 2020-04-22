@@ -6,12 +6,12 @@
     "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
     "url": "https://github.com/fredrikbaberg/hassio-addons",
     "startup": "application",
-    "webui": "http://[HOST]:[PORT:5000]",
+    // "webui": "http://[HOST]:[PORT:5000]",
     "boot": "auto",
-    "ports": {
-        "80/tcp": 5000,
-        "80/udp": 5000
-    },
+    // "ports": {
+    //     "80/tcp": 5000,
+    //     "80/udp": 5000
+    // },
     "auto_uart": true,
     "map": ["config:rw"],
     "options": {},
