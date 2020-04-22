@@ -1,7 +1,0 @@
-loggers:
-    level: WARNING
-    octoprint.server.util.sockjs:
-        level: INFO
-    octoprint.util.flask:
-        level: INFO
-    

@@ -46,5 +46,5 @@ RUN chmod a+x /run.sh
 COPY debug.sh /
 RUN chmod a+x /debug.sh
 WORKDIR /
-# CMD [ "/run.sh" ]
-CMD [ "/debug.sh" ]
+CMD [ "/run.sh" ]
+# CMD [ "/debug.sh" ]

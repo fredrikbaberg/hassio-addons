@@ -13,6 +13,6 @@
     "schema": {},
     "ingress": true,
     "ingress_port": 8099,
-    "panel_icon": "mdi:printer",
+    "panel_icon": "mdi:printer-3d",
     "panel_title": "OctoPrint"
 }

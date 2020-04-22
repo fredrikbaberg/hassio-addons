@@ -13,25 +13,6 @@ create_homeassistant_user() {
     octoprint --basedir /data --config /config/octoprint/config.yaml user add homeassistant --password octoprint --admin 2> /dev/null
 }
 
-create_logging() {
-    # if [ ! -f /config/octoprint/logging.yaml ]; then
-        cd /data
-        touch logging.yaml
-        echo "" > logging.yaml # Replace content.
-        echo "loggers:" >> logging.yaml
-        for level_warn in "octoprint" "octoprint.util.pip" "octoprint.plugins.pluginmanager" "octoprint.plugins.softwareupdate" "octoprint.plugins.discovery" "octoprint.plugins.octoprint.plugins.discovery" "octoprint.server.util.flask"
-        do
-            echo "  $level_warn:" >> logging.yaml
-            echo "    level: WARN" >> logging.yaml
-        done
-        for level_info in "octoprint.server.util.sockjs"
-        do
-            echo "  $level_info:" >> logging.yaml
-            echo "    level: INFO" >> logging.yaml
-        done
-    # fi
-}
-
 create_config() {
     if [ ! -f /config/octoprint/config.yaml ]; then
         echo "Create config"
@@ -54,11 +35,29 @@ create_config() {
     fi
 }
 
+create_logging() {
+    # if [ ! -f /config/octoprint/logging.yaml ]; then
+        cd /data
+        touch logging.yaml
+        echo "" > logging.yaml # Replace content.
+        echo "loggers:" >> logging.yaml
+        for level_warn in "octoprint" "octoprint.util.pip" "octoprint.plugins.pluginmanager" "octoprint.plugins.softwareupdate" "octoprint.plugins.discovery" "octoprint.plugins.octoprint.plugins.discovery" "octoprint.server.util.flask"
+        do
+            echo "  $level_warn:" >> logging.yaml
+            echo "    level: WARN" >> logging.yaml
+        done
+        for level_info in "octoprint.server.util.sockjs"
+        do
+            echo "  $level_info:" >> logging.yaml
+            echo "    level: INFO" >> logging.yaml
+        done
+    # fi
+}
+
 copy_data
 create_config
 create_logging
 create_homeassistant_user # Ensure homeassistant user exist.
-bash debug.sh
-# echo "Launch"
-# /usr/bin/supervisord -c /etc/supervisord.conf
-# tail -f /tmp/octoprint-stdout*
+echo "Launch"
+/usr/bin/supervisord -c /etc/supervisord.conf
+tail -f /tmp/octoprint-stdout*
