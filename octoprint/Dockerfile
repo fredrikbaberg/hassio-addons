@@ -6,7 +6,7 @@ ENV LANG C.UTF-8
 # Enable/disable features here, instead of in code.
 ENV INSTALL_OCTOPRINT=1
 ENV INSTALL_CURA_LEGACY=0
-ENV INSTALL_MJPEG=0
+ENV INSTALL_CAMERA_SUPPORT=0
 
 # Specify versions here instead of in code.
 ENV OCTOPRINT_VERSION=1.4.0
@@ -38,8 +38,8 @@ RUN apk add --no-cache --virtual .necessary supervisor haproxy avahi-compat-libd
         && pip install --user https://goo.gl/SxQZ06 --quiet \
         && cp -R /data/python /root/ \
     ; fi \
-    # && if [ "${INSTALL_MJPEG}" != "0" ]; then \
-    #     echo "Installing mjpeg" && \
+    # && if [ "${INSTALL_CAMERA_SUPPORT}" != "0" ]; then \
+    #     echo "Installing camera support" && \
     # ; fi \
     # && if [ "${INSTALL_CURA_LEGACY}}" != "0" ]; then \
     #     echo "Installing CuraLegacy" && \
@@ -51,8 +51,8 @@ RUN apk add --no-cache --virtual .necessary supervisor haproxy avahi-compat-libd
 # Copy data for add-on
 COPY haproxy.cfg /etc/haproxy/haproxy.cfg
 COPY supervisord.conf /etc/supervisord.conf
-COPY run.sh /run.sh
-# COPY run_dev.sh /run.sh
+# COPY run.sh /run.sh
+COPY run_dev.sh /run.sh
 RUN chmod a+x /run.sh
 WORKDIR /
 CMD [ "/run.sh" ]
