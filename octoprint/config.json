@@ -1,6 +1,6 @@
 {
     "name": "Octoprint",
-    "version": "0.3.0-alpha",
+    "version": "0.3.0-alpha-0",
     "slug": "octoprint",
     "description": "Octoprint add-on for Hass.io",
     "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
@@ -15,6 +15,7 @@
         "5000/tcp": "WebUI (Not required for Ingress)"
     },
     "auto_uart": true,
+    "homeassistant": "0.108.0",
     "map": ["config:rw"],
     "options": {},
     "schema": {},

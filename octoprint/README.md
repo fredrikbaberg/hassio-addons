@@ -3,7 +3,9 @@
 **This version is highly experimental!**
 **Ensure you have backup of your configuration, the same config folder is used for all versions. Plugins are most likely not kept between updates.**
 
-This version has been unavailabe for some time due to an old configuration. Instead of experimenting with "slim" or "dev" I'm using this. Expect breaking changes, and do keep a **backup** before updating.
+
+This version has been unavailabe for some time due to an old configuration, I've been hesistant to update since it could break.
+Now there has been some time, so I'll experiment with this version instead of "slim" or "dev". This will be limited to newer versions of Home Assistant (0.108.0 for now, arbitrary number and mostly a safeguard - I do not plan to work on backwards-compatibility). Expect breaking changes, and do make a **backup** before updating.
 
 ## Setup
 
