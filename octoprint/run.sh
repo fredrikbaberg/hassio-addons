@@ -54,10 +54,16 @@ create_logging() {
     # fi
 }
 
+set_ingress_entry() {
+    ingress_entry=$(bashio::addon.ingress_entry)
+    sed -i "s#%%base_path%%#${ingress_entry}#g" /etc/haproxy/haproxy.cfg
+}
+
 copy_data
 create_config
 create_logging
 create_homeassistant_user # Ensure homeassistant user exist.
+set_ingress_entry
 echo "Launch"
 /usr/bin/supervisord -c /etc/supervisord.conf
 tail -f /tmp/octoprint-stdout*
