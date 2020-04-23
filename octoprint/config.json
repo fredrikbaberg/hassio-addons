@@ -19,7 +19,6 @@
     "map": ["config:rw"],
     "options": {},
     "schema": {},
-    "image": "fredrikbaberg/octoprint-{arch}-image",
     "ingress": true,
     "panel_icon": "mdi:printer-3d",
     "panel_title": "OctoPrint",
