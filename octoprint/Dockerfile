@@ -1,66 +1,58 @@
 ARG BUILD_FROM
-FROM $BUILD_FROM
+FROM ${BUILD_FROM}
 
-# Add env
 ENV LANG C.UTF-8
 
-# Setup
-RUN apk add --update --no-cache sudo python && \
-    # Add user, and make sure to have sudo access.
-    addgroup -S octoprint && \
-    adduser -G octoprint -g "octoprint user" -s /bin/sh -D octoprint && \
-    addgroup octoprint dialout && \
-    addgroup octoprint tty && \
-    echo "octoprint ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-USER octoprint
-# Make sure all files are built for the path /data. Will copy files away from there, and back when running.
-RUN sudo mkdir -p /data && sudo chown -R octoprint:octoprint /data
-WORKDIR /data
-RUN sudo apk add --update --no-cache --virtual build-dependencies \
-    build-base alpine-sdk python-dev linux-headers cmake protobuf-dev curl git python3-dev py3-sip-dev py3-sip libexecinfo-dev && \
-    curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
-    sudo python get-pip.py && sudo pip install virtualenv && \
-    cd /data && git clone https://github.com/foosel/OctoPrint.git && \
-    cd /data && git clone https://github.com/Ultimaker/libArcus.git && \
-    cd /data && git clone -b legacy https://github.com/Ultimaker/CuraEngine.git && \
-    # Install OctoPrint
-    cd /data/OctoPrint && \
-    virtualenv venv --quiet && \
-    ./venv/bin/python setup.py install --quiet && \
-    ./venv/bin/python setup.py clean --all --quiet && \
-    rm -rf .git && \
-    find . -not -name 'venv' -not -name '.' -not -name '..' -not -name 'run' -maxdepth 1 -exec rm -rf {} + && \
-    # Install CuraEngine dependencies
-    cd /data/libArcus && mkdir -p build && cd build && cmake .. && make && sudo make install && \
-    cd /data/libArcus && rm -rf .git && \
-    cd /data/libArcus/build && make clean && \
-    # Install CuraEngine <= 15.0.4 (for OctoPrint integration).
-    cd /data && make -C CuraEngine --quiet && \
-    rm -rf CuraEngine/.git && \
-    cd CuraEngine/ && find . -not -name 'build' -not -name '.' -not -name '..' -maxdepth 1 -exec rm -rf {} + && \
-#     # Setup configuration file for octoprint.
-    mkdir -p /home/octoprint/.octoprint && cd /home/octoprint && \
-    echo "server:" >> .octoprint/config.yaml && \
-    echo "  commands:" >> .octoprint/config.yaml && \
-    echo "    serverRestartCommand: /home/octoprint/octoprint.sh" >> .octoprint/config.yaml && \
-    echo "devel:" >> .octoprint/config.yaml && \
-    echo "  virtualPrinter:" >> .octoprint/config.yaml && \
-    echo "    enabled: true" >> .octoprint/config.yaml && \
-    echo "plugins:" >> .octoprint/config.yaml && \
-    echo "  cura:" >> .octoprint/config.yaml && \
-    echo "    cura_engine: /data/CuraEngine/build/CuraEngine" >> .octoprint/config.yaml && \
-    echo "    debug_logging: false" >> .octoprint/config.yaml && \
-    sudo apk del build-dependencies && \
-    sudo apk add --update --no-cache --virtual run-dependencies \
-    python && \
-    mv /data/* /home/octoprint/
+# Enable/disable features here, instead of in code.
+ENV INSTALL_OCTOPRINT=1
+ENV INSTALL_CURA_LEGACY=0
+ENV INSTALL_CAMERA_SUPPORT=0
 
-# Copy data
-COPY run.sh /home/octoprint/octoprint.sh
-# Make script have correct permissions and is executable.
-RUN sudo chown -R octoprint:octoprint /home/octoprint/octoprint.sh && \
-    sudo chmod +x /home/octoprint/octoprint.sh
+# Specify versions here instead of in code.
+ENV OCTOPRINT_VERSION=1.4.0
 
-EXPOSE 5000
-WORKDIR /home/octoprint
-ENTRYPOINT /home/octoprint/octoprint.sh && tail -f /dev/null
+# To slice in OctoPrint using CURA we need this legacy version (and a plugin).
+ENV CURA_VERSION=15.04.6
+
+# Environment variables for build and run
+# ENV CAMERA_DEV /dev/video0
+# ENV STREAMER_FLAGS -y -n
+
+# To have Python packages persistently installed.
+ENV PYTHONPATH=/data/python
+ENV PATH=${PATH}:/data/python/bin
+ENV PYTHONUSERBASE=/data/python
+
+# Change to tmp folder for all installs, easier to clean
+WORKDIR /tmp
+
+# Install requirements for add-on
+RUN apk add --no-cache --virtual .necessary supervisor haproxy avahi-compat-libdns_sd dbus avahi python2 \
+    && apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libjpeg-turbo-dev python2-dev libexecinfo-dev py2-pip \
+    && if [ "${INSTALL_OCTOPRINT}" != "0" ]; then \
+        echo "Installing OctoPrint" \
+        && pip install virtualenv \
+        && virtualenv /data/python \
+        && source /data/python/bin/activate \
+        && pip install OctoPrint==${OCTOPRINT_VERSION} \
+        && pip install --user https://goo.gl/SxQZ06 --quiet \
+        && cp -R /data/python /root/ \
+    ; fi \
+    # && if [ "${INSTALL_CAMERA_SUPPORT}" != "0" ]; then \
+    #     echo "Installing camera support" && \
+    # ; fi \
+    # && if [ "${INSTALL_CURA_LEGACY}}" != "0" ]; then \
+    #     echo "Installing CuraLegacy" && \
+    # ; fi \
+    # # Cleanup
+    && apk del --no-cache .build-dependencies \
+    && rm -rf /tmp
+
+# Copy data for add-on
+COPY haproxy.cfg /etc/haproxy/haproxy.cfg
+COPY supervisord.conf /etc/supervisord.conf
+# COPY run.sh /run.sh
+COPY run_dev.sh /run.sh
+RUN chmod a+x /run.sh
+WORKDIR /
+CMD [ "/run.sh" ]

@@ -1,25 +1,27 @@
-#!/usr/bin/with-contenv bashio
-# #!/bin/sh
-# set -e
+#!/bin/sh
+set -e
+# #!/usr/bin/with-contenv bashio
+
+# Mostly the same as run.sh, but without bashio calls.
 
 copy_data() {
     if [ ! -d /data/python ]; then
-        bashio::log.info "Copy data"
-        # echo "Copy data"
+        # bashio::log.info "Copy data"
+        echo "Copy data"
         cp -R /root/python /data/
     fi
 }
 
 create_ingress_user() {
-    bashio::log.info "Create ingress user"
-    # echo "Create ingress user"
+    # bashio::log.info "Create ingress user"
+    echo "Create ingress user"
     octoprint --basedir /data --config /config/octoprint/config.yaml user add homeassistant --password octoprint --admin 2> /dev/null
 }
 
 create_config() {
     if [ ! -f /config/octoprint/config.yaml ]; then
-        bashio::log.info "Create config"
-        # echo "Create config"
+        # bashio::log.info "Create config"
+        echo "Create config"
         mkdir -p /config/octoprint/
         cd /config/octoprint
         touch config.yaml
@@ -83,9 +85,9 @@ create_logging_file() {
 }
 
 set_ingress_entry() {
-    ingress_entry=$(bashio::addon.ingress_entry)
-    sed -i "s#%%base_path%%#${ingress_entry}#g" /etc/haproxy/haproxy.cfg
-    # sed -e '/http-request set-header X-Script-Name/s/^/#/g' -i /etc/haproxy/haproxy.cfg
+    # ingress_entry=$(bashio::addon.ingress_entry)
+    # sed -i "s#%%base_path%%#${ingress_entry}#g" /etc/haproxy/haproxy.cfg
+    sed -e '/http-request set-header X-Script-Name/s/^/#/g' -i /etc/haproxy/haproxy.cfg
 }
 
 copy_data
@@ -93,7 +95,7 @@ create_config
 # create_logging_file # Don't modify logging.
 create_ingress_user # Ensure Ingress user (homeassistant) exist. This should not modify existing users.
 set_ingress_entry
-bashio::log.info "Launch"
-# echo "Launch"
+# bashio::log.info "Launch"
+echo "Launch"
 /usr/bin/supervisord -c /etc/supervisord.conf
 tail -f /tmp/octoprint-stdout*
