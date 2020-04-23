@@ -1,6 +1,6 @@
 {
-    "name": "Octoprint",
-    "version": "0.3.0-alpha-1",
+    "name": "Octoprint Experimental",
+    "version": "0.3.0-alpha-2",
     "slug": "octoprint",
     "description": "Octoprint add-on for Hass.io",
     "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
