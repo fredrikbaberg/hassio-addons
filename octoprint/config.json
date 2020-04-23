@@ -1,6 +1,6 @@
 {
     "name": "Octoprint",
-    "version": "0.2.9",
+    "version": "0.3.0-alpha-0",
     "slug": "octoprint",
     "description": "Octoprint add-on for Hass.io",
     "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
@@ -19,6 +19,7 @@
     "map": ["config:rw"],
     "options": {},
     "schema": {},
+    "image": "fredrikbaberg/octoprint-{arch}-image",
     "ingress": true,
     "panel_icon": "mdi:printer-3d",
     "panel_title": "OctoPrint",
