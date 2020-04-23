@@ -93,8 +93,6 @@ create_config
 # create_logging_file # Don't modify logging.
 create_ingress_user # Ensure Ingress user (homeassistant) exist. This should not modify existing users.
 set_ingress_entry
-bashio::log.info "$(ls -l /dev)"
-# echo "$(ls -l /dev)"
 bashio::log.info "Launch"
 # echo "Launch"
 /usr/bin/supervisord -c /etc/supervisord.conf

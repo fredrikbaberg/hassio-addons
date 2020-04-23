@@ -14,7 +14,6 @@
     "ports_description": {
         "5000/tcp": "WebUI (Not required for Ingress)"
     },
-    "devices": ["/dev/bus/usb:/dev/bus/usb:rwm"],
     "auto_uart": true,
     "homeassistant": "0.108.0",
     "map": ["config:rw"],
