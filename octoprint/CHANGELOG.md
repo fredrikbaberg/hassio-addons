@@ -1,5 +1,8 @@
 # Changelog
 
+[0.3.0-alpha-1]
+- Bugfix for Ingress for normal (experimental) version
+
 [0.3.0-alpha]
 - Support for Ingress
 - Rewritten install, using pip

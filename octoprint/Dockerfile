@@ -51,8 +51,8 @@ RUN apk add --no-cache --virtual .necessary supervisor haproxy avahi-compat-libd
 # Copy data for add-on
 COPY haproxy.cfg /etc/haproxy/haproxy.cfg
 COPY supervisord.conf /etc/supervisord.conf
-# COPY run.sh /run.sh
-COPY run_dev.sh /run.sh
+COPY run.sh /run.sh
+# COPY run_dev.sh /run.sh
 RUN chmod a+x /run.sh
 WORKDIR /
 CMD [ "/run.sh" ]
