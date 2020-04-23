@@ -14,6 +14,9 @@
     "ports_description": {
         "5000/tcp": "WebUI (Not required for Ingress)"
     },
+    "devices": [
+        "/dev/null:/dev/video0:ro"
+    ],
     "auto_uart": true,
     "homeassistant": "0.108.0",
     "map": ["config:rw"],
