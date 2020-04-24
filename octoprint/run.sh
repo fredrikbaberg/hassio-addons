@@ -4,9 +4,9 @@
 
 copy_data() {
     if [ ! -d /data/python ]; then
-        bashio::log.info "Copy data"
-        # echo "Copy data"
-        cp -R /root/python /data/
+        bashio::log.info "Move data"
+        # echo "Move data"
+        mv /root/python /data/
     fi
 }
 
