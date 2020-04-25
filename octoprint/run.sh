@@ -4,9 +4,9 @@
 
 copy_data() {
     if [ ! -d /data/python ]; then
-        bashio::log.info "Copy data"
-        # echo "Copy data"
-        cp -R /root/python /data/
+        bashio::log.info "Move data"
+        # echo "Move data"
+        mv /root/python /data/
     fi
 }
 
@@ -32,11 +32,9 @@ create_config() {
         echo "  virtualPrinter:" >> config.yaml
         echo "    enabled: true" >> config.yaml
         echo "plugins:" >> config.yaml
-        if [ "${INSTALL_CURA_LEGACY}" != "0" ]; then
-            echo "  cura:" >> config.yaml
-            echo "    cura_engine: /sbin/CuraEngine" >> config.yaml
-            echo "    debug_logging: false" >> config.yaml
-        fi
+        echo "  cura:" >> config.yaml
+        echo "    cura_engine: /sbin/CuraEngine" >> config.yaml
+        echo "    debug_logging: false" >> config.yaml
         echo "  pluginmanager:" >> config.yaml
         echo "    pip_force_user: true" >> config.yaml
         echo "serial:" >> config.yaml
@@ -45,22 +43,20 @@ create_config() {
         echo "server:" >> config.yaml
         echo "  commands:" >> config.yaml
         echo "    serverRestartCommand: supervisorctl reload" >> config.yaml
-        if [ "${INSTALL_CAMERA_SUPPORT}" != "0" ]; then
-            echo "system:" >> config.yaml
-            echo "  actions:" >> config.yaml
-            echo "  - action: streamon" >> config.yaml
-            echo "    command: supervisorctl start mjpeg-streamer" >> config.yaml
-            echo "    confirm: false" >> config.yaml
-            echo "    name: Start webcam" >> config.yaml
-            echo "  - action: streamoff" >> config.yaml
-            echo "    command: supervisorctl stop mjpeg-streamer" >> config.yaml
-            echo "    confirm: false" >> config.yaml
-            echo "    name: Stop webcam" >> config.yaml
-            echo "webcam:" >> config.yaml
-            echo "  stream: /webcam/?action=stream" >> config.yaml
-            echo "  snapshot: http://127.0.0.1:8080/?action=snapshot" >> config.yaml
-            echo "  ffmpeg: /usr/bin/ffmpeg" >> config.yaml
-        fi
+        echo "system:" >> config.yaml
+        echo "  actions:" >> config.yaml
+        echo "  - action: streamon" >> config.yaml
+        echo "    command: supervisorctl start mjpeg-streamer" >> config.yaml
+        echo "    confirm: false" >> config.yaml
+        echo "    name: Start webcam" >> config.yaml
+        echo "  - action: streamoff" >> config.yaml
+        echo "    command: supervisorctl stop mjpeg-streamer" >> config.yaml
+        echo "    confirm: false" >> config.yaml
+        echo "    name: Stop webcam" >> config.yaml
+        echo "webcam:" >> config.yaml
+        echo "  stream: /webcam/?action=stream" >> config.yaml
+        echo "  snapshot: http://127.0.0.1:8080/?action=snapshot" >> config.yaml
+        echo "  ffmpeg: /usr/bin/ffmpeg" >> config.yaml
     fi
 }
 

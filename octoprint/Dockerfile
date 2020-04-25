@@ -3,11 +3,6 @@ FROM ${BUILD_FROM}
 
 ENV LANG C.UTF-8
 
-# Enable/disable features here, instead of in code.
-ENV INSTALL_OCTOPRINT=1
-ENV INSTALL_CURA_LEGACY=1
-ENV INSTALL_CAMERA_SUPPORT=1
-
 # Specify versions here instead of in code.
 ENV OCTOPRINT_VERSION=1.4.0
 
@@ -27,39 +22,44 @@ ENV PYTHONUSERBASE=/data/python
 WORKDIR /tmp
 
 # Install requirements for add-on
-RUN apk add --no-cache --virtual .necessary supervisor haproxy avahi-compat-libdns_sd dbus avahi python2 \
-    && apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libjpeg-turbo-dev python2-dev libexecinfo-dev py2-pip \
-    && if [ "${INSTALL_OCTOPRINT}" != "0" ]; then \
-        echo "Installing OctoPrint" \
-        && pip install virtualenv \
-        && virtualenv /data/python \
-        && source /data/python/bin/activate \
-        && pip install OctoPrint==${OCTOPRINT_VERSION} \
-        && pip install --user https://goo.gl/SxQZ06 --quiet \
-        && cp -R /data/python /root/ \
-    ; fi \
-    && if [ "${INSTALL_CAMERA_SUPPORT}" != "0" ]; then \
-        echo "Installing camera support" \
-        && apk add --no-cache ffmpeg \
-        && cd /tmp \
-        && wget -qO- https://github.com/jacksonliam/mjpg-streamer/archive/master.tar.gz | tar xz \
-        && cd /tmp/mjpg-streamer-master/mjpg-streamer-experimental/ \
-        && make --quiet \
-        && make install --quiet \
-        && cd /tmp \
-    ; fi \
-    && if [ "${INSTALL_CURA_LEGACY}}" != "0" ]; then \
-        echo "Installing CuraLegacy" \
-        && cd /tmp \
-        && wget -qO- https://github.com/Ultimaker/CuraEngine/archive/${CURA_VERSION}.tar.gz | tar xz \
-        && cd /tmp/CuraEngine-${CURA_VERSION} \
-        && mkdir -p build \
-        && make --quiet \
-        && cp build/CuraEngine /sbin/CuraEngine \
-        && source /data/python/bin/activate \
-        && pip install "https://github.com/OctoPrint/OctoPrint-CuraLegacy/archive/master.zip" \
-    ; fi \
-    # # Cleanup
+RUN apk add --no-cache --virtual .necessary supervisor haproxy avahi-compat-libdns_sd dbus avahi
+# OctoPrint
+RUN echo "Installing OctoPrint" \
+    && apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libjpeg-turbo-dev python3-dev libexecinfo-dev py3-pip py3-virtualenv \
+    && export PYTHONDONTWRITEBYTECODE="" \
+    && virtualenv /data/python \
+    && source /data/python/bin/activate \
+    && pip install OctoPrint==${OCTOPRINT_VERSION} --quiet --no-cache-dir \
+    # && pip install https://goo.gl/SxQZ06 --quiet --no-cache-dir \
+    && cd /tmp \
+    && wget https://github.com/kounch/pybonjour-python3/archive/master.zip \
+    && unzip master.zip \
+    && cd pybonjour-python3-master \
+    && python setup.py install \
+    && mv /data/python /root/ \
+    && apk del --no-cache .build-dependencies \
+    && find /usr/lib/python3.8/ | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
+    && find /root/python | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
+    && rm -rf /root/.cache
+# Camera support
+RUN echo "Installing camera support" \
+    && apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libexecinfo-dev libjpeg-turbo-dev \
+    && apk add --no-cache ffmpeg \
+    && cd /tmp \
+    && wget -qO- https://github.com/jacksonliam/mjpg-streamer/archive/master.tar.gz | tar xz \
+    && cd /tmp/mjpg-streamer-master/mjpg-streamer-experimental/ \
+    && make --quiet \
+    && make install --quiet \
+    && apk del --no-cache .build-dependencies \
+    && rm -rf /tmp/*
+# CuraEngine Legacy
+RUN echo "Installing CuraLegacy" \
+    && apk add --no-cache --virtual .build-dependencies build-base libexecinfo-dev \
+    && cd /tmp \
+    && wget -qO- https://github.com/Ultimaker/CuraEngine/archive/${CURA_VERSION}.tar.gz | tar xz \
+    && cd CuraEngine-${CURA_VERSION} \
+    && make --quiet \
+    && cp build/CuraEngine /sbin/CuraEngine \
     && apk del --no-cache .build-dependencies \
     && rm -rf /tmp
 
