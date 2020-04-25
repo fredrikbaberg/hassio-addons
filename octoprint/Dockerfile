@@ -31,6 +31,11 @@ RUN echo "Installing OctoPrint" \
     && source /data/python/bin/activate \
     && pip install OctoPrint==${OCTOPRINT_VERSION} --quiet --no-cache-dir \
     # && pip install https://goo.gl/SxQZ06 --quiet --no-cache-dir \
+    && cd /tmp \
+    && wget https://github.com/kounch/pybonjour-python3/archive/master.zip \
+    && unzip master.zip \
+    && cd pybonjour-python3-master \
+    && python setup.py install \
     && mv /data/python /root/ \
     && apk del --no-cache .build-dependencies \
     && find /usr/lib/python3.8/ | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
