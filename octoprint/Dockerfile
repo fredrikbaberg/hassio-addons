@@ -25,7 +25,7 @@ WORKDIR /tmp
 RUN apk add --no-cache --virtual .necessary supervisor haproxy avahi-compat-libdns_sd dbus avahi
 # OctoPrint
 RUN echo "Installing OctoPrint" \
-    && apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libjpeg-turbo-dev python3-dev libexecinfo-dev py3-pip py3-virtualenv \
+    && apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libjpeg-turbo-dev python3-dev libexecinfo-dev py3-pip py3-virtualenv postgresql-dev \
     && export PYTHONDONTWRITEBYTECODE="" \
     && virtualenv /data/python \
     && source /data/python/bin/activate \
