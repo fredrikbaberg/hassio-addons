@@ -1,5 +1,8 @@
 # Changelog
 
+[0.3.0-alpha-6]
+- Include psycopg2 (for filamentmanager)
+
 [0.3.0-alpha-4]
 - Switch to Python3
 
