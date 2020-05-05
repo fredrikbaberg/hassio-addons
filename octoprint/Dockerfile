@@ -30,6 +30,7 @@ RUN echo "Installing OctoPrint" \
     && virtualenv /data/python \
     && source /data/python/bin/activate \
     && pip install OctoPrint==${OCTOPRINT_VERSION} --quiet --no-cache-dir \
+    && pip install psycopg2 --quiet --no-cache-dir \
     # && pip install https://goo.gl/SxQZ06 --quiet --no-cache-dir \
     && cd /tmp \
     && wget https://github.com/kounch/pybonjour-python3/archive/master.zip \
