@@ -77,6 +77,7 @@ reset_password_if_requested(){
 reset_data_if_requested(){
     if bashio::config.exists 'request_reset_data'; then
         if bashio::config.true 'request_reset_data'; then
+            bashio::log.info "Data has been reset"
             rm -rf /data/python
         fi
     fi

@@ -23,7 +23,7 @@ Now there has been some time, so I'll experiment with this version instead of "s
 
 With Ingress no password should be required. A default user called `homeassistant` is created on first launch, and re-created on restart if it has been removed. The password is randomly generated.
 
-If you loose access and need to reset password, there is a configuration option called `reset_password`. Set it to `true` and restart the addon, this should set the credentials to `homeassistant`/`octoprint`. Don´t forget to change the password afterwards!
+If you loose access and need to reset password, there is a configuration option called `reset_password`. Set it to `true` and restart the addon, this should set the credentials to `homeassistant`/`octoprint`. Don´t forget to set this back to `false` and change password!
 
 ## Updates
 
