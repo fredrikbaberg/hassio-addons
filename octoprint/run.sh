@@ -44,7 +44,7 @@ create_config() {
         echo "    cura_engine: /sbin/CuraEngine" >> config.yaml
         echo "    debug_logging: false" >> config.yaml
         echo "  pluginmanager:" >> config.yaml
-        echo "    pip_force_user: true" >> config.yaml
+        echo "    pip_force_user: false" >> config.yaml
         echo "serial:" >> config.yaml
         echo "  additionalPorts:" >> config.yaml
         echo "  - /dev/tty*" >> config.yaml
