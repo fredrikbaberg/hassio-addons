@@ -8,6 +8,8 @@
 - Backup and restore now working (previously broken!)
 - Add option to reset data folder
 - `Start on boot` now default manual instead of auto
+- Removed some mjpg settings from default config
+- Set upload/watch/timelapse location to config folder
 
 [0.3.0-alpha-6]
 - Include psycopg2 (for filamentmanager)
