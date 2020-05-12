@@ -4,6 +4,8 @@
 - Revert to Python2
 - Separate config directory for `Experimental`
 - Refactor Dockerfile to multistage build
+- Backup and restore now working (previously broken!)
+- Add option to reset data folder
 
 [0.3.0-alpha-6]
 - Include psycopg2 (for filamentmanager)
