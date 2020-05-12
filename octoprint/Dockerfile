@@ -80,13 +80,14 @@ ENV LANG C.UTF-8
 ENV PYTHONPATH=/data/python
 ENV PATH=${PATH}:/data/python/bin
 ENV PYTHONUSERBASE=/data/python
+ARG OCTOPRINT_CONFIG_DIR
 ENV OCTOPRINT_CONFIG_DIR=${OCTOPRINT_CONFIG_DIR}
 # Install requirements to run
-RUN apk add --no-cache --virtual .necessary supervisor haproxy avahi-compat-libdns_sd dbus avahi ${PYTHON_VERSION} postgresql-libs # libjpeg ffmpeg
+RUN apk add --no-cache --virtual .necessary supervisor haproxy avahi-compat-libdns_sd dbus avahi ${PYTHON_VERSION} postgresql-libs libjpeg # ffmpeg
 # Copy data from filesystem and previous stages
 COPY --from=octoprint /data/python /root/python
 COPY --from=build-curaengine /sbin/CuraEngine /sbin/CuraEngine
-# COPY --from=build-camera /root/usr /usr/
+COPY --from=build-camera /root/usr /usr/
 COPY haproxy.cfg /etc/haproxy/haproxy.cfg
 COPY supervisord.conf /etc/supervisord.conf
 COPY run.sh /run.sh

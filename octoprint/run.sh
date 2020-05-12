@@ -13,7 +13,7 @@ copy_data() {
     if [ ! -d /data/python ]; then
         bashio::log.info "Copy data to persistent location"
         # echo "Copy data to persistent location"
-        cp /root/python /data/
+        cp -R /root/python /data/
     fi
 }
 
@@ -51,20 +51,20 @@ create_config() {
         echo "server:" >> config.yaml
         echo "  commands:" >> config.yaml
         echo "    serverRestartCommand: supervisorctl reload" >> config.yaml
-        # echo "system:" >> config.yaml
-        # echo "  actions:" >> config.yaml
-        # echo "  - action: streamon" >> config.yaml
-        # echo "    command: supervisorctl start mjpeg-streamer" >> config.yaml
-        # echo "    confirm: false" >> config.yaml
-        # echo "    name: Start webcam" >> config.yaml
-        # echo "  - action: streamoff" >> config.yaml
-        # echo "    command: supervisorctl stop mjpeg-streamer" >> config.yaml
-        # echo "    confirm: false" >> config.yaml
-        # echo "    name: Stop webcam" >> config.yaml
-        # echo "webcam:" >> config.yaml
-        # echo "  stream: /webcam/?action=stream" >> config.yaml
-        # echo "  snapshot: http://127.0.0.1:8080/?action=snapshot" >> config.yaml
-        # echo "  ffmpeg: /usr/bin/ffmpeg" >> config.yaml
+        echo "system:" >> config.yaml
+        echo "  actions:" >> config.yaml
+        echo "  - action: streamon" >> config.yaml
+        echo "    command: supervisorctl start mjpeg-streamer" >> config.yaml
+        echo "    confirm: false" >> config.yaml
+        echo "    name: Start webcam" >> config.yaml
+        echo "  - action: streamoff" >> config.yaml
+        echo "    command: supervisorctl stop mjpeg-streamer" >> config.yaml
+        echo "    confirm: false" >> config.yaml
+        echo "    name: Stop webcam" >> config.yaml
+        echo "webcam:" >> config.yaml
+        echo "  stream: /webcam/?action=stream" >> config.yaml
+        echo "  snapshot: http://127.0.0.1:8080/?action=snapshot" >> config.yaml
+        echo "  ffmpeg: /usr/bin/ffmpeg" >> config.yaml
     fi
 }
 
