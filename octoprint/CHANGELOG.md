@@ -1,6 +1,6 @@
 # Changelog
 
-[0.3.0-alpha-7]
+[0.3.0-alpha-8]
 - Breaking! Previous backups are broken
 - Revert to Python2
 - Separate config directory for `Experimental`

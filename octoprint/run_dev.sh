@@ -41,6 +41,7 @@ create_config() {
         echo "    enabled: true" >> config.yaml
         echo "folder:" >> config.yaml
         echo "  timelapse: /config/octoprint/timelapse" >> config.yaml
+        echo "  timelapse_tmp: /config/octoprint/timelapse/tmp" >> config.yaml
         echo "  uploads: /config/octoprint/uploads" >> config.yaml
         echo "  watched: /config/octoprint/watched" >> config.yaml
         echo "plugins:" >> config.yaml
