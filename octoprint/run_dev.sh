@@ -15,7 +15,8 @@ copy_data() {
 create_ingress_user() {
     # bashio::log.info "Create ingress user"
     echo "Create ingress user"
-    octoprint --basedir /data --config /config/octoprint/config.yaml user add homeassistant --password octoprint --admin 2> /dev/null
+    new_password=`date +%s | sha256sum | base64 | head -c 32 ; echo`
+    octoprint --basedir /data --config /config/octoprint/config.yaml user add homeassistant --password $new_password --admin 2> /dev/null
 }
 
 create_config() {
@@ -62,34 +63,24 @@ create_config() {
     fi
 }
 
-create_logging_file() {
-    # Use this to clean up some of the logging.
-    cd /data
-    touch logging.yaml
-    echo "" > logging.yaml # Replace content.
-    echo "loggers:" >> logging.yaml
-    for level_warn in "octoprint" "octoprint.util.pip" "octoprint.plugins.pluginmanager" "octoprint.plugins.softwareupdate" "octoprint.plugins.discovery" "octoprint.plugins.octoprint.plugins.discovery" "octoprint.server.util.flask"
-    do
-        echo "  $level_warn:" >> logging.yaml
-        echo "    level: WARN" >> logging.yaml
-    done
-    for level_info in "octoprint.server.util.sockjs"
-    do
-        echo "  $level_info:" >> logging.yaml
-        echo "    level: INFO" >> logging.yaml
-    done
-}
-
 set_ingress_entry() {
     # ingress_entry=$(bashio::addon.ingress_entry)
     # sed -i "s#%%base_path%%#${ingress_entry}#g" /etc/haproxy/haproxy.cfg
     sed -e '/http-request set-header X-Script-Name/s/^/#/g' -i /etc/haproxy/haproxy.cfg
 }
 
+reset_password(){
+    if [ $(basio::config 'reset_password') ]; then
+        bashio::log.info "Password of user homeassistant was set to 'octoprint'"
+        octoprint --basedir /data --config /config/octoprint/config.yaml user password homeassistant --password octoprint
+        sed -e 's/"reset_password": "true"/"reset_password": "false"/'-i /data/options.json
+    fi
+}
+
 copy_data
 create_config
-# create_logging_file # Don't modify logging.
 create_ingress_user # Ensure Ingress user (homeassistant) exist. This should not modify existing users.
+# reset_user # Needs bashio
 set_ingress_entry
 # bashio::log.info "Launch"
 echo "Launch"

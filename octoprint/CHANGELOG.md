@@ -1,5 +1,10 @@
 # Changelog
 
+[0.3.0-alpha-7]
+- Revert to Python2
+- Added configuration option to reset password
+- Remove ffmpeg/mjpeg-streamer (unable to test, uses 50MB extra space)
+
 [0.3.0-alpha-6]
 - Include psycopg2 (for filamentmanager)
 

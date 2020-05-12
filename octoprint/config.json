@@ -1,6 +1,6 @@
 {
     "name": "Octoprint Experimental",
-    "version": "0.3.0-alpha-6",
+    "version": "0.3.0-alpha-7",
     "slug": "octoprint",
     "description": "Octoprint add-on for Hass.io",
     "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
@@ -17,8 +17,12 @@
     "auto_uart": true,
     "homeassistant": "0.108.0",
     "map": ["config:rw"],
-    "options": {},
-    "schema": {},
+    "options": {
+        "reset_password": "false"
+    },
+    "schema": {
+        "reset_password": "bool"
+    },
     "image": "fredrikbaberg/octoprint-{arch}-image",
     "ingress": true,
     "panel_icon": "mdi:printer-3d",
