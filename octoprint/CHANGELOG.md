@@ -2,7 +2,6 @@
 
 [0.3.0-alpha-7]
 - Revert to Python2
-- Remove ffmpeg/mjpeg-streamer (unable to test, uses 50MB extra space)
 - Separate config directory for `Experimental`
 - Refactor Dockerfile to multistage build
 
