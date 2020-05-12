@@ -14,7 +14,7 @@ create_ingress_user() {
     bashio::log.info "Create ingress user"
     # echo "Create ingress user"
     new_password=`date +%s | sha256sum | base64 | head -c 32 ; echo`
-    octoprint --basedir /data --config /config/$OCTOPRINT_CONFIGDIR/config.yaml user add homeassistant --password $new_password --admin 2> /dev/null
+    octoprint --basedir /data --config /config/$OCTOPRINT_CONFIGDIR/config.yaml user add homeassistant --password $new_password --admin # 2> /dev/null
 }
 
 create_config() {
@@ -69,7 +69,7 @@ set_ingress_entry() {
 
 reset_password_if_requested(){
     if bashio::config.true 'reset_password'; then
-        octoprint --basedir /data --config /config/$OCTOPRINT_CONFIGDIR/config.yaml user password homeassistant --password "octoprint"
+        octoprint --basedir /data --config /config/$OCTOPRINT_CONFIGDIR/config.yaml user password homeassistant --password octoprint
         bashio::log.info "Password of user homeassistant was set to 'octoprint'"
     fi
 }
@@ -78,7 +78,7 @@ reset_data_if_requested(){
     if bashio::config.exists 'request_reset_data'; then
         bashio::log.info "Entry to reset exists"
         if bashio::config.true 'request_reset_data'; then
-            rm -rf /data/python
+            rm -rf /data/*
             bashio::log.info "Data has been reset"
         fi
     fi
