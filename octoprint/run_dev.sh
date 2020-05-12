@@ -69,7 +69,7 @@ set_ingress_entry() {
     sed -e '/http-request set-header X-Script-Name/s/^/#/g' -i /etc/haproxy/haproxy.cfg
 }
 
-reset_password(){
+reset_password_if_requested(){
     if [ $(basio::config 'reset_password') ]; then
         bashio::log.info "Password of user homeassistant was set to 'octoprint'"
         octoprint --basedir /data --config /config/$OCTOPRINT_CONFIGDIR/config.yaml user password homeassistant --password octoprint
@@ -80,7 +80,7 @@ reset_password(){
 copy_data
 create_config
 create_ingress_user # Ensure Ingress user (homeassistant) exist. This should not modify existing users.
-# reset_user # Needs bashio
+# reset_password_if_requested # Needs bashio
 set_ingress_entry
 # bashio::log.info "Launch"
 echo "Launch"
