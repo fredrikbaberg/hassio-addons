@@ -14,15 +14,15 @@ create_ingress_user() {
     bashio::log.info "Create ingress user"
     # echo "Create ingress user"
     new_password=`date +%s | sha256sum | base64 | head -c 32 ; echo`
-    octoprint --basedir /data --config /config/octoprint/config.yaml user add homeassistant --password $new_password --admin 2> /dev/null
+    octoprint --basedir /data --config /config/$OCTOPRINT_CONFIGDIR/config.yaml user add homeassistant --password $new_password --admin 2> /dev/null
 }
 
 create_config() {
-    if [ ! -f /config/octoprint/config.yaml ]; then
+    if [ ! -f /config/$OCTOPRINT_CONFIGDIR/config.yaml ]; then
         bashio::log.info "Create config"
         # echo "Create config"
-        mkdir -p /config/octoprint/
-        cd /config/octoprint
+        mkdir -p /config/$OCTOPRINT_CONFIGDIR/
+        cd /config/$OCTOPRINT_CONFIGDIR
         touch config.yaml
         echo "accessControl:" >> config.yaml
         echo "  autologinAs: homeassistant" >> config.yaml
@@ -70,7 +70,7 @@ set_ingress_entry() {
 reset_password(){
     if [ $(basio::config 'reset_password') ]; then
         bashio::log.info "Password of user homeassistant was set to 'octoprint'"
-        octoprint --basedir /data --config /config/octoprint/config.yaml user password homeassistant --password octoprint
+        octoprint --basedir /data --config /config/$OCTOPRINT_CONFIGDIR/config.yaml user password homeassistant --password octoprint
         sed -i '/reset_password/c\   \"reset_password\" : \"false\",' /data/options.json
     fi
 }

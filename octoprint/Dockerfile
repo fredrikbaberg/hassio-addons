@@ -14,6 +14,7 @@ ENV OCTOPRINT_VERSION=1.4.0
 ENV CURA_VERSION=15.04.6
 
 # Environment variables for build and run
+ENV OCTOPRINT_CONFIGDIR=octoprint_experimental
 # ENV CAMERA_DEV /dev/video0
 # ENV STREAMER_FLAGS -y -n
 
@@ -76,7 +77,7 @@ RUN echo "Installing CuraLegacy" \
 COPY haproxy.cfg /etc/haproxy/haproxy.cfg
 COPY supervisord.conf /etc/supervisord.conf
 COPY run.sh /run.sh
-COPY run_dev.sh /run_dev.sh
+# COPY run_dev.sh /run_dev.sh
 RUN chmod a+x /run.sh
 WORKDIR /
 CMD [ "/run.sh" ]

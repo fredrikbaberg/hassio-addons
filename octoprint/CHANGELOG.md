@@ -4,6 +4,7 @@
 - Revert to Python2
 - Added configuration option to reset password
 - Remove ffmpeg/mjpeg-streamer (unable to test, uses 50MB extra space)
+- Separate config directory for `Experimental`
 
 [0.3.0-alpha-6]
 - Include psycopg2 (for filamentmanager)
