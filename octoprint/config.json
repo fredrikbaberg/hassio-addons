@@ -1,8 +1,8 @@
 {
     "name": "Octoprint Experimental",
-    "version": "0.3.0-alpha-9",
+    "version": "0.3.0-alpha-7",
     "slug": "octoprint",
-    "description": "Octoprint add-on for Hass.io",
+    "description": "OctoPrint add-on for Home Assistant",
     "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
     "url": "https://github.com/fredrikbaberg/hassio-addons",
     "startup": "application",
@@ -18,10 +18,9 @@
     "homeassistant": "0.108.0",
     "map": ["config:rw"],
     "options": {
-        "reset_password": false
+        "request_reset_data": false
     },
     "schema": {
-        "reset_password": "bool",
         "request_reset_data": "bool?"
     },
     "image": "fredrikbaberg/octoprint-{arch}-image",

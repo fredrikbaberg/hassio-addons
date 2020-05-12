@@ -22,6 +22,7 @@ ENV OCTOPRINT_CONFIGDIR=octoprint_experimental
 ENV PYTHONPATH=/data/python
 ENV PATH=${PATH}:/data/python/bin
 ENV PYTHONUSERBASE=/data/python
+ENV PYTHONDONTWRITEBYTECODE=""
 
 # Change to tmp folder for all installs, easier to clean
 WORKDIR /tmp
@@ -30,7 +31,6 @@ WORKDIR /tmp
 RUN apk add --no-cache --virtual .necessary supervisor haproxy avahi-compat-libdns_sd dbus avahi python2 postgresql-libs
 # OctoPrint
 RUN echo "Installing OctoPrint" \
-    && export PYTHONDONTWRITEBYTECODE="" \
     && apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libjpeg-turbo-dev libexecinfo-dev postgresql-dev python2-dev py2-pip python3-dev py3-pip py3-virtualenv \
     && virtualenv --python=${USE_PYTHON_VERSION} /data/python \
     && source /data/python/bin/activate \
@@ -49,6 +49,7 @@ RUN echo "Installing OctoPrint" \
     && mv /data/python /root/ \
     && apk del --no-cache .build-dependencies \
     && find /usr/lib/python3.8/ | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
+    && find /usr/lib/python2.7/ | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && find /root/python | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && rm -rf /root/.cache
 # CuraEngine Legacy
