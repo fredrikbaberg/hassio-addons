@@ -19,6 +19,8 @@ Now there has been some time, so I'll experiment with this version instead of "s
 
 * OctoPrint config is stored in `config/octoprint` folder, however, plugins and users are stored in persistent folder (should not be accessible for the user). This means plugins will not be kept on re-install.
 
+* CuraEngine Legacy is installed but not the plugin, see [OctoPrint CuraLegacy plugin](https://plugins.octoprint.org/plugins/curalegacy/).
+
 ## Credentials
 
 With Ingress no password should be required. A default user called `homeassistant` is created on first launch, and re-created on restart if it has been removed. The password is randomly generated.

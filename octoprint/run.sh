@@ -2,11 +2,18 @@
 # #!/bin/sh
 # set -e
 
+reset_data_if_requested(){
+    if bashio::config.true 'request_reset_data'; then
+        rm -rf /data/*
+        bashio::log.info "Data has been reset"
+    fi
+}
+
 copy_data() {
     if [ ! -d /data/python ]; then
-        bashio::log.info "Move data"
-        # echo "Move data"
-        mv /root/python /data/
+        bashio::log.info "Copy data to persistent location"
+        # echo "Copy data to persistent location"
+        cp /root/python /data/
     fi
 }
 
@@ -67,17 +74,7 @@ set_ingress_entry() {
     # sed -e '/http-request set-header X-Script-Name/s/^/#/g' -i /etc/haproxy/haproxy.cfg
 }
 
-reset_data_if_requested(){
-    if bashio::config.exists 'request_reset_data'; then
-        bashio::log.info "Entry to reset exists"
-        if bashio::config.true 'request_reset_data'; then
-            rm -rf /data/*
-            bashio::log.info "Data has been reset"
-        fi
-    fi
-}
-
-reset_data_if_requested # If ´request_reset_data´ is set, will reset OctoPrint data folder (leave config untouched).
+reset_data_if_requested
 copy_data
 create_config
 create_ingress_user # Ensure Ingress user (homeassistant) exist. This should not modify existing users.
