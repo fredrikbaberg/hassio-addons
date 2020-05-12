@@ -69,8 +69,8 @@ set_ingress_entry() {
 
 reset_password_if_requested(){
     if bashio::config.true 'reset_password'; then
+        octoprint --basedir /data --config /config/$OCTOPRINT_CONFIGDIR/config.yaml user password homeassistant --password "octoprint"
         bashio::log.info "Password of user homeassistant was set to 'octoprint'"
-        octoprint --basedir /data --config /config/$OCTOPRINT_CONFIGDIR/config.yaml user password homeassistant --password octoprint
     fi
 }
 
@@ -78,8 +78,8 @@ reset_data_if_requested(){
     if bashio::config.exists 'request_reset_data'; then
         bashio::log.info "Entry to reset exists"
         if bashio::config.true 'request_reset_data'; then
-            bashio::log.info "Data has been reset"
             rm -rf /data/python
+            bashio::log.info "Data has been reset"
         fi
     fi
 }
