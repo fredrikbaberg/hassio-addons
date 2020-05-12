@@ -71,11 +71,18 @@ reset_password_if_requested(){
     if bashio::config.true 'reset_password'; then
         bashio::log.info "Password of user homeassistant was set to 'octoprint'"
         octoprint --basedir /data --config /config/$OCTOPRINT_CONFIGDIR/config.yaml user password homeassistant --password octoprint
-        sed -i '/reset_password/c\   \"reset_password\" : \"false\",' /data/options.json
     fi
-    cat /data/options.json
 }
 
+reset_data_if_requested(){
+    if bashio::config.exists 'request_reset_data'; then
+        if bashio::config.true 'request_reset_data'; then
+            rm -rf /data/python
+        fi
+    fi
+}
+
+reset_data_if_requested # If ´request_reset_data´ is set, will reset OctoPrint data folder (leave config untouched).
 copy_data
 create_config
 create_ingress_user # Ensure Ingress user (homeassistant) exist. This should not modify existing users.

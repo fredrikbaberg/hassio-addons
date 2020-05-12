@@ -18,10 +18,11 @@
     "homeassistant": "0.108.0",
     "map": ["config:rw"],
     "options": {
-        "reset_password": "false"
+        "reset_password": false
     },
     "schema": {
-        "reset_password": "bool"
+        "reset_password": "bool",
+        "request_reset_data": "bool?"
     },
     "image": "fredrikbaberg/octoprint-{arch}-image",
     "ingress": true,
