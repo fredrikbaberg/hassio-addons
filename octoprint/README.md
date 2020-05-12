@@ -45,3 +45,8 @@ A legacy version of CuraEngine is required to use Cura as slicer from within Oct
 
 - PyBonjour
 Not available from PyPI, so installed from external source. Port configuration probably prevents discovery.
+
+## Full reset of data
+
+It is possible to reset the data for the addon without a full reinstall (since the config folder is user-accessible that data is not touched).
+To avoid accidental triggering it is not listed under configuration. Add the following to addon `configuration`: `request_reset_data: true`, then restart the addon. Don´t forget to remove that line afterwards - otherwise you will loose the data on each restart.
