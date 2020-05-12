@@ -21,15 +21,15 @@ create_ingress_user() {
     bashio::log.info "Create ingress user"
     # echo "Create ingress user"
     new_password=`date +%s | sha256sum | base64 | head -c 32 ; echo`
-    octoprint --basedir /data --config /config/octoprint${CONFIG_DIR_SUFFIX}/config.yaml user add homeassistant --password $new_password --admin # 2> /dev/null
+    octoprint --basedir /data --config /config/octoprint/config.yaml user add homeassistant --password $new_password --admin # 2> /dev/null
 }
 
 create_config() {
-    if [ ! -f /config/octoprint${CONFIG_DIR_SUFFIX}/config.yaml ]; then
+    if [ ! -f /config/octoprint/config.yaml ]; then
         bashio::log.info "Create config"
         # echo "Create config"
-        mkdir -p /config/octoprint${CONFIG_DIR_SUFFIX}/
-        cd /config/octoprint${CONFIG_DIR_SUFFIX}
+        mkdir -p /config/octoprint/
+        cd /config/octoprint
         touch config.yaml
         echo "accessControl:" >> config.yaml
         echo "  autologinAs: homeassistant" >> config.yaml
@@ -51,6 +51,8 @@ create_config() {
         echo "server:" >> config.yaml
         echo "  commands:" >> config.yaml
         echo "    serverRestartCommand: supervisorctl reload" >> config.yaml
+        echo "    systemRestartCommand: bashio::addon.restart" >> config.yaml
+        echo "    systemShutdownCommand: bashio::addon.stop" >> config.yaml
         echo "system:" >> config.yaml
         echo "  actions:" >> config.yaml
         echo "  - action: streamon" >> config.yaml
@@ -78,7 +80,6 @@ reset_data_if_requested
 copy_data
 create_config
 create_ingress_user # Ensure Ingress user (homeassistant) exist. This should not modify existing users.
-reset_password_if_requested
 set_ingress_entry
 bashio::log.info "Launch"
 # echo "Launch"

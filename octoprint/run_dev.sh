@@ -2,13 +2,18 @@
 set -e
 # #!/usr/bin/with-contenv bashio
 
-# Mostly the same as run.sh, but without bashio calls.
+reset_data_if_requested(){
+    if bashio::config.true 'request_reset_data'; then
+        rm -rf /data/*
+        bashio::log.info "Data has been reset"
+    fi
+}
 
 copy_data() {
     if [ ! -d /data/python ]; then
-        # bashio::log.info "Move data"
-        echo "Move data"
-        mv /root/python /data/
+        # bashio::log.info "Copy data to persistent location"
+        echo "Copy data to persistent location"
+        cp -R /root/python /data/
     fi
 }
 
@@ -16,15 +21,15 @@ create_ingress_user() {
     # bashio::log.info "Create ingress user"
     echo "Create ingress user"
     new_password=`date +%s | sha256sum | base64 | head -c 32 ; echo`
-    octoprint --basedir /data --config /config/$OCTOPRINT_CONFIGDIR/config.yaml user add homeassistant --password $new_password --admin 2> /dev/null
+    octoprint --basedir /data --config /config/octoprint/config.yaml user add homeassistant --password $new_password --admin # 2> /dev/null
 }
 
 create_config() {
-    if [ ! -f /config/$OCTOPRINT_CONFIGDIR/config.yaml ]; then
+    if [ ! -f /config/octoprint/config.yaml ]; then
         # bashio::log.info "Create config"
         echo "Create config"
-        mkdir -p /config/$OCTOPRINT_CONFIGDIR/
-        cd /config/$OCTOPRINT_CONFIGDIR
+        mkdir -p /config/octoprint/
+        cd /config/octoprint
         touch config.yaml
         echo "accessControl:" >> config.yaml
         echo "  autologinAs: homeassistant" >> config.yaml
@@ -46,6 +51,8 @@ create_config() {
         echo "server:" >> config.yaml
         echo "  commands:" >> config.yaml
         echo "    serverRestartCommand: supervisorctl reload" >> config.yaml
+        echo "    systemRestartCommand: bashio::addon.restart" >> config.yaml
+        echo "    systemShutdownCommand: bashio::addon.stop" >> config.yaml
         echo "system:" >> config.yaml
         echo "  actions:" >> config.yaml
         echo "  - action: streamon" >> config.yaml
@@ -69,28 +76,10 @@ set_ingress_entry() {
     sed -e '/http-request set-header X-Script-Name/s/^/#/g' -i /etc/haproxy/haproxy.cfg
 }
 
-reset_password_if_requested(){
-    if bashio::config.true 'reset_password'; then
-        bashio::log.info "Password of user homeassistant was set to 'octoprint'"
-        octoprint --basedir /data --config /config/$OCTOPRINT_CONFIGDIR/config.yaml user password homeassistant --password octoprint
-        sed -i '/reset_password/c\   \"reset_password\" : \"false\",' /data/options.json
-    fi
-    cat /data/options.json
-}
-
-reset_data_if_requested(){
-    if bashio::config.exists 'request_reset_data'; then
-        if bashio::config.true 'request_reset_data'; then
-            rm -rf /data/python
-        fi
-    fi
-}
-
-# reset_data_if_requested # If ´request_reset_data´ is set, will reset OctoPrint data folder (leave config untouched).
+# reset_data_if_requested
 copy_data
 create_config
 create_ingress_user # Ensure Ingress user (homeassistant) exist. This should not modify existing users.
-# reset_password_if_requested # Needs bashio
 set_ingress_entry
 # bashio::log.info "Launch"
 echo "Launch"

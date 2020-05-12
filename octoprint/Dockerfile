@@ -80,6 +80,8 @@ ENV LANG C.UTF-8
 ENV PYTHONPATH=/data/python
 ENV PATH=${PATH}:/data/python/bin
 ENV PYTHONUSERBASE=/data/python
+
+ARG PYTHON_VERSION
 ARG CONFIG_DIR_SUFFIX
 ENV CONFIG_DIR_SUFFIX=${CONFIG_DIR_SUFFIX}
 # Install requirements to run
@@ -91,6 +93,12 @@ COPY --from=build-camera /root/usr /usr/
 COPY haproxy.cfg /etc/haproxy/haproxy.cfg
 COPY supervisord.conf /etc/supervisord.conf
 COPY run.sh /run.sh
+COPY run_dev.sh /run_dev.sh
 RUN chmod a+x /run.sh
+RUN chmod a+x /run_dev.sh
+RUN echo "Update config directory for all files" \
+    && sed -i "s#/config/octoprint/#/config/octoprint${CONFIG_DIR_SUFFIX}/#g" /etc/supervisord.conf \
+    && sed -i "s#/config/octoprint/#/config/octoprint${CONFIG_DIR_SUFFIX}/#g" /run.sh \
+    && sed -i "s#/config/octoprint/#/config/octoprint${CONFIG_DIR_SUFFIX}/#g" /run_dev.sh
 WORKDIR /
-CMD [ "/run.sh" ]
+CMD [ "/run_dev.sh" ]

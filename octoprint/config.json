@@ -17,9 +17,7 @@
     "auto_uart": true,
     "homeassistant": "0.108.0",
     "map": ["config:rw"],
-    "options": {
-        "request_reset_data": false
-    },
+    "options": {},
     "schema": {
         "request_reset_data": "bool?"
     },
