@@ -70,11 +70,12 @@ set_ingress_entry() {
 }
 
 reset_password_if_requested(){
-    if [ $(basio::config 'reset_password') ]; then
+    if bashio::config.true 'reset_password'; then
         bashio::log.info "Password of user homeassistant was set to 'octoprint'"
         octoprint --basedir /data --config /config/$OCTOPRINT_CONFIGDIR/config.yaml user password homeassistant --password octoprint
-        sed -e 's/"reset_password": "true"/"reset_password": "false"/'-i /data/options.json
+        sed -i '/reset_password/c\   \"reset_password\" : \"false\",' /data/options.json
     fi
+    cat /data/options.json
 }
 
 copy_data
