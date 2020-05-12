@@ -39,6 +39,10 @@ create_config() {
         echo "devel:" >> config.yaml
         echo "  virtualPrinter:" >> config.yaml
         echo "    enabled: true" >> config.yaml
+        echo "folder:" >> config.yaml
+        echo "  timelapse: /config/octoprint/timelapse" >> config.yaml
+        echo "  uploads: /config/octoprint/uploads" >> config.yaml
+        echo "  watched: /config/octoprint/watched" >> config.yaml
         echo "plugins:" >> config.yaml
         echo "  cura:" >> config.yaml
         echo "    cura_engine: /sbin/CuraEngine" >> config.yaml
@@ -55,17 +59,17 @@ create_config() {
         # echo "    systemShutdownCommand: bashio::addon.stop" >> config.yaml
         echo "system:" >> config.yaml
         echo "  actions:" >> config.yaml
-        echo "  - action: streamon" >> config.yaml
-        echo "    command: supervisorctl start mjpeg-streamer" >> config.yaml
-        echo "    confirm: false" >> config.yaml
-        echo "    name: Start webcam" >> config.yaml
-        echo "  - action: streamoff" >> config.yaml
-        echo "    command: supervisorctl stop mjpeg-streamer" >> config.yaml
-        echo "    confirm: false" >> config.yaml
-        echo "    name: Stop webcam" >> config.yaml
+        # echo "  - action: streamon" >> config.yaml
+        # echo "    command: supervisorctl start mjpeg-streamer" >> config.yaml
+        # echo "    confirm: false" >> config.yaml
+        # echo "    name: Start webcam" >> config.yaml
+        # echo "  - action: streamoff" >> config.yaml
+        # echo "    command: supervisorctl stop mjpeg-streamer" >> config.yaml
+        # echo "    confirm: false" >> config.yaml
+        # echo "    name: Stop webcam" >> config.yaml
         echo "webcam:" >> config.yaml
-        echo "  stream: /webcam/?action=stream" >> config.yaml
-        echo "  snapshot: http://127.0.0.1:8080/?action=snapshot" >> config.yaml
+        # echo "  stream: /webcam/?action=stream" >> config.yaml
+        # echo "  snapshot: http://127.0.0.1:8080/?action=snapshot" >> config.yaml
         echo "  ffmpeg: /usr/bin/ffmpeg" >> config.yaml
     fi
 }
