@@ -10,6 +10,7 @@
 - `Start on boot` now default manual instead of auto
 - Removed some mjpg settings from default config
 - Set upload/watch/timelapse location to config folder
+- Enable cache on HAproxy
 
 [0.3.0-alpha-6]
 - Include psycopg2 (for filamentmanager)
