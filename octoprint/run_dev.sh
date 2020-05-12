@@ -51,8 +51,8 @@ create_config() {
         echo "server:" >> config.yaml
         echo "  commands:" >> config.yaml
         echo "    serverRestartCommand: supervisorctl reload" >> config.yaml
-        echo "    systemRestartCommand: bashio::addon.restart" >> config.yaml
-        echo "    systemShutdownCommand: bashio::addon.stop" >> config.yaml
+        # echo "    systemRestartCommand: bashio::addon.restart" >> config.yaml
+        # echo "    systemShutdownCommand: bashio::addon.stop" >> config.yaml
         echo "system:" >> config.yaml
         echo "  actions:" >> config.yaml
         echo "  - action: streamon" >> config.yaml
