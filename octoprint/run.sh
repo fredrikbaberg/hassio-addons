@@ -29,7 +29,7 @@ create_config() {
         bashio::log.info "Create config"
         # echo "Create config"
         mkdir -p /config/octoprint/
-        cd /config/octoprint
+        cd /config/octoprint/
         touch config.yaml
         echo "accessControl:" >> config.yaml
         echo "  autologinAs: homeassistant" >> config.yaml
