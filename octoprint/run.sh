@@ -21,15 +21,15 @@ create_ingress_user() {
     bashio::log.info "Create ingress user"
     # echo "Create ingress user"
     new_password=`date +%s | sha256sum | base64 | head -c 32 ; echo`
-    octoprint --basedir /data --config /config/$OCTOPRINT_CONFIG_DIR/config.yaml user add homeassistant --password $new_password --admin # 2> /dev/null
+    octoprint --basedir /data --config /config/octoprint${CONFIG_DIR_SUFFIX}/config.yaml user add homeassistant --password $new_password --admin # 2> /dev/null
 }
 
 create_config() {
-    if [ ! -f /config/$OCTOPRINT_CONFIG_DIR/config.yaml ]; then
+    if [ ! -f /config/octoprint${CONFIG_DIR_SUFFIX}/config.yaml ]; then
         bashio::log.info "Create config"
         # echo "Create config"
-        mkdir -p /config/$OCTOPRINT_CONFIG_DIR/
-        cd /config/$OCTOPRINT_CONFIG_DIR
+        mkdir -p /config/octoprint${CONFIG_DIR_SUFFIX}/
+        cd /config/octoprint${CONFIG_DIR_SUFFIX}
         touch config.yaml
         echo "accessControl:" >> config.yaml
         echo "  autologinAs: homeassistant" >> config.yaml

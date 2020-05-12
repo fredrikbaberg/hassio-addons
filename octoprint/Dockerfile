@@ -2,7 +2,7 @@ ARG BUILD_FROM
 
 ARG OCTOPRINT_VERSION=1.4.0
 ARG CURA_VERSION=15.04.6
-ARG OCTOPRINT_CONFIG_DIR=octoprint_experimental
+ARG CONFIG_DIR_SUFFIX=_experimental
 ARG PYTHON_VERSION="python2"
 ARG PIP_FLAGS="--no-cache-dir"
 
@@ -80,8 +80,8 @@ ENV LANG C.UTF-8
 ENV PYTHONPATH=/data/python
 ENV PATH=${PATH}:/data/python/bin
 ENV PYTHONUSERBASE=/data/python
-ARG OCTOPRINT_CONFIG_DIR
-ENV OCTOPRINT_CONFIG_DIR=${OCTOPRINT_CONFIG_DIR}
+ARG CONFIG_DIR_SUFFIX
+ENV CONFIG_DIR_SUFFIX=${CONFIG_DIR_SUFFIX}
 # Install requirements to run
 RUN apk add --no-cache --virtual .necessary supervisor haproxy avahi-compat-libdns_sd dbus avahi ${PYTHON_VERSION} postgresql-libs libjpeg # ffmpeg
 # Copy data from filesystem and previous stages
