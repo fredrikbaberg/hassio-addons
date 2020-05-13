@@ -25,16 +25,16 @@ create_ingress_user() {
     bashio::log.info "Create ingress user"
     # echo "Create ingress user"
     new_password=`date +%s | sha256sum | base64 | head -c 32 ; echo`
-    octoprint --basedir /config/octoprint/ user add homeassistant --password $new_password --admin # 2> /dev/null
+    octoprint --basedir /config/octoprint user add homeassistant --password $new_password --admin # 2> /dev/null
 }
 
 create_config() {
-    mkdir -p /config/octoprint/
+    mkdir -p /config/octoprint
     if [ ! -f /config/octoprint/config.yaml ]; then
         bashio::log.info "Create config"
         # echo "Create config"
-        mkdir -p /config/octoprint/
-        cd /config/octoprint/
+        mkdir -p /config/octoprint
+        cd /config/octoprint
         touch config.yaml
         echo "accessControl:" >> config.yaml
         echo "  autologinAs: homeassistant" >> config.yaml
@@ -66,7 +66,9 @@ create_config() {
         echo "    debug_logging: false" >> config.yaml
         echo "server:" >> config.yaml
         echo "  commands:" >> config.yaml
-        echo "    serverRestartCommand: supervisorctl reload" >> config.yaml
+        echo "    serverRestartCommand: supervisorctl restart octoprint" >> config.yaml
+        echo "    systemRestartCommand: /restart.sh" >> config.yaml
+        echo "    systemShutdownCommand: /shutdown.sh" >> config.yaml
         echo "webcam:" >> config.yaml
         echo "  ffmpeg: /usr/bin/ffmpeg" >> config.yaml
         # echo "  stream: /webcam/?action=stream" >> config.yaml
@@ -96,7 +98,7 @@ set_ingress_entry() {
     # sed -e '/http-request set-header X-Script-Name/s/^/#/g' -i /etc/haproxy/haproxy.cfg
 }
 
-# reset_data_if_requested
+reset_data_if_requested
 copy_data
 create_config
 create_ingress_user # Ensure Ingress user (homeassistant) exist. This should not modify existing users.

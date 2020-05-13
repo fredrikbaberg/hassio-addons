@@ -73,11 +73,11 @@ COPY FS/ /
 COPY --from=curaengine-legacy /root/copy/ /
 COPY --from=mjpg-streamer /root/copy /
 # Make scripts executable
-RUN chmod a+x /run.sh
-RUN chmod a+x /run_dev.sh && dos2unix /run_dev.sh # For development purposes
+RUN chmod a+x /*.sh
+RUN dos2unix /run_dev.sh # For development purposes
 RUN echo "Update config directory for all files" \
-    && sed -i "s#/config/octoprint/#/config/octoprint${CONFIG_DIR_SUFFIX}/#g" /etc/supervisord.conf \
-    && sed -i "s#/config/octoprint/#/config/octoprint${CONFIG_DIR_SUFFIX}/#g" /run.sh \
-    && sed -i "s#/config/octoprint/#/config/octoprint${CONFIG_DIR_SUFFIX}/#g" /run_dev.sh
+    && sed -i "s#/config/octoprint#/config/octoprint${CONFIG_DIR_SUFFIX}#g" /etc/supervisord.conf \
+    && sed -i "s#/config/octoprint#/config/octoprint${CONFIG_DIR_SUFFIX}#g" /run.sh \
+    && sed -i "s#/config/octoprint#/config/octoprint${CONFIG_DIR_SUFFIX}#g" /run_dev.sh
 WORKDIR /
 CMD [ "/run.sh" ]
