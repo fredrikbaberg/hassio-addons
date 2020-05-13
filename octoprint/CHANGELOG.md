@@ -1,5 +1,10 @@
 # Changelog
 
+[0.3.0-beta-0]
+
+Same as previous alpha, just to indicate that this is what I intend to use as release.
+Please report any errors, since this may replace both `Dev` and `Slim`.
+
 [0.3.0-alpha-10]
 
 Lot of changes for this release, you may need to uninstall and reinstall for this to work. Unfortunately I discovered an error with previous backups, they contain lots of extra data due to a configuration error (wrong baseDir used) and may not be useable.
