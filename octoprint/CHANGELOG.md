@@ -1,5 +1,17 @@
 # Changelog
 
+[0.3.0-alpha-8]
+- Breaking! Previous backups are broken
+- Revert to Python2
+- Separate config directory for `Experimental`
+- Refactor Dockerfile to multistage build
+- Backup and restore now working (previously broken!)
+- Add option to reset data folder
+- `Start on boot` now default manual instead of auto
+- Removed some mjpg settings from default config
+- Set upload/watch/timelapse location to config folder
+- Enable cache on HAproxy
+
 [0.3.0-alpha-6]
 - Include psycopg2 (for filamentmanager)
 
