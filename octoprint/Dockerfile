@@ -1,101 +1,75 @@
-ARG BUILD_FROM
+ARG BUILD_FROM="homeassistant/amd64-base:latest"
 
-ARG OCTOPRINT_VERSION=1.4.0
-ARG CURA_VERSION=15.04.6
-ARG CONFIG_DIR_SUFFIX=_experimental
-ARG USE_PYTHON_VERSION=python2
+ARG OCTOPRINT_VERSION="1.4.0"
+ARG CONFIG_DIR_SUFFIX="_experimental"
 ARG PIP_FLAGS="--no-cache-dir"
+ARG PYTHON_VERSION="python2"
 
-FROM alpine:latest AS build-octoprint-python2
-ARG OCTOPRINT_VERSION
-ARG PIP_FLAGS
-# OctoPrint
-RUN echo "Installing OctoPrint" \
-    && apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libjpeg-turbo-dev libexecinfo-dev avahi-compat-libdns_sd postgresql-dev python2-dev py2-pip py3-virtualenv \
-    && virtualenv --python=python2 /data/python \
-    && source /data/python/bin/activate \
-    && pip install ${PIP_FLAGS} --upgrade pip \
-    && pip install ${PIP_FLAGS} OctoPrint==${OCTOPRINT_VERSION} \
-    && pip install ${PIP_FLAGS} psycopg2 \
-    && pip install ${PIP_FLAGS} https://goo.gl/SxQZ06 \
-    # Cleanup, should result in smaller stages (at the cost of time)
-    && find /data/python | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
-    && apk del --no-cache .build-dependencies
-
-# FROM alpine:latest AS build-octoprint-python3
-# # Specify versions here instead of in code.
-# ARG OCTOPRINT_VERSION
-# ARG PIP_FLAGS
-# # OctoPrint
-# RUN echo "Installing OctoPrint" \
-#     && apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libjpeg-turbo-dev libexecinfo-dev avahi-compat-libdns_sd postgresql-dev python3-dev py3-pip py3-virtualenv \
-#     && virtualenv --python=python3 /data/python \
-#     && source /data/python/bin/activate \
-#     && pip install ${PIP_FLAGS} --upgrade pip \
-#     && pip install ${PIP_FLAGS} OctoPrint==${OCTOPRINT_VERSION} \
-#     && pip install ${PIP_FLAGS} psycopg2 \
-#     && pip install ${PIP_FLAGS} https://github.com/kounch/pybonjour-python3/archive/master.zip \
-#     # Cleanup, should result in smaller stages (at the cost of time)
-#     && find /data/python | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
-#     && apk del --no-cache .build-dependencies
-
-FROM alpine:latest AS build-curaengine
-ARG CURA_VERSION
-# CuraLegacy
-RUN echo "Installing CuraLegacy" \
-    && apk add --no-cache --virtual .build-dependencies build-base libexecinfo-dev \
-    && cd /tmp \
+FROM alpine:latest AS curaengine-legacy
+ARG CURA_VERSION=15.04.6
+WORKDIR /tmp
+RUN apk add --no-cache --virtual .build-dependencies build-base libexecinfo-dev \
     && wget -qO- https://github.com/Ultimaker/CuraEngine/archive/${CURA_VERSION}.tar.gz | tar xz \
     && cd CuraEngine-${CURA_VERSION} \
     && make --quiet \
-    && mv build/CuraEngine /sbin/CuraEngine \
+    && mkdir -p /root/copy/sbin/ \
+    && mv build/CuraEngine /root/copy/sbin/CuraEngine \
     # Cleanup, should result in smaller stages (at the cost of time)
     && rm -rf /tmp \
     && apk del --no-cache .build-dependencies
 
-FROM alpine:latest AS build-camera
-# Camera support
-RUN echo "Installing camera support" \
-    && apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libexecinfo-dev libjpeg-turbo-dev \
-    && apk add --no-cache ffmpeg \
-    && cd /tmp \
+FROM alpine:latest AS mjpg-streamer
+WORKDIR /tmp
+RUN apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libexecinfo-dev libjpeg-turbo-dev \
     && wget -qO- https://github.com/jacksonliam/mjpg-streamer/archive/master.tar.gz | tar xz \
-    && cd /tmp/mjpg-streamer-master/mjpg-streamer-experimental/ \
+    && cd mjpg-streamer-master/mjpg-streamer-experimental/ \
     && make --quiet \
     && make install --quiet \
     # Move files to /root/ for easier copy.
-    && mkdir -p /root/usr/local/lib/mjpg-streamer \
-    && cp *.so /root/usr/local/lib/mjpg-streamer/ \
-    && mkdir -p /root/usr/local/bin \
-    && cp /usr/local/bin/mjpg_streamer /root/usr/local/bin/ \
+    && mkdir -p /root/copy/usr/local/lib/mjpg-streamer \
+    && cp *.so /root/copy/usr/local/lib/mjpg-streamer/ \
+    && mkdir -p /root/copy/usr/local/bin \
+    && cp /usr/local/bin/mjpg_streamer /root/copy/usr/local/bin/ \
     # Cleanup
     && apk del --no-cache .build-dependencies \
     && rm -rf /tmp
 
-# COPY doesn´t support ARG, this line is to select version
-FROM build-octoprint-${USE_PYTHON_VERSION} AS octoprint
-
-FROM ${BUILD_FROM} AS main
+FROM ${BUILD_FROM} AS final
+ARG OCTOPRINT_VERSION
+ARG CONFIG_DIR_SUFFIX
+ARG PIP_FLAGS
+ARG PYTHON_VERSION
 ENV LANG C.UTF-8
 ENV PYTHONPATH=/data/python
 ENV PATH=${PATH}:/data/python/bin
 ENV PYTHONUSERBASE=/data/python
-
-ARG USE_PYTHON_VERSION
-ARG CONFIG_DIR_SUFFIX
-ENV CONFIG_DIR_SUFFIX=${CONFIG_DIR_SUFFIX}
 # Install requirements to run
-RUN apk add --no-cache --virtual .necessary supervisor haproxy avahi-compat-libdns_sd dbus avahi ${USE_PYTHON_VERSION} python2 python3 postgresql-libs libjpeg ffmpeg
+RUN apk add --no-cache --virtual .necessary supervisor haproxy ${PYTHON_VERSION} avahi-compat-libdns_sd dbus avahi postgresql-libs libjpeg ffmpeg
+# Install OctoPrint
+RUN echo "Installing OctoPrint" \
+    && apk add --no-cache --virtual .build-dependencies \
+       py3-virtualenv build-base ${PYTHON_VERSION}-dev linux-headers \
+       avahi-compat-libdns_sd \
+       postgresql-dev \
+    && virtualenv --python=${PYTHON_VERSION} /data/python \
+    && source /data/python/bin/activate \
+    && pip install ${PIP_FLAGS} --upgrade pip \
+    && pip install ${PIP_FLAGS} OctoPrint==${OCTOPRINT_VERSION} \
+    # # Python2 PyBonjour
+    && if [ "${PYTHON_VERSION}" = "python2" ]; then pip install ${PIP_FLAGS} https://goo.gl/SxQZ06 ; fi \
+    # # Python3 PyBonjour
+    && if [ "${PYTHON_VERSION}" = "python3" ]; then pip install ${PIP_FLAGS} https://github.com/kounch/pybonjour-python3/archive/master.zip ; fi \
+    && pip install ${PIP_FLAGS} psycopg2 \
+    && find /data/python | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
+    && apk del --no-cache .build-dependencies \
+    && mv /data/python /root/python
 # Copy data from filesystem and previous stages
-COPY --from=octoprint /data/python /root/python
-COPY --from=build-curaengine /sbin/CuraEngine /sbin/CuraEngine
-COPY --from=build-camera /root/usr /usr/
-COPY haproxy.cfg /etc/haproxy/haproxy.cfg
-COPY supervisord.conf /etc/supervisord.conf
-COPY run.sh /run.sh
-COPY run_dev.sh /run_dev.sh
+COPY FS/ /
+COPY --from=curaengine-legacy /root/copy/ /
+COPY --from=mjpg-streamer /root/copy /
+# Make scripts executable
 RUN chmod a+x /run.sh
-RUN chmod a+x /run_dev.sh
+RUN chmod a+x /run_dev.sh && dos2unix /run_dev.sh # For development purposes
 RUN echo "Update config directory for all files" \
     && sed -i "s#/config/octoprint/#/config/octoprint${CONFIG_DIR_SUFFIX}/#g" /etc/supervisord.conf \
     && sed -i "s#/config/octoprint/#/config/octoprint${CONFIG_DIR_SUFFIX}/#g" /run.sh \
