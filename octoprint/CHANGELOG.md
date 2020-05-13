@@ -11,7 +11,8 @@ Lot of changes for this release, you may need to uninstall and reinstall for thi
 - Add option to reset data folder
 - `Start on boot` now default manual instead of auto
 - Cleaned up initial config (e.g. unused mjpg-streaming config)
-- Enable cache on HAproxy (may or may not help)
+- Add shutdown and restart command (for OctoPrint)
+- Correction to restart OctoPrint command, should no longer halt Add-on log
 - Refactor Dockerfile
 
 [0.3.0-alpha-6]
