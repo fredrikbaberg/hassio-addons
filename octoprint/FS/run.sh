@@ -2,6 +2,7 @@
 # #!/bin/sh
 # set -e
 
+
 echo "run.sh"
 # echo "run_dev.sh"
 
@@ -28,6 +29,7 @@ create_ingress_user() {
 }
 
 create_config() {
+    mkdir -p /config/octoprint/
     if [ ! -f /config/octoprint/config.yaml ]; then
         bashio::log.info "Create config"
         # echo "Create config"
@@ -42,18 +44,36 @@ create_config() {
         echo "devel:" >> config.yaml
         echo "  virtualPrinter:" >> config.yaml
         echo "    enabled: true" >> config.yaml
+        echo "folder:" >> config.yaml
+        # Non-user-accessible folders
+        echo "  data: /data/octoprint/data" >> config.yaml
+        echo "  generated: /data/octoprint/generated" >> config.yaml
+        echo "  logs: /data/octoprint/logs" >> config.yaml
+        echo "  plugins: /data/octoprint/plugins" >> config.yaml
+        echo "  virtualSd: /data/octoprint/virtualSd" >> config.yaml
+        # User-accessible folders
+        echo "  printerProfiles: /config/octoprint/printerProfiles" >> config.yaml
+        echo "  slicingProfiles: /config/octoprint/slicingProfiles" >> config.yaml
+        echo "  scripts: /config/octoprint/scripts" >> config.yaml
+        echo "  timelapse: /config/octoprint/timelapse" >> config.yaml
+        echo "  timelapse_tmp: /config/octoprint/timelapse/tmp" >> config.yaml
+        echo "  translations: /config/octoprint/translations" >> config.yaml
+        echo "  uploads: /config/octoprint/uploads" >> config.yaml
+        echo "  watched: /config/octoprint/watched" >> config.yaml
         echo "plugins:" >> config.yaml
         echo "  cura:" >> config.yaml
         echo "    cura_engine: /sbin/CuraEngine" >> config.yaml
         echo "    debug_logging: false" >> config.yaml
-        echo "  pluginmanager:" >> config.yaml
-        echo "    pip_force_user: false" >> config.yaml
-        echo "serial:" >> config.yaml
-        echo "  additionalPorts:" >> config.yaml
-        echo "  - /dev/tty*" >> config.yaml
         echo "server:" >> config.yaml
         echo "  commands:" >> config.yaml
         echo "    serverRestartCommand: supervisorctl reload" >> config.yaml
+        echo "webcam:" >> config.yaml
+        echo "  ffmpeg: /usr/bin/ffmpeg" >> config.yaml
+        # echo "  stream: /webcam/?action=stream" >> config.yaml
+        # echo "  snapshot: http://127.0.0.1:8080/?action=snapshot" >> config.yaml
+        # echo "serial:" >> config.yaml
+        # echo "  additionalPorts:" >> config.yaml
+        # echo "  - /dev/tty*" >> config.yaml
         # echo "    systemRestartCommand: bashio::addon.restart" >> config.yaml
         # echo "    systemShutdownCommand: bashio::addon.stop" >> config.yaml
         # echo "system:" >> config.yaml
@@ -66,10 +86,7 @@ create_config() {
         # echo "    command: supervisorctl stop mjpeg-streamer" >> config.yaml
         # echo "    confirm: false" >> config.yaml
         # echo "    name: Stop webcam" >> config.yaml
-        echo "webcam:" >> config.yaml
-        echo "  ffmpeg: /usr/bin/ffmpeg" >> config.yaml
-        # echo "  stream: /webcam/?action=stream" >> config.yaml
-        # echo "  snapshot: http://127.0.0.1:8080/?action=snapshot" >> config.yaml
+        
     fi
 }
 
@@ -79,7 +96,7 @@ set_ingress_entry() {
     # sed -e '/http-request set-header X-Script-Name/s/^/#/g' -i /etc/haproxy/haproxy.cfg
 }
 
-reset_data_if_requested
+# reset_data_if_requested
 copy_data
 create_config
 create_ingress_user # Ensure Ingress user (homeassistant) exist. This should not modify existing users.
