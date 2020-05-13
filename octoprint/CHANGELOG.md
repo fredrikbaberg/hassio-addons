@@ -1,5 +1,8 @@
 # Changelog
 
+[0.3.0-alpha-10]
+- Bugfix, would not launch properly
+
 [0.3.0-alpha-9]
 - Breaking! Previous backups are broken
 - Revert to Python2
