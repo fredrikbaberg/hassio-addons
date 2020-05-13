@@ -2,6 +2,9 @@
 set -e
 # #!/usr/bin/with-contenv bashio
 
+# echo "run.sh"
+echo "run_dev.sh"
+
 reset_data_if_requested(){
     if bashio::config.true 'request_reset_data'; then
         rm -rf /data/*
