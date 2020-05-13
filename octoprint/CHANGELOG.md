@@ -1,6 +1,7 @@
 # Changelog
 
 [0.3.0-alpha-10]
+
 Lot of changes for this release, you may need to uninstall and reinstall for this to work. Unfortunately I discovered an error with previous backups, they contain lots of extra data due to a configuration error (wrong baseDir used) and may not be useable.
 
 - Backup and Restore should now work (previous backups were broken!)
