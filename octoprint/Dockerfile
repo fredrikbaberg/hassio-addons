@@ -44,7 +44,8 @@ ENV PYTHONPATH=/data/python
 ENV PATH=${PATH}:/data/python/bin
 ENV PYTHONUSERBASE=/data/python
 # Install requirements to run
-RUN apk add --no-cache --virtual .necessary supervisor haproxy ${PYTHON_VERSION} avahi-compat-libdns_sd dbus avahi postgresql-libs libjpeg ffmpeg
+RUN apk add --no-cache --virtual .necessary supervisor haproxy ${PYTHON_VERSION} dbus avahi
+RUN apk add --no-cache --virtual .extra avahi-compat-libdns_sd postgresql-libs libjpeg ffmpeg
 # Install OctoPrint
 RUN echo "Installing OctoPrint" \
     && apk add --no-cache --virtual .build-dependencies \
@@ -55,12 +56,16 @@ RUN echo "Installing OctoPrint" \
     && source /data/python/bin/activate \
     && pip install ${PIP_FLAGS} --upgrade pip \
     && pip install ${PIP_FLAGS} OctoPrint==${OCTOPRINT_VERSION} \
-    # # Python2 PyBonjour
-    && if [ "${PYTHON_VERSION}" = "python2" ]; then pip install ${PIP_FLAGS} https://goo.gl/SxQZ06 ; fi \
-    # # Python3 PyBonjour
-    && if [ "${PYTHON_VERSION}" = "python3" ]; then pip install ${PIP_FLAGS} https://github.com/kounch/pybonjour-python3/archive/master.zip ; fi \
+    # The following steps, until cleanup, are optional and could be skipped if small size is required (loosing pybonjour, psycopg2 [for filamentmanager] )
+    && if [ "${PYTHON_VERSION}" = "python2" ]; then \
+            pip install ${PIP_FLAGS} https://goo.gl/SxQZ06 ; \
+       else \
+            pip install ${PIP_FLAGS} https://github.com/kounch/pybonjour-python3/archive/master.zip ; \
+       fi \
     && pip install ${PIP_FLAGS} psycopg2 \
+    # Cleanup and move output /root/python
     && find /data/python | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
+    && rm -rf /root/.cache \
     && apk del --no-cache .build-dependencies \
     && mv /data/python /root/python
 # Copy data from filesystem and previous stages
