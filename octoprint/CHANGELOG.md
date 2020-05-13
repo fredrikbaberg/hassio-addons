@@ -1,19 +1,19 @@
 # Changelog
 
 [0.3.0-alpha-10]
-- Bugfix, would not launch properly
 
-[0.3.0-alpha-9]
-- Breaking! Previous backups are broken
+Lot of changes for this release, you may need to uninstall and reinstall for this to work. Unfortunately I discovered an error with previous backups, they contain lots of extra data due to a configuration error (wrong baseDir used) and may not be useable.
+
+- Backup and Restore should now work (previous backups were broken!)
 - Revert to Python2
-- Separate config directory for `Experimental`
-- Refactor Dockerfile to multistage build
-- Backup and restore now working (previously broken!)
+- Separate config directory `octoprint_experimental`
+- Move baseDir to config folder
 - Add option to reset data folder
 - `Start on boot` now default manual instead of auto
-- Removed some mjpg settings from default config
-- Set upload/watch/timelapse location to config folder
-- Enable cache on HAproxy
+- Cleaned up initial config (e.g. unused mjpg-streaming config)
+- Add shutdown and restart command (for OctoPrint)
+- Correction to restart OctoPrint command, should no longer halt Add-on log
+- Refactor Dockerfile
 
 [0.3.0-alpha-6]
 - Include psycopg2 (for filamentmanager)
