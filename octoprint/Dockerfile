@@ -85,11 +85,11 @@ ARG USE_PYTHON_VERSION
 ARG CONFIG_DIR_SUFFIX
 ENV CONFIG_DIR_SUFFIX=${CONFIG_DIR_SUFFIX}
 # Install requirements to run
-RUN apk add --no-cache --virtual .necessary supervisor haproxy avahi-compat-libdns_sd dbus avahi ${USE_PYTHON_VERSION} py-pip postgresql-libs libjpeg ffmpeg
+RUN apk add --no-cache --virtual .necessary supervisor haproxy avahi-compat-libdns_sd dbus avahi ${USE_PYTHON_VERSION}-dev py-pip postgresql-libs libjpeg ffmpeg
 # Copy data from filesystem and previous stages
 COPY --from=octoprint /data/python /root/python
-COPY --from=build-curaengine /sbin/CuraEngine /sbin/CuraEngine
-COPY --from=build-camera /root/usr /usr/
+# COPY --from=build-curaengine /sbin/CuraEngine /sbin/CuraEngine
+# COPY --from=build-camera /root/usr /usr/
 COPY haproxy.cfg /etc/haproxy/haproxy.cfg
 COPY supervisord.conf /etc/supervisord.conf
 COPY run.sh /run.sh
