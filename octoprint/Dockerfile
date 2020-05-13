@@ -1,6 +1,6 @@
-ARG BUILD_FROM
+ARG BUILD_FROM="homeassistant/amd64-base:latest"
 
-ARG OCTOPRINT_VERSION="1.3.12"
+ARG OCTOPRINT_VERSION="1.4.0"
 ARG CONFIG_DIR_SUFFIX="_experimental"
 ARG PIP_FLAGS="--no-cache-dir"
 ARG PYTHON_VERSION="python2"
@@ -56,9 +56,9 @@ RUN echo "Installing OctoPrint" \
     && pip install ${PIP_FLAGS} --upgrade pip \
     && pip install ${PIP_FLAGS} OctoPrint==${OCTOPRINT_VERSION} \
     # # Python2 PyBonjour
-    && pip install ${PIP_FLAGS} https://goo.gl/SxQZ06 \
+    && if [ "${PYTHON_VERSION}" = "python2" ]; then pip install ${PIP_FLAGS} https://goo.gl/SxQZ06 ; fi \
     # # Python3 PyBonjour
-    # && pip install ${PIP_FLAGS} https://github.com/kounch/pybonjour-python3/archive/master.zip \
+    && if [ "${PYTHON_VERSION}" = "python3" ]; then pip install ${PIP_FLAGS} https://github.com/kounch/pybonjour-python3/archive/master.zip ; fi \
     && pip install ${PIP_FLAGS} psycopg2 \
     && find /data/python | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && apk del --no-cache .build-dependencies \
@@ -69,7 +69,7 @@ COPY --from=curaengine-legacy /root/copy/ /
 COPY --from=mjpg-streamer /root/copy /
 # Make scripts executable
 RUN chmod a+x /run.sh
-RUN chmod a+x /run_dev.sh && dos2unix /run_dev.sh
+RUN chmod a+x /run_dev.sh && dos2unix /run_dev.sh # For development purposes
 RUN echo "Update config directory for all files" \
     && sed -i "s#/config/octoprint/#/config/octoprint${CONFIG_DIR_SUFFIX}/#g" /etc/supervisord.conf \
     && sed -i "s#/config/octoprint/#/config/octoprint${CONFIG_DIR_SUFFIX}/#g" /run.sh \
