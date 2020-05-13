@@ -22,22 +22,22 @@ RUN echo "Installing OctoPrint" \
     && find /data/python | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && apk del --no-cache .build-dependencies
 
-# FROM alpine:latest AS build-octoprint-python3
-# # Specify versions here instead of in code.
-# ARG OCTOPRINT_VERSION
-# ARG PIP_FLAGS
-# # OctoPrint
-# RUN echo "Installing OctoPrint" \
-#     && apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libjpeg-turbo-dev libexecinfo-dev avahi-compat-libdns_sd postgresql-dev python3-dev py3-pip py3-virtualenv \
-#     && virtualenv --python=python3 /data/python \
-#     && source /data/python/bin/activate \
-#     && pip install ${PIP_FLAGS} --upgrade pip \
-#     && pip install ${PIP_FLAGS} OctoPrint==${OCTOPRINT_VERSION} \
-#     && pip install ${PIP_FLAGS} psycopg2 \
-#     && pip install ${PIP_FLAGS} https://github.com/kounch/pybonjour-python3/archive/master.zip \
-#     # Cleanup, should result in smaller stages (at the cost of time)
-#     && find /data/python | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
-#     && apk del --no-cache .build-dependencies
+FROM alpine:latest AS build-octoprint-python3
+# Specify versions here instead of in code.
+ARG OCTOPRINT_VERSION
+ARG PIP_FLAGS
+# OctoPrint
+RUN echo "Installing OctoPrint" \
+    && apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libjpeg-turbo-dev libexecinfo-dev avahi-compat-libdns_sd postgresql-dev python3-dev py3-pip py3-virtualenv \
+    && virtualenv --python=python3 /data/python \
+    && source /data/python/bin/activate \
+    && pip install ${PIP_FLAGS} --upgrade pip \
+    && pip install ${PIP_FLAGS} OctoPrint==${OCTOPRINT_VERSION} \
+    && pip install ${PIP_FLAGS} psycopg2 \
+    && pip install ${PIP_FLAGS} https://github.com/kounch/pybonjour-python3/archive/master.zip \
+    # Cleanup, should result in smaller stages (at the cost of time)
+    && find /data/python | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
+    && apk del --no-cache .build-dependencies
 
 FROM alpine:latest AS build-curaengine
 ARG CURA_VERSION
@@ -75,7 +75,7 @@ RUN echo "Installing camera support" \
 # COPY doesn´t support ARG, this line is to select version
 FROM build-octoprint-${USE_PYTHON_VERSION} AS octoprint
 
-FROM ${BUILD_FROM} AS main
+FROM ${BUILD_FROM}
 ENV LANG C.UTF-8
 ENV PYTHONPATH=/data/python
 ENV PATH=${PATH}:/data/python/bin
@@ -85,7 +85,7 @@ ARG USE_PYTHON_VERSION
 ARG CONFIG_DIR_SUFFIX
 ENV CONFIG_DIR_SUFFIX=${CONFIG_DIR_SUFFIX}
 # Install requirements to run
-RUN apk add --no-cache --virtual .necessary supervisor haproxy avahi-compat-libdns_sd dbus avahi ${USE_PYTHON_VERSION} python2 python3 postgresql-libs libjpeg ffmpeg
+RUN apk add --no-cache --virtual .necessary supervisor haproxy avahi-compat-libdns_sd dbus avahi python2 python3 postgresql-libs libjpeg ffmpeg
 # Copy data from filesystem and previous stages
 COPY --from=octoprint /data/python /root/python
 COPY --from=build-curaengine /sbin/CuraEngine /sbin/CuraEngine

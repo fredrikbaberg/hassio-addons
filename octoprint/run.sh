@@ -24,7 +24,7 @@ create_ingress_user() {
     bashio::log.info "Create ingress user"
     # echo "Create ingress user"
     new_password=`date +%s | sha256sum | base64 | head -c 32 ; echo`
-    octoprint --basedir /data/octoprint --config /config/octoprint/config.yaml user add homeassistant --password $new_password --admin # 2> /dev/null
+    octoprint --basedir /config/octoprint/ --config /config/octoprint/config.yaml user add homeassistant --password $new_password --admin # 2> /dev/null
 }
 
 create_config() {
