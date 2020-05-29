@@ -19,5 +19,6 @@
     "map": ["config:rw"],
     "options": {},
     "schema": {},
-    "image": "fredrikbaberg/octoprint-slim-{arch}-image"
+    "image": "fredrikbaberg/octoprint-slim-{arch}-image",
+    "stage": "deprecated"
 }

@@ -1,15 +1,8 @@
 # OctoPrint add-on for Home Assistant
 
-**This version is highly experimental! Major changes can occur. `Dev` and `slim` should be more stable.**
-
 **Ensure you have a backup of your configuration.**
 
 This Addon-on allows you to run [OctoPrint](https://octoprint.org) on a device running [Home Assistant](https://home-assistant.io/).
-
-This is the latest version of the addon, I'll try to test changes here before I update other versions. The `Experimental` part of the name was added recently (April 2020), since the previous version was not installable due to change of configuration files. More recent versions of Home Assistant is supported(0.108.0, arbitrary number and mostly a safeguard - I do not plan to work on backwards-compatibility).
-
-This version has been unavailable for some time due to an old configuration, I've been hesitant to update since it could break.
-Now there has been some time, so I'll experiment with this version instead of "slim" or "dev". This will be limited to newer versions of Home Assistant (0.108.0 for now, arbitrary number and mostly a safeguard - I do not plan to work on backwards-compatibility but can set a previous version if it can be confirmed to work). Expect breaking changes, and do make a **backup** before updating.
 
 ## Setup
 
@@ -20,6 +13,10 @@ Now there has been some time, so I'll experiment with this version instead of "s
 * OctoPrint config is stored in `config/octoprint` folder, however, plugins and users are stored in persistent folder (should not be accessible for the user). This means plugins will not be kept on re-install.
 
 * CuraEngine Legacy is installed but not the plugin, see [OctoPrint CuraLegacy plugin](https://plugins.octoprint.org/plugins/curalegacy/).
+
+* If you see a "pip not found" error, try to reload the page or restart the Add-On.
+
+* When you specify port for your printer, you could use the serial ID instead (`/dev/serial/by-id/...`)
 
 ## Credentials
 
@@ -38,7 +35,7 @@ Some notes regarding the software and versions.
 Not all software is installed for all images.
 
 - OctoPrint
-Installed in a `venv` from PyPI. The Add-on uses a pre-defined version of OctoPrint (currently 1.4.0 for `Experimental`). However, it should now be possible to update from within OctoPrint.
+Installed in a `venv` from PyPI. The Add-on uses a pre-defined version of OctoPrint (currently 1.4.0). However, it should now be possible to update from within OctoPrint.
 
 - CuraEngine
 A legacy version of CuraEngine is required to use Cura as slicer from within OctoPrint, [for more information see OctoPrint CuraLegacy plugin](https://plugins.octoprint.org/plugins/curalegacy/).
