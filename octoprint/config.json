@@ -21,7 +21,6 @@
     "schema": {
         "request_reset_data": "bool?"
     },
-    "image": "fredrikbaberg/octoprint-{arch}-image",
     "ingress": true,
     "panel_icon": "mdi:printer-3d",
     "panel_title": "OctoPrint",
