@@ -1,5 +1,10 @@
 # Changelog
 
+[0.3.0-beta-2]
+
+Changes:
+- Install supervisor with pip, should remove python3 requirement
+
 [0.3.0-beta-1]
 
 Preparation to use this as main version from now on.
