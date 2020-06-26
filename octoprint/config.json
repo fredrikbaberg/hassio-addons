@@ -24,5 +24,6 @@
     "ingress": true,
     "panel_icon": "mdi:printer-3d",
     "panel_title": "OctoPrint",
+    "image": "fredrikbaberg/octoprint-{arch}-image",
     "stage": "stable"
 }
