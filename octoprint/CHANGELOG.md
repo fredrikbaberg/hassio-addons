@@ -1,5 +1,10 @@
 # Changelog
 
+[0.3.0-beta-3]
+
+Changes:
+- Revert to supervisor installed through apk (did not restart properly otherwise)
+
 [0.3.0-beta-2]
 
 Changes:
