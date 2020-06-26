@@ -107,5 +107,5 @@ create_ingress_user # Ensure Ingress user (homeassistant) exist. This should not
 set_ingress_entry
 bashio::log.info "Launch"
 # echo "Launch"
-supervisord -c /etc/supervisord.conf
+/data/python/bin/supervisord -c /etc/supervisord.conf
 tail -f /tmp/octoprint-stdout*
