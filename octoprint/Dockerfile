@@ -1,7 +1,7 @@
 ARG BUILD_FROM="homeassistant/amd64-base:latest"
 
 ARG OCTOPRINT_VERSION="1.4.0"
-ARG CONFIG_DIR_SUFFIX=""
+ARG CONFIG_DIR_SUFFIX="_experimental"
 ARG PIP_FLAGS="--no-cache-dir"
 ARG PYTHON_VERSION="python2"
 
@@ -44,8 +44,8 @@ ENV PYTHONPATH=/data/python
 ENV PATH=${PATH}:/data/python/bin
 ENV PYTHONUSERBASE=/data/python
 # Install requirements to run
-RUN apk add --no-cache --virtual .necessary supervisor haproxy ${PYTHON_VERSION} dbus avahi
-RUN apk add --no-cache --virtual .extra avahi-compat-libdns_sd postgresql-libs libjpeg ffmpeg zlib
+RUN apk add --no-cache --virtual .necessary haproxy ${PYTHON_VERSION} dbus avahi
+RUN apk add --no-cache --virtual .extra avahi-compat-libdns_sd postgresql-libs libjpeg ffmpeg
 # Install OctoPrint
 RUN echo "Installing OctoPrint" \
     && apk add --no-cache --virtual .build-dependencies \
@@ -56,6 +56,7 @@ RUN echo "Installing OctoPrint" \
     && source /data/python/bin/activate \
     && pip install ${PIP_FLAGS} --upgrade pip \
     && pip install ${PIP_FLAGS} OctoPrint==${OCTOPRINT_VERSION} \
+    && pip install supervisor \
     # The following steps, until cleanup, are optional and could be skipped if small size is required (loosing pybonjour, psycopg2 [for filamentmanager] )
     && if [ "${PYTHON_VERSION}" = "python2" ]; then \
             pip install ${PIP_FLAGS} https://goo.gl/SxQZ06 ; \
