@@ -65,6 +65,7 @@ RUN echo "Installing OctoPrint" \
     && pip install ${PIP_FLAGS} psycopg2 \
     # Cleanup and move output /root/python
     && find /data/python | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
+    && find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && rm -rf /root/.cache \
     && apk del --no-cache .build-dependencies \
     && mv /data/python /root/python
