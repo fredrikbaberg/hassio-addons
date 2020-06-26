@@ -44,7 +44,7 @@ ENV PYTHONPATH=/data/python
 ENV PATH=${PATH}:/data/python/bin
 ENV PYTHONUSERBASE=/data/python
 # Install requirements to run
-RUN apk add --no-cache --virtual .necessary haproxy ${PYTHON_VERSION} dbus avahi
+RUN apk add --no-cache --virtual .necessary haproxy ${PYTHON_VERSION} dbus avahi supervisor
 RUN apk add --no-cache --virtual .extra avahi-compat-libdns_sd postgresql-libs libjpeg ffmpeg
 # Install OctoPrint
 RUN echo "Installing OctoPrint" \
@@ -56,7 +56,7 @@ RUN echo "Installing OctoPrint" \
     && source /data/python/bin/activate \
     && pip install ${PIP_FLAGS} --upgrade pip \
     && pip install ${PIP_FLAGS} OctoPrint==${OCTOPRINT_VERSION} \
-    && pip install supervisor \
+    # && pip install supervisor \
     # The following steps, until cleanup, are optional and could be skipped if small size is required (loosing pybonjour, psycopg2 [for filamentmanager] )
     && if [ "${PYTHON_VERSION}" = "python2" ]; then \
             pip install ${PIP_FLAGS} https://goo.gl/SxQZ06 ; \
