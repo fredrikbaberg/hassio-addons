@@ -20,7 +20,7 @@ copy_data() {
         echo "Copy data to persistent location"
         # cp -R /root/python /data/
         tar -zxf /root/python.tar.gz -C /data/
-        # rm -rf /root/python.tar.gz
+        rm -rf /root/python.tar.gz
     fi
 }
 

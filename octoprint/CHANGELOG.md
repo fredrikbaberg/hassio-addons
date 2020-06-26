@@ -3,7 +3,8 @@
 [0.3.0-beta-2]
 
 Changes:
-- Install supervisor with pip, should remove python3 requirement
+- Install supervisor with pip (avoid two versions of Python)
+- Compress files, should reduce image size
 
 [0.3.0-beta-1]
 
