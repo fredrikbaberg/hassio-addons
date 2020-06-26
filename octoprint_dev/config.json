@@ -16,5 +16,6 @@
     "schema": {},
     "webui": "http://[HOST]:[PORT:5000]",
     "auto_uart": true,
-    "image": "fredrikbaberg/octoprint-dev-{arch}-image"
+    "image": "fredrikbaberg/octoprint-dev-{arch}-image",
+    "stage": "deprecated"
 }

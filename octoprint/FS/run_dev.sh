@@ -18,7 +18,9 @@ copy_data() {
     if [ ! -d /data/python ]; then
         # bashio::log.info "Copy data to persistent location"
         echo "Copy data to persistent location"
-        cp -R /root/python /data/
+        # cp -R /root/python /data/
+        tar -zxf /root/python.tar.gz -C /data/
+        # rm -rf /root/python.tar.gz
     fi
 }
 
@@ -106,5 +108,5 @@ create_ingress_user # Ensure Ingress user (homeassistant) exist. This should not
 set_ingress_entry
 # bashio::log.info "Launch"
 echo "Launch"
-/usr/bin/supervisord -c /etc/supervisord.conf
+supervisord -c /etc/supervisord.conf
 tail -f /tmp/octoprint-stdout*

@@ -1,5 +1,23 @@
 # Changelog
 
+[0.3.0-beta-2]
+
+Changes:
+- Install supervisor with pip, should remove python3 requirement
+
+[0.3.0-beta-1]
+
+Preparation to use this as main version from now on.
+
+Changes:
+- Remove `experimental` flag and from config directory
+- Install `zlib` by default
+
+Breaking changes on update:
+- Config folder was renamed (removed `_experimental`). To fix this:
+  - Rename folder from `octoprint_experimental` to `octoprint`
+  - Replace `octoprint_experimental` with `octoprint` in config file (`octoprint/config.yaml`)
+
 [0.3.0-beta-0]
 
 Same as previous alpha, just to indicate that this is what I intend to use as release.
