@@ -69,7 +69,9 @@ RUN echo "Installing OctoPrint" \
     && find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && rm -rf /root/.cache \
     && apk del --no-cache .build-dependencies \
-    && mv /data/python /root/python
+    && cd /data && tar -zcvf /root/python.tar.gz python \
+    && rm -rf /data/python
+    # && mv /data/python /root/python
 # Copy data from filesystem and previous stages
 COPY FS/ /
 COPY --from=curaengine-legacy /root/copy/ /
