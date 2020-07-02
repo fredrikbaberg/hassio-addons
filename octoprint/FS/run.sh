@@ -108,4 +108,4 @@ set_ingress_entry
 bashio::log.info "Launch"
 # echo "Launch"
 supervisord -c /etc/supervisord.conf
-tail -f /tmp/octoprint-stdout*
+tail -f /tmp/*
