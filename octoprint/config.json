@@ -3,7 +3,7 @@
     "version": "0.3.0-beta-8",
     "slug": "octoprint",
     "description": "OctoPrint add-on for Home Assistant",
-    "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
+    "arch": ["armv7", "amd64", "armhf", "aarch64", "i386"],
     "url": "https://github.com/fredrikbaberg/hassio-addons",
     "startup": "application",
     "webui": "http://[HOST]:[PORT:5000]",
