@@ -83,11 +83,11 @@ create_config() {
         # echo "system:" >> config.yaml
         # echo "  actions:" >> config.yaml
         # echo "  - action: streamon" >> config.yaml
-        # echo "    command: supervisorctl start mjpeg-streamer" >> config.yaml
+        # echo "    command: supervisorctl start mjpg-streamer" >> config.yaml
         # echo "    confirm: false" >> config.yaml
         # echo "    name: Start webcam" >> config.yaml
         # echo "  - action: streamoff" >> config.yaml
-        # echo "    command: supervisorctl stop mjpeg-streamer" >> config.yaml
+        # echo "    command: supervisorctl stop mjpg-streamer" >> config.yaml
         # echo "    confirm: false" >> config.yaml
         # echo "    name: Stop webcam" >> config.yaml
         
