@@ -35,15 +35,9 @@ webcam:
     ffmpeg: /usr/bin/ffmpeg
 system:
     actions:
-        -   action: mjpguvcstart
-            command: supervisorctl start mjpg-streamer-uvc
-            name: Start mjpg-streamer uvc
-        -   action: mjpguvcstop
-            command: supervisorctl stop mjpg-streamer-uvc
-            name: Stop mjpg-streamer uvc
-        -   action: mjpgrpistop
-            command: supervisorctl start mjpg-streamer-raspicam
-            name: Start mjpg-streamer raspicam
-        -   action: mjpgrpistart
-            command: supervisorctl stop mjpg-streamer-raspicam
-            name: Stop mjpg-streamer raspicam
+        -   action: mjpgstart
+            command: supervisorctl start mjpg-streamer
+            name: Start mjpg-streamer
+        -   action: mjpgstop
+            command: supervisorctl stop mjpg-streamer
+            name: Stop mjpg-streamer
