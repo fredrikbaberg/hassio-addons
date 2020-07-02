@@ -84,7 +84,6 @@ RUN apk add --no-cache --virtual .build-dependencies build-base cmake linux-head
     # && cp /usr/local/bin/mjpg_streamer /root/copy/usr/local/bin/ \
     # Cleanup
     && apk del --no-cache .build-dependencies \
-    && rm -rf /tmp \
     && rm -rf /mjpg-streamer-master
 # Copy data from filesystem and previous stages
 COPY FS/ /
