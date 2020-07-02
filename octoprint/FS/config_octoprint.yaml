@@ -1,0 +1,35 @@
+accessControl:
+    autologinAs: homeassistant
+    autologinLocal: true
+    localNetworks:
+        - 172.30.32.2
+devel:
+    virtualPrinter:
+        enabled: true
+folder:
+    # Non-user-accessible folders
+    data: /data/octoprint/data
+    generated: /data/octoprint/generated
+    logs: /data/octoprint/logs
+    plugins: /data/octoprint/plugins
+    virtualSd: /data/octoprint/virtualSd
+    # User-accessible folders
+    printerProfiles: /config/octoprint/printerProfiles
+    slicingProfiles: /config/octoprint/slicingProfiles
+    scripts: /config/octoprint/scripts
+    timelapse: /config/octoprint/timelapse
+    timelapse_tmp: /config/octoprint/timelapse/tmp
+    translations: /config/octoprint/translations
+    uploads: /config/octoprint/uploads
+    watched: /config/octoprint/watched
+plugins:
+    cura:
+        cura_engine: /sbin/CuraEngine
+        debug_logging: false
+server:
+    commands:
+        serverRestartCommand: supervisorctl restart octoprint
+        systemRestartCommand: /restart.sh
+        systemShutdownCommand: /shutdown.sh
+webcam:
+    ffmpeg: /usr/bin/ffmpeg
