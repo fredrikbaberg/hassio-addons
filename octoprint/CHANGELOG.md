@@ -1,5 +1,11 @@
 # Changelog
 
+[0.3.0-beta-4]
+
+Changes:
+- Add mjpg-streamer to supervisord
+- Add system access to camera
+
 [0.3.0-beta-3]
 
 Changes:
