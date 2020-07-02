@@ -18,21 +18,21 @@ RUN apk add --no-cache --virtual .build-dependencies build-base libexecinfo-dev 
     && rm -rf /tmp \
     && apk del --no-cache .build-dependencies
 
-FROM alpine:latest AS mjpg-streamer
-WORKDIR /tmp
-RUN apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libexecinfo-dev libjpeg-turbo-dev \
-    && wget -qO- https://github.com/jacksonliam/mjpg-streamer/archive/master.tar.gz | tar xz \
-    && cd mjpg-streamer-master/mjpg-streamer-experimental/ \
-    && make --quiet \
-    && make install --quiet \
-    # Move files to /root/ for easier copy.
-    && mkdir -p /root/copy/usr/local/lib/mjpg-streamer \
-    && cp *.so /root/copy/usr/local/lib/mjpg-streamer/ \
-    && mkdir -p /root/copy/usr/local/bin \
-    && cp /usr/local/bin/mjpg_streamer /root/copy/usr/local/bin/ \
-    # Cleanup
-    && apk del --no-cache .build-dependencies \
-    && rm -rf /tmp
+# FROM alpine:latest AS mjpg-streamer
+# WORKDIR /tmp
+# RUN apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libexecinfo-dev libjpeg-turbo-dev \
+#     && wget -qO- https://github.com/jacksonliam/mjpg-streamer/archive/master.tar.gz | tar xz \
+#     && cd mjpg-streamer-master/mjpg-streamer-experimental/ \
+#     && make --quiet \
+#     && make install --quiet \
+#     # Move files to /root/ for easier copy.
+#     && mkdir -p /root/copy/usr/local/lib/mjpg-streamer \
+#     && cp *.so /root/copy/usr/local/lib/mjpg-streamer/ \
+#     && mkdir -p /root/copy/usr/local/bin \
+#     && cp /usr/local/bin/mjpg_streamer /root/copy/usr/local/bin/ \
+#     # Cleanup
+#     && apk del --no-cache .build-dependencies \
+#     && rm -rf /tmp
 
 FROM ${BUILD_FROM} AS final
 ARG OCTOPRINT_VERSION
@@ -72,10 +72,24 @@ RUN echo "Installing OctoPrint" \
     && cd /data && tar -zcf /root/python.tar.gz python \
     && rm -rf /data/python
     # && mv /data/python /root/python
+RUN apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libexecinfo-dev libjpeg-turbo-dev \
+    && wget -qO- https://github.com/jacksonliam/mjpg-streamer/archive/master.tar.gz | tar xz \
+    && cd mjpg-streamer-master/mjpg-streamer-experimental/ \
+    && make --quiet \
+    && make install --quiet \
+    # Move files to /root/ for easier copy.
+    # && mkdir -p /usr/local/lib/mjpg-streamer \
+    # && cp *.so /usr/local/lib/mjpg-streamer/ \
+    # && mkdir -p /root/copy/usr/local/bin \
+    # && cp /usr/local/bin/mjpg_streamer /root/copy/usr/local/bin/ \
+    # Cleanup
+    && apk del --no-cache .build-dependencies \
+    && rm -rf /tmp \
+    && rm -rf /mjpg-streamer-master
 # Copy data from filesystem and previous stages
 COPY FS/ /
 COPY --from=curaengine-legacy /root/copy/ /
-COPY --from=mjpg-streamer /root/copy /
+# COPY --from=mjpg-streamer /root/copy /
 # Make scripts executable
 RUN chmod a+x /*.sh
 RUN chmod a+x /octoprint/scripts/*.sh
