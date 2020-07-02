@@ -72,16 +72,12 @@ RUN echo "Installing OctoPrint" \
     && cd /data && tar -zcf /root/python.tar.gz python \
     && rm -rf /data/python
     # && mv /data/python /root/python
-RUN apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libexecinfo-dev libjpeg-turbo-dev \
+# Might need raspberrypi-dev for mjpg-streamer input_rpicam.so, install if found in search.
+RUN apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libexecinfo-dev libjpeg-turbo-dev $(apk search -q --no-cache -x raspberrypi-dev) \
     && wget -qO- https://github.com/jacksonliam/mjpg-streamer/archive/master.tar.gz | tar xz \
     && cd mjpg-streamer-master/mjpg-streamer-experimental/ \
     && make --quiet \
     && make install --quiet \
-    # Move files to /root/ for easier copy.
-    # && mkdir -p /usr/local/lib/mjpg-streamer \
-    # && cp *.so /usr/local/lib/mjpg-streamer/ \
-    # && mkdir -p /root/copy/usr/local/bin \
-    # && cp /usr/local/bin/mjpg_streamer /root/copy/usr/local/bin/ \
     # Cleanup
     && apk del --no-cache .build-dependencies \
     && rm -rf /mjpg-streamer-master
