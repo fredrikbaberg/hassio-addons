@@ -48,12 +48,22 @@ set_ingress_entry() {
     sed -e '/http-request set-header X-Script-Name/s/^/#/g' -i /etc/haproxy/haproxy.cfg
 }
 
+set_mjpg_args(){
+    echo '#!/bin/bash' > test.sh
+    INPUT="input_uvc.so"
+    OUTPUT="output_http.so -w /config/octoprint/www -p 8080"
+    echo "mjpg_streamer -i \"${INPUT}\" -o \"${OUTPUT}\"" >> /config/octoprint/scripts/mjpgstreamer.sh
+    chmod +x /config/octoprint/scripts/mjpgstreamer.sh
+}
+
 # reset_data_if_requested
 copy_data
 create_config
 create_ingress_user # Ensure Ingress user (homeassistant) exist. This should not modify existing users.
 set_ingress_entry
+set_mjpg_args
 # bashio::log.info "Launch"
+export TEST="t1"
 echo "Launch"
 supervisord -c /etc/supervisord.conf
 tail -f /tmp/*
