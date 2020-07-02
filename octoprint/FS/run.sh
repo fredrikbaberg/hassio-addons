@@ -48,7 +48,7 @@ set_ingress_entry() {
 }
 
 set_mjpg_args(){
-    echo '#!/bin/bash' > test.sh
+    echo '#!/bin/bash' > /config/octoprint/scripts/mjpgstreamer.sh
     INPUT=$(bashio::config 'mjpg_input')
     OUTPUT=$(bashio::config 'mjpg_output')
     echo "mjpg_streamer -i \"${INPUT}\" -o \"${OUTPUT}\"" >> /config/octoprint/scripts/mjpgstreamer.sh
