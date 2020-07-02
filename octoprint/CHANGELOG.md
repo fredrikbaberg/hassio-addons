@@ -1,10 +1,12 @@
 # Changelog
 
-[0.3.0-beta-4]
+[0.3.0-beta-5]
 
 Changes:
 - Add mjpg-streamer to supervisord
 - Add system access to camera
+- Add both UVC and raspicam options to mjpg-streamer
+- Output all logs, not just octoprint
 
 [0.3.0-beta-3]
 
