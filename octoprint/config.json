@@ -1,6 +1,6 @@
 {
     "name": "Octoprint",
-    "version": "0.3.0-beta-3",
+    "version": "0.3.0-beta-4",
     "slug": "octoprint",
     "description": "OctoPrint add-on for Home Assistant",
     "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
@@ -25,5 +25,6 @@
     "panel_icon": "mdi:printer-3d",
     "panel_title": "OctoPrint",
     "image": "fredrikbaberg/octoprint-{arch}-image",
-    "stage": "stable"
+    "stage": "stable",
+    "video": true
 }
