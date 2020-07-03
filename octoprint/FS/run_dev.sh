@@ -49,8 +49,12 @@ set_ingress_entry() {
 }
 
 set_mjpg_args(){
-    sed -i 's+/usr/bin/with-contenv bashio+/bin/sh+g' /mjpgstreamer.sh
-    sed -i 's+^exec mjpg_streamer.*+exec mjpg_streamer -i \"input_file.so -f /www_mjpg -e\" -o \"output_http.so -w /www_mjpg -p 8080\"+g' /mjpgstreamer.sh
+    # sed -i 's+/usr/bin/with-contenv bashio+/bin/sh+g' /mjpgstreamer.sh
+    INPUT="input_file.so -f /www_mjpg -e"
+    OUTPUT="output_http.so -w /www_mjpg -p 8080"
+    sed -i "s+%%mjpg_input%%+${INPUT}+g" /mjpgstreamer.sh
+    sed -i "s+%%mjpg_output%%+${OUTPUT}+g" /mjpgstreamer.sh
+    cp /mjpgstreamer.sh /config/octoprint/scripts/mjpgstreamer_current.sh
 }
 
 # reset_data_if_requested
