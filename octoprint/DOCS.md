@@ -8,8 +8,9 @@ In order to access OctoPrint without Ingress, specify a port in the port section
 
 ## Camera support?
 
-Everything should now be in place for camera support. In the options for the addon you can specify input and parameters for mjpg-streamer.
-In order to access the camera stream you have to specify a port in the port section of the addon, Ingress is not supported for the video stream. You can either expose OctoPrint UI (5000) and use /webcam/ in the URL, or only expose mjpg-streamer (8080).
+Everything should now be in place for basic camera support. In the options for the addon you can specify input and parameters for mjpg-streamer.
+In order to access the camera stream you have to specify a port in the port section of the addon, the stream does not work through Ingress. You can either expose only the stream (8080) or full OctoPrint UI (5000) and use /webcam/ in the URL.
+Note that for screenshots you do not need to open any ports!
 You may have to do some additional configuration for it to work, the following excerpt from config.yaml may be helpful:
 
 ```
@@ -33,5 +34,7 @@ webcam:
   - Try to refresh the page, or restart the Add-On.
 - I have multiple devices connected, ttyUSB0 is not always the correct device?
   - Try to specify the device ID. In Home Assistant this can be found under "Supervisor" - "System" - "Hardware" `/dev/serial/by-id/usb-...`
+- There is no webcam stream?
+  - Are you accessing through Ingress? Right now it does not seem possible to have the video stream visible through Ingress.
 - How do I get Raspberry Pi camera to work on Home Assistant?
   - Probably not recommended, but based on [https://raspberrypi.stackexchange.com/a/51440](https://raspberrypi.stackexchange.com/a/51440) I did the steps related to `start_x.elf` and `fixup_x.dat`. Note that I skipped the `gpu_mem`, `apk`, `modprobe` and `v4l2-ctl` parts.
