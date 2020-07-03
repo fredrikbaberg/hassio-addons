@@ -20,7 +20,7 @@
     "homeassistant": "0.108.0",
     "map": ["config:rw"],
     "options": {
-        "mjpg_input": "input_uvc.so",
+        "mjpg_input": "input_uvc.so -n",
         "mjpg_output": "output_http.so -w /www_mjpg"
     },
     "schema": {
