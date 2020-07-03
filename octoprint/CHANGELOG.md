@@ -1,5 +1,11 @@
 # Changelog
 
+[0.3.0-beta-6]
+
+Changes:
+- Initial webcam support (video stream requires specifying port)
+- Add option to only expose mjpg-streamer
+
 [0.3.0-beta-5]
 
 Changes:

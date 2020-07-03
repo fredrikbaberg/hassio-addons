@@ -52,7 +52,6 @@ set_mjpg_args(){
     OUTPUT=$(bashio::config 'mjpg_output')
     sed -i "s+%%mjpg_input%%+${INPUT}+g" /mjpgstreamer.sh
     sed -i "s+%%mjpg_output%%+${OUTPUT}+g" /mjpgstreamer.sh
-    cp /mjpgstreamer.sh /config/octoprint/scripts/mjpgstreamer_current.sh
 }
 
 reset_data_if_requested

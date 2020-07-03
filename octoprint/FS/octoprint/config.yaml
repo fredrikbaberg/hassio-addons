@@ -33,6 +33,7 @@ server:
         systemShutdownCommand: /shutdown.sh
 webcam:
     ffmpeg: /usr/bin/ffmpeg
+    snapshot: http://localhost:8080/?action=snapshot
 system:
     actions:
         -   action: mjpgstart
