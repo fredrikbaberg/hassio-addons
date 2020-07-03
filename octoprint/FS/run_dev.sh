@@ -49,9 +49,9 @@ set_ingress_entry() {
 }
 
 set_mjpg_args(){
-    echo '#!/bin/bash' > test.sh
+    echo '#!/bin/bash' > /config/octoprint/scripts/mjpgstreamer.sh
     INPUT="input_uvc.so"
-    OUTPUT="output_http.so -w /config/octoprint/www -p 8080"
+    OUTPUT="output_http.so -w /www_mjpg -p 8080"
     echo "mjpg_streamer -i \"${INPUT}\" -o \"${OUTPUT}\"" >> /config/octoprint/scripts/mjpgstreamer.sh
     chmod +x /config/octoprint/scripts/mjpgstreamer.sh
 }

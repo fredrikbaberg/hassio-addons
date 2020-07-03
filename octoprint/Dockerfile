@@ -79,6 +79,8 @@ RUN apk add --no-cache --virtual .build-dependencies build-base cmake linux-head
     && cd mjpg-streamer-master/mjpg-streamer-experimental/ \
     && make --quiet \
     && make install --quiet \
+    # Move files
+    && mv www/ /www_mjpg \
     # Cleanup
     && apk del --no-cache .build-dependencies \
     && rm -rf /mjpg-streamer-master
