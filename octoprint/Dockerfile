@@ -77,7 +77,7 @@ RUN apk add --no-cache --virtual .build-dependencies build-base cmake linux-head
     && apk add --no-cache $(apk search -q --no-cache -x raspberrypi-libs) \
     && wget -qO- https://github.com/jacksonliam/mjpg-streamer/archive/master.tar.gz | tar xz \
     && cd mjpg-streamer-master/mjpg-streamer-experimental/ \
-    && sed -i '23i\    target_include_directories(${PROJECT_NAME} PUBLIC mmal)' plugins/input_raspicam/CMakeLists.txt \
+    && sed -i '23i\    add_subdirectory( mmal )' plugins/input_raspicam/CMakeLists.txt \
     && make \
     && make install --quiet \
     # Move files
