@@ -73,7 +73,7 @@ RUN echo "Installing OctoPrint" \
     && rm -rf /data/python
     # && mv /data/python /root/python
 # Might need raspberrypi-dev for mjpg-streamer input_rpicam.so, install if found in search.
-RUN apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libexecinfo-dev libjpeg-turbo-dev $(apk search -q --no-cache -x linux-rpi-dev) $(apk search -q --no-cache -x raspberrypi-dev) $(apk search -q --no-cache -x linux-vanilla) \
+RUN apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libexecinfo-dev libjpeg-turbo-dev $(apk search -q --no-cache -x linux-vanilla-dev) $(apk search -q --no-cache -x raspberrypi-dev) \
     && apk add --no-cache $(apk search -q --no-cache -x raspberrypi-libs) \
     && wget -qO- https://github.com/jacksonliam/mjpg-streamer/archive/master.tar.gz | tar xz \
     && cd mjpg-streamer-master/mjpg-streamer-experimental/ \
