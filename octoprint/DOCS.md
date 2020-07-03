@@ -9,7 +9,7 @@ In order to access OctoPrint without Ingress, specify a port in the port section
 ## Camera support?
 
 Everything should now be in place for basic camera support. In the options for the addon you can specify input and parameters for mjpg-streamer.
-In order to access the camera stream you have to specify a port in the port section of the addon, the stream does not work through Ingress. You can either expose only the stream (8080) or full OctoPrint UI (5000) and use /webcam/ in the URL.
+In order to access the camera stream you have to specify a port in the port section of the addon, the stream does not work through Ingress. You can either expose only the stream (8000) or full OctoPrint UI (5000) and use /webcam/ in the URL.
 Note that for screenshots you do not need to open any ports!
 You may have to do some additional configuration for it to work, the following excerpt from config.yaml may be helpful:
 
