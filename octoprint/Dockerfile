@@ -77,7 +77,8 @@ RUN apk add --no-cache --virtual .build-dependencies build-base cmake linux-head
     && apk add --no-cache $(apk search -q --no-cache -x raspberrypi-libs) \
     && wget -qO- https://github.com/jacksonliam/mjpg-streamer/archive/master.tar.gz | tar xz \
     && cd mjpg-streamer-master/mjpg-streamer-experimental/ \
-    && make -DCMAKE_EXE_LINKER_FLAGS='-Wl,--no-as-needed' \
+    && sed -i '14iSET( CMAKE_SHARED_LINKER_FLAGS(-Wl, --no-as-needed))' plugins/input_raspicam/mmal_CMakeLists.txt \
+    && make \
     && make install --quiet \
     # Move files
     && mv www/ /www_mjpg \
