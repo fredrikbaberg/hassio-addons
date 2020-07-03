@@ -78,7 +78,6 @@ RUN apk add --no-cache --virtual .build-dependencies build-base cmake linux-head
     && wget -qO- https://github.com/jacksonliam/mjpg-streamer/archive/master.tar.gz | tar xz \
     && cd mjpg-streamer-master/mjpg-streamer-experimental/ \
     && sed -i '18i\    include_directories(mmal)' plugins/input_raspicam/CMakeLists.txt \
-    && sed -i '19i\    add_subdirectory(mmal)' plugins/input_raspicam/CMakeLists.txt \
     && make \
     && make install --quiet \
     # Move files
