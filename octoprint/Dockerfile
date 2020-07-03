@@ -80,7 +80,7 @@ RUN apk add --no-cache --virtual .build-dependencies build-base cmake linux-head
     && sed -i '20i\    set( BUILD_MMAL_APPS TRUE )' plugins/input_raspicam/CMakeLists.txt \
     # && sed -i 's/add_subdirectory(components)/#/g' plugins/input_raspicam/mmal/CMakeLists.txt \
     # && sed -i '19i\    add_subdirectory( mmal )' plugins/input_raspicam/CMakeLists.txt \
-    # && sed -i 's/target_link_libraries(input_raspicam mmal_core mmal_util mmal_vc_client vcos bcm_host)/target_link_libraries(input_raspicam mmal vcos bcm_host)/g' plugins/input_raspicam/CMakeLists.txt \
+    && sed -i 's/target_link_libraries(input_raspicam mmal_core mmal_util mmal_vc_client vcos bcm_host)/target_link_libraries(input_raspicam mmal vcos bcm_host)/g' plugins/input_raspicam/CMakeLists.txt \
     && make \
     && make install --quiet \
     # Move files
