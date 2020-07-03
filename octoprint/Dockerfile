@@ -77,7 +77,6 @@ RUN apk add --no-cache --virtual .build-dependencies build-base cmake linux-head
     && apk add --no-cache $(apk search -q --no-cache -x raspberrypi-libs) \
     && wget -qO- https://github.com/jacksonliam/mjpg-streamer/archive/master.tar.gz | tar xz \
     && cd mjpg-streamer-master/mjpg-streamer-experimental/ \
-    && sed -i '19i\    add_subdirectory(mmal)' plugins/input_raspicam/CMakeLists.txt \
     && sed -i 's/target_link_libraries(input_raspicam mmal_core mmal_util mmal_vc_client vcos bcm_host)/target_link_libraries(input_raspicam mmal vcos bcm_host)/g' plugins/input_raspicam/CMakeLists.txt \
     && make \
     && make install --quiet \
