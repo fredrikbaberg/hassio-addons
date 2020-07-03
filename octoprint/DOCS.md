@@ -35,6 +35,7 @@ webcam:
 - I have multiple devices connected, ttyUSB0 is not always the correct device?
   - Try to specify the device ID. In Home Assistant this can be found under "Supervisor" - "System" - "Hardware" `/dev/serial/by-id/usb-...`
 - There is no webcam stream?
-  - Are you accessing through Ingress? Right now it does not seem possible to have the video stream visible through Ingress.
+  - Are you accessing through Ingress? Right now it does not seem possible to have the video stream available through Ingress.
+  - Is mjpg-streamer running? You can launch it from OctoPrint UI, it´s in the same menu used to restart OctoPrint.
 - How do I get Raspberry Pi camera to work on Home Assistant?
   - Probably not recommended, but based on [https://raspberrypi.stackexchange.com/a/51440](https://raspberrypi.stackexchange.com/a/51440) I did the steps related to `start_x.elf` and `fixup_x.dat`. Note that I skipped the `gpu_mem`, `apk`, `modprobe` and `v4l2-ctl` parts.
