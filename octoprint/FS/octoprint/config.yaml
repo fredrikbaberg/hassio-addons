@@ -25,7 +25,6 @@ folder:
 plugins:
     cura:
         cura_engine: /sbin/CuraEngine
-        debug_logging: false
 server:
     commands:
         serverRestartCommand: supervisorctl restart octoprint

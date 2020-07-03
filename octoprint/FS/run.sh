@@ -36,18 +36,22 @@ create_config() {
         bashio::log.info "Create config"
         # echo "Create config"
         mkdir -p /config/octoprint
-        cd /octoprint && cp -R * /config/octoprint/
-        # cp /config_octoprint.yaml /config/octoprint/config.yaml
+        cp /octoprint/config.yaml /config/octoprint/config.yaml
+        # cd /octoprint && cp -R * /config/octoprint/
     fi
 }
 
 set_ingress_entry() {
+    bashio::log.info "Set Ingress entry"
+    # echo "Set Ingress entry"
     ingress_entry=$(bashio::addon.ingress_entry)
     sed -i "s#%%base_path%%#${ingress_entry}#g" /etc/haproxy/haproxy.cfg
     # sed -e '/http-request set-header X-Script-Name/s/^/#/g' -i /etc/haproxy/haproxy.cfg
 }
 
 set_mjpg_args(){
+    bashio::log.info "Set mjpg-streamer arguments"
+    # echo "Set mjpg-streamer arguments"
     INPUT=$(bashio::config 'mjpg_input')
     OUTPUT=$(bashio::config 'mjpg_output')
     sed -i "s+%%mjpg_input%%+${INPUT}+g" /mjpgstreamer.sh

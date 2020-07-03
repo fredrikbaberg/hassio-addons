@@ -73,17 +73,11 @@ RUN echo "Installing OctoPrint" \
     && rm -rf /data/python
     # && mv /data/python /root/python
 # Might need raspberrypi-dev for mjpg-streamer input_rpicam.so, install if found in search.
-RUN apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libexecinfo-dev libjpeg-turbo-dev $(apk search -q --no-cache -x raspberrypi-dev) \
-    && apk add --no-cache $(apk search -q --no-cache -x raspberrypi-libs) \
+RUN apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libexecinfo-dev libjpeg-turbo-dev \
     && wget -qO- https://github.com/jacksonliam/mjpg-streamer/archive/master.tar.gz | tar xz \
     && cd mjpg-streamer-master/mjpg-streamer-experimental/ \
-    && sed -i '20i\    set( BUILD_MMAL_APPS TRUE )' plugins/input_raspicam/CMakeLists.txt \
-    # && sed -i 's/add_subdirectory(components)/#/g' plugins/input_raspicam/mmal/CMakeLists.txt \
-    && sed -i '19i\    add_subdirectory( mmal )' plugins/input_raspicam/CMakeLists.txt \
-    && sed -i 's/target_link_libraries(input_raspicam mmal_core mmal_util mmal_vc_client vcos bcm_host)/target_link_libraries(input_raspicam mmal vcos bcm_host)/g' plugins/input_raspicam/CMakeLists.txt \
-    && export VERBOSE=defined \
-    && make \
-    && make install --quiet \
+    && make --silent \
+    && make install --silent \
     # Move files
     && mv www/ /www_mjpg \
     # Cleanup
