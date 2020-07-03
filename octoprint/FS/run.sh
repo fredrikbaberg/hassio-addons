@@ -67,4 +67,4 @@ set_mjpg_args
 bashio::log.info "Launch"
 # echo "Launch"
 supervisord -c /etc/supervisord.conf
-tail -f /tmp/*
+tail -f /tmp/*-stdout*.log
