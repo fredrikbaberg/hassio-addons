@@ -49,11 +49,8 @@ set_ingress_entry() {
 }
 
 set_mjpg_args(){
-    echo '#!/bin/bash' > /config/octoprint/scripts/mjpgstreamer.sh
-    INPUT="input_file.so -f /www_mjpg"
-    OUTPUT="output_http.so -w /www_mjpg -p 8080"
-    echo "mjpg_streamer -i \"${INPUT}\" -o \"${OUTPUT}\"" >> /config/octoprint/scripts/mjpgstreamer.sh
-    chmod +x /config/octoprint/scripts/mjpgstreamer.sh
+    sed -i 's+/usr/bin/with-contenv bashio+/bin/sh+g' /mjpgstreamer.sh
+    sed -i 's+^exec mjpg_streamer.*+exec mjpg_streamer -i \"input_file.so -f /www_mjpg -e\" -o \"output_http.so -w /www_mjpg -p 8080\"+g' /mjpgstreamer.sh
 }
 
 # reset_data_if_requested
@@ -63,7 +60,6 @@ create_ingress_user # Ensure Ingress user (homeassistant) exist. This should not
 set_ingress_entry
 set_mjpg_args
 # bashio::log.info "Launch"
-export TEST="t1"
 echo "Launch"
 supervisord -c /etc/supervisord.conf
 tail -f /tmp/*

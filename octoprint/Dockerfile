@@ -90,7 +90,6 @@ COPY --from=curaengine-legacy /root/copy/ /
 # COPY --from=mjpg-streamer /root/copy /
 # Make scripts executable
 RUN chmod a+x /*.sh
-RUN chmod a+x /octoprint/scripts/*.sh
 RUN dos2unix /run_dev.sh # For development purposes
 RUN echo "Update config directory for all files" \
     && sed -i "s#/config/octoprint#/config/octoprint${CONFIG_DIR_SUFFIX}#g" /etc/supervisord.conf \
