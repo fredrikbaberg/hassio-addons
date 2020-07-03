@@ -73,15 +73,10 @@ RUN echo "Installing OctoPrint" \
     && rm -rf /data/python
     # && mv /data/python /root/python
 # Might need raspberrypi-dev for mjpg-streamer input_rpicam.so, install if found in search.
-RUN apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libexecinfo-dev libjpeg-turbo-dev patch $(apk search -q --no-cache -x raspberrypi-dev) \
+RUN apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libexecinfo-dev libjpeg-turbo-dev $(apk search -q --no-cache -x raspberrypi-dev) \
     && apk add --no-cache $(apk search -q --no-cache -x raspberrypi-libs) \
     && wget -qO- https://github.com/jacksonliam/mjpg-streamer/archive/master.tar.gz | tar xz \
-    && cd mjpg-streamer-master \
-    && wget https://github.com/jacksonliam/mjpg-streamer/pull/68.patch \
-    && patch -p1 < 68.patch \
-    && cd mjpg-streamer-experimental/ \
-    # && sed -i '14iSET(  "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--no-as-needed" )' plugins/input_raspicam/mmal/CMakeLists.txt \
-    # && sed -i '12i\    SET( CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--no-as-needed")' plugins/input_raspicam/CMakeLists.txt \
+    && cd mjpg-streamer-master/mjpg-streamer-experimental/ \
     && make \
     && make install --quiet \
     # Move files
