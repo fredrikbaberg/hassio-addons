@@ -1,41 +1,81 @@
 # Documentation
 
-## Access
+## Configuration
 
-There is a default user created called `homeassistant`, this is for access through Ingress. The password is randomized at first launch.
+Configuration is only needed for camera support.
 
-In order to access OctoPrint without Ingress, specify a port in the port section of the addon.
+- `mjpg_input`: Specify input arguments for mjpg_streamer.
+- `mjpg_output`: Specify output arguments for mjpg_streamer.
 
-## Camera support?
+### Network
 
-Everything should now be in place for basic camera support. In the options for the addon you can specify input and parameters for mjpg-streamer.
-In order to access the camera stream you have to specify a port in the port section of the addon, the stream does not work through Ingress. You can either expose only the stream (8000) or full OctoPrint UI (5000) and use /webcam/ in the URL.
-Note that for screenshots you do not need to open any ports!
-You may have to do some additional configuration for it to work, the following excerpt from config.yaml may be helpful:
+Two ports can be specified, both are disabled by default.
+
+- WebUI: Used to connect to OctoPrint outside of Ingress. E.g. have a slicer connect to OctoPrint.
+- mjpg-streamer: Port for mjpg-streamer to be externally available.
+
+
+## How to use
+
+Start the addon. First setup assumes Ingress is used.
+There is a default user (`homeassistant`) used for Ingress, the password is randomly generated on first launch. If this user is removed it will be re-created on next restart.
+
+If you need external access (e.g. connect from a slicer such as Cura) you need to set a port for WebUI (disabled by default). In case you need access outside of Ingress, feel free to change the password of user `homeassistant` or create a new user.
+
+OctoPrint config is stored in `config/octoprint` folder, however, plugins are not. If you reinstall the addon plugins will be lost (unless you use a backup).
+
+### Slicer
+
+CuraEngine Legacy is installed, in case you need to slice from within OctoPrint. A plugin is needed to use this, see [OctoPrint CuraLegacy plugin](https://plugins.octoprint.org/plugins/curalegacy/).
+
+### Credentials
+
+Through Ingress no password should be required. The initial password for user `homeassistant` is randomly generated, access OctoPrint through Ingress in order to create a new user or set a new password.
+
+### Updates
+
+Make sure to make a backup before updating. Backup can be created from within OctoPrint WebUI.
+
+### Camera
+
+Basic camera support should now be in place. Snapshots should work without opening any port. Video stream requires at least one of the two ports enabled (5000/`WebUI` or 8000/`mjpg-streamer`).
+Some additional configuration may be needed, the following excerpt from `config.yaml` may be helpful:
 
 ```
-system:
-    actions:
-    -   action: mjpgstart
-        command: supervisorctl start mjpg-streamer
-        name: Start mjpg-streamer
-    -   action: mjpgstop
-        command: supervisorctl stop mjpg-streamer
-        name: Stop mjpg-streamer
 webcam:
     ffmpeg: /usr/bin/ffmpeg
     snapshot: http://localhost:8080/?action=snapshot
     stream: http://<device IP address>:5000/webcam/?action=stream
 ```
 
-## FAQ
+### Q and A
 
-- `pip` is not found?
+- `pip` not found?
   - Try to refresh the page, or restart the Add-On.
-- I have multiple devices connected, ttyUSB0 is not always the correct device?
-  - Try to specify the device ID. In Home Assistant this can be found under "Supervisor" - "System" - "Hardware" `/dev/serial/by-id/usb-...`
-- There is no webcam stream?
-  - Are you accessing through Ingress? Right now it does not seem possible to have the video stream available through Ingress.
-  - Is mjpg-streamer running? You can launch it from OctoPrint UI, it´s in the same menu used to restart OctoPrint.
-- How do I get Raspberry Pi camera to work on Home Assistant?
-  - Probably not recommended, but based on [https://raspberrypi.stackexchange.com/a/51440](https://raspberrypi.stackexchange.com/a/51440) I did the steps related to `start_x.elf` and `fixup_x.dat`. Note that I skipped the `gpu_mem`, `apk`, `modprobe` and `v4l2-ctl` parts.
+- I have multiple devices, ttyUSB0 is not always the correct device?
+  - Use device ID instead. In Home Assistant this can be found under "Supervisor" - "System" - "Hardware" `/dev/serial/by-id/usb-...`
+- Camera stream is not visible?
+  - Is `mjpg-streamer` running? It can be started from OctoPrint UI, same menu as for stop and restart.
+  - Are you accessing through Ingress? Try through WebUI (set port in configuration).
+- How do I reset data?
+  - You can delete the folder `config/octoprint` to reset settings.
+  - To fully reset installed plugins: add `request_reset_data: true` in configuration, restart addon, then remove the line again. Or uninstall and reinstall the addon.
+- How do I get Raspberry Pi camera to work in Home Assistant?
+  - Probably not officially supported, but based on [https://raspberrypi.stackexchange.com/a/51440](https://raspberrypi.stackexchange.com/a/51440) I did the steps related to `start_x.elf` and `fixup_x.dat`. Note that I skipped the `gpu_mem`, `apk`, `modprobe` and `v4l2-ctl` parts.
+
+## Versions
+
+Some notes regarding the software and versions.
+Not all software is installed for all images.
+
+- OctoPrint
+Installed in a `venv` from PyPI. The Add-on uses a pre-defined version of OctoPrint (currently 1.4.0), however, it should be possible to install updates.
+
+- CuraEngine
+A legacy version of CuraEngine is required to use Cura as slicer from within OctoPrint, for more information see [OctoPrint CuraLegacy plugin](https://plugins.octoprint.org/plugins/curalegacy/).
+
+- PyBonjour
+Not available from PyPI, so installed from external source. Port configuration probably prevents discovery.
+
+- mjpg-streamer
+Compiled from [https://github.com/jacksonliam/mjpg-streamer](https://github.com/jacksonliam/mjpg-streamer).
