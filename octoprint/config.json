@@ -1,29 +1,37 @@
 {
-    "name": "Octoprint Experimental",
-    "version": "0.3.0-beta-0",
+    "name": "Octoprint",
+    "version": "0.3.0",
     "slug": "octoprint",
     "description": "OctoPrint add-on for Home Assistant",
-    "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
+    "arch": ["armv7", "amd64", "armhf", "aarch64", "i386"],
     "url": "https://github.com/fredrikbaberg/hassio-addons",
     "startup": "application",
     "webui": "http://[HOST]:[PORT:5000]",
     "boot": "manual",
     "ports": {
-        "5000/tcp": null
+        "5000/tcp": null,
+        "8000/tcp": null
     },
     "ports_description": {
-        "5000/tcp": "WebUI (Not required for Ingress)"
+        "5000/tcp": "WebUI (Not required for Ingress)",
+        "8000/tcp": "mjpg-streamer (could also use WebUI/webcam/)"
     },
     "auto_uart": true,
     "homeassistant": "0.108.0",
     "map": ["config:rw"],
-    "options": {},
-    "schema": {
-        "request_reset_data": "bool?"
+    "options": {
+        "mjpg_input": "input_uvc.so -n",
+        "mjpg_output": "output_http.so -w /www_mjpg"
     },
-    "image": "fredrikbaberg/octoprint-{arch}-image",
+    "schema": {
+        "request_reset_data": "bool?",
+        "mjpg_input": "str",
+        "mjpg_output": "str"
+    },
     "ingress": true,
     "panel_icon": "mdi:printer-3d",
     "panel_title": "OctoPrint",
-    "stage": "experimental"
+    "image": "fredrikbaberg/octoprint-{arch}-image",
+    "stage": "stable",
+    "video": true
 }

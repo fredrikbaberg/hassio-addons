@@ -1,6 +1,10 @@
 # Changelog
 
 [0.2.7]
+
+Added deprecated status for now.
+
+[0.2.7]
 - Works with HassOS
 - Bonjour enabled
 - Ready for camera support

@@ -1,6 +1,10 @@
 # Changelog
 
 [0.0.4]
+
+Added deprecated status for now.
+
+[0.0.4]
 - Correction of exposed ports.
 - Update to OctoPrint 1.3.11
 
