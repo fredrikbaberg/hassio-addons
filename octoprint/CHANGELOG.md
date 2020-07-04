@@ -5,6 +5,10 @@
 Changes:
 - Initial webcam support (video stream requires specifying port)
 - Add option to only expose mjpg-streamer
+- Copy config.yaml instead of generate
+- mjpg-streamer input_raspicam removed
+- Modified CuraEngine build (internal change)
+- Only output stdout log files
 
 [0.3.0-beta-5]
 
