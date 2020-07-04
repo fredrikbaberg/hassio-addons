@@ -13,12 +13,12 @@ folder:
     logs: /data/octoprint/logs
     plugins: /data/octoprint/plugins
     virtualSd: /data/octoprint/virtualSd
+    timelapse_tmp: /data/octoprint/timelapse/tmp
     # User-accessible folders
     printerProfiles: /config/octoprint/printerProfiles
     slicingProfiles: /config/octoprint/slicingProfiles
     scripts: /config/octoprint/scripts
     timelapse: /config/octoprint/timelapse
-    timelapse_tmp: /config/octoprint/timelapse/tmp
     translations: /config/octoprint/translations
     uploads: /config/octoprint/uploads
     watched: /config/octoprint/watched
