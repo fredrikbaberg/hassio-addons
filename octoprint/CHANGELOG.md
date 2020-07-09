@@ -1,5 +1,10 @@
 # Changelog
 
+[0.3.1]
+
+Modify reset option to only delete Python install.
+Note: quick fix, should only affect reset script but do be careful. Backup before upgrade, if possible.
+
 [0.3.0]
 
 First _"stable"_ version, other versions of this addon (`dev`, `slim`) are to be considered deprecated.

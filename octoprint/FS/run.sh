@@ -8,7 +8,7 @@ echo "run.sh"
 
 reset_data_if_requested(){
     if bashio::config.true 'request_reset_data'; then
-        rm -rf /data/*
+        rm -rf /data/python
         bashio::log.info "Data has been reset"
     fi
 }
