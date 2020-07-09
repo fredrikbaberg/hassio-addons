@@ -59,7 +59,7 @@ webcam:
   - Are you accessing through Ingress? Try through WebUI (set port in configuration).
 - How do I reset data?
   - You can delete the folder `config/octoprint` to reset settings.
-  - To fully reset installed plugins: add `request_reset_data: true` in configuration, restart addon, then remove the line again. Or uninstall and reinstall the addon.
+  - To reset: add `request_reset_data: true` in configuration, restart addon, then remove the line again. Or uninstall and reinstall the addon.
 - How do I get Raspberry Pi camera to work in Home Assistant?
   - Probably not officially supported, but based on [https://raspberrypi.stackexchange.com/a/51440](https://raspberrypi.stackexchange.com/a/51440) I did the steps related to `start_x.elf` and `fixup_x.dat`. Note that I skipped the `modprobe` and `v4l2-ctl` parts. Note that an update of `HassOS` requires you to re-download the files for the system to boot again.
 

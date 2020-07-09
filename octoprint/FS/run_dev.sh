@@ -7,10 +7,10 @@ set -e
 echo "run_dev.sh"
 
 reset_data_if_requested(){
-    if bashio::config.true 'request_reset_data'; then
-        rm -rf /data/*
-        bashio::log.info "Data has been reset"
-    fi
+    # if bashio::config.true 'request_reset_data'; then
+    rm -rf /data/python
+    #     bashio::log.info "Data has been reset"
+    # fi
 }
 
 copy_data() {
