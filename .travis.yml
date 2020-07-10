@@ -5,7 +5,7 @@ services:
   - docker
 branches:
   only:
-    - build
+    - master
 before_install:
   - sudo apt-get install jq
   - sudo chmod +x ./build.sh
