@@ -23,7 +23,7 @@ rescue(){
         rm -rf /data/python
         tar -zxf /root/python.tar.gz -C /data/
         {
-            pip install --upgrade --no-cache-dir -r /tmp/pipfreeze.txt
+            pip install --no-cache-dir -r /tmp/pipfreeze.txt
         } || {
             bashio::log.info "Could not restore data from pip"
             # echo "Could not restore to pip"
