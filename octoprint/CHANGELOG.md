@@ -1,6 +1,6 @@
 # Changelog
 
-[0.3.1-1]
+[0.3.2]
 
 Change reset to rescue. Will attempt to reinstall Python with addons.
 
