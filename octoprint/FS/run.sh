@@ -6,10 +6,28 @@
 echo "run.sh"
 # echo "run_dev.sh"
 
-reset_data_if_requested(){
-    if bashio::config.true 'request_reset_data'; then
+
+rescue(){
+    # Simple rescue.
+    # - Try to export list of pip packages
+    # - Reset Python directory
+    # - Try to reinstall pip packages
+    #
+    if bashio::config.true 'rescue'; then
+        {
+            pip freeze --local > /tmp/pipfreeze.txt
+        } || {
+            bashio::log.info "Could not save data from pip"
+            # echo "Could not export list from pip"
+        }
         rm -rf /data/python
-        bashio::log.info "Data has been reset"
+        tar -zxf /root/python.tar.gz -C /data/
+        {
+            pip install --upgrade --no-cache-dir -r /tmp/pipfreeze.txt
+        } || {
+            bashio::log.info "Could not restore data from pip"
+            # echo "Could not restore to pip"
+        }
     fi
 }
 
@@ -58,7 +76,7 @@ set_mjpg_args(){
     sed -i "s+%%mjpg_output%%+${OUTPUT}+g" /mjpgstreamer.sh
 }
 
-reset_data_if_requested
+rescue
 copy_data
 create_config
 create_ingress_user # Ensure Ingress user (homeassistant) exist. This should not modify existing users.

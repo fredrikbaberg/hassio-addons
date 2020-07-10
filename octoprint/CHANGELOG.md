@@ -1,5 +1,9 @@
 # Changelog
 
+[0.3.1-1]
+
+Change reset to rescue. Will attempt to reinstall Python with addons.
+
 [0.3.1]
 
 Modify reset option to only delete Python install.
