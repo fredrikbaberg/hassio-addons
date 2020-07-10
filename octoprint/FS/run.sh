@@ -8,12 +8,12 @@ echo "run.sh"
 
 
 rescue(){
-    # Simple rescue.
+    # Simple attempt to rescue system.
     # - Try to export list of pip packages
     # - Reset Python directory
     # - Try to reinstall pip packages
     #
-    if bashio::config.true 'rescue'; then
+    if bashio::config.true 'request_rescue'; then
         {
             pip freeze --local > /tmp/pipfreeze.txt
         } || {
