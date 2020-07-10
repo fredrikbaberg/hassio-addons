@@ -6,7 +6,7 @@ Configuration is only needed for camera support or rescue/reset
 
 - `mjpg_input`: Specify input arguments for mjpg_streamer.
 - `mjpg_output`: Specify output arguments for mjpg_streamer.
-- `rescue`: Reset Python install, normally not be needed.
+- `request_rescue`: Reset Python install, normally not be needed.
 
 ### Network
 
