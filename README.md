@@ -2,8 +2,8 @@
 
 Intended home for hassio addons, if time allows.
 
-## octoprint
+## OctoPrint
 
-The docker image for octoprint is also available on docker hub (fredrikbaberg).
+Plugin to run OctoPrint as an addon in Home Assistant.
 
-Please report issues here, or through the following [thread](https://community.home-assistant.io/t/repository-octoprint-wip/22883).
+Please report issues here, or through the following [thread](https://community.home-assistant.io/t/repository-octoprint/22883).
