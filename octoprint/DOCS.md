@@ -2,11 +2,12 @@
 
 ## Configuration
 
-Configuration is only needed for camera support or rescue/reset
+Configuration should only be needed for camera support, rescue/reset, and possibly if plugins are not installing due to missing components.
 
 - `mjpg_input`: Specify input arguments for mjpg_streamer.
 - `mjpg_output`: Specify output arguments for mjpg_streamer.
 - `request_rescue`: Reset Python install, normally not be needed.
+- `add_build_packages`: Install additional packages for installing certain plugins. Note that this will take 220+ MB additional space, and packages will be reinstalled on each restart (increased disk write).
 
 ### Network
 
@@ -64,6 +65,8 @@ webcam:
   - Uninstall and (re)install the addon.
 - How do I get Raspberry Pi camera to work in Home Assistant?
   - Probably not officially supported, but based on [https://raspberrypi.stackexchange.com/a/51440](https://raspberrypi.stackexchange.com/a/51440) I did the steps related to `start_x.elf` and `fixup_x.dat`. Note that I skipped the `modprobe` and `v4l2-ctl` parts. Note that an update of `HassOS` requires you to re-download the files for the system to boot again.
+- I cannot install <plugin>?
+  - If there are missing dependencies, try to set `add_build_packages` to `true`. This will install additional packages (`build-base`, `linux-headers`, `python-dev`, `zlib-dev`, `jpeg-dev`) when the addon start. Note that this will require 220+ MB additional space, and on each restart the packages will be downloaded and installed again.
 
 ## Versions
 

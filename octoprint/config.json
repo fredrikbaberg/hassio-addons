@@ -1,6 +1,6 @@
 {
     "name": "Octoprint",
-    "version": "0.3.3",
+    "version": "0.3.4",
     "slug": "octoprint",
     "description": "OctoPrint add-on for Home Assistant",
     "arch": ["armv7", "amd64", "armhf", "aarch64", "i386"],
@@ -22,12 +22,14 @@
     "options": {
         "mjpg_input": "input_uvc.so -n",
         "mjpg_output": "output_http.so -w /www_mjpg",
-        "request_rescue": false
+        "request_rescue": false,
+        "add_build_packages": false
     },
     "schema": {
         "mjpg_input": "str",
         "mjpg_output": "str",
-        "request_rescue": "bool?"
+        "request_rescue": "bool",
+        "add_build_packages": "bool"
     },
     "ingress": true,
     "panel_icon": "mdi:printer-3d",

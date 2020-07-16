@@ -43,6 +43,7 @@ ENV LANG C.UTF-8
 ENV PYTHONPATH=/data/python
 ENV PATH=${PATH}:/data/python/bin
 ENV PYTHONUSERBASE=/data/python
+ENV PYTHON_VERSION=$PYTHON_VERSION
 # Install requirements to run
 RUN apk add --no-cache --virtual .necessary haproxy ${PYTHON_VERSION} dbus avahi supervisor
 RUN apk add --no-cache --virtual .extra avahi-compat-libdns_sd postgresql-libs libjpeg ffmpeg

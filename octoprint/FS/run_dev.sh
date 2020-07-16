@@ -30,6 +30,21 @@ rescue(){
     # fi
 }
 
+add_build_packages(){
+    # if bashio::config.true 'add_build_packages'; then
+    {
+        # bashio::log.info "Adding packages to build/install new plugins"
+        echo "Adding packages to build/install new plugins"
+        apk add --no-cache -q --virtual .build \
+        zlib-dev \
+        jpeg-dev \
+        ${PYTHON_VERSION}-dev \
+        build-base \
+        linux-headers
+    }
+    # fi
+}
+
 copy_data() {
     if [ ! -d /data/python ]; then
         # bashio::log.info "Copy data to persistent location"
@@ -76,6 +91,7 @@ set_mjpg_args(){
 }
 
 # rescue
+# add_build_packages
 copy_data
 create_config
 create_ingress_user # Ensure Ingress user (homeassistant) exist. This should not modify existing users.

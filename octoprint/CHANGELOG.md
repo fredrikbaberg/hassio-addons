@@ -1,5 +1,10 @@
 # Changelog
 
+[0.3.4]
+
+Added configuration parameter `add_build_packages` for install of build tools (`build-base`, `linux-headers`, `python-dev`, `zlib-dev`, `jpeg-dev`), might help to install certain plugins.
+Note: any installed package will be lost on restart!
+
 [0.3.3]
 
 Change reset to rescue. Will attempt to reinstall Python with addons.
