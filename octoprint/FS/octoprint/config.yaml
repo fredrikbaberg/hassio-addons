@@ -5,7 +5,7 @@ accessControl:
         - 172.30.32.2
 devel:
     virtualPrinter:
-        enabled: true
+        enabled: false
 folder:
     # Non-user-accessible folders
     data: /data/octoprint/data
