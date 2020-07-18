@@ -1,5 +1,12 @@
 # Changelog
 
+[0.3.5]
+
+Changes:
+- Capitalization of addon name
+- Remove virtual printer from default config
+- Update documentation
+
 [0.3.4]
 
 Added configuration parameter `add_build_packages` for install of build tools (`build-base`, `linux-headers`, `python-dev`, `zlib-dev`, `jpeg-dev`), might help to install certain plugins.
