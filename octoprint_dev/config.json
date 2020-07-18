@@ -1,5 +1,5 @@
 {
-    "name": "Octoprint Dev",
+    "name": "OctoPrint Dev",
     "version": "0.2.7",
     "slug": "octoprint-dev",
     "description": "Octoprint add-on for Hass.io",

@@ -1,5 +1,5 @@
 {
-    "name": "Octoprint",
+    "name": "OctoPrint",
     "version": "0.3.4",
     "slug": "octoprint",
     "description": "OctoPrint add-on for Home Assistant",
