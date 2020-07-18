@@ -3,9 +3,6 @@ accessControl:
     autologinLocal: true
     localNetworks:
         - 172.30.32.2
-devel:
-    virtualPrinter:
-        enabled: false
 folder:
     # Non-user-accessible folders
     data: /data/octoprint/data
