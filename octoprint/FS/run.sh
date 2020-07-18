@@ -6,7 +6,6 @@
 echo "run.sh"
 # echo "run_dev.sh"
 
-
 rescue(){
     # Simple attempt to rescue system.
     # - Try to export list of pip packages
@@ -18,7 +17,7 @@ rescue(){
             pip freeze --local > /tmp/pipfreeze.txt
         } || {
             bashio::log.info "Could not save data from pip"
-            # echo "Could not export list from pip"
+            # echo "Could not save data from pip"
         }
         rm -rf /data/python
         tar -zxf /root/python.tar.gz -C /data/
@@ -26,7 +25,7 @@ rescue(){
             pip install --no-cache-dir -r /tmp/pipfreeze.txt
         } || {
             bashio::log.info "Could not restore data from pip"
-            # echo "Could not restore to pip"
+            # echo "Could not restore data from pip"
         }
     fi
 }
@@ -36,7 +35,7 @@ add_build_packages(){
     {
         bashio::log.info "Adding packages to build/install new plugins"
         # echo "Adding packages to build/install new plugins"
-        apk add --no-cache --virtual .build \
+        apk add --no-cache -q --virtual .build \
         zlib-dev \
         jpeg-dev \
         ${PYTHON_VERSION}-dev \
@@ -50,15 +49,14 @@ copy_data() {
     if [ ! -d /data/python ]; then
         bashio::log.info "Copy data to persistent location"
         # echo "Copy data to persistent location"
-        # cp -R /root/python /data/
         tar -zxf /root/python.tar.gz -C /data/
         rm -rf /root/python.tar.gz
     fi
 }
 
 create_ingress_user() {
-    bashio::log.info "Create ingress user"
-    # echo "Create ingress user"
+    bashio::log.info "Create Ingress user"
+    # echo "Create Ingress user"
     new_password=`date +%s | sha256sum | base64 | head -c 32 ; echo`
     octoprint --basedir /config/octoprint user add homeassistant --password $new_password --admin # 2> /dev/null
 }
@@ -70,7 +68,6 @@ create_config() {
         # echo "Create config"
         mkdir -p /config/octoprint
         cp /octoprint/config.yaml /config/octoprint/config.yaml
-        # cd /octoprint && cp -R * /config/octoprint/
     fi
 }
 

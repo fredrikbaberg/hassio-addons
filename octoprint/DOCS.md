@@ -67,6 +67,17 @@ webcam:
   - Probably not officially supported, but based on [https://raspberrypi.stackexchange.com/a/51440](https://raspberrypi.stackexchange.com/a/51440) I did the steps related to `start_x.elf` and `fixup_x.dat`. Note that I skipped the `modprobe` and `v4l2-ctl` parts. Note that an update of `HassOS` requires you to re-download the files for the system to boot again.
 - I cannot install <plugin>?
   - If there are missing dependencies, try to set `add_build_packages` to `true`. This will install additional packages (`build-base`, `linux-headers`, `python-dev`, `zlib-dev`, `jpeg-dev`) when the addon start. Note that this will require 220+ MB additional space, and on each restart the packages will be downloaded and installed again.
+- How do I autostart the camera?
+  - To start the camera with the addon you can use [event hooks](https://docs.octoprint.org/en/master/events/index.html). Add the following lines to `config.yaml`:
+    ```
+    events:
+    enabled: true
+    subscriptions:
+    -   command: supervisorctl start mjpg-streamer
+        enabled: true
+        event: Startup
+        type: system
+    ```
 
 ## Versions
 
