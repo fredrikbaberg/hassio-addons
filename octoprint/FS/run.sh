@@ -50,7 +50,7 @@ copy_data() {
         bashio::log.info "Copy data to persistent location"
         # echo "Copy data to persistent location"
         tar -zxf /root/python.tar.gz -C /data/
-        rm -rf /root/python.tar.gz
+        # rm -rf /root/python.tar.gz
     fi
 }
 
