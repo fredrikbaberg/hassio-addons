@@ -1,5 +1,10 @@
 # Changelog
 
+[0.3.6]
+
+Changes:
+- Skip removal of Python install archive.
+
 [0.3.5]
 
 Changes:
