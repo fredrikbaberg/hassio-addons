@@ -1,5 +1,10 @@
 # Changelog
 
+[0.3.7]
+
+Preparation for Python3.
+`run.sh` has been modified to have single version for dev and release.
+
 [0.3.6]
 
 Changes:
