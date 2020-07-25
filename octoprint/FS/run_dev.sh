@@ -6,28 +6,73 @@ set -e
 # echo "run.sh"
 echo "run_dev.sh"
 
+
 rescue(){
     # Simple attempt to rescue system.
-    # - Try to export list of pip packages
+    # - Install Python
+    # - Create backup of OctoPrint
     # - Reset Python directory
-    # - Try to reinstall pip packages
+    # - Restore backup of OctoPrint
     #
     # if bashio::config.true 'request_rescue'; then
-        {
-            pip freeze --local > /tmp/pipfreeze.txt
-        } || {
-            # bashio::log.info "Could not save data from pip"
-            echo "Could not save data from pip"
-        }
-        rm -rf /data/python
-        tar -zxf /root/python.tar.gz -C /data/
-        {
-            pip install --no-cache-dir -r /tmp/pipfreeze.txt
-        } || {
-            # bashio::log.info "Could not restore data from pip"
-            echo "Could not restore data from pip"
-        }
+        apk add --quiet --no-cache $PYTHON_VERSION
+        backup_create
+        python_replace
+        backup_restore
     # fi
+}
+
+migrate_to_python3(){
+    # Migrate from Python2 to Python3.
+    if [[ ! -e /data/migrated ]]; then
+        echo "Upgrade to Python3"
+        if ! command -v octoprint &> /dev/null
+        then
+            python_refresh
+        else
+            echo "Backup, update and restore"
+            apk add --quiet --no-cache --virtual .update python2
+            backup_create
+            python_replace
+            backup_restore
+            apk del --quiet --no-cache .update
+        fi
+        # Create file to prevent this from running again
+        touch /data/migrated
+    fi
+}
+
+python_refresh(){
+    # Refresh Python files from archive
+    tar -zxf /root/python.tar.gz -C /data/
+}
+
+python_replace(){
+    # Remove old Python install, replace with new
+    rm -rf /data/python
+    tar -zxf /root/python.tar.gz -C /data/
+}
+
+backup_create(){
+    # Backup OctoPrint, save a copy of backup in /config/octoprint_backup for user access
+    {
+        octoprint --basedir /config/octoprint plugins backup:backup
+        mkdir -p /config/octoprint_backup
+        cp $(ls /data/octoprint/data/backup/octoprint-backup* -t -1 | head -n1) /config/octoprint_backup/
+    } || {
+        echo "Could not create backup"
+        # bashio::log.info "Could not create backup"
+    }
+}
+
+backup_restore(){
+    # Restore latest backup
+    {
+        octoprint --basedir /config/octoprint plugins backup:restore $(ls /data/octoprint/data/backup/octoprint-backup* -t -1 | head -n1)
+    } || {
+        echo "Could not restore backup"
+        # bashio::log.info "Could not restore backup"
+    }
 }
 
 add_build_packages(){
@@ -88,6 +133,7 @@ set_mjpg_args(){
     sed -i "s+%%mjpg_output%%+${OUTPUT}+g" /mjpgstreamer.sh
 }
 
+migrate_to_python3
 # rescue
 # add_build_packages
 copy_data
