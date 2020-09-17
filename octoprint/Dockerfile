@@ -105,7 +105,7 @@ RUN dos2unix /dev.sh # For development purposes
 RUN echo "Update config directory for all files" \
     && sed -i "s#/config/octoprint#/config/octoprint${CONFIG_DIR_SUFFIX}#g" /etc/supervisord.conf \
     && sed -i "s#/config/octoprint#/config/octoprint${CONFIG_DIR_SUFFIX}#g" /run.sh \
-    && sed -i "s#/config/octoprint#/config/octoprint${CONFIG_DIR_SUFFIX}#g" /run_dev.sh \
+    && sed -i "s#/config/octoprint#/config/octoprint${CONFIG_DIR_SUFFIX}#g" /dev.sh \
     && sed -i "s#/config/octoprint#/config/octoprint${CONFIG_DIR_SUFFIX}#g" /octoprint/config.yaml
 WORKDIR /
 CMD [ "/run.sh" ]
