@@ -6,6 +6,8 @@ iPerf3 server
 
 ### Network
 
+Runs on port 5201.
+
 ## How to use
 
-
+Start addon to run server. Run iperf3 client (not included) on another device to measure performance.
