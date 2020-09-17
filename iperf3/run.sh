@@ -1,3 +1,7 @@
-#!/usr/bin/with-contenv bashio
+#!/usr/bin/env bashio
+set +u
 
-iperf3 $(bashio::config 'arguments')
+CONFIG_PATH=/data/options.json
+ARGUMENTS=$(jq --raw-output ".arguments" $CONFIG_PATH)
+
+iperf3 $ARGUMENTS
