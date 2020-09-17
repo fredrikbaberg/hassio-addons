@@ -5,5 +5,7 @@ ENV LANG C.UTF-8
 # Install requirements to run
 RUN apk add --no-cache iperf3
 
-ENTRYPOINT [ "iperf3" ]
-CMD [ "-s" ]
+COPY run.sh /
+RUN chmod +x run.sh
+
+ENTRYPOINT [ "/run.sh" ]

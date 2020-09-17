@@ -4,6 +4,8 @@ iPerf3 server
 
 ## Configuration
 
+`arguments`: Arguments to pass to iperf3. Use `-s` for server.
+
 ### Network
 
 Runs on port 5201.

@@ -1,6 +1,6 @@
 {
     "name": "iPerf3",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "slug": "iperf3",
     "description": "iPerf3 add-on for Home Assistant",
     "arch": ["armv7", "amd64", "armhf", "aarch64", "i386"],
@@ -12,8 +12,12 @@
         "5201/udp": 5201
     },
     "homeassistant": "0.108.0",
-    "options": {},
-    "schema": {},
+    "options": {
+        "arguments": "-s"
+    },
+    "schema": {
+        "arguments": "str"
+    },
     "image": "fredrikbaberg/iperf3-{arch}-image",
-    "stage": "stable"
+    "stage": "experimental"
 }
