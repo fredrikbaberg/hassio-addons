@@ -13,6 +13,7 @@ env:
   - ADDON="octoprint"
   - ADDON="octoprint_dev"
   - ADDON="octoprint_slim"
+  - ADDON="iperf3"
 script:
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
   - ./build.sh $ADDON
