@@ -19,5 +19,5 @@
         "arguments": "str"
     },
     "image": "fredrikbaberg/iperf3-{arch}-image",
-    "stage": "experimental"
+    "stage": "stable"
 }
