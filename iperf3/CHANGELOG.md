@@ -1,10 +1,10 @@
 # Changelog
 
-[0.0.2]
+[0.0.3]
 
 Changelog:
 
-- Use options to pass arguments to iperf3.
+- Enable pass arguments to iperf3.
 
 [0.0.1]
 

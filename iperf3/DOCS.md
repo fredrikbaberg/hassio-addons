@@ -4,7 +4,9 @@ iPerf3 server
 
 ## Configuration
 
-`arguments`: Arguments to pass to iperf3. Use `-s` for server.
+`arguments`: Arguments to pass to iperf3.
+- `-s` for server.
+- `-c <IP>` to connect to other server. Addon will terminate when execution is done.
 
 ### Network
 
