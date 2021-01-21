@@ -16,6 +16,9 @@
         "5000/tcp": "WebUI (Not required for Ingress)",
         "8000/tcp": "mjpg-streamer (could also use WebUI/webcam/)"
     },
+    "devices": [
+        "/dev/mem:/dev/mem:rw"
+    ],
     "auto_uart": true,
     "homeassistant": "0.108.0",
     "privileged": ["SYS_RAWIO"],
