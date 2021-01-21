@@ -2,6 +2,8 @@
 
 **Ensure you have a backup of your configuration.**
 
+**This version is VERY EXPERIMENTAL, please use the one without prefix for now.**
+
 ## About
 
 This Addon-on allows you to run [OctoPrint](https://octoprint.org) on a device running [Home Assistant](https://home-assistant.io/).
