@@ -12,6 +12,7 @@ before_install:
 env:
   - ADDON="octoprint"
   - ADDON="octoprint_dev"
+  - ADDON="octoprint_py3"
   - ADDON="octoprint_slim"
   - ADDON="iperf3"
 script:
