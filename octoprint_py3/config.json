@@ -1,6 +1,6 @@
 {
     "name": "OctoPrint Py3",
-    "version": "0.3.0",
+    "version": "0.3.0-1",
     "slug": "octoprint-py3",
     "description": "OctoPrint add-on for Home Assistant, uses Python3",
     "arch": ["armv7", "amd64", "armhf", "aarch64", "i386"],
@@ -25,11 +25,13 @@
     "usb": true,
     "options": {
         "mjpg_input": "input_uvc.so -n",
-        "mjpg_output": "output_http.so -w /www_mjpg"
+        "mjpg_output": "output_http.so -w /www_mjpg",
+        "config_folder": "/config/octoprint_py3"
     },
     "schema": {
         "mjpg_input": "str",
-        "mjpg_output": "str"
+        "mjpg_output": "str",
+        "config_folder": "str"
     },
     "ingress": true,
     "ingress_port": 8099,
