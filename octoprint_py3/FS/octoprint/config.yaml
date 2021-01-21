@@ -1,0 +1,40 @@
+accessControl:
+    autologinAs: homeassistant
+    autologinLocal: true
+    localNetworks:
+        - 172.30.32.2
+folder:
+    # Non-user-accessible folders
+    data: /data/octoprint/data
+    generated: /data/octoprint/generated
+    logs: /data/octoprint/logs
+    plugins: /data/octoprint/plugins
+    virtualSd: /data/octoprint/virtualSd
+    timelapse_tmp: /data/octoprint/timelapse/tmp
+    # User-accessible folders
+    printerProfiles: /config/octoprint/printerProfiles
+    slicingProfiles: /config/octoprint/slicingProfiles
+    scripts: /config/octoprint/scripts
+    timelapse: /config/octoprint/timelapse
+    translations: /config/octoprint/translations
+    uploads: /config/octoprint/uploads
+    watched: /config/octoprint/watched
+plugins:
+    cura:
+        cura_engine: /sbin/CuraEngine
+server:
+    commands:
+        serverRestartCommand: supervisorctl restart octoprint
+        systemRestartCommand: /restart.sh
+        systemShutdownCommand: /shutdown.sh
+webcam:
+    ffmpeg: /usr/bin/ffmpeg
+    snapshot: http://localhost:8080/?action=snapshot
+system:
+    actions:
+        -   action: mjpgstart
+            command: supervisorctl start mjpg-streamer
+            name: Start mjpg-streamer
+        -   action: mjpgstop
+            command: supervisorctl stop mjpg-streamer
+            name: Stop mjpg-streamer
