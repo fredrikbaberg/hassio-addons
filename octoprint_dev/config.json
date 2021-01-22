@@ -1,21 +1,45 @@
 {
     "name": "OctoPrint Dev",
-    "version": "0.2.7",
+    "version": "0.3.1",
     "slug": "octoprint-dev",
-    "description": "Octoprint add-on for Hass.io",
-    "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
+    "description": "Development version of OctoPrint add-on for Home Assistant",
+    "arch": ["armv7", "amd64", "armhf", "aarch64", "i386"],
     "url": "https://github.com/fredrikbaberg/hassio-addons",
     "startup": "application",
-    "boot": "auto",
-    "ports": {
-        "80/tcp": 5000,
-        "80/udp": 5000
-    },
-    "map": ["config:rw"],
-    "options": {},
-    "schema": {},
     "webui": "http://[HOST]:[PORT:5000]",
+    "boot": "manual",
+    "ports": {
+        "5000/tcp": null,
+        "8000/tcp": null
+    },
+    "ports_description": {
+        "5000/tcp": "WebUI (Not required for Ingress)",
+        "8000/tcp": "mjpg-streamer (could also use WebUI/webcam/)"
+    },
+    "devices": [
+        "/dev/mem:/dev/mem:rw"
+    ],
     "auto_uart": true,
+    "homeassistant": "0.108.0",
+    "privileged": ["SYS_RAWIO"],
+    "map": ["config:rw"],
+    "video": true,
+    "gpio": true,
+    "usb": true,
+    "options": {
+        "mjpg_input": "input_uvc.so -n",
+        "mjpg_output": "output_http.so -w /www_mjpg",
+        "config_folder_suffix": "_dev"
+    },
+    "schema": {
+        "mjpg_input": "str",
+        "mjpg_output": "str",
+        "config_folder_suffix": "str"
+    },
+    "ingress": true,
+    "ingress_port": 8099,
+    "panel_icon": "mdi:printer-3d",
+    "panel_title": "OctoPrint Py3",
     "image": "fredrikbaberg/octoprint-dev-{arch}-image",
-    "stage": "deprecated"
+    "stage": "experimental"
 }
