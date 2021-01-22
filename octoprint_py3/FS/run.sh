@@ -50,4 +50,4 @@ set_ingress_entry
 set_mjpg_args
 bashio::log.info "Launch"
 supervisord -c /etc/supervisord.conf
-tail -f /tmp/*-stdout*.log
+tail -f /tmp/*
