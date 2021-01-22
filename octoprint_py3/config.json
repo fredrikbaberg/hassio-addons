@@ -40,5 +40,6 @@
     "ingress_port": 8099,
     "panel_icon": "mdi:printer-3d",
     "panel_title": "OctoPrint Py3",
+    "image": "fredrikbaberg/octoprint-py3-{arch}-image",
     "stage": "experimental"
 }
