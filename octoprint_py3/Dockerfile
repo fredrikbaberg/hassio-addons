@@ -32,6 +32,7 @@ RUN apk add --no-cache --virtual .build-dependencies-mjpg-streamer build-base cm
     && wget -qO- https://github.com/jacksonliam/mjpg-streamer/archive/master.tar.gz | tar xz \
     && cd mjpg-streamer-master/mjpg-streamer-experimental/ \
     && make CMAKE_BUILD_TYPE=Debug --silent \
+    # && make --silent \
     && make install --silent \
     # Move files
     && mv www/ /www_mjpg

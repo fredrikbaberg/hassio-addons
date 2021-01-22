@@ -6,11 +6,11 @@
 # echo "run.sh"
 
 ## Read values from configuration.
-OCTOPRINT_BASEDIR=$(bashio::config 'config_folder')
+OCTOPRINT_BASEDIR="/config/octoprint"$(bashio::config 'config_folder_suffix')
 MJPG_INPUT_ARGS=$(bashio::config 'mjpg_input')
 MJPG_OUTPUT_ARGS=$(bashio::config 'mjpg_output')
 INGRESS_ENTRY=$(bashio::addon.ingress_entry)
-# OCTOPRINT_BASEDIR="/config/octoprint_py3"
+# OCTOPRINT_BASEDIR="/config/octoprint""_py3"
 # MJPG_INPUT_ARGS="input_file.so -f /www_mjpg"
 # MJPG_OUTPUT_ARGS="output_http.so -w /www_mjpg"
 # INGRESS_ENTRY=""
@@ -25,7 +25,7 @@ fi
 mkdir -p $OCTOPRINT_BASEDIR
 if [ ! -f $OCTOPRINT_BASEDIR/config.yaml ]; then
     cp /octoprint/config.yaml $OCTOPRINT_BASEDIR/config.yaml
-    sed -i "s#/config/octoprint#/$OCTOPRINT_BASEDIR#g" $OCTOPRINT_BASEDIR/config.yaml
+    sed -i "s#/config/octoprint#$OCTOPRINT_BASEDIR#g" $OCTOPRINT_BASEDIR/config.yaml
 fi
 
 # Ensure Ingress user (homeassistant) exist. This should not modify existing users.
@@ -41,6 +41,7 @@ sed -i "s#%%base_path%%#${INGRESS_ENTRY}#g" /etc/haproxy/haproxy.cfg
 sed -i "s+%%basedir%%+${OCTOPRINT_BASEDIR}+g" /etc/supervisord.conf
 sed -i "s+%%mjpg_input%%+${MJPG_INPUT_ARGS}+g" /etc/supervisord.conf
 sed -i "s+%%mjpg_output%%+${MJPG_OUTPUT_ARGS}+g" /etc/supervisord.conf
+sed -i "s+%%password%%+${new_password=`date +%s | sha256sum | base64 | head -c 32 ; echo`}+g" /etc/supervisord.conf
 
 # Launch
 supervisord -c /etc/supervisord.conf
