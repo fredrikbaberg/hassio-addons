@@ -11,10 +11,12 @@ ENV PYTHONUSERBASE=/data/python
 
 # Install requirements to run
 RUN apk add --no-cache --virtual .necessary haproxy python3 dbus avahi supervisor
-RUN apk add --no-cache --virtual .extra avahi-compat-libdns_sd postgresql-libs libjpeg ffmpeg
-RUN apk add --no-cache --virtual .build-dependencies py3-virtualenv build-base python3-dev linux-headers zlib-dev jpeg-dev musl-dev
+RUN apk add --no-cache --virtual .extra avahi-compat-libdns_sd libjpeg ffmpeg
 # Install OctoPrint
-RUN echo "Install OctoPrint" \
+RUN apk add --no-cache --virtual .build-dependencies py3-virtualenv build-base python3-dev linux-headers zlib-dev jpeg-dev musl-dev \
+    && apk add --no-cache --virtual .build-dependencies-mjpgstreamer cmake libexecinfo-dev libjpeg-turbo-dev \
+    ## octoprint
+    && echo "Install OctoPrint" \
     && virtualenv --python=python3 /data/python \
     && source /data/python/bin/activate \
     && pip install ${PIP_FLAGS} --upgrade pip \
@@ -24,21 +26,20 @@ RUN echo "Install OctoPrint" \
     && find /data/python | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && rm -rf /root/.cache \
-    && cd /data && tar -zcf /root/python.tar.gz python
-    # && rm -rf /data/python \
-    # && apk del --no-cache .build-dependencies
-# Install mjpg-streamer
-RUN apk add --no-cache --virtual .build-dependencies-mjpg-streamer build-base cmake linux-headers libexecinfo-dev libjpeg-turbo-dev \
+    && cd /data && tar -zcf /root/python.tar.gz python \
+    && rm -rf /data/python \
+    ## mjpg-streamer
+    && echo "Install mjpg-streamer" \
     && wget -qO- https://github.com/jacksonliam/mjpg-streamer/archive/master.tar.gz | tar xz \
     && cd mjpg-streamer-master/mjpg-streamer-experimental/ \
     && make CMAKE_BUILD_TYPE=Debug --silent \
-    # && make --silent \
     && make install --silent \
     # Move files
-    && mv www/ /www_mjpg
-    # Cleanup
-    # && apk del --no-cache .build-dependencies-mjpg-streamer \
-    # && rm -rf /mjpg-streamer-master
+    && mv www/ /www_mjpg \
+    # Cleanup mjpg-streamer
+    && rm -rf /mjpg-streamer-master \
+    ## Final cleanup
+    && apk del --no-cache .build-dependencies .build-dependencies-mjpgstreamer
 # # Install CuraEngine-Legacy
 # ARG CURA_VERSION=15.04.6
 # RUN apk add --no-cache --virtual .build-dependencies-cura-legacy build-base libexecinfo-dev \
