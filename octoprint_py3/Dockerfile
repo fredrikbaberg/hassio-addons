@@ -38,26 +38,27 @@ RUN apk add --no-cache --virtual .build-dependencies-mjpg-streamer build-base cm
     # Move files
     && mv www/ /www_mjpg \
     # Cleanup
-    && apk del --no-cache .build-dependencies-mjpg-streamer \
-    && rm -rf /mjpg-streamer-master
-# Install CuraEngine-Legacy
-ARG CURA_VERSION=15.04.6
-RUN apk add --no-cache --virtual .build-dependencies-cura-legacy build-base libexecinfo-dev \
-    && wget -qO- https://github.com/Ultimaker/CuraEngine/archive/${CURA_VERSION}.tar.gz | tar xz \
-    && cd CuraEngine-${CURA_VERSION} \
-    && make --quiet \
-    && mv build/CuraEngine /sbin/CuraEngine \
-    # Cleanup
-    && cd .. && rm -rf CuraEngine-${CURA_VERSION} \
-    && apk del --no-cache .build-dependencies-cura-legacy
+    # && apk del --no-cache .build-dependencies-mjpg-streamer \
+    # && rm -rf /mjpg-streamer-master
+# # Install CuraEngine-Legacy
+# ARG CURA_VERSION=15.04.6
+# RUN apk add --no-cache --virtual .build-dependencies-cura-legacy build-base libexecinfo-dev \
+#     && wget -qO- https://github.com/Ultimaker/CuraEngine/archive/${CURA_VERSION}.tar.gz | tar xz \
+#     && cd CuraEngine-${CURA_VERSION} \
+#     && make --quiet \
+#     && mv build/CuraEngine /sbin/CuraEngine \
+#     # Cleanup
+#     && cd .. && rm -rf CuraEngine-${CURA_VERSION} \
+#     && apk del --no-cache .build-dependencies-cura-legacy
 # Copy data from filesystem and previous stages
 COPY FS/ /
 # Make scripts executable
 RUN chmod a+x /*.sh
-RUN dos2unix /mjpgstreamer.sh # For development purposes
-RUN echo "Update config directory for all files" \
-    && sed -i "s#/config/octoprint#/config/octoprint${CONFIG_DIR_SUFFIX}#g" /etc/supervisord.conf \
-    && sed -i "s#/config/octoprint#/config/octoprint${CONFIG_DIR_SUFFIX}#g" /run.sh \
-    && sed -i "s#/config/octoprint#/config/octoprint${CONFIG_DIR_SUFFIX}#g" /octoprint/config.yaml
+# TODO: Do all `sed` in run.sh, so that path can be set by option.
+# RUN dos2unix /mjpgstreamer.sh # For development purposes
+# RUN echo "Update config directory for all files" \
+#     && sed -i "s#/config/octoprint#/config/octoprint${CONFIG_DIR_SUFFIX}#g" /etc/supervisord.conf \
+#     && sed -i "s#/config/octoprint#/config/octoprint${CONFIG_DIR_SUFFIX}#g" /run.sh \
+#     && sed -i "s#/config/octoprint#/config/octoprint${CONFIG_DIR_SUFFIX}#g" /octoprint/config.yaml
 WORKDIR /
 CMD [ "/run.sh" ]
