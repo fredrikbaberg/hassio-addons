@@ -22,4 +22,4 @@ Either write in the [thread](https://community.home-assistant.io/t/repository-oc
 
 ## Development
 
-For local debugging, use the following command: `docker build . -t local/octoprint ; docker run --rm -it -p 5000:5000 -v ${pwd}/octoprint_config:/config -v octoprint_data:/data --entrypoint=/bin/bash local/octoprint`
+For local debugging, use the following command: `docker build . -t local/octoprint_py3 ; docker run --rm -it -p 5000:5000 -v ${pwd}/octoprint_config:/config -v octoprint_data:/data --entrypoint=/bin/bash local/octoprint`

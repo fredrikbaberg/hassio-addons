@@ -36,7 +36,7 @@ RUN apk add --no-cache --virtual .build-dependencies-mjpg-streamer build-base cm
     && make --silent \
     && make install --silent \
     # Move files
-    && mv www/ /www_mjpg \
+    && mv www/ /www_mjpg
     # Cleanup
     # && apk del --no-cache .build-dependencies-mjpg-streamer \
     # && rm -rf /mjpg-streamer-master
