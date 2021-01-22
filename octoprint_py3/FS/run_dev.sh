@@ -1,19 +1,20 @@
+#!/bin/sh
+set -e
 #!/usr/bin/with-contenv bashio
-# #!/bin/sh
-# set -e
 
 # bashio::log.info "run.sh"
 # echo "run.sh"
 
 ## Read values from configuration.
-OCTOPRINT_BASEDIR=$(bashio::config 'config_folder')
-MJPG_INPUT_ARGS=$(bashio::config 'mjpg_input')
-MJPG_OUTPUT_ARGS=$(bashio::config 'mjpg_output')
-INGRESS_ENTRY=$(bashio::addon.ingress_entry)
-# OCTOPRINT_BASEDIR="/config/octoprint_py3"
-# MJPG_INPUT_ARGS="input_file.so -f /www_mjpg"
-# MJPG_OUTPUT_ARGS="output_http.so -w /www_mjpg"
-# INGRESS_ENTRY=""
+# OCTOPRINT_BASEDIR=$(bashio::config 'config_folder')
+# MJPG_INPUT_ARGS=$(bashio::config 'mjpg_input')
+# MJPG_OUTPUT_ARGS=$(bashio::config 'mjpg_output')
+# INGRESS_ENTRY=$(bashio::addon.ingress_entry)
+OCTOPRINT_BASEDIR="/config/octoprint_py3"
+MJPG_INPUT_ARGS="input_file.so -f /www_mjpg"
+MJPG_OUTPUT_ARGS="output_http.so -w /www_mjpg"
+INGRESS_ENTRY=""
+
 
 # Copy data to persistent location
 if [ ! -d /data/python ]; then
@@ -35,7 +36,7 @@ octoprint --basedir $OCTOPRINT_BASEDIR user add homeassistant --password $new_pa
 # Set Ingress entry
 sed -i "s#%%base_path%%#${INGRESS_ENTRY}#g" /etc/haproxy/haproxy.cfg
 # The following is only for dev:
-# sed -e '/http-request set-header X-Script-Name/s/^/#/g' -i /etc/haproxy/haproxy.cfg
+sed -e '/http-request set-header X-Script-Name/s/^/#/g' -i /etc/haproxy/haproxy.cfg
 
 # Update supervisord
 sed -i "s+%%basedir%%+${OCTOPRINT_BASEDIR}+g" /etc/supervisord.conf

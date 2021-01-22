@@ -1,10 +1,8 @@
 ARG BUILD_FROM="homeassistant/amd64-base:latest"
 
-ARG CONFIG_DIR_SUFFIX="_py3"
 ARG PIP_FLAGS="--no-cache-dir"
 
 FROM ${BUILD_FROM} AS final
-ARG CONFIG_DIR_SUFFIX
 ARG PIP_FLAGS
 ENV LANG C.UTF-8
 ENV PYTHONPATH=/data/python
@@ -26,8 +24,8 @@ RUN echo "Installing OctoPrint" \
     && find /data/python | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && rm -rf /root/.cache \
-    && cd /data && tar -zcf /root/python.tar.gz python \
-    && rm -rf /data/python
+    && cd /data && tar -zcf /root/python.tar.gz python
+    # && rm -rf /data/python \
     # && apk del --no-cache .build-dependencies
 # Install mjpg-streamer
 RUN apk add --no-cache --virtual .build-dependencies-mjpg-streamer build-base cmake linux-headers libexecinfo-dev libjpeg-turbo-dev \
@@ -54,8 +52,9 @@ RUN apk add --no-cache --virtual .build-dependencies-mjpg-streamer build-base cm
 COPY FS/ /
 # Make scripts executable
 RUN chmod a+x /*.sh
+# Make sure scripts are formatted for Unix
+RUN dos2unix /run_dev.sh
 # TODO: Do all `sed` in run.sh, so that path can be set by option.
-# RUN dos2unix /mjpgstreamer.sh # For development purposes
 # RUN echo "Update config directory for all files" \
 #     && sed -i "s#/config/octoprint#/config/octoprint${CONFIG_DIR_SUFFIX}#g" /etc/supervisord.conf \
 #     && sed -i "s#/config/octoprint#/config/octoprint${CONFIG_DIR_SUFFIX}#g" /run.sh \
