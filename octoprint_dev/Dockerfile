@@ -1,74 +1,60 @@
-ARG BUILD_FROM
-FROM $BUILD_FROM
+ARG BUILD_FROM="homeassistant/amd64-base:latest"
 
+ARG PIP_FLAGS="--no-cache-dir"
+
+FROM ${BUILD_FROM} AS final
+ARG PIP_FLAGS
 ENV LANG C.UTF-8
-
-ENV CAMERA_DEV /dev/video0
-ENV STREAMER_FLAGS -y -n
-ENV OCTOPRINT_VERSION=1.3.9
-ENV CURA_VERSION=15.04.6
-# To have Python packages persistently installed.
 ENV PYTHONPATH=/data/python
 ENV PATH=${PATH}:/data/python/bin
 ENV PYTHONUSERBASE=/data/python
 
-# Change to tmp folder for all installs, easier to clean
-WORKDIR /tmp
-
-# Install requirements for add-on
-RUN apk add --no-cache jq supervisor ffmpeg py-pip \
-    && \
-    # Get code for installation, install.
-    wget -qO- https://github.com/foosel/OctoPrint/archive/${OCTOPRINT_VERSION}.tar.gz | tar xz && \
-    wget -qO- https://github.com/jacksonliam/mjpg-streamer/archive/master.tar.gz | tar xz && \
-    wget -qO- https://github.com/Ultimaker/CuraEngine/archive/${CURA_VERSION}.tar.gz | tar xz \
-    && \
-    # Compile and install
-    apk add --no-cache --virtual build-dependencies \
-    build-base cmake linux-headers libjpeg-turbo-dev python-dev libexecinfo-dev \
-    && \
-    # mjpeg-streamer
-    apk add --no-cache haproxy \
-    && cd /tmp/mjpg-streamer-master/mjpg-streamer-experimental/ \
-    && make --quiet \
-    && make install --quiet \
-    && \
-    # Cura
-    cd /tmp/CuraEngine-${CURA_VERSION} \
-    && mkdir -p build \
-    && make --quiet \
-    && cp build/CuraEngine /sbin/CuraEngine \
-    && \
-    # Octoprint
-    apk add --no-cache avahi-compat-libdns_sd dbus avahi \
-    && cd /tmp/OctoPrint-${OCTOPRINT_VERSION} \
-    && pip install --upgrade pip --user --quiet \
-    && pip install --user https://goo.gl/SxQZ06 --quiet \
-    && pip install -r requirements.txt --user --quiet \
-    && python setup.py install --user --quiet \
-    && ls /data \
-    && cp -R /data/python /root/ \
-    && \
-    # Cleanup
-    apk del --no-cache build-dependencies \
-    && rm -rf /tmp
-
-# Copy data for add-on
-COPY run.sh /
-RUN chmod a+x /run.sh
-COPY haproxy.cfg /etc/haproxy/haproxy.cfg
-COPY supervisord.conf /etc/supervisord.conf
-
-EXPOSE 80
+# Install requirements to run
+RUN apk add --no-cache --virtual .necessary haproxy python3 dbus avahi supervisor
+RUN apk add --no-cache --virtual .extra avahi-compat-libdns_sd libjpeg ffmpeg
+# Install OctoPrint
+RUN apk add --no-cache --virtual .build-dependencies py3-virtualenv build-base python3-dev linux-headers zlib-dev jpeg-dev musl-dev \
+    && apk add --no-cache --virtual .build-dependencies-mjpgstreamer cmake libexecinfo-dev libjpeg-turbo-dev \
+    ## octoprint
+    && echo "Install OctoPrint" \
+    && virtualenv --python=python3 /data/python \
+    && source /data/python/bin/activate \
+    && pip install ${PIP_FLAGS} --upgrade pip \
+    && pip install ${PIP_FLAGS} OctoPrint \
+    && pip install ${PIP_FLAGS} https://github.com/kounch/pybonjour-python3/archive/master.zip \
+    # Cleanup, move output
+    && find /data/python | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
+    && find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
+    && rm -rf /root/.cache \
+    && cd /data && tar -zcf /root/python.tar.gz python \
+    && rm -rf /data/python \
+    ## mjpg-streamer
+    && echo "Install mjpg-streamer" \
+    && wget -qO- https://github.com/jacksonliam/mjpg-streamer/archive/master.tar.gz | tar xz \
+    && cd mjpg-streamer-master/mjpg-streamer-experimental/ \
+    && make CMAKE_BUILD_TYPE=Debug --silent \
+    && make install --silent \
+    # Move files
+    && mv www/ /www_mjpg \
+    # Cleanup mjpg-streamer
+    && rm -rf /mjpg-streamer-master \
+    ## Final cleanup
+    && apk del --no-cache .build-dependencies .build-dependencies-mjpgstreamer
+# # Install CuraEngine-Legacy
+# ARG CURA_VERSION=15.04.6
+# RUN apk add --no-cache --virtual .build-dependencies-cura-legacy build-base libexecinfo-dev \
+#     && wget -qO- https://github.com/Ultimaker/CuraEngine/archive/${CURA_VERSION}.tar.gz | tar xz \
+#     && cd CuraEngine-${CURA_VERSION} \
+#     && make --quiet \
+#     && mv build/CuraEngine /sbin/CuraEngine \
+#     # Cleanup
+#     && cd .. && rm -rf CuraEngine-${CURA_VERSION} \
+#     && apk del --no-cache .build-dependencies-cura-legacy
+# Copy data from filesystem and previous stages
+COPY FS/ /
+# Make scripts executable
+RUN chmod a+x /*.sh
+# Make sure scripts are formatted for Unix
+RUN dos2unix /run_dev.sh
 WORKDIR /
 CMD [ "/run.sh" ]
-
-# # Add user with sudo access.
-# # RUN apk add --no-cache sudo && \
-# #     addgroup -S octoprint && \
-# #     adduser -G octoprint -g "octoprint user" -s /bin/sh -D octoprint && \
-# #     addgroup octoprint dialout && \
-# #     addgroup octoprint tty && \
-# #     echo "octoprint ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-# # USER octoprint
-# # WORKDIR /home/octoprint

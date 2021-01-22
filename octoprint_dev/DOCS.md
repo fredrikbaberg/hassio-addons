@@ -6,6 +6,7 @@ Configuration should only be needed for camera support.
 
 - `mjpg_input`: Specify input arguments for mjpg_streamer.
 - `mjpg_output`: Specify output arguments for mjpg_streamer.
+- `config_folder_suffix`: Suffix for config folder, will be `/config/octoprint<config_folder_suffix>`.
 
 ### Network
 

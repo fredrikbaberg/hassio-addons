@@ -1,5 +1,12 @@
 # Changelog
 
+[0.3.1]
+
+- Uses Python3
+- Can specify configuration folder suffix
+- Supervisord priority set
+- Remove CuraEngine-Legacy
+
 [0.2.7]
 
 Added deprecated status for now.
