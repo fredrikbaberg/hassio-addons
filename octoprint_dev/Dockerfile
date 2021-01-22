@@ -32,7 +32,8 @@ RUN apk add --no-cache --virtual .build-dependencies py3-virtualenv build-base p
     && echo "Install mjpg-streamer" \
     && wget -qO- https://github.com/jacksonliam/mjpg-streamer/archive/master.tar.gz | tar xz \
     && cd mjpg-streamer-master/mjpg-streamer-experimental/ \
-    && make CMAKE_BUILD_TYPE=Debug --silent \
+    && make --silent \
+    # && make CMAKE_BUILD_TYPE=Debug --silent \
     && make install --silent \
     # Move files
     && mv www/ /www_mjpg \
@@ -40,16 +41,6 @@ RUN apk add --no-cache --virtual .build-dependencies py3-virtualenv build-base p
     && rm -rf /mjpg-streamer-master \
     ## Final cleanup
     && apk del --no-cache .build-dependencies .build-dependencies-mjpgstreamer
-# # Install CuraEngine-Legacy
-# ARG CURA_VERSION=15.04.6
-# RUN apk add --no-cache --virtual .build-dependencies-cura-legacy build-base libexecinfo-dev \
-#     && wget -qO- https://github.com/Ultimaker/CuraEngine/archive/${CURA_VERSION}.tar.gz | tar xz \
-#     && cd CuraEngine-${CURA_VERSION} \
-#     && make --quiet \
-#     && mv build/CuraEngine /sbin/CuraEngine \
-#     # Cleanup
-#     && cd .. && rm -rf CuraEngine-${CURA_VERSION} \
-#     && apk del --no-cache .build-dependencies-cura-legacy
 # Copy data from filesystem and previous stages
 COPY FS/ /
 # Make scripts executable
