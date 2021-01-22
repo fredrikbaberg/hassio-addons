@@ -2,7 +2,7 @@
 
 **Ensure you have a backup of your configuration.**
 
-**This version is VERY EXPERIMENTAL, please use the one without prefix for now.**
+**This version is VERY EXPERIMENTAL, please use the one simply called "OctoPrint" for now.**
 
 ## About
 
