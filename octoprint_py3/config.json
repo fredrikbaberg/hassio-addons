@@ -1,7 +1,7 @@
 {
     "name": "OctoPrint Py3",
     "version": "0.3.0-2",
-    "slug": "octoprint-py3",
+    "slug": "octoprint_py3",
     "description": "OctoPrint add-on for Home Assistant, uses Python3",
     "arch": ["armv7", "amd64", "armhf", "aarch64", "i386"],
     "url": "https://github.com/fredrikbaberg/hassio-addons",
