@@ -14,7 +14,7 @@ RUN apk add --no-cache --virtual .necessary haproxy python3 dbus avahi superviso
 RUN apk add --no-cache --virtual .extra avahi-compat-libdns_sd postgresql-libs libjpeg ffmpeg
 RUN apk add --no-cache --virtual .build-dependencies py3-virtualenv build-base python3-dev linux-headers zlib-dev jpeg-dev musl-dev
 # Install OctoPrint
-RUN echo "Installing OctoPrint" \
+RUN echo "Install OctoPrint" \
     && virtualenv --python=python3 /data/python \
     && source /data/python/bin/activate \
     && pip install ${PIP_FLAGS} --upgrade pip \
@@ -31,7 +31,7 @@ RUN echo "Installing OctoPrint" \
 RUN apk add --no-cache --virtual .build-dependencies-mjpg-streamer build-base cmake linux-headers libexecinfo-dev libjpeg-turbo-dev \
     && wget -qO- https://github.com/jacksonliam/mjpg-streamer/archive/master.tar.gz | tar xz \
     && cd mjpg-streamer-master/mjpg-streamer-experimental/ \
-    && make --silent \
+    && make CMAKE_BUILD_TYPE=Debug --silent \
     && make install --silent \
     # Move files
     && mv www/ /www_mjpg
@@ -54,10 +54,5 @@ COPY FS/ /
 RUN chmod a+x /*.sh
 # Make sure scripts are formatted for Unix
 RUN dos2unix /run_dev.sh
-# TODO: Do all `sed` in run.sh, so that path can be set by option.
-# RUN echo "Update config directory for all files" \
-#     && sed -i "s#/config/octoprint#/config/octoprint${CONFIG_DIR_SUFFIX}#g" /etc/supervisord.conf \
-#     && sed -i "s#/config/octoprint#/config/octoprint${CONFIG_DIR_SUFFIX}#g" /run.sh \
-#     && sed -i "s#/config/octoprint#/config/octoprint${CONFIG_DIR_SUFFIX}#g" /octoprint/config.yaml
 WORKDIR /
 CMD [ "/run.sh" ]
