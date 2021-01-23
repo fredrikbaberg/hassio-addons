@@ -1,5 +1,10 @@
 # Changelog
 
+[0.3.2]
+
+- Clean up logs
+- Remove mjpgstreamer from autostart again
+
 [0.3.1]
 
 - Uses Python3
