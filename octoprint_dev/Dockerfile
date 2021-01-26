@@ -10,8 +10,8 @@ ENV PATH=${PATH}:/data/python/bin
 ENV PYTHONUSERBASE=/data/python
 
 # Install requirements to run
-RUN apk add --no-cache --virtual .necessary haproxy python3 dbus avahi supervisor
-RUN apk add --no-cache --virtual .extra avahi-compat-libdns_sd libjpeg ffmpeg
+RUN apk add --no-cache --virtual .necessary supervisor dbus avahi nginx \
+    && apk add --no-cache --virtual .extra avahi-compat-libdns_sd libjpeg ffmpeg
 # Install OctoPrint
 RUN apk add --no-cache --virtual .build-dependencies py3-virtualenv build-base python3-dev linux-headers zlib-dev jpeg-dev musl-dev \
     && apk add --no-cache --virtual .build-dependencies-mjpgstreamer cmake libexecinfo-dev libjpeg-turbo-dev \
@@ -33,7 +33,6 @@ RUN apk add --no-cache --virtual .build-dependencies py3-virtualenv build-base p
     && wget -qO- https://github.com/jacksonliam/mjpg-streamer/archive/master.tar.gz | tar xz \
     && cd mjpg-streamer-master/mjpg-streamer-experimental/ \
     && make --silent \
-    # && make CMAKE_BUILD_TYPE=Debug --silent \
     && make install --silent \
     # Move files
     && mv www/ /www_mjpg \
@@ -44,8 +43,7 @@ RUN apk add --no-cache --virtual .build-dependencies py3-virtualenv build-base p
 # Copy data from filesystem and previous stages
 COPY FS/ /
 # Make scripts executable
-RUN chmod a+x /*.sh
-# Make sure scripts are formatted for Unix
-RUN dos2unix /run_dev.sh
+RUN chmod a+x /*.sh \
+    && dos2unix /run_dev.sh # Need to format for Unix, since testing on Windows.
 WORKDIR /
 CMD [ "/run.sh" ]

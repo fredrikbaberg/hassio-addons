@@ -5,6 +5,10 @@
 # bashio::log.info "run.sh"
 # echo "run.sh"
 
+## Print add-on information
+bashio::log.info $(bashio::addon.version)
+# bashio::log.info $(bashio::addon.ingress_entry)
+
 ## Read values from configuration.
 OCTOPRINT_BASEDIR="/config/octoprint"$(bashio::config 'config_folder_suffix')
 MJPG_INPUT_ARGS=$(bashio::config 'mjpg_input')
@@ -32,10 +36,11 @@ fi
 new_password=`date +%s | sha256sum | base64 | head -c 32 ; echo`
 octoprint --basedir $OCTOPRINT_BASEDIR user add homeassistant --password $new_password --admin # 2> /dev/null
 
-# Set Ingress entry
-sed -i "s#%%base_path%%#${INGRESS_ENTRY}#g" /etc/haproxy/haproxy.cfg
-# The following is only for dev:
-# sed -e '/http-request set-header X-Script-Name/s/^/#/g' -i /etc/haproxy/haproxy.cfg
+# Update proxy (haproxy/nginx) for Ingress
+# sed -i "s#%%ingress_entry%%#${INGRESS_ENTRY}#g" /etc/haproxy/haproxy.cfg
+if [ -f $OCTOPRINT_BASEDIR/nginx.conf ]; then
+    cp $OCTOPRINT_BASEDIR/nginx.conf /etc/nginx/
+fi
 
 # Update supervisord
 sed -i "s+%%basedir%%+${OCTOPRINT_BASEDIR}+g" /etc/supervisord.conf
