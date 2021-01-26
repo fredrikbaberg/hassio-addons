@@ -10,7 +10,7 @@ ENV PATH=${PATH}:/data/python/bin
 ENV PYTHONUSERBASE=/data/python
 
 # Install requirements to run
-RUN apk add --no-cache --virtual .necessary haproxy python3 dbus avahi supervisor
+RUN apk add --no-cache --virtual .necessary supervisor dbus avahi python3 haproxy
 RUN apk add --no-cache --virtual .extra avahi-compat-libdns_sd libjpeg ffmpeg
 # Install OctoPrint
 RUN apk add --no-cache --virtual .build-dependencies py3-virtualenv build-base python3-dev linux-headers zlib-dev jpeg-dev musl-dev \

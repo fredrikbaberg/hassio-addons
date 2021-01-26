@@ -1,5 +1,10 @@
 # Changelog
 
+[0.3.3]
+
+- Update proxy configuration.
+  - Will use haproxy.cfg from octoprint config directory if available.
+
 [0.3.2]
 
 - Clean up logs
