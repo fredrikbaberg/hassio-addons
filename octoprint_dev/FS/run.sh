@@ -4,6 +4,9 @@
 
 # bashio::log.info "run.sh"
 # echo "run.sh"
+bashio::log.info $(bashio::addon.name)
+bashio::log.info $(bashio::addon.hostname)
+bashio::log.info $(bashio::addon.ingress_entry)
 
 ## Read values from configuration.
 OCTOPRINT_BASEDIR="/config/octoprint"$(bashio::config 'config_folder_suffix')
@@ -21,7 +24,7 @@ if [ ! -d /data/python ]; then
     rm -rf /root/python.tar.gz
 fi
 
-# Create config
+# Create config if it does not exist.
 mkdir -p $OCTOPRINT_BASEDIR
 if [ ! -f $OCTOPRINT_BASEDIR/config.yaml ]; then
     cp /octoprint/config.yaml $OCTOPRINT_BASEDIR/config.yaml
@@ -32,10 +35,13 @@ fi
 new_password=`date +%s | sha256sum | base64 | head -c 32 ; echo`
 octoprint --basedir $OCTOPRINT_BASEDIR user add homeassistant --password $new_password --admin # 2> /dev/null
 
-# Set Ingress entry
-sed -i "s#%%base_path%%#${INGRESS_ENTRY}#g" /etc/haproxy/haproxy.cfg
-# The following is only for dev:
-# sed -e '/http-request set-header X-Script-Name/s/^/#/g' -i /etc/haproxy/haproxy.cfg
+# Update proxy file
+if [ -f /config/${OCTOPRINT_BASEDIR}/haproxy.cfg]; then
+    cp /config/${OCTOPRINT_BASEDIR}/haproxy.cfg /etc/haproxy/haproxy.cfg
+    bashio::log.info "Copied haproxy.cfg"
+fi
+# sed -i "s#%%base_path%%#${INGRESS_ENTRY}#g" /etc/haproxy/haproxy.cfg # Set Ingress entry
+# sed -e '/http-request set-header X-Script-Name/s/^/#/g' -i /etc/haproxy/haproxy.cfg # Only needed for dev
 
 # Update supervisord
 sed -i "s+%%basedir%%+${OCTOPRINT_BASEDIR}+g" /etc/supervisord.conf
