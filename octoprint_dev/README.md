@@ -1,8 +1,8 @@
 # Development version of OctoPrint add-on for Home Assistant
 
-**Ensure you have a backup of your configuration.**
-
 **This version is VERY EXPERIMENTAL, please use the one simply called "OctoPrint" for now.**
+
+**Ensure you have a backup of your configuration.**
 
 ## About
 
@@ -14,7 +14,7 @@ Add the repository [https://github.com/fredrikbaberg/hassio-addons](https://gith
 
 ## Documentation
 
-See the tab _Documentation_ or the file `DOCS.md`.
+See the tab _Documentation_ in Home Assistant addon page, or the file `DOCS.md`.
 
 ## Support
 
