@@ -10,10 +10,12 @@ ENV PATH=${PATH}:/data/python/bin
 ENV PYTHONUSERBASE=/data/python
 
 # Install requirements to run
-RUN apk add --no-cache --virtual .necessary supervisor dbus avahi python3 haproxy
-RUN apk add --no-cache --virtual .extra avahi-compat-libdns_sd libjpeg ffmpeg
+RUN echo "Install requirements" \
+    && apk add --no-cache --virtual .necessary supervisor dbus avahi python3 haproxy \
+    && apk add --no-cache --virtual .extra avahi-compat-libdns_sd libjpeg ffmpeg
 # Install OctoPrint
-RUN apk add --no-cache --virtual .build-dependencies py3-virtualenv build-base python3-dev linux-headers zlib-dev jpeg-dev musl-dev \
+RUN echo "Install software" \
+    && apk add --no-cache --virtual .build-dependencies py3-virtualenv build-base python3-dev linux-headers zlib-dev jpeg-dev musl-dev \
     && apk add --no-cache --virtual .build-dependencies-mjpgstreamer cmake libexecinfo-dev libjpeg-turbo-dev \
     ## octoprint
     && echo "Install OctoPrint" \
