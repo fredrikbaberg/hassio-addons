@@ -1,5 +1,9 @@
 # Changelog
 
+[0.3.6]
+
+- Add zlib
+
 [0.3.5]
 
 - Fix incorrect spacing in run.sh

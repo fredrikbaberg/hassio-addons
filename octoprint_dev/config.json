@@ -1,6 +1,6 @@
 {
     "name": "OctoPrint Dev",
-    "version": "0.3.5",
+    "version": "0.3.6",
     "slug": "octoprint-dev",
     "description": "Development version of OctoPrint add-on for Home Assistant",
     "arch": ["armv7", "amd64", "armhf", "aarch64", "i386"],
