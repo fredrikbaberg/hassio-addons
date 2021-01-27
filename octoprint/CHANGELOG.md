@@ -1,5 +1,12 @@
 # Changelog
 
+[0.3.7]
+
+This version should fix issues with recovery.
+
+Changes:
+- Modified rescue
+
 [0.3.6]
 
 Changes:

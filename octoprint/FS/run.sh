@@ -14,7 +14,7 @@ rescue(){
     #
     if bashio::config.true 'request_rescue'; then
         {
-            pip freeze --local > /tmp/pipfreeze.txt
+            pip freeze --local > /tmp/pipfreeze_old.txt
         } || {
             bashio::log.info "Could not save data from pip"
             # echo "Could not save data from pip"
@@ -22,7 +22,12 @@ rescue(){
         rm -rf /data/python
         tar -zxf /root/python.tar.gz -C /data/
         {
-            pip install --no-cache-dir -r /tmp/pipfreeze.txt
+            # Try to restore packages only in old pip freeze.
+            pip freeze --local > /tmp/pipfreeze_new.txt
+            cat /tmp/pipfreeze_old.txt | sed 's/==.*//' > /tmp/pipfreeze_old.txt
+            cat /tmp/pipfreeze_new.txt | sed 's/==.*//' > /tmp/pipfreeze_new.txt
+            comm -23 /tmp/pipfreeze_old.txt /tmp/pipfreeze_new.txt > /tmp/pipfreeze_diff.txt
+            pip install --no-cache-dir -r /tmp/pipfreeze_diff.txt
         } || {
             bashio::log.info "Could not restore data from pip"
             # echo "Could not restore data from pip"
@@ -88,8 +93,8 @@ set_mjpg_args(){
     sed -i "s+%%mjpg_output%%+${OUTPUT}+g" /mjpgstreamer.sh
 }
 
-rescue
 add_build_packages
+rescue
 copy_data
 create_config
 create_ingress_user # Ensure Ingress user (homeassistant) exist. This should not modify existing users.
