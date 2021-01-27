@@ -1,5 +1,13 @@
 # Changelog
 
+[0.3.6]
+
+- Add zlib
+
+[0.3.5]
+
+- Fix incorrect spacing in run.sh
+
 [0.3.4]
 
 - Correction to haproxy names.
