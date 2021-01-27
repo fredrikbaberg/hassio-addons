@@ -1,6 +1,6 @@
 ARG BUILD_FROM="homeassistant/amd64-base:latest"
 
-ARG OCTOPRINT_VERSION="1.4.0"
+ARG OCTOPRINT_VERSION="1.4.1"
 ARG CONFIG_DIR_SUFFIX=""
 ARG PIP_FLAGS="--no-cache-dir"
 ARG PYTHON_VERSION="python2"
