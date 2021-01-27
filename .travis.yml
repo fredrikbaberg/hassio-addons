@@ -6,6 +6,7 @@ services:
 branches:
   only:
     - master
+    - build
 before_install:
   - sudo apt-get install jq
   - sudo chmod +x ./build.sh
