@@ -1,5 +1,9 @@
 # Changelog
 
+[0.4.0]
+
+Update OctoPrint to version 1.5.3
+
 [0.3.7]
 
 This version should fix issues with recovery.

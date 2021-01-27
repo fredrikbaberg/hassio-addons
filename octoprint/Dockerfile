@@ -1,6 +1,6 @@
 ARG BUILD_FROM="homeassistant/amd64-base:latest"
 
-ARG OCTOPRINT_VERSION="1.4.1"
+ARG OCTOPRINT_VERSION="1.5.3"
 ARG CONFIG_DIR_SUFFIX=""
 ARG PIP_FLAGS="--no-cache-dir"
 ARG PYTHON_VERSION="python2"
@@ -74,7 +74,8 @@ RUN echo "Installing OctoPrint" \
     && rm -rf /data/python
     # && mv /data/python /root/python
 # Install mjpg-streamer
-RUN apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libexecinfo-dev libjpeg-turbo-dev \
+RUN echo "Installing mjpg-streamer" \
+    && apk add --no-cache --virtual .build-dependencies build-base cmake linux-headers libexecinfo-dev libjpeg-turbo-dev \
     && wget -qO- https://github.com/jacksonliam/mjpg-streamer/archive/master.tar.gz | tar xz \
     && cd mjpg-streamer-master/mjpg-streamer-experimental/ \
     && make --silent \
@@ -86,7 +87,8 @@ RUN apk add --no-cache --virtual .build-dependencies build-base cmake linux-head
     && rm -rf /mjpg-streamer-master
 # Install CuraEngine-Legacy
 ARG CURA_VERSION=15.04.6
-RUN apk add --no-cache --virtual .build-dependencies build-base libexecinfo-dev \
+RUN echo "Installing CuraEngine-Legacy" \
+    && apk add --no-cache --virtual .build-dependencies build-base libexecinfo-dev \
     && wget -qO- https://github.com/Ultimaker/CuraEngine/archive/${CURA_VERSION}.tar.gz | tar xz \
     && cd CuraEngine-${CURA_VERSION} \
     && make --quiet \
