@@ -60,12 +60,13 @@ webcam:
   - Is `mjpg-streamer` running? It can be started from OctoPrint UI, same menu as for stop and restart.
   - Are you accessing through Ingress? Try through WebUI (set port in configuration).
 - How do I reset data?
+  This depends on what you need to reset.
   - Delete the folder `config/octoprint` to reset OctoPrint settings.
-  - Set `request_rescue: true` in configuration, restart addon, then set it back to false. This will attempt to reset only Python.
+  - Set `request_rescue: true` in configuration, restart addon, then set it back to false. This will attempt to reset the Python install used.
   - Uninstall and (re)install the addon.
 - How do I get Raspberry Pi camera to work in Home Assistant?
   - Probably not officially supported, but based on [https://raspberrypi.stackexchange.com/a/51440](https://raspberrypi.stackexchange.com/a/51440) I did the steps related to `start_x.elf` and `fixup_x.dat`. Note that I skipped the `modprobe` and `v4l2-ctl` parts. Note that an update of `HassOS` requires you to re-download the files for the system to boot again.
-- I cannot install <plugin>?
+- I cannot install `<plugin>`?
   - If there are missing dependencies, try to set `add_build_packages` to `true`. This will install additional packages (`build-base`, `linux-headers`, `python-dev`, `zlib-dev`, `jpeg-dev`) when the addon start. Note that this will require 220+ MB additional space, and on each restart the packages will be downloaded and installed again.
 - How do I autostart the camera?
   - To start the camera with the addon you can use [event hooks](https://docs.octoprint.org/en/master/events/index.html). Add the following lines to `config.yaml`:
@@ -78,6 +79,9 @@ webcam:
         event: Startup
         type: system
     ```
+- I pressed update, got an error about `gcc` or some other dependency missing, what do I do now?
+  - If OctoPrint still starts, you can set `add_build_packages` to `true`, restart the addon and try again. See ``I cannot install <plugin>?``. You may want to set it back to `false` when done.
+  - If it no longer starts, you were probably on OctoPrint 1.4.0 and tried to update. Set `request_rescue` to `true`, restart, and then back to `false`.
 
 ## Versions
 
@@ -85,7 +89,7 @@ Some notes regarding the software and versions.
 Not all software is installed for all images.
 
 - OctoPrint
-Installed in a `venv` from PyPI. The Add-on uses a pre-defined version of OctoPrint (currently 1.4.0), however, it should be possible to install updates.
+Installed in a `venv` from PyPI. The Add-on uses a pre-defined version of OctoPrint (currently 1.5.3), however, it should be possible to install updates.
 
 - CuraEngine
 A legacy version of CuraEngine is required to use Cura as slicer from within OctoPrint, for more information see [OctoPrint CuraLegacy plugin](https://plugins.octoprint.org/plugins/curalegacy/).
