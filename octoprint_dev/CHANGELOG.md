@@ -1,5 +1,9 @@
 # Changelog
 
+[0.3.4]
+
+- Correction to haproxy names.
+
 [0.3.3]
 
 - Update proxy configuration.
