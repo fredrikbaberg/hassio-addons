@@ -37,7 +37,7 @@ new_password=`date +%s | sha256sum | base64 | head -c 32 ; echo`
 octoprint --basedir $OCTOPRINT_BASEDIR user add homeassistant --password $new_password --admin # 2> /dev/null
 
 # Update proxy settings. Use file in OCTOPRINT_BASEDIR if available.
-if [ -f /config/${OCTOPRINT_BASEDIR}/haproxy.cfg]; then
+if [ -f /config/${OCTOPRINT_BASEDIR}/haproxy.cfg ]; then
     cp /config/${OCTOPRINT_BASEDIR}/haproxy.cfg /etc/haproxy/haproxy.cfg
 fi
 sed -i "s#%%ingress_entry%%#${INGRESS_ENTRY}#g" /etc/haproxy/haproxy.cfg # Set Ingress entry

@@ -1,5 +1,9 @@
 # Changelog
 
+[0.3.5]
+
+- Fix incorrect spacing in run.sh
+
 [0.3.4]
 
 - Correction to haproxy names.
