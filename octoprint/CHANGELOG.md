@@ -1,5 +1,9 @@
 # Changelog
 
+[0.4.1]
+
+Rescue will not try to re-install Python packages.
+
 [0.4.0]
 
 Update OctoPrint to version 1.5.3

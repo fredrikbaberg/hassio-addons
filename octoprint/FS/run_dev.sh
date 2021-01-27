@@ -8,30 +8,30 @@ echo "run_dev.sh"
 
 rescue(){
     # Simple attempt to rescue system.
-    # - Try to export list of pip packages
+    # - (skip) Try to export list of pip packages
     # - Reset Python directory
-    # - Try to reinstall pip packages
+    # - (skip) Try to reinstall pip packages
     #
     # if bashio::config.true 'request_rescue'; then
-        {
-            pip freeze --local > /tmp/pipfreeze_old.txt
-        } || {
-            # bashio::log.info "Could not save data from pip"
-            echo "Could not save data from pip"
-        }
+        # {
+        #     pip freeze --local > /tmp/pipfreeze_old.txt
+        # } || {
+        #     # bashio::log.info "Could not save data from pip"
+        #     echo "Could not save data from pip"
+        # }
         rm -rf /data/python
         tar -zxf /root/python.tar.gz -C /data/
-        {
-            # Try to restore packages only in old pip freeze.
-            pip freeze --local > /tmp/pipfreeze_new.txt
-            cat /tmp/pipfreeze_old.txt | sed 's/==.*//' > /tmp/pipfreeze_old.txt
-            cat /tmp/pipfreeze_new.txt | sed 's/==.*//' > /tmp/pipfreeze_new.txt
-            comm -23 /tmp/pipfreeze_old.txt /tmp/pipfreeze_new.txt > /tmp/pipfreeze_diff.txt
-            pip install --no-cache-dir -r /tmp/pipfreeze_diff.txt
-        } || {
-            # bashio::log.info "Could not restore data from pip"
-            echo "Could not restore data from pip"
-        }
+        # {
+        #     # Try to restore packages only in old pip freeze.
+        #     pip freeze --local > /tmp/pipfreeze_new.txt
+        #     cat /tmp/pipfreeze_old.txt | sed 's/==.*//' > /tmp/pipfreeze_old.txt
+        #     cat /tmp/pipfreeze_new.txt | sed 's/==.*//' > /tmp/pipfreeze_new.txt
+        #     comm -23 /tmp/pipfreeze_old.txt /tmp/pipfreeze_new.txt > /tmp/pipfreeze_diff.txt
+        #     pip install --no-cache-dir -r /tmp/pipfreeze_diff.txt
+        # } || {
+        #     # bashio::log.info "Could not restore data from pip"
+        #     echo "Could not restore data from pip"
+        # }
     # fi
 }
 
