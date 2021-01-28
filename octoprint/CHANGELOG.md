@@ -1,5 +1,9 @@
 # Changelog
 
+[0.4.3]
+
+Modify rescue script for install of previous packages
+
 [0.4.2]
 
 Correct HAProxy syntax for time
