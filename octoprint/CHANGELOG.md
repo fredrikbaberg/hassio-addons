@@ -1,8 +1,14 @@
 # Changelog
 
+[0.4.1]
+
+Correct bug in rescue where packages are not reinstalled.
+
 [0.4.0]
 
-Update OctoPrint to version 1.5.3
+Update OctoPrint to version 1.5.3.
+
+Recovery is intended to restore the system to a working state, loss of plugin data is possible.
 
 [0.3.7]
 

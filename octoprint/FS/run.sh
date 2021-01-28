@@ -14,7 +14,7 @@ rescue(){
     #
     if bashio::config.true 'request_rescue'; then
         {
-            pip freeze --local > /tmp/pipfreeze_old.txt
+            pip freeze --local > /tmp/pipfreeze_old.txt  
         } || {
             bashio::log.info "Could not save data from pip"
             # echo "Could not save data from pip"
@@ -23,11 +23,11 @@ rescue(){
         tar -zxf /root/python.tar.gz -C /data/
         {
             # Try to restore packages only in old pip freeze.
-            pip freeze --local > /tmp/pipfreeze_new.txt
-            cat /tmp/pipfreeze_old.txt | sed 's/==.*//' > /tmp/pipfreeze_old.txt
-            cat /tmp/pipfreeze_new.txt | sed 's/==.*//' > /tmp/pipfreeze_new.txt
-            comm -23 /tmp/pipfreeze_old.txt /tmp/pipfreeze_new.txt > /tmp/pipfreeze_diff.txt
-            pip install --no-cache-dir -r /tmp/pipfreeze_diff.txt
+            pip freeze --local > /tmp/pipfreeze_new.txt 
+            cat /tmp/pipfreeze_old.txt | sed 's/==.*//' > /tmp/pipf_old.txt 
+            cat /tmp/pipfreeze_new.txt | sed 's/==.*//' > /tmp/pipf_new.txt 
+            comm -23 /tmp/pipf_old.txt /tmp/pipf_new.txt > /tmp/pipf_diff.txt
+            pip install --no-cache-dir -r /tmp/pipf_diff.txt 
         } || {
             bashio::log.info "Could not restore data from pip"
             # echo "Could not restore data from pip"
