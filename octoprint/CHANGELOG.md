@@ -1,5 +1,31 @@
 # Changelog
 
+[0.4.4]
+
+Modify rescue script for install of previous packages
+Will install build packages on rescue if there are additional packages to install.
+
+[0.4.2]
+
+Correct HAProxy syntax for time
+
+[0.4.1]
+
+Correct bug in rescue where packages are not reinstalled.
+
+[0.4.0]
+
+Update OctoPrint to version 1.5.3.
+
+Recovery is intended to restore the system to a working state, loss of plugin data is possible.
+
+[0.3.7]
+
+This version should fix issues with recovery.
+
+Changes:
+- Modified rescue
+
 [0.3.6]
 
 Changes:
