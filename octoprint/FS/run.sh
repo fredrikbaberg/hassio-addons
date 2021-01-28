@@ -8,7 +8,7 @@ echo "run.sh"
 
 rescue(){
     # Simple attempt to rescue system.
-    # - Try to export list of pip packages-
+    # - Try to export list of pip packages
     # - Reset Python directory
     # - Try to reinstall pip packages
     #
