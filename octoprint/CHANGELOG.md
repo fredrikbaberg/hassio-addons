@@ -1,5 +1,9 @@
 # Changelog
 
+[0.4.2]
+
+Correct HAProxy syntax for time
+
 [0.4.1]
 
 Correct bug in rescue where packages are not reinstalled.
