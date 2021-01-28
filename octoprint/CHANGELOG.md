@@ -1,8 +1,9 @@
 # Changelog
 
-[0.4.3]
+[0.4.4]
 
 Modify rescue script for install of previous packages
+Will install build packages on rescue if there are additional packages to install.
 
 [0.4.2]
 

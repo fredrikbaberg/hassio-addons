@@ -27,7 +27,9 @@ rescue(){
             cat /tmp/pipfreeze_old.txt | sed 's/==.*//' | sed 's/ @ file:.*//' | sed 's/ @ /@/' > /tmp/pipf_old.txt 
             cat /tmp/pipfreeze_new.txt | sed 's/==.*//' | sed 's/ @ file:.*//' | sed 's/ @ /@/' > /tmp/pipf_new.txt 
             comm -23 /tmp/pipf_old.txt /tmp/pipf_new.txt > /tmp/pipf_diff.txt
-            pip install --no-cache-dir -r /tmp/pipf_diff.txt
+            # If the diff file is not empty, install build packages
+            [ -s /tmp/pipf_diff.txt ] && add_build_packages
+            pip install --no-cache-dir -r /tmp/pipf_diff.txt 
         } || {
             # bashio::log.info "Could not restore data from pip"
             echo "Could not restore data from pip"
