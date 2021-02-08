@@ -16,7 +16,7 @@
         "5000/tcp": "WebUI (Not required for Ingress)",
         "8000/tcp": "mjpg-streamer (could also use WebUI/webcam/)"
     },
-    "auto_uart": true,
+    "uart": true,
     "homeassistant": "0.108.0",
     "map": ["config:rw"],
     "options": {
