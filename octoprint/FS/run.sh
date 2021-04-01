@@ -74,7 +74,7 @@ create_config() {
         bashio::log.info "Create config"
         # echo "Create config"
         mkdir -p /config/octoprint
-        cp /octoprint/config.yaml /config/octoprint/config.yaml
+        cp /octoprint/config.octoprint.yaml /config/octoprint/config.yaml
     fi
 }
 

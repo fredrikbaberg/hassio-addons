@@ -28,7 +28,7 @@ fi
 # Create config if it does not exist.
 mkdir -p $OCTOPRINT_BASEDIR
 if [ ! -f $OCTOPRINT_BASEDIR/config.yaml ]; then
-    cp /octoprint/configuration.yaml $OCTOPRINT_BASEDIR/config.yaml
+    cp /octoprint/config.octoprint.yaml $OCTOPRINT_BASEDIR/config.yaml
     sed -i "s#/config/octoprint#$OCTOPRINT_BASEDIR#g" $OCTOPRINT_BASEDIR/config.yaml
 fi
 
