@@ -2,9 +2,5 @@
 
 bashio::log.info "Starting mjpg-streamer.."
 
-bashio::log.info $(bashio::addon.name)
-bashio::log.info $(bashio::addon.version)
-bashio::log.info $(bashio::addon.hostname)
-
-# mjpg_streamer -i "$(bashio::config 'mjpg_input')" -o "output_http.so -w /www_mjpg -p 8000"
-mjpg_streamer -i "input_file.so -f /www_mjpg -e" -o "output_http.so -w /www_mjpg -p 8000"
+mjpg_streamer -i "$(bashio::config 'mjpg_input')" -o "output_http.so -w /www_mjpg -p 8000"
+# mjpg_streamer -i "input_file.so -f /www_mjpg -e" -o "output_http.so -w /www_mjpg -p 8000"
