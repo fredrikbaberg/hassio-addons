@@ -21,3 +21,7 @@ Please report issues here, or through the following [thread](https://community.h
 ## iPerf3 ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/fredrikbaberg/iperf3-amd64-image?sort=semver)
 
 iPerf3 server
+
+## mjpg-streamer ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/fredrikbaberg/mjpg-streamer-amd64-image?sort=semver)
+
+mjpg-streamer

@@ -4,9 +4,9 @@
 
 - `mjpg_input`: Specify input arguments for mjpg_streamer.
 
-### Network
-
 ## How to use
+
+The addon starts mjpg-streamer with input argument set by `mjpg_input`. The output can be accessed through Ingress by a simple web interface, or other addons can access by addon hostname. Path should be: `hostname/action?stream` or `hostname/?action=snapshot`.
 
 ## Versions
 
