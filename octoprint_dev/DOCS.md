@@ -2,18 +2,11 @@
 
 ## Configuration
 
-You can change settings for camera support and where config files are stored.
-
-- `mjpg_input`: Specify input arguments for mjpg_streamer.
-- `mjpg_output`: Specify output arguments for mjpg_streamer.
 - `config_folder_suffix`: Suffix for config folder, will be `/config/octoprint<config_folder_suffix>`.
 
 ### Network
 
-Two ports can be specified, both are disabled by default.
-
-- WebUI: Used to connect to OctoPrint outside of Ingress. E.g. have a slicer connect to OctoPrint.
-- mjpg-streamer: Port for mjpg-streamer to be externally available.
+By default no port is exposed outside of Home Assistant. You need to either set a port, or use a proxy, to have access to OctoPrint from e.g. a slicer.
 
 ## How to use
 
@@ -34,32 +27,22 @@ One user, `homeassistant`, is created with a random password on first launch. Us
 
 ### Updates
 
-Backup first, from within OctoPrint.
-It should be possible to update from within OctoPrint.
+Backup first, from within OctoPrint. It should be possible to update from within OctoPrint.
 
 ### Camera
 
-There is basic camera support. Snapshots works without opening a port.
-Video streams requires one of the ports to be set.
-Some additional configuration may be needed, you may find the following excerpt from `config.yaml` helpful:
+mjpg-streamer is available as a separate add-on to provide camera support.
+
+You may find the following excerpt from `config.yaml` helpful:
 
 ```
 webcam:
     ffmpeg: /usr/bin/ffmpeg
-    snapshot: http://localhost:8080/?action=snapshot
-    stream: http://<device IP address>:5000/webcam/?action=stream
+    stream: http://local-mjpg-streamer:8000/?action=stream
+    snapshot: http://local-mjpg-streamer:8000/?action=snapshot
 ```
 
-The camera does not start automatically. Use the menu to start mjpg-streamer, or add the following to `config.yaml` for autostart:
-```
-events:
-enabled: true
-subscriptions:
--   command: supervisorctl start mjpg-streamer
-    enabled: true
-    event: Startup
-    type: system
-```
+With the camera provided by another add-on, you need to control that add-on to start and stop the camera.
 
 ### Q and A
 

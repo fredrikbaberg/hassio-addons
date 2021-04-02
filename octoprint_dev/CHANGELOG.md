@@ -1,5 +1,9 @@
 # Changelog
 
+[0.3.7]
+
+- Rewrite to use s6-overlay, change of reverse proxy used.
+
 [0.3.6]
 
 - Add zlib

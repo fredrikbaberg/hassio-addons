@@ -1,0 +1,6 @@
+172.30.32.2:8099 {
+        reverse_proxy 127.0.0.1:80
+        handle_path /webcam* {
+                reverse_proxy localhost:8000
+        }
+}

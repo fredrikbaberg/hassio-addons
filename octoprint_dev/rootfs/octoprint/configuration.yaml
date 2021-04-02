@@ -19,22 +19,11 @@ folder:
     translations: /config/octoprint/translations
     uploads: /config/octoprint/uploads
     watched: /config/octoprint/watched
-plugins:
-    cura:
-        cura_engine: /sbin/CuraEngine
 server:
     commands:
-        serverRestartCommand: supervisorctl restart octoprint
+        serverRestartCommand: s6-svc -r /var/run/s6/services/octoprint
         systemRestartCommand: /restart.sh
         systemShutdownCommand: /shutdown.sh
 webcam:
     ffmpeg: /usr/bin/ffmpeg
     snapshot: http://localhost:8080/?action=snapshot
-system:
-    actions:
-        -   action: mjpgstart
-            command: supervisorctl start mjpg-streamer
-            name: Start mjpg-streamer
-        -   action: mjpgstop
-            command: supervisorctl stop mjpg-streamer
-            name: Stop mjpg-streamer

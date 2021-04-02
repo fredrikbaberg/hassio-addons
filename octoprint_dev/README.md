@@ -22,4 +22,4 @@ Either write in the [thread](https://community.home-assistant.io/t/repository-oc
 
 ## Development
 
-For local debugging, use the following command: `docker build . -t local/octoprint_dev ; docker run --rm -it -p 5000:5000 -v ${pwd}/octoprint_config:/config -v octoprint_data_dev:/data --entrypoint=/bin/bash local/octoprint_dev`
+Repository is prepared for VSCode and devcontainer.
