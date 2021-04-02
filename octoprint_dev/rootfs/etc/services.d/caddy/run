@@ -4,4 +4,5 @@
 # Starts server to serve the app
 # ==============================================================================
 
+bashio::log.info "caddy"
 caddy run -config Caddyfile
