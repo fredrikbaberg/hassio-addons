@@ -6,7 +6,8 @@
 
 ## How to use
 
-The addon starts mjpg-streamer with input argument set by `mjpg_input`. The output can be accessed through Ingress by a simple web interface, or other addons can access by addon hostname. Path should be: `hostname/action?stream` or `hostname/?action=snapshot`.
+Set input arguments through `mjpg_input` configuration option, start the add-on.
+The camera stream and snapshot can be accessed by e.g. [MJPEG IP Camera](https://www.home-assistant.io/integrations/mjpeg/) from url `http://<addon-hostname>/?action=stream` or `http://<addon-hostname>/?action=snapshot`.
 
 ## Versions
 
