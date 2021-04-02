@@ -1,0 +1,24 @@
+{
+    "name": "mjpg-streamer",
+    "version": "0.0.1",
+    "slug": "mjpg-streamer",
+    "description": "mjpg-streamer add-on for Home Assistant",
+    "arch": ["armv7", "amd64", "armhf", "aarch64", "i386"],
+    "url": "https://github.com/fredrikbaberg/hassio-addons",
+    "startup": "application",
+    "boot": "manual",
+    "homeassistant": "2021.1.0",
+    "video": true,
+    "usb": true,
+    "options": {
+        "mjpg_input": "input_uvc.so -n"
+    },
+    "schema": {
+        "mjpg_input": "str"
+    },
+    "ingress": false,
+    "ingress_port": 8099,
+    "panel_icon": "mdi:camera",
+    "panel_title": "mjpg-streamer",
+    "stage": "experimental"
+}
