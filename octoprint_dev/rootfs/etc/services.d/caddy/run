@@ -5,4 +5,4 @@
 # ==============================================================================
 
 bashio::log.info "caddy"
-caddy run -config Caddyfile
+caddy run -config /config/Caddyfile
