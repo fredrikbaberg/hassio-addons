@@ -2,6 +2,7 @@
 
 bashio::log.info "Caddy cont-init.d"
 
+# TODO: Remove this, should not expose the Caddyfile.
 if [ ! -f /config/Caddyfile ]; then
     cp /etc/services.d/caddy/Caddyfile /config/Caddyfile
 fi

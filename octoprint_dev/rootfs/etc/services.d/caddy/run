@@ -6,3 +6,5 @@
 
 bashio::log.info "caddy"
 caddy run -config /config/Caddyfile
+# TODO: Use Caddyfile in this folder, not from config.
+# caddy run -config Caddyfile
