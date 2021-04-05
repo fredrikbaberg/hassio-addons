@@ -1,10 +1,7 @@
 #!/usr/bin/with-contenv bashio
-# ==============================================================================
-# Home Assistant Community Add-on: OctoPrint (Dev)
-# Starts server to serve the app
-# ==============================================================================
 
 bashio::log.info "caddy"
+
 caddy run -config /config/Caddyfile
 # TODO: Use Caddyfile in this folder, not from config.
 # caddy run -config Caddyfile

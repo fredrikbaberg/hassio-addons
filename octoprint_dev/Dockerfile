@@ -31,4 +31,6 @@ RUN echo "Install software" \
     && apk del --no-cache .build-dependencies-octoprint
 # Copy data from filesystem and previous stages
 COPY rootfs/ /
+RUN chmod a+x /restart.sh
+RUN chmod a+x /shutdown.sh
 WORKDIR /
