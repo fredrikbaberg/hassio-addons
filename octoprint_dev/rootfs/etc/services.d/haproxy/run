@@ -1,0 +1,6 @@
+#!/usr/bin/with-contenv bashio
+
+if [ -f /config/haproxy.cfg ]; then
+    bashio::log.info "Starting HAProxy"
+    haproxy -db -f /config/haproxy.cfg
+fi

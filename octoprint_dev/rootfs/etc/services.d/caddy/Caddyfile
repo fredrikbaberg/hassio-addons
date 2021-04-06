@@ -1,14 +1,3 @@
-:5000 {
-    reverse_proxy localhost:80 {
-        header_up X-Scheme {scheme}
-    }
-    handle_path /webcam* {
-        reverse_proxy local-mjpg-streamer:80 {
-            header_up X-Scheme {scheme}
-        }
-    }
-}
-
 :8099 {
     @ingress {
         remote_ip 172.30.32.2
@@ -17,6 +6,17 @@
         header_up X-Scheme {scheme}
         header_up X-Script-Name %%base_path%%
         header_up X-Forwarded-For 172.30.32.2
+    }
+    handle_path /webcam* {
+        reverse_proxy local-mjpg-streamer:80 {
+            header_up X-Scheme {scheme}
+        }
+    }
+}
+
+:5000 {
+    reverse_proxy localhost:80 {
+        header_up X-Scheme {scheme}
     }
     handle_path /webcam* {
         reverse_proxy local-mjpg-streamer:80 {

@@ -1,7 +1,6 @@
 #!/usr/bin/with-contenv bashio
 
-bashio::log.info "caddy"
-
-caddy run -config /config/Caddyfile
-# TODO: Use Caddyfile in this folder, not from config.
-# caddy run -config Caddyfile
+if [ -f /config/Caddyfile ]; then
+    bashio::log.info "Starting Caddy ..."
+    caddy run -config /config/Caddyfile
+fi

@@ -2,11 +2,7 @@
 
 bashio::log.info "Caddy cont-init.d"
 
-# # TODO: Remove this, should not expose the Caddyfile.
-# if [ ! -f /config/Caddyfile ]; then
-#     cp /etc/services.d/caddy/Caddyfile /config/Caddyfile
-# fi
-
-# ingress_entry=$(bashio::addon.ingress_entry)
-# sed -i "s#%%base_path%%#${ingress_entry}#g" /config/Caddyfile
-# # sed -i "s#%%base_path%%#${ingress_entry}#g" /etc/services.d/caddy/Caddyfile
+if [ -f /config/Caddyfile ]; then
+    ingress_entry=$(bashio::addon.ingress_entry)
+    sed -i "s#%%base_path%%#${ingress_entry}#g" /config/Caddyfile
+fi
