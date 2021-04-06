@@ -10,8 +10,14 @@ ENV PYTHONUSERBASE=/data/python
 
 # Install requirements to run
 RUN echo "Install base requirements for running." \
-    && apk add --no-cache --virtual .necessary python3 caddy \
-    && apk add --no-cache --virtual .extras ffmpeg # libjpeg postgresql-libs python3-dev zlib-dev jpeg-dev build-base linux-headers
+    && apk add --no-cache --virtual .necessary python3 caddy ffmpeg \
+    && apk add --no-cache --virtual .extras \
+        build-base \
+        linux-headers \
+        python3-dev \
+        zlib-dev \
+        jpeg-dev
+        # libjpeg postgresql-libs python3-dev zlib-dev jpeg-dev build-base linux-headers
 RUN echo "Install software" \
     && apk add --no-cache --virtual .build-dependencies-octoprint py3-virtualenv build-base python3-dev linux-headers \
     && echo "Setup Python" \
