@@ -2,5 +2,5 @@
 
 if [ -f "/config/octoprint"$(bashio::config 'config_folder_suffix')/Caddyfile ]; then
     bashio::log.info "Starting Caddy ..."
-    caddy run -config "/config/octoprint"$(bashio::config 'config_folder_suffix')/Caddyfile
+    caddy run --watch -config "/config/octoprint"$(bashio::config 'config_folder_suffix')/Caddyfile
 fi
