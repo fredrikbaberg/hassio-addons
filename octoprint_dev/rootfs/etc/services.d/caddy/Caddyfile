@@ -11,7 +11,7 @@
     }
     handle_path /webcam/* {
         rewrite * /?{query}
-        reverse_proxy http://local-mjpg-streamer:80 {
+        reverse_proxy http://774437fd-mjpg-streamer:80 {
         }
     }
 }
@@ -21,7 +21,7 @@
         header_up X-Scheme {scheme}
     }
     handle_path /webcam* {
-        reverse_proxy http://local-mjpg-streamer:80 {
+        reverse_proxy http://774437fd-mjpg-streamer:80 {
             header_up X-Scheme {scheme}
         }
     }
