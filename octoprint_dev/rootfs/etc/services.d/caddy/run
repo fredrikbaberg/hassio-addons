@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bashio
 
-if [ -f /config/Caddyfile ]; then
+if [ -f "/config/octoprint"$(bashio::config 'config_folder_suffix')/Caddyfile ]; then
     bashio::log.info "Starting Caddy ..."
-    caddy run -config /config/Caddyfile
+    caddy run -config "/config/octoprint"$(bashio::config 'config_folder_suffix')/Caddyfile
 fi
