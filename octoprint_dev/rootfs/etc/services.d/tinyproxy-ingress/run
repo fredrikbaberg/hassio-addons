@@ -1,6 +1,0 @@
-#!/usr/bin/with-contenv bashio
-
-if [ -f "/config/octoprint"$(bashio::config 'config_folder_suffix')/tinyproxy-ingress.conf ]; then
-    bashio::log.info "Starting Tinyproxy for Ingress..."
-    tinyproxy -d -c "/config/octoprint"$(bashio::config 'config_folder_suffix')/tinyproxy-ingress.conf
-fi

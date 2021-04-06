@@ -1,6 +1,0 @@
-#!/usr/bin/with-contenv bashio
-
-if [ -f "/config/octoprint"$(bashio::config 'config_folder_suffix')/nginx.conf ]; then
-    bashio::log.info "Starting nginx"
-    nginx -c "/config/octoprint"$(bashio::config 'config_folder_suffix')/nginx.conf
-fi

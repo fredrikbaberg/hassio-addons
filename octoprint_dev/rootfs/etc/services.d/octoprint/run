@@ -5,4 +5,5 @@
 ## Read values from configuration.
 OCTOPRINT_BASEDIR="/config/octoprint"$(bashio::config 'config_folder_suffix')
 
+# Launch OctoPrint
 octoprint serve --iknowwhatimdoing --basedir "${OCTOPRINT_BASEDIR}" --host 0.0.0.0 --port 80

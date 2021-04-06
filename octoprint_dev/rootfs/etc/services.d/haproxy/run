@@ -1,6 +1,0 @@
-#!/usr/bin/with-contenv bashio
-
-if [ -f "/config/octoprint"$(bashio::config 'config_folder_suffix')/haproxy.cfg ]; then
-    bashio::log.info "Starting HAProxy"
-    haproxy -db -f "/config/octoprint"$(bashio::config 'config_folder_suffix')/haproxy.cfg
-fi

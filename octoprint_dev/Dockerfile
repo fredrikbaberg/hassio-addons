@@ -10,7 +10,7 @@ ENV PYTHONUSERBASE=/data/python
 
 # Install requirements to run
 RUN echo "Install base requirements for running." \
-    && apk add --no-cache --virtual .necessary python3 caddy tinyproxy haproxy nginx \
+    && apk add --no-cache --virtual .necessary python3 caddy \
     && apk add --no-cache --virtual .extras ffmpeg # python3-dev
 RUN echo "Install software" \
     && apk add --no-cache --virtual .build-dependencies-octoprint py3-virtualenv build-base python3-dev linux-headers \
