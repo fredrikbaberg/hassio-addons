@@ -82,7 +82,7 @@ function run_supervisor() {
         -v /run/dbus:/run/dbus:ro \
         -v /run/udev:/run/udev:ro \
         -v /tmp/supervisor_data:/data:rw \
-        -v "/workspaces/addons":/data/addons/local:rw \
+        -v "/workspaces":/data/addons/local:rw \
         -v /etc/machine-id:/etc/machine-id:ro \
         -e SUPERVISOR_SHARE="/tmp/supervisor_data" \
         -e SUPERVISOR_NAME=hassio_supervisor \

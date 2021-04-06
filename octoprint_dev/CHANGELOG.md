@@ -1,5 +1,11 @@
 # Changelog
 
+[0.4.0]
+
+- Use s6-overlay instead of supervisord
+- Change proxy to Caddy
+- Move mjpg-streamer to separate addon
+
 [0.3.6]
 
 - Add zlib
