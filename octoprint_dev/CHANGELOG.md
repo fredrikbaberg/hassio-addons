@@ -1,5 +1,9 @@
 # Changelog
 
+[0.4.2]
+
+- Added build packages, will be useful for testing. Could be removed later.
+
 [0.4.0]
 
 - Use s6-overlay instead of supervisord
