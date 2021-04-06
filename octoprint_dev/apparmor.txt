@@ -6,6 +6,7 @@ profile octoprint-dev flags=(attach_disconnected,mediate_deleted) {
   # Capabilities
   file,
   signal,
+  sys_rawio,
 
   # S6-Overlay
   /init rix,
@@ -24,14 +25,5 @@ profile octoprint-dev flags=(attach_disconnected,mediate_deleted) {
 
   # Access to Options.json and other files within your addon
   /data/** rw,
-  
-  # Start new profile for service
-  /usr/bin/myprogram cx,
-  
-  profile usr/bin/myprogram flags=(attach_disconnected,mediate_deleted) {
-    #include <abstractions/base>
-    
-    # Receive signals from S6-Overlay
-    signal receive,
-  }
+  /dev/mem rw,
 }
