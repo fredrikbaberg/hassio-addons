@@ -1,21 +1,20 @@
 # Documentation
 
+## How to use
+
+First check configuration of the addon. When ready, start the addon and use Ingress for initial configuration.
+
+For external access you can setup another user, or change the password of the user `homeassistant`.
+
+OctoPrint config is stored in `config/octoprint<config_folder_suffix>` folder, however, plugins are not. If you reinstall any plugins will be lost.
+
 ## Configuration
 
-- `config_folder_suffix`: Suffix for config folder, will be `/config/octoprint<config_folder_suffix>`.
+- `config_folder_suffix`: Suffix for config folder, OctoPrint files will be stored in `/config/octoprint<config_folder_suffix>`.
 
 ### Network
 
-By default no port is exposed outside of Home Assistant. You need to either set a port, or use a proxy, to have access to OctoPrint from e.g. a slicer.
-
-## How to use
-
-Start the addon. First setup assumes Ingress is used.
-There is a default user (`homeassistant`) used for Ingress, the password is randomly generated on first launch. If this user is removed it will be re-created on next restart.
-
-If you need external access, e.g. for a slicer such as Cura, you need to specify a port for WebUI. In case you need access outside of Ingress, feel free to change the password of user `homeassistant` or create a new user.
-
-OctoPrint config is stored in `config/octoprint<config_folder_suffix>` folder, however, plugins are not. If you reinstall any plugins will be lost.
+By default there is access through Ingress, but no ports are exposed outside of Home Assistant. To have external access, for instance to a slicer, you either need to specify a port or setup a proxy.
 
 ### Slicer
 
@@ -23,7 +22,7 @@ No slicer included.
 
 ### Credentials
 
-One user, `homeassistant`, is created with a random password on first launch. Use Ingress to change password or setup another user.
+One user, `homeassistant`, is created with a random password on first launch. You can use Ingress to automatically sign in as this user. From there you can change password, or create another user. Note that if the user `homeassistant` is removed, it will be recreated on the next restart.
 
 ### Updates
 
@@ -38,11 +37,11 @@ You may find the following excerpt from `config.yaml` helpful:
 ```
 webcam:
     ffmpeg: /usr/bin/ffmpeg
-    stream: http://local-mjpg-streamer:8000/?action=stream
+    stream: /webcam/?action=stream
     snapshot: http://local-mjpg-streamer:8000/?action=snapshot
 ```
 
-With the camera provided by another add-on, you need to control that add-on to start and stop the camera.
+As the camera is controlled by another addon, any start and stop of the camera is up to the user.
 
 ### Q and A
 
@@ -51,24 +50,19 @@ With the camera provided by another add-on, you need to control that add-on to s
 - I have multiple devices, what if ttyUSB0 is not the correct device?
   - Use device ID instead. In Home Assistant this can be found under "Supervisor" - "System" - "Hardware" `/dev/serial/by-id/usb-...`
 - Camera stream is not visible?
-  - Is `mjpg-streamer` running? It can be started from OctoPrint UI, same menu as for stop and restart.
+  - Check that `mjpg-streamer` addon is running.
   - Are you accessing through Ingress? Try through WebUI (set port in configuration).
+    - If you have ideas how to configure reverse proxy to get the camera stream in Ingress, please let me know. Right now it does not seem to work.
 - How do I reset addon/OctoPrint data?
-  - Rename or remove folder `config/octoprint<config_folder_suffix>`,
-  - Uninstall and (re)install the addon.
+  - Rename or remove folder `config/octoprint<config_folder_suffix>` to remove configuration
+  - Uninstall and (re)install the addon to reset plugins etc.
+  - Or use OctoPrint recovery mode.
 - How do I get Raspberry Pi camera to work in Home Assistant?
   - On your own risk, based on [https://raspberrypi.stackexchange.com/a/51440](https://raspberrypi.stackexchange.com/a/51440), I did the steps related to `start_x.elf` and `fixup_x.dat`. Note that I skipped the `modprobe` and `v4l2-ctl` parts. Updates to `HassOS` will break the system, you will need to download the files again for the system to boot.
 - `<plugin>` fails to install?
   - Some dependencies may be missing. There are no additional build tools included in this version.
 - How can I access GPIO?
   - This is currently missing. It may be enough to setup AppArmor, please let me know if you have knowledge on this.
-- I get a `Load failed` on access through Ingress?
-  - It seems `CORS` is required if you use `https`. This can be done from OctoPrint or with the following line in `config.yaml`:
-    ```
-    api:
-      allowCrossOrigin: true
-    ```
-  - If you know how to setup `haproxy` to avoid this, please let me know.
 
 ## Versions
 

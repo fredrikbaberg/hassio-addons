@@ -24,5 +24,14 @@ profile octoprint-dev flags=(attach_disconnected,mediate_deleted) {
 
   # Access to Options.json and other files within your addon
   /data/** rw,
-  /dev/mem rw,
+  
+  # Start new profile for service
+  /data/python/bin/octoprint cx,
+  
+  profile data/python/bin/octoprint flags=(attach_disconnected,mediate_deleted) {
+    #include <abstractions/base>
+    
+    # Receive signals from S6-Overlay
+    signal receive,
+  }
 }

@@ -1,8 +1,10 @@
 # Changelog
 
-[0.3.7]
+[0.4.0]
 
-- Rewrite to use s6-overlay, change of reverse proxy used.
+- Use s6-overlay instead of supervisord
+- Change proxy to Caddy
+- Move mjpg-streamer to separate addon
 
 [0.3.6]
 
