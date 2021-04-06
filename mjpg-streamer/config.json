@@ -7,6 +7,12 @@
     "url": "https://github.com/fredrikbaberg/hassio-addons",
     "startup": "application",
     "boot": "manual",
+    "ports": {
+        "8000/tcp": null
+    },
+    "ports_description": {
+        "8000/tcp": "Web-based interface)"
+    },
     "homeassistant": "2021.1.0",
     "video": true,
     "usb": true,
@@ -20,6 +26,5 @@
     "ingress_port": 8099,
     "panel_icon": "mdi:camera",
     "panel_title": "mjpg-streamer",
-    "image": "fredrikbaberg/mjpg-streamer-{arch}-image",
     "stage": "experimental"
 }
