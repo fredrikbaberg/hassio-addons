@@ -21,7 +21,8 @@ folder:
     watched: /config/octoprint/watched
 server:
     commands:
-        serverRestartCommand: s6-svc -r /var/run/s6/services/octoprint
+        # serverRestartCommand: s6-svc -r /var/run/s6/services/octoprint
+        serverRestartCommand: ./restart.sh
         systemRestartCommand: /restart.sh
         systemShutdownCommand: /shutdown.sh
 webcam:
