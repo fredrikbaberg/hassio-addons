@@ -1,5 +1,9 @@
 # Changelog
 
+[0.4.3]
+
+- Set CFLAGS environment variable for installing RPI GPIO
+
 [0.4.2]
 
 - Added build packages, will be useful for testing. Could be removed later.

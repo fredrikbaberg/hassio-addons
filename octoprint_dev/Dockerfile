@@ -7,6 +7,7 @@ ENV LANG C.UTF-8
 ENV PYTHONPATH=/data/python
 ENV PATH=${PATH}:/data/python/bin
 ENV PYTHONUSERBASE=/data/python
+ENV CFLAGS="-fcommon"
 
 # Install requirements to run
 RUN echo "Install base requirements for running." \
