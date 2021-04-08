@@ -1,6 +1,6 @@
 {
     "name": "OctoPrint Dev",
-    "version": "0.4.3",
+    "version": "0.4.4",
     "slug": "octoprint-dev",
     "description": "Development version of OctoPrint add-on for Home Assistant",
     "arch": ["armv7", "amd64", "armhf", "aarch64", "i386"],
@@ -14,10 +14,8 @@
     "ports_description": {
         "5000/tcp": "WebUI (Not required for Ingress)"
     },
-    "devices": ["/dev/mem"],
     "uart": true,
     "homeassistant": "2021.3.0",
-    "privileged": ["SYS_RAWIO"],
     "map": ["config:rw"],
     "gpio": true,
     "usb": true,

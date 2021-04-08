@@ -1,7 +1,13 @@
+(log) {
+    log {
+        level WARN
+    }
+}
 :8099 {
     @ingress {
         remote_ip 172.30.32.2
     }
+    import log
     reverse_proxy @ingress http://127.0.0.1:80 {
         header_up -Origin
         header_up Origin 172.30.32.2

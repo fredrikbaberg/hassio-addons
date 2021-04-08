@@ -1,5 +1,9 @@
 # Changelog
 
+[0.4.4]
+
+- Enable AppArmor.
+
 [0.4.3]
 
 - Set CFLAGS environment variable for installing RPI GPIO
