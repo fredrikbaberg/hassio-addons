@@ -60,7 +60,7 @@ As the camera is controlled by another addon, any start and stop of the camera i
 - How do I get Raspberry Pi camera to work in Home Assistant?
   - On your own risk, based on [https://raspberrypi.stackexchange.com/a/51440](https://raspberrypi.stackexchange.com/a/51440), I did the steps related to `start_x.elf` and `fixup_x.dat`. Note that I skipped the `modprobe` and `v4l2-ctl` parts. Updates to `HassOS` will break the system, you will need to download the files again for the system to boot.
 - `<plugin>` fails to install?
-  - Some dependencies may be missing. There are no additional build tools included in this version.
+  - Some dependencies may be missing.
 - How can I access GPIO?
   - This is currently missing. It may be enough to setup AppArmor, please let me know if you have knowledge on this.
 
