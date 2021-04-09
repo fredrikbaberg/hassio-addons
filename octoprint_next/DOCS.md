@@ -8,6 +8,8 @@ For external access you can setup another user, or change the password of the us
 
 ## Configuration
 
+There is a toggle to enter recovery mode.
+
 ### Network
 
 By default there is access through Ingress, but no ports are exposed outside of Home Assistant. To have external access, for instance to a slicer, you either need to specify a port or setup a proxy.

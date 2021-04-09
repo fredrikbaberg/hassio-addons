@@ -30,7 +30,7 @@
         "recovery": false
     },
     "schema": {
-        "recovery": "bool"
+        "recovery": "bool?"
     },
     "tmpfs": true,
     "ingress": true,
