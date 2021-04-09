@@ -26,8 +26,12 @@
     "gpio": true,
     "usb": true,
     "uart": true,
-    "options": {},
-    "schema": {},
+    "options": {
+        "recovery": false
+    },
+    "schema": {
+        "recovery": "bool"
+    },
     "tmpfs": true,
     "ingress": true,
     "panel_icon": "mdi:printer-3d",
