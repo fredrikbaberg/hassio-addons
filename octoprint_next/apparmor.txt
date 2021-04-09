@@ -25,9 +25,6 @@ profile octoprint-next flags=(attach_disconnected,mediate_deleted) {
   # Access to Options.json and other files within your addon
   /data/** rw,
 
-  # For access to GPIO
-  /dev/gpiomem rw,
-
   # Start new profile for service
   /data/python/bin/octoprint cx,
   
