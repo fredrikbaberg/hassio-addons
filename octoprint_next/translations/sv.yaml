@@ -1,4 +1,4 @@
 configuration:
   recovery:
-    name: recovery
-    description: Enable recovery mode
+    name: återställning
+    description: Aktivera återställningsläge
