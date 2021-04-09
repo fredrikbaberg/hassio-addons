@@ -3,6 +3,7 @@
 [0.0.3]
 
 - Added option for recovery.
+- Added translation for recovery option.
 
 [0.0.2]
 
