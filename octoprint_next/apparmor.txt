@@ -1,6 +1,6 @@
 #include <tunables/global>
 
-profile octoprint-dev flags=(attach_disconnected,mediate_deleted) {
+profile octoprint-next flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
   
   # Capabilities
@@ -25,32 +25,23 @@ profile octoprint-dev flags=(attach_disconnected,mediate_deleted) {
   # Access to Options.json and other files within your addon
   /data/** rw,
 
-  # Start new profile for service
-  /etc/cont-init.d/octoprint.sh cx,
-  
-  profile /etc/cont-init.d/octoprint.sh flags=(attach_disconnected,mediate_deleted) {
-    #include <abstractions/base>
-    
-    file,
-    capability,
-  }
+  # For access to GPIO
+  /dev/gpiomem rw,
 
-  # Start new profile for service
-  /data/python/bin/octoprint cx,
-  
-  profile /data/python/bin/octoprint flags=(attach_disconnected,mediate_deleted) {
-    #include <abstractions/base>
-    #include <abstractions/nameservice>
-
-    # Receive signals from S6-Overlay
-    signal receive,
-    
-    file,
-    network,
-
-    audit deny /config/[^octoprint]** rw,
-
-    # For access to GPIO
-    /dev/gpiomem rw,
-  }
+  # # Start new profile for service
+  # /data/python/bin/octoprint cx,
+  # 
+  # profile /data/python/bin/octoprint flags=(attach_disconnected,mediate_deleted) {
+  #   #include <abstractions/base>
+  #   #include <abstractions/nameservice>
+  # 
+  #   # Receive signals from S6-Overlay
+  #   signal receive,
+  #   
+  #   file,
+  #   network,
+  # 
+  #   # For access to GPIO
+  #   /dev/gpiomem rw,
+  # }
 }
