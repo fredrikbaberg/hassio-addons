@@ -1,0 +1,4 @@
+configuration:
+  recovery:
+    name: recovery
+    description: Enable recovery mode
