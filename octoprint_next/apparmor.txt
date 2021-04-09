@@ -2,7 +2,6 @@
 
 profile octoprint-next flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
-  #include <abstractions/nameservice>
   
   # Capabilities
   file,
@@ -29,4 +28,18 @@ profile octoprint-next flags=(attach_disconnected,mediate_deleted) {
   # For access to GPIO
   /dev/gpiomem rw,
 
+  # Start new profile for service
+  /data/python/bin/octoprint cx,
+  
+  profile /data/python/bin/octoprint flags=(attach_disconnected,mediate_deleted) {
+    #include <abstractions/base>
+    #include <abstractions/nameservice>
+  
+    # Receive signals from S6-Overlay
+    signal receive,
+    file,
+    
+    # For access to GPIO
+    /dev/gpiomem rw,
+  }
 }
