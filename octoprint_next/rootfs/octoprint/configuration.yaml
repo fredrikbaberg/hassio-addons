@@ -4,19 +4,19 @@ accessControl:
     localNetworks:
         - 172.30.32.2
 folder:
-    data: /data/.octoprint/data
-    generated: /data/.octoprint/generated
-    logs: /data/.octoprint/logs
-    plugins: /data/.octoprint/plugins
-    printerProfiles: /data/.octoprint/printerProfiles
-    scripts: /data/.octoprint/scripts
-    slicingProfiles: /data/.octoprint/slicingProfiles
+    data: /data/octoprint/data
+    generated: /data/octoprint/generated
+    logs: /data/octoprint/logs
+    plugins: /data/octoprint/plugins
+    printerProfiles: /data/octoprint/printerProfiles
+    scripts: /data/octoprint/scripts
+    slicingProfiles: /data/octoprint/slicingProfiles
     timelapse_tmp: /tmp
-    timelapse: /data/.octoprint/timelapse
-    translations: /data/.octoprint/translations
-    uploads: /data/.octoprint/uploads
-    virtualSd: /data/.octoprint/virtualSd
-    watched: /data/.octoprint/watched
+    timelapse: /data/octoprint/timelapse
+    translations: /data/octoprint/translations
+    uploads: /data/octoprint/uploads
+    virtualSd: /data/octoprint/virtualSd
+    watched: /data/octoprint/watched
 server:
     commands:
         serverRestartCommand:  s6-svc -wD -d /var/run/s6/services/octoprint

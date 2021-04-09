@@ -9,11 +9,11 @@ if [ ! -d /data/python ]; then
 fi
 
 # Create config if it does not exist.
-mkdir -p /data/.octoprint
-if [ ! -f /data/.octoprint/config.yaml ]; then
-    cp /octoprint/configuration.yaml /data/.octoprint/config.yaml
+mkdir -p /data/octoprint
+if [ ! -f /data/octoprint/config.yaml ]; then
+    cp /octoprint/configuration.yaml /data/octoprint/config.yaml
 fi
 
 # Ensure Ingress user (homeassistant) exist.
 new_password=$(date +%s | sha256sum | base64 | head -c 32 ; echo)
-octoprint --basedir /data/.octoprint user add homeassistant --password "$new_password" --admin # 2> /dev/null
+octoprint --basedir /data/octoprint user add homeassistant --password "$new_password" --admin # 2> /dev/null
