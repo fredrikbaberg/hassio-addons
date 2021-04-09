@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv bashio
+
+bashio::log.info "Starting Caddy ..."
+
+caddy run -config /etc/caddy/Caddyfile
