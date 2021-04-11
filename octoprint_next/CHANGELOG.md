@@ -1,5 +1,9 @@
 # Changelog
 
+[0.0.4]
+
+- Added mjpg-streamer for testing.
+
 [0.0.3]
 
 - Added option for recovery.
