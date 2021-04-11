@@ -24,5 +24,5 @@ server:
         systemShutdownCommand: /shutdown.sh
 webcam:
     ffmpeg: /usr/bin/ffmpeg
-    snapshot: http://774437fd-mjpg-streamer:80/?action=snapshot
+    snapshot: http://localhost:8000/?action=snapshot
     stream: /webcam/?action=stream
