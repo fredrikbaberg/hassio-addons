@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv bashio
+
+bashio::log.info "Starting mjpg-streamer.."
+
+mjpg_streamer -i "$(bashio::config 'mjpg_input')" -o "output_http.so -w /www_mjpg -p 8000"

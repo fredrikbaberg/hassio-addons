@@ -36,6 +36,16 @@ RUN echo "Install software" \
     && rm -rf /data/python \
     ## Final cleanup
     && apk del --no-cache .build-dependencies-octoprint
+RUN echo "Install mjpg-streamer" \
+    && apk add --no-cache --virtual .necessary-mjpeg-streamer libjpeg \
+    && apk add --no-cache --virtual .build-dependencies-mjpgstreamer make cmake build-base linux-headers libjpeg-turbo-dev \
+    && wget -qO- https://github.com/jacksonliam/mjpg-streamer/archive/master.tar.gz | tar xz -C /tmp \
+    && cd /tmp/mjpg-streamer-master/mjpg-streamer-experimental/ \
+    && make --silent \
+    && make install --silent \
+    && mv www/ /www_mjpg \
+    && rm -rf /tmp/mjpg-streamer-master \
+    && apk del --no-cache .build-dependencies-mjpgstreamer
 # Copy data from filesystem and previous stages
 COPY rootfs/ /
 RUN chmod a+x /restart.sh

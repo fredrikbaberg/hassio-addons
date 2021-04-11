@@ -18,9 +18,14 @@
     }
     handle_path /webcam/* {
         rewrite * /?{query}
-        reverse_proxy http://774437fd-mjpg-streamer:80 {
+        reverse_proxy @ingress http://127.0.0.1:8000 {
         }
     }
+    # handle_path /webcam/* {
+    #     rewrite * /?{query}
+    #     reverse_proxy http://774437fd-mjpg-streamer:80 {
+    #     }
+    # }
 }
 
 :5000 {
@@ -29,8 +34,14 @@
     }
     handle_path /webcam* {
         rewrite * /?{query}
-        reverse_proxy http://774437fd-mjpg-streamer:80 {
+        reverse_proxy http://127.0.0.1:8000 {
             header_up X-Scheme {scheme}
         }
     }
+    # handle_path /webcam* {
+    #     rewrite * /?{query}
+    #     reverse_proxy http://774437fd-mjpg-streamer:80 {
+    #         header_up X-Scheme {scheme}
+    #     }
+    # }
 }

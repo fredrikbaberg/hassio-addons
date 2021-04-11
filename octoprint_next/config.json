@@ -27,9 +27,11 @@
     "usb": true,
     "uart": true,
     "options": {
+        "mjpg_input": "input_uvc.so -n",
         "recovery": false
     },
     "schema": {
+        "mjpg_input": "str",
         "recovery": "bool?"
     },
     "tmpfs": true,
