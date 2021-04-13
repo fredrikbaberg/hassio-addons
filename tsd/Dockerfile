@@ -24,7 +24,9 @@ COPY --from=source /TheSpaghettiDetective/web /web
 RUN pip install ${PIP_FLAGS} -r /app/requirements_x86_64.txt && \
     pip install ${PIP_FLAGS} -r /web/requirements.txt
 # To mitigate some warnings
-RUN pip install ${PIP_FLAGS} psycopg2-binary
+RUN pip install ${PIP_FLAGS} -U \
+    psycopg2-binary \
+    Twisted[tls,http2]
 # Cleanup
 RUN find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf && \
     rm -rf /root/.cache && \
