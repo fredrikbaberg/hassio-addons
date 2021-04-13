@@ -4,6 +4,10 @@ bashio::log.info "Starting web..."
 
 source /envvars.sh
 
-cd /data/web/
+cd /data/web
 
-sh -c "python manage.py collectstatic --noinput && python manage.py migrate && python manage.py runserver --noreload 0.0.0.0:3334"
+python manage.py collectstatic --noinput
+python manage.py migrate
+python manage.py runserver --noreload 0.0.0.0:3334
+
+# sh -c "python manage.py collectstatic --noinput && python manage.py migrate && python manage.py runserver --noreload 0.0.0.0:3334"

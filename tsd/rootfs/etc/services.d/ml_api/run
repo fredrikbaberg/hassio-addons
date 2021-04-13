@@ -2,11 +2,12 @@
 
 bashio::log.info "Starting ml_api..."
 
-cd /app/
+cd /data/app/
 
 export DEBUG='True'
 export FLASK_APP='server.py'
 
-# sed -i "s#/app/#/tsd/ml_api/#g" model/model.meta
+gunicorn --bind 0.0.0.0:3333 --workers 1 wsgi
 
-bash -c "gunicorn --bind 0.0.0.0:3333 --workers 1 wsgi"
+# sed -i "s#/app/#/tsd/ml_api/#g" model/model.meta
+# bash -c "gunicorn --bind 0.0.0.0:3333 --workers 1 wsgi"

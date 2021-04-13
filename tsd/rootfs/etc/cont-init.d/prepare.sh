@@ -2,19 +2,18 @@
 
 bashio::log.info "Prepare cont-init.d"
 
-if [ ! -d /app ]; then
-    cp -R /tsd/TheSpaghettiDetective/ml_api /app/
-fi
-
 if [ ! -d /data/web ]; then
-    cp -R /tsd/TheSpaghettiDetective/web /data/
+    cp -R /web /data/
 fi
 
-if [ ! -f /app/model/model.weights ]; then
-    bashio::log.info "Downloading model weights"
-    cd /app && wget --quiet -O model/model.weights $(cat model/model.weights.url | tr -d '\r')
+if [ ! -d /data/app ]; then
+    cp -R /app /data/
 fi
 
-cd /tsd/web && python manage.py collectstatic --noinput
+if [ ! -f /data/app/model/model.weights ]; then
+    # bashio::log.info "Downloading model weights"
+    cd /data/app && wget --quiet -O model/model.weights $(cat model/model.weights.url | tr -d '\r')
+    sed -i "s#/app/#/data/app/#g" /data/app/model/model.meta
+fi
 
-# echo never > /sys/kernel/mm/transparent_hugepage/enabled
+cd /data/web && python manage.py collectstatic --noinput
