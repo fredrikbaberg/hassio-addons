@@ -54,7 +54,7 @@
         "TELEGRAM_BOT_TOKEN": "password",
         "PUSHOVER_APP_TOKEN": "password"
     },
-    "ingress": true,
+    "ingress": false,
     "panel_icon": "mdi:puzzle",
     "panel_title": "TSD",
     "panel_admin": true,
