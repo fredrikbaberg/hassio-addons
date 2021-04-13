@@ -5,7 +5,3 @@ Work in progress.
 Configuration options to be implemented.
 
 Model weights will be downloaded on first launch.
-
-## Source
-
-See https://github.com/TheSpaghettiDetective/TheSpaghettiDetective
