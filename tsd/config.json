@@ -1,6 +1,6 @@
 {
     "name": "TSD",
-    "version": "0.0.5",
+    "version": "0.0.4",
     "slug": "tsd",
     "description": "TSD add-on for Home Assistant",
     "arch": ["amd64"],
@@ -57,7 +57,7 @@
     "ingress": true,
     "panel_icon": "mdi:puzzle",
     "panel_title": "TSD",
-    "panel_admin": false,
+    "panel_admin": true,
     "snapshot_exclude": [],
     "stage": "experimental",
     "image": "fredrikbaberg/tsd-{arch}-image"

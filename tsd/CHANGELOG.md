@@ -1,9 +1,5 @@
 # Changelog
 
-[0.0.5]
-
-- Change to HAProxy
-
 [0.0.4]
 
 - Add Twisted for Django http2 support
