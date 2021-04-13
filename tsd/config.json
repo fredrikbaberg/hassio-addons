@@ -1,6 +1,6 @@
 {
     "name": "TSD",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "slug": "tsd",
     "description": "TSD add-on for Home Assistant",
     "arch": ["amd64"],
@@ -9,12 +9,10 @@
     "webui": "http://[HOST]:[PORT:3334]",
     "boot": "manual",
     "ports": {
-        "3334/tcp": 3334,
-        "3334/udp": 3334
+        "3334": 3334
     },
     "ports_description": {
-        "3334/tcp": "Web access to TSD (TCP)",
-        "3334/udp": "Web access to TSD (UDP)"
+        "3334": "Web access to TSD"
     },
     "devices": [],
     "homeassistant": "2021.4.0",
