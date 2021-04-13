@@ -1,10 +1,17 @@
 # Changelog
 
+[0.0.5]
+
+- Change to HAProxy
+
 [0.0.4]
+
+- Add Twisted for Django http2 support
+
+[0.0.3]
 
 - Use both TCP and UDP for network communication
 - Initial attempt at Ingress
-  - Add Twisted for http2 support
 
 [0.0.2]
 

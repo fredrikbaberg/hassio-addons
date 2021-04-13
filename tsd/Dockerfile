@@ -12,7 +12,7 @@ ENV LANG C.UTF-8
 # Preparations
 RUN apt update && \
     apt install --no-install-recommends -y python3-pip python3-setuptools git && \
-    apt install --no-install-recommends -y libsm6 libxrender1 libfontconfig1 ffmpeg wget tinyproxy redis && \
+    apt install --no-install-recommends -y libsm6 libxrender1 libfontconfig1 ffmpeg wget haproxy redis && \
     rm -rf /var/lib/apt/lists/* && \
     update-alternatives --install /usr/bin/python python /usr/bin/python3 10 && \
     update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 10 && \
