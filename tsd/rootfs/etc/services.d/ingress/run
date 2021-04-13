@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv bashio
+
+bashio::log.info "Starting reverse proxy for Ingress..."
+
+tinyproxy -d -c tinyproxy.conf
