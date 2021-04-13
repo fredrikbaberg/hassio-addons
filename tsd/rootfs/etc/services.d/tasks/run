@@ -1,0 +1,11 @@
+#!/usr/bin/with-contenv bashio
+
+bashio::log.info "Starting tasks..."
+
+source /envvars.sh
+
+cd /data/web
+
+celery -A config worker --beat -l info -c 2 -Q realtime,celery
+
+# sh -c "celery -A config worker --beat -l info -c 2 -Q realtime,celery"

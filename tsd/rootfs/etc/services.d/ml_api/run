@@ -1,0 +1,13 @@
+#!/usr/bin/with-contenv bashio
+
+bashio::log.info "Starting ml_api..."
+
+cd /data/app/
+
+export DEBUG='True'
+export FLASK_APP='server.py'
+
+gunicorn --bind 0.0.0.0:3333 --workers 1 wsgi
+
+# sed -i "s#/app/#/tsd/ml_api/#g" model/model.meta
+# bash -c "gunicorn --bind 0.0.0.0:3333 --workers 1 wsgi"

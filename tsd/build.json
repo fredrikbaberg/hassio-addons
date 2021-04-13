@@ -1,0 +1,7 @@
+{
+    "build_from": {
+        "amd64": "homeassistant/amd64-base-debian:latest"
+    },
+    "squash": false,
+    "args": {}
+}
