@@ -1,0 +1,29 @@
+{
+    "name": "TSD",
+    "version": "0.0.1",
+    "slug": "tsd",
+    "description": "TSD add-on for Home Assistant",
+    "arch": ["amd64"],
+    "url": "https://github.com/fredrikbaberg/hassio-addons",
+    "startup": "application",
+    "webui": "http://[HOST]:[PORT:3334]",
+    "boot": "manual",
+    "ports": {
+        "3334/tcp": 3334,
+        "3334/udp": 3334
+    },
+    "ports_description": {
+        "3334/tcp": "Web access to TSD (TCP)",
+        "3334/udp": "Web access to TSD (UDP)"
+    },
+    "devices": [],
+    "homeassistant": "2021.4.0",
+    "privileged": [],
+    "map": [],
+    "panel_icon": "mdi:puzzle",
+    "panel_title": "TSD",
+    "panel_admin": false,
+    "snapshot_exclude": [],
+    "stage": "experimental",
+    "image": "fredrikbaberg/tsd-{arch}-image"
+}

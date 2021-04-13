@@ -1,0 +1,9 @@
+#!/usr/bin/with-contenv bashio
+
+bashio::log.info "Starting web..."
+
+source /envvars.sh
+
+cd /data/web/
+
+sh -c "python manage.py collectstatic --noinput && python manage.py migrate && python manage.py runserver --noreload 0.0.0.0:3334"

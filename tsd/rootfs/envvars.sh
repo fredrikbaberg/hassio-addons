@@ -1,0 +1,15 @@
+export EMAIL_HOST='' # -> such as 'smtp.gmail.com'
+export EMAIL_HOST_USER='' # -> such as your email address for a Gmail account
+export EMAIL_HOST_PASSWORD='' # -> your email account password
+export EMAIL_PORT=587  # DO NOT surround it with quotes. Otherwise email won't be sent!
+export EMAIL_USE_TLS='True'
+export DEFAULT_FROM_EMAIL='changeme@example.com'
+export DEBUG='False'    # Don't set DEBUG to True, otherwise the static files will be cached in browser until hard-refresh
+export SITE_USES_HTTPS='False' # set it to 'True' if https is set up
+export SOCIAL_LOGIN='False'
+export REDIS_URL='redis://localhost:6379'
+export DATABASE_URL='sqlite:////data/web/db.sqlite3'
+export INTERNAL_MEDIA_HOST='http://localhost:3334'
+export ML_API_HOST='http://localhost:3333'
+export ACCOUNT_ALLOW_SIGN_UP='False'  # -> set to 'True' if you want to open sign up form
+export WEBPACK_LOADER_ENABLED=''
