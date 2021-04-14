@@ -9,17 +9,16 @@
     }
     # import log
     # insert_rescue
-    reverse_proxy @ingress http://127.0.0.1:80 {
+    reverse_proxy @ingress localhost:80 {
         header_up -Origin
         header_up Origin 172.30.32.2
         header_up X-Scheme {scheme}
         header_up X-Script-Name %%base_path%%
         header_up X-Forwarded-For 172.30.32.2
     }
-    handle_path /webcam/* {
-        rewrite * /?{query}
-        reverse_proxy @ingress http://127.0.0.1:8000 {
-        }
+    route /webcam/* {
+        uri strip_prefix /webcam
+        reverse_proxy localhost:8000
     }
     # handle_path /webcam/* {
     #     rewrite * /?{query}
