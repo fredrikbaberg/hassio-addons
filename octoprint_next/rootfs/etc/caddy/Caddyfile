@@ -1,30 +1,30 @@
 (log) {
     log {
-        level WARN
+        level INFO
     }
 }
 :8099 {
     @ingress {
         remote_ip 172.30.32.2
     }
-    # import log
-    # insert_rescue
-    reverse_proxy @ingress localhost:80 {
-        header_up -Origin
-        header_up Origin 172.30.32.2
-        header_up X-Scheme {scheme}
-        header_up X-Script-Name %%base_path%%
-        header_up X-Forwarded-For 172.30.32.2
-    }
-    route /webcam/* {
+    import log
+    handle_path /webcam/* {
         uri strip_prefix /webcam
-        reverse_proxy localhost:8000
+        reverse_proxy localhost:8000 {
+            header_up X-Scheme {scheme}
+            flush_interval -1
+        }
     }
-    # handle_path /webcam/* {
-    #     rewrite * /?{query}
-    #     reverse_proxy http://774437fd-mjpg-streamer:80 {
-    #     }
-    # }
+    handle {
+        # insert_rescue
+        reverse_proxy @ingress localhost:80 {
+            header_up -Origin
+            header_up Origin 172.30.32.2
+            header_up X-Scheme {scheme}
+            header_up X-Script-Name %%base_path%%
+            header_up X-Forwarded-For 172.30.32.2
+        }
+    }
 }
 
 :5000 {
@@ -37,10 +37,4 @@
             header_up X-Scheme {scheme}
         }
     }
-    # handle_path /webcam* {
-    #     rewrite * /?{query}
-    #     reverse_proxy http://774437fd-mjpg-streamer:80 {
-    #         header_up X-Scheme {scheme}
-    #     }
-    # }
 }

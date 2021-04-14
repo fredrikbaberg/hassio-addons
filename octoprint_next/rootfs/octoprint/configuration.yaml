@@ -25,4 +25,4 @@ server:
 webcam:
     ffmpeg: /usr/bin/ffmpeg
     snapshot: http://localhost:8000/?action=snapshot
-    stream: /webcam/?action=stream
+    stream: webcam/?action=stream
