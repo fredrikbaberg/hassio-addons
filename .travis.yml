@@ -12,6 +12,7 @@ before_install:
 env:
   - ADDON="octoprint"
   - ADDON="octoprint_dev"
+  - ADDON="octoprint_next"
   - ADDON="iperf3"
   - ADDON="mjpg-streamer"
   - ADDON="tsd"
