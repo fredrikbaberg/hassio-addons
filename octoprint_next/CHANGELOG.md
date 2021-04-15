@@ -1,5 +1,10 @@
 # Changelog
 
+[0.0.5]
+
+- Build image
+- Some changes to reverse proxy
+
 [0.0.4]
 
 - Added mjpg-streamer for testing.

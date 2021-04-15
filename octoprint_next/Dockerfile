@@ -18,7 +18,7 @@ RUN echo "Install base requirements for running." \
         python3-dev \
         zlib-dev \
         jpeg-dev
-        # libjpeg postgresql-libs python3-dev zlib-dev jpeg-dev build-base linux-headers
+        # libjpeg postgresql-libs
 RUN echo "Install software" \
     && apk add --no-cache --virtual .build-dependencies-octoprint py3-virtualenv build-base python3-dev linux-headers \
     && echo "Setup Python" \

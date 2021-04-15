@@ -9,7 +9,8 @@
     }
     import log
     handle_path /webcam/* {
-        uri strip_prefix /webcam
+        rewrite * ?{query}
+        # uri strip_prefix /webcam
         reverse_proxy localhost:8000 {
             header_up X-Scheme {scheme}
             flush_interval -1
