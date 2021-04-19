@@ -1,6 +1,6 @@
 {
     "name": "OctoPrint Next",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "slug": "octoprint-next",
     "description": "New version of OctoPrint add-on for Home Assistant",
     "arch": ["armv7", "amd64", "armhf", "aarch64", "i386"],
@@ -26,7 +26,6 @@
     "gpio": true,
     "usb": true,
     "uart": true,
-    "video": true,
     "options": {
         "mjpg_input": "input_file.so -f /www_mjpg -e",
         "recovery": false

@@ -7,11 +7,11 @@
     @ingress {
         remote_ip 172.30.32.2
     }
-    import log
+    # import log
     handle_path /webcam/* {
         rewrite * ?{query}
         # uri strip_prefix /webcam
-        reverse_proxy localhost:8000 {
+        reverse_proxy 774437fd-mjpg-streamer:80 {
             header_up X-Scheme {scheme}
             flush_interval -1
         }

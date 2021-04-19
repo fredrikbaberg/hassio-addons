@@ -1,5 +1,9 @@
 # Changelog
 
+[0.0.6]
+
+- Removed mjpg-streamer
+
 [0.0.5]
 
 - Build image
