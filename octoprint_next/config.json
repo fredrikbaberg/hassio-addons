@@ -26,6 +26,7 @@
     "gpio": true,
     "usb": true,
     "uart": true,
+    "video": true,
     "options": {
         "mjpg_input": "input_file.so -f /www_mjpg -e",
         "recovery": false
