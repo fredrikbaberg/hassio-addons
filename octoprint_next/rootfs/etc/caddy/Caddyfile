@@ -11,7 +11,7 @@
     handle_path /webcam/* {
         rewrite * ?{query}
         # uri strip_prefix /webcam
-        reverse_proxy 774437fd-mjpg-streamer:80 {
+        reverse_proxy %%webcam_url%% {
             header_up X-Scheme {scheme}
             flush_interval -1
         }
@@ -34,7 +34,7 @@
     }
     handle_path /webcam* {
         rewrite * /?{query}
-        reverse_proxy http://127.0.0.1:8000 {
+        reverse_proxy http://%%webcam_url%% {
             header_up X-Scheme {scheme}
         }
     }

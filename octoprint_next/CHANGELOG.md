@@ -1,5 +1,9 @@
 # Changelog
 
+[0.0.7]
+
+- Add option to set webcam_url, to help with debugging.
+
 [0.0.6]
 
 - Removed mjpg-streamer
