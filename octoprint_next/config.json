@@ -28,7 +28,7 @@
     "uart": true,
     "options": {
         "recovery": false,
-        "camera_arguments": "input_file.so -f /www_mjpg -e"
+        "camera_arguments": ""
     },
     "schema": {
         "recovery": "bool?",
@@ -40,5 +40,6 @@
     "panel_title": "OctoPrint Next",
     "panel_admin": false,
     "snapshot_exclude": [],
-    "stage": "experimental"
+    "stage": "experimental",
+    "image": "fredrikbaberg/octoprint-next-{arch}-image"
 }

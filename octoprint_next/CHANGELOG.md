@@ -1,5 +1,9 @@
 # Changelog
 
+[0.0.9]
+
+- Include ustreamer
+
 [0.0.8]
 
 - Remove translations
