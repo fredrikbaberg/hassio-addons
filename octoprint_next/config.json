@@ -1,8 +1,8 @@
 {
     "name": "OctoPrint Next",
-    "version": "0.0.9",
+    "version": "0.0.10",
     "slug": "octoprint-next",
-    "description": "New version of OctoPrint add-on for Home Assistant",
+    "description": "Next version of OctoPrint add-on for Home Assistant",
     "arch": ["armv7", "amd64", "armhf", "aarch64", "i386"],
     "url": "https://github.com/fredrikbaberg/hassio-addons",
     "startup": "application",
@@ -28,11 +28,11 @@
     "uart": true,
     "options": {
         "recovery": false,
-        "camera_arguments": ""
+        "webcam_url": "774437fd-ustreamer:80"
     },
     "schema": {
-        "recovery": "bool?",
-        "camera_arguments": "str?"
+        "recovery": "bool",
+        "webcam_url": "str?"
     },
     "tmpfs": true,
     "ingress": true,

@@ -1,20 +1,5 @@
 ARG BUILD_FROM="homeassistant/amd64-base:latest"
 
-FROM ${BUILD_FROM} as ustreamer
-ENV LANG C.UTF-8
-RUN echo "Install base requirements." && \
-    apk add --no-cache --virtual .build-dependencies \
-        make \
-        build-base \
-        linux-headers \
-        libjpeg-turbo-dev \
-        libevent-dev \
-        libbsd-dev
-RUN wget -qO- https://github.com/pikvm/ustreamer/archive/master.tar.gz | tar xz && \
-    cd ustreamer-master && \
-    WITH_PTHREAD_NP=0 WITH_OMX=0 WITH_GPIO=0 make --silent && \
-    make install
-
 FROM ${BUILD_FROM} AS final
 ENV LANG C.UTF-8
 ENV PIP_FLAGS="--no-cache-dir"
@@ -56,13 +41,8 @@ RUN echo "Install packages for installing" && \
     rm -rf /data/python && \
     ## Final cleanup
     apk del --no-cache .build-dependencies-octoprint
-RUN echo "For ustreamer" && \
-    apk add --no-cache \
-        libjpeg \
-        libevent \
-        libbsd
+
 # Copy data from filesystem and previous stages
-COPY --from=ustreamer /usr/local/bin/ustreamer /usr/local/bin/ustreamer
 COPY rootfs/ /
 RUN chmod a+x /restart.sh
 RUN chmod a+x /shutdown.sh

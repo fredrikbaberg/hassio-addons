@@ -2,7 +2,7 @@
 
 **This version is still in development, please use the one simply called "OctoPrint" for now.**
 
-**Ensure you have a backup of your configuration.**
+**Always ensure you have a backup of your configuration.**
 
 ## About
 

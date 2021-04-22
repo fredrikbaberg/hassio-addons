@@ -19,10 +19,10 @@ folder:
     watched: /data/octoprint/watched
 server:
     commands:
-        # serverRestartCommand:  s6-svc -wD -d /var/run/s6/services/octoprint
+        serverRestartCommand: s6-svc -k /var/run/s6/services/octoprint
         systemRestartCommand: /restart.sh
         systemShutdownCommand: /shutdown.sh
 webcam:
     ffmpeg: /usr/bin/ffmpeg
-    snapshot: http://localhost:8000/?action=snapshot
+    snapshot: http://774437fd-ustreamer:80/snapshot
     stream: webcam/?action=stream

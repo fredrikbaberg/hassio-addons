@@ -8,7 +8,7 @@ For external access you can setup another user, or change the password of the us
 
 ## Configuration
 
-There is a toggle to enter recovery mode.
+There is a toggle under options to force recovery mode.
 
 ### Network
 
@@ -28,36 +28,33 @@ Backup first, from within OctoPrint. It should be possible to update from within
 
 ### Camera
 
-mjpg-streamer is available as a separate add-on to provide camera support.
-
-You may find the following excerpt from `config.yaml` helpful:
+You have to provide camera feed from another source, for instance the `mjpg-streamer` or `ustreamer` addon.
+The following excerpt from `config.yaml` may be helpful, the URL (e.g. `774437fd-ustreamer:80`) can be found for each addon.
 
 ```
 webcam:
     ffmpeg: /usr/bin/ffmpeg
     stream: /webcam/?action=stream
-    snapshot: http://local-mjpg-streamer:8000/?action=snapshot
+    snapshot: http://774437fd-ustreamer:80/?action=snapshot
 ```
 
-As the camera is controlled by another addon, any start and stop of the camera is up to the user.
+Start and stop of the camera is up to the user.
 
 ### Q and A
 
 - I have multiple devices, what if ttyUSB0 is not the correct device?
   - Use device ID instead. In Home Assistant this can be found under "Supervisor" - "System" - "Hardware" `/dev/serial/by-id/usb-...`
 - Camera stream is not visible?
-  - Check that `mjpg-streamer` addon is running.
-  - Are you accessing through Ingress? Try through WebUI (set port in configuration).
-    - If you have ideas how to configure reverse proxy to get the camera stream in Ingress, please let me know. Right now it does not seem to work.
+  - Camera needs to be provided by another addon.
+  - Are you using Ingress for access? Try through WebUI (set port in configuration).
+    - If you have ideas how to configure reverse proxy to get the camera stream through Ingress, please let me know.
 - How do I reset addon/OctoPrint data?
-  - Either uninstall and (re)install the addon to reset plugins etc.
-  - Or use OctoPrint recovery mode.
-- How do I get Raspberry Pi camera to work in Home Assistant?
-  - On your own risk, based on [https://raspberrypi.stackexchange.com/a/51440](https://raspberrypi.stackexchange.com/a/51440), I did the steps related to `start_x.elf` and `fixup_x.dat`. Note that I skipped the `modprobe` and `v4l2-ctl` parts. Updates to `HassOS` will break the system, you will need to download the files again for the system to boot.
+  - Uninstall and (re)install the addon to reset plugins etc.
+  - Use OctoPrint recovery mode.
 - `<plugin>` fails to install?
-  - Some dependencies may be missing.
+  - Some dependencies may be missing, check the log and create an issue on GitHub.
 - How can I access GPIO?
-  - This is currently missing. It may be enough to setup AppArmor, please let me know if you have knowledge on this.
+  - Let me know if you have knowledge on AppArmor, I believe proper configuration is what is missing for GPIO support.
 
 ## Versions
 
@@ -65,4 +62,4 @@ Some notes regarding the software and versions.
 Not all software is installed for all images.
 
 - OctoPrint
-  - Installed in a `venv` from PyPI, using latest version.
+  - Installed in a `virtualenv` from PyPI, using latest version.
