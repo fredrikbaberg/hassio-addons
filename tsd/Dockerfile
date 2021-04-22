@@ -12,7 +12,7 @@ ENV LANG C.UTF-8
 
 # Preparations
 RUN apt update && \
-    apt install --no-install-recommends -y python3-pip python3-setuptools git && \
+    apt install --no-install-recommends -y python3-pip python3-setuptools python3-dev git gcc libpq-dev && \
     apt install --no-install-recommends -y libsm6 libxrender1 libfontconfig1 ffmpeg wget && \
     rm -rf /var/lib/apt/lists/* && \
     update-alternatives --install /usr/bin/python python /usr/bin/python3 10 && \
@@ -25,8 +25,8 @@ RUN apt update && \
 COPY --from=source /TheSpaghettiDetective/ml_api /app
 COPY --from=source /TheSpaghettiDetective/web /web
 # Install requirements
-RUN pip install ${PIP_FLAGS} -r /app/requirements_x86_64.txt && \
-    pip install ${PIP_FLAGS} -r /web/requirements.txt
+RUN pip install ${PIP_FLAGS} -r /app/requirements_x86_64.txt
+RUN pip install ${PIP_FLAGS} -r /web/requirements.txt
 # To mitigate some warnings
 RUN pip install ${PIP_FLAGS} -U \
     psycopg2-binary \
@@ -40,6 +40,6 @@ RUN apt update && \
 # Cleanup
 RUN find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf && \
     rm -rf /root/.cache && \
-    apt remove -y python3-pip python3-setuptools git
+    apt remove -y python3-pip python3-setuptools python3-dev git gcc libpq-dev
 # Copy data from filesystem
 COPY rootfs/ /
