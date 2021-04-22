@@ -17,7 +17,10 @@ RUN apt update && \
     rm -rf /var/lib/apt/lists/* && \
     update-alternatives --install /usr/bin/python python /usr/bin/python3 10 && \
     update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 10 && \
-    pip install ${PIP_FLAGS} --upgrade pip wheel
+    pip install ${PIP_FLAGS} --upgrade \
+    pip \
+    wheel \
+    psycopg2-binary
 # Copy source code
 COPY --from=source /TheSpaghettiDetective/ml_api /app
 COPY --from=source /TheSpaghettiDetective/web /web
