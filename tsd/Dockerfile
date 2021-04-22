@@ -27,7 +27,7 @@ RUN apt update && \
     # Other packages required to run
     apt install -y \
         redis \
-        tinyproxy \
+        haproxy \
         wget && \
     rm -rf /var/lib/apt/lists/* && \
     update-alternatives --install /usr/bin/python python /usr/bin/python3 10 && \

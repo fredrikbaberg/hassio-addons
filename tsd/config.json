@@ -1,6 +1,6 @@
 {
     "name": "TSD",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "slug": "tsd",
     "description": "TSD add-on for Home Assistant",
     "arch": ["amd64"],
@@ -59,7 +59,8 @@
     "panel_title": "TSD",
     "panel_admin": true,
     "snapshot_exclude": [
-        "/data/app/model/model.weights"
+        "/data/app",
+        "/data/web"
     ],
     "stage": "experimental"
 }
