@@ -2,4 +2,4 @@
 
 bashio::log.info "Starting reverse proxy for Ingress..."
 
-tinyproxy -d -c tinyproxy.conf
+tinyproxy -d -c /config/tinyproxy.conf
