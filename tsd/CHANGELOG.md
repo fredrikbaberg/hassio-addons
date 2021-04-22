@@ -1,5 +1,10 @@
 # Changelog
 
+[0.0.3]
+
+- Use HAProxy
+- Fix build issues with psycopg2
+
 [0.0.2]
 
 - Enabled Ingress (untested)

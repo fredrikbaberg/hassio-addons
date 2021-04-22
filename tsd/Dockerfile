@@ -35,7 +35,8 @@ RUN pip install ${PIP_FLAGS} -U \
 RUN apt update && \
     apt install -y \
     redis \
-    tinyproxy && \
+    tinyproxy \
+    haproxy && \
     rm -rf /var/lib/apt/lists/*
 # Cleanup
 RUN find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf && \
