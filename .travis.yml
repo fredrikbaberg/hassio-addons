@@ -15,6 +15,7 @@ env:
   - ADDON="octoprint_next"
   - ADDON="iperf3"
   - ADDON="mjpg-streamer"
+  - ADDON="ustreamer"
   - ADDON="tsd"
 script:
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
