@@ -7,6 +7,7 @@ RUN apt update && \
 
 FROM ${BUILD_FROM} as final
 ENV PIP_FLAGS="--no-cache-dir"
+ENV CFLAGS="-fcommon"
 ENV LANG C.UTF-8
 
 # Preparations
