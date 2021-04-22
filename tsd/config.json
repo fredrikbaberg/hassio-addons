@@ -1,6 +1,6 @@
 {
     "name": "TSD",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "slug": "tsd",
     "description": "TSD add-on for Home Assistant",
     "arch": ["amd64"],
@@ -54,7 +54,7 @@
         "TELEGRAM_BOT_TOKEN": "password",
         "PUSHOVER_APP_TOKEN": "password"
     },
-    "ingress": false,
+    "ingress": true,
     "panel_icon": "mdi:puzzle",
     "panel_title": "TSD",
     "panel_admin": true,

@@ -7,22 +7,26 @@ RUN apt update && \
 
 FROM ${BUILD_FROM} as final
 ENV PIP_FLAGS="--no-cache-dir"
+ENV CFLAGS="-fcommon"
 ENV LANG C.UTF-8
 
 # Preparations
 RUN apt update && \
-    apt install --no-install-recommends -y python3-pip python3-setuptools git && \
+    apt install --no-install-recommends -y python3-pip python3-setuptools python3-dev git gcc libpq-dev && \
     apt install --no-install-recommends -y libsm6 libxrender1 libfontconfig1 ffmpeg wget && \
     rm -rf /var/lib/apt/lists/* && \
     update-alternatives --install /usr/bin/python python /usr/bin/python3 10 && \
     update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 10 && \
-    pip install ${PIP_FLAGS} --upgrade pip wheel
+    pip install ${PIP_FLAGS} --upgrade \
+    pip \
+    wheel \
+    psycopg2-binary
 # Copy source code
 COPY --from=source /TheSpaghettiDetective/ml_api /app
 COPY --from=source /TheSpaghettiDetective/web /web
 # Install requirements
-RUN pip install ${PIP_FLAGS} -r /app/requirements_x86_64.txt && \
-    pip install ${PIP_FLAGS} -r /web/requirements.txt
+RUN pip install ${PIP_FLAGS} -r /app/requirements_x86_64.txt
+RUN pip install ${PIP_FLAGS} -r /web/requirements.txt
 # To mitigate some warnings
 RUN pip install ${PIP_FLAGS} -U \
     psycopg2-binary \
@@ -31,11 +35,12 @@ RUN pip install ${PIP_FLAGS} -U \
 RUN apt update && \
     apt install -y \
     redis \
-    tinyproxy && \
+    tinyproxy \
+    haproxy && \
     rm -rf /var/lib/apt/lists/*
 # Cleanup
 RUN find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf && \
     rm -rf /root/.cache && \
-    apt remove -y python3-pip python3-setuptools git
+    apt remove -y python3-pip python3-setuptools python3-dev git gcc libpq-dev
 # Copy data from filesystem
 COPY rootfs/ /
