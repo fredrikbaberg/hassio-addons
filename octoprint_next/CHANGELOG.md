@@ -1,5 +1,11 @@
 # Changelog
 
+[0.0.8]
+
+- Remove translations
+- Don't build image
+- Correction to `webcam_url`
+
 [0.0.7]
 
 - Add option to set webcam_url, to help with debugging.

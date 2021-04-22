@@ -1,7 +1,0 @@
-configuration:
-  recovery:
-    name: återställning
-    description: Aktivera återställningsläge
-  mjpg_input:
-    name: mjpg_input
-    description: Plugin och alternativ för mjpg-streamer

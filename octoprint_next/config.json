@@ -42,6 +42,5 @@
     "panel_title": "OctoPrint Next",
     "panel_admin": false,
     "snapshot_exclude": [],
-    "stage": "experimental",
-    "image": "fredrikbaberg/octoprint-next-{arch}-image"
+    "stage": "experimental"
 }

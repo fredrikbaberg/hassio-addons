@@ -1,7 +1,0 @@
-configuration:
-  recovery:
-    name: recovery
-    description: Enable recovery mode
-  mjpg_input:
-    name: mjpg_input
-    description: Input option for mjpg-streamer
