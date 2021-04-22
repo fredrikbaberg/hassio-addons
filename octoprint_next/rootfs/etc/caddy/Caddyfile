@@ -11,13 +11,13 @@
     handle_path /webcam/* {
         rewrite * ?{query}
         # uri strip_prefix /webcam
-        reverse_proxy %%webcam_url%% {
+        reverse_proxy localhost:8000 {
             header_up X-Scheme {scheme}
             flush_interval -1
         }
     }
     handle {
-        # insert_rescue
+        #insert_rescue
         reverse_proxy @ingress localhost:80 {
             header_up -Origin
             header_up Origin 172.30.32.2
@@ -34,7 +34,7 @@
     }
     handle_path /webcam* {
         rewrite * /?{query}
-        reverse_proxy http://%%webcam_url%% {
+        reverse_proxy http://localhost:8000%% {
             header_up X-Scheme {scheme}
         }
     }

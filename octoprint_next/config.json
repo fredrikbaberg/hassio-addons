@@ -1,6 +1,6 @@
 {
     "name": "OctoPrint Next",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "slug": "octoprint-next",
     "description": "New version of OctoPrint add-on for Home Assistant",
     "arch": ["armv7", "amd64", "armhf", "aarch64", "i386"],
@@ -27,14 +27,12 @@
     "usb": true,
     "uart": true,
     "options": {
-        "webcam_url": "774437fd-ustreamer:80",
-        "mjpg_input": "input_file.so -f /www_mjpg -e",
-        "recovery": false
+        "recovery": false,
+        "camera_arguments": "input_file.so -f /www_mjpg -e"
     },
     "schema": {
-        "webcam_url": "str",
-        "mjpg_input": "str",
-        "recovery": "bool?"
+        "recovery": "bool?",
+        "camera_arguments": "str?"
     },
     "tmpfs": true,
     "ingress": true,
