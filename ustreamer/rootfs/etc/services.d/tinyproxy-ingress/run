@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv bashio
+
+bashio::log.info "Starting tinyproxy for Ingress..."
+
+tinyproxy -d -c tinyproxy-ingress.conf

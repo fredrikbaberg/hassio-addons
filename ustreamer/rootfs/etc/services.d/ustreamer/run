@@ -1,0 +1,4 @@
+#!/usr/bin/with-contenv bashio
+
+bashio::log.info "Starting ustreamer.."
+ustreamer --host=0.0.0.0 --port=80 "$(bashio::config 'ustreamer_arguments')"
