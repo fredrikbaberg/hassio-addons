@@ -2,4 +2,4 @@
 
 bashio::log.info "Starting tinyproxy for web..."
 
-tinyproxy -d -c tinyproxy-web.conf
+tinyproxy -d -c tinyproxy.conf

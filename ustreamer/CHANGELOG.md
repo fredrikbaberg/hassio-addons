@@ -1,9 +1,5 @@
 # Changelog
 
-[0.0.4]
+[0.1.0]
 
-- Use stream as Ingress page
-
-[0.0.1]
-
-- Initial version.
+- Initial version under new name

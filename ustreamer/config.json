@@ -1,6 +1,6 @@
 {
     "name": "ustreamer",
-    "version": "0.0.4",
+    "version": "0.1.0",
     "slug": "ustreamer",
     "description": "ustreamer add-on for Home Assistant",
     "arch": ["armv7", "amd64", "armhf", "aarch64", "i386"],
@@ -27,5 +27,5 @@
     "panel_icon": "mdi:camera",
     "panel_title": "ustreamer",
     "stage": "experimental",
-    "image": "fredrikbaberg/ustreamer-{arch}-image"
+    "image": "fredrikbaberg/addon-ustreamer-{arch}"
 }

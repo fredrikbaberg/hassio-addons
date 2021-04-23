@@ -26,6 +26,10 @@ iPerf3 server
 
 mjpg-streamer
 
+## ustreamer ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/fredrikbaberg/addon-ustreamer-amd64?sort=semver)
+
+Addon for ustreamer, to stream camera to e.g. OctoPrint.
+
 ## tsd ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/fredrikbaberg/tsd-amd64-image?sort=semver)
 
 tsd
