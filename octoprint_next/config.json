@@ -42,6 +42,5 @@
     "panel_admin": false,
     "snapshot_exclude": [],
     "stage": "experimental",
-    "watchdog": "tcp://[HOST]:[PORT:80]",
     "realtime": true
 }
