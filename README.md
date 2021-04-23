@@ -30,6 +30,6 @@ mjpg-streamer
 
 Addon for ustreamer, to stream camera to e.g. OctoPrint.
 
-## tsd ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/fredrikbaberg/tsd-amd64-image?sort=semver)
+## TSD ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/fredrikbaberg/addon-tsd-amd64?sort=semver)
 
-tsd
+Addon for The Spaghetti Detective. Requires advanced configuration.
