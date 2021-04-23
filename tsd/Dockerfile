@@ -63,7 +63,7 @@ RUN find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf 
         git \
         gcc \
         libpq-dev && \
-        rm -rf /etc/nginx/sites-enabled/default
+        rm -rf /etc/nginx/*
 
 # Copy data from filesystem
 COPY rootfs/ /
