@@ -2,4 +2,4 @@
 
 bashio::log.info "Starting reverse proxy for Ingress..."
 
-nginx -c /config/nginx.conf
+haproxy -db -f /config/haproxy.cfg

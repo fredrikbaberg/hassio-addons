@@ -27,7 +27,7 @@ RUN apt update && \
     # Other packages required to run
     apt install -y \
         redis \
-        nginx \
+        haproxy \
         wget && \
     rm -rf /var/lib/apt/lists/* && \
     update-alternatives --install /usr/bin/python python /usr/bin/python3 10 && \
@@ -62,8 +62,7 @@ RUN find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf 
         python3-dev \
         git \
         gcc \
-        libpq-dev && \
-        rm -rf /etc/nginx/*
+        libpq-dev
 
 # Copy data from filesystem
 COPY rootfs/ /
