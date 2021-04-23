@@ -1,6 +1,6 @@
 {
     "name": "ustreamer",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "slug": "ustreamer",
     "description": "ustreamer add-on for Home Assistant",
     "arch": ["armv7", "amd64", "armhf", "aarch64", "i386"],
@@ -17,12 +17,10 @@
     "video": true,
     "usb": true,
     "options": {
-        "ustreamer_arguments": "",
-        "ingress_page":  ""
+        "ustreamer_arguments": ""
     },
     "schema": {
-        "ustreamer_arguments": "str",
-        "ingress_page": "str?"
+        "ustreamer_arguments": "str"
     },
     "ingress": true,
     "ingress_port": 8099,
