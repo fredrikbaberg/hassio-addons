@@ -24,7 +24,7 @@ Addon for iPerf3 server/client
 
 ## mjpg-streamer ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/fredrikbaberg/addon-mjpg-streamer-amd64?sort=semver)
 
-mjpg-streamer
+Addon for mjpg-streamer, to stream camera to e.g. OctoPrint.
 
 ## ustreamer ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/fredrikbaberg/addon-ustreamer-amd64?sort=semver)
 
