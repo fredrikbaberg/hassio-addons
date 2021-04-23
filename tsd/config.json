@@ -1,6 +1,6 @@
 {
     "name": "TSD",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "slug": "tsd",
     "description": "TSD add-on for Home Assistant",
     "arch": ["amd64"],
@@ -9,7 +9,7 @@
     "webui": "http://[HOST]:[PORT:3334]",
     "boot": "manual",
     "ports": {
-        "3334": 3334
+        "3334": null
     },
     "ports_description": {
         "3334": "Web access to TSD"
@@ -58,7 +58,10 @@
     "panel_icon": "mdi:puzzle",
     "panel_title": "TSD",
     "panel_admin": true,
-    "snapshot_exclude": [],
+    "snapshot_exclude": [
+        "/data/app",
+        "/data/web"
+    ],
     "stage": "experimental",
-    "image": "fredrikbaberg/tsd-{arch}-image"
+    "image": "fredrikbaberg/addon-tsd-{arch}"
 }

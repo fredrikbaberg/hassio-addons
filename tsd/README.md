@@ -1,7 +1,13 @@
 # TSD add-on for Home Assistant
 
-Work in progress.
+** Work in progress. **
 
-Configuration options to be implemented.
+The Spaghetti Detective addon for Home Assistant.
 
-Model weights will be downloaded on first launch.
+For instructions, see: https://github.com/TheSpaghettiDetective/TheSpaghettiDetective
+
+Notes:
+
+- Model weights will be downloaded on first launch.
+- Ingress does not work.
+- Email and other configuration not tested.

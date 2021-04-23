@@ -1,6 +1,6 @@
 {
     "name": "mjpg-streamer",
-    "version": "0.0.2",
+    "version": "0.1.0",
     "slug": "mjpg-streamer",
     "description": "mjpg-streamer add-on for Home Assistant",
     "arch": ["armv7", "amd64", "armhf", "aarch64", "i386"],
@@ -27,5 +27,5 @@
     "panel_icon": "mdi:camera",
     "panel_title": "mjpg-streamer",
     "stage": "experimental",
-    "image": "fredrikbaberg/mjpg-streamer-{arch}-image"
+    "image": "fredrikbaberg/addon-mjpg-streamer-{arch}"
 }
