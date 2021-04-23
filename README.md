@@ -18,9 +18,9 @@ Plugin to run OctoPrint as an addon in Home Assistant, Dev version
 Please report issues here, or through the following [thread](https://community.home-assistant.io/t/repository-octoprint/22883).
 
 
-## iPerf3 ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/fredrikbaberg/iperf3-amd64-image?sort=semver)
+## iPerf3 ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/fredrikbaberg/addon-iperf3-amd64?sort=semver)
 
-iPerf3 server
+Addon for iPerf3 server/client
 
 ## mjpg-streamer ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/fredrikbaberg/addon-mjpg-streamer-amd64?sort=semver)
 
