@@ -2,6 +2,7 @@
 
 bashio::log.info "Starting tinyproxy for Ingress..."
 
+ingress_page="/config/octoprint"$(bashio::config 'ingress_page')
 sed -i "s#%%ingress_page%%#${ingress_page}#g" tinyproxy-ingress.conf
 
 tinyproxy -d -c tinyproxy-ingress.conf
