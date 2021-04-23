@@ -10,3 +10,4 @@ Notes:
 
 - Model weights will be downloaded on first launch.
 - Ingress does not work.
+- Email and other configuration not tested.
