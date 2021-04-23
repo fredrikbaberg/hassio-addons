@@ -1,9 +1,5 @@
 # Changelog
 
-[0.0.2]
+[0.1.0]
 
-- Allow external access.
-
-[0.0.1]
-
-- Initial version.
+- Initial version with new name
