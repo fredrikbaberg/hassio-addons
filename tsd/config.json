@@ -1,6 +1,6 @@
 {
     "name": "TSD",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "slug": "tsd",
     "description": "TSD add-on for Home Assistant",
     "arch": ["amd64"],
@@ -17,7 +17,7 @@
     "devices": [],
     "homeassistant": "2021.4.0",
     "privileged": [],
-    "map": [],
+    "map": ["config:rw"],
     "options": {
         "EMAIL_HOST": "",
         "EMAIL_HOST_USER": "",
@@ -58,7 +58,10 @@
     "panel_icon": "mdi:puzzle",
     "panel_title": "TSD",
     "panel_admin": true,
-    "snapshot_exclude": [],
+    "snapshot_exclude": [
+        "/data/app",
+        "/data/web"
+    ],
     "stage": "experimental",
     "image": "fredrikbaberg/tsd-{arch}-image"
 }

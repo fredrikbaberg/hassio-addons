@@ -1,5 +1,5 @@
 #!/usr/bin/with-contenv bashio
 
-bashio::log.info "Starting haproxy..."
+bashio::log.info "Starting reverse proxy for Ingress..."
 
 haproxy -db -f /etc/haproxy/haproxy.cfg
