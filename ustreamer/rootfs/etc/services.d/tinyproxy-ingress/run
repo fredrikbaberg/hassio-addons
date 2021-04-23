@@ -2,4 +2,6 @@
 
 bashio::log.info "Starting tinyproxy for Ingress..."
 
+sed -i "s#%%ingress_page%%#${ingress_page}#g" tinyproxy-ingress.conf
+
 tinyproxy -d -c tinyproxy-ingress.conf
