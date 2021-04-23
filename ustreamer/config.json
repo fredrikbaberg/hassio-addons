@@ -1,6 +1,6 @@
 {
     "name": "ustreamer",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "slug": "ustreamer",
     "description": "ustreamer add-on for Home Assistant",
     "arch": ["armv7", "amd64", "armhf", "aarch64", "i386"],
