@@ -1,6 +1,6 @@
 {
     "name": "OctoPrint Next",
-    "version": "0.0.11",
+    "version": "0.0.12",
     "slug": "octoprint-next",
     "description": "Next version of OctoPrint add-on for Home Assistant",
     "arch": ["armv7", "amd64", "armhf", "aarch64", "i386"],
@@ -34,6 +34,7 @@
         "recovery": "bool",
         "webcam_url": "str?"
     },
+    "image": "fredrikbaberg/octoprint-next-{arch}-image",
     "tmpfs": true,
     "ingress": true,
     "panel_icon": "mdi:printer-3d",
@@ -41,5 +42,6 @@
     "panel_admin": false,
     "snapshot_exclude": [],
     "stage": "experimental",
-    "image": "fredrikbaberg/octoprint-next-{arch}-image"
+    "watchdog": "tcp://[HOST]:[PORT:80]",
+    "realtime": true
 }
