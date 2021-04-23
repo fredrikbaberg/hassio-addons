@@ -1,6 +1,6 @@
 # Changelog
 
-[0.0.3]
+[0.0.4]
 
 - Use HAProxy
 - Fix build issues with psycopg2
