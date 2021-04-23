@@ -3,4 +3,4 @@
 ## Preparations of OctoPrint is done in /etc/cont-init.d/octoprint.sh
 
 # Launch OctoPrint
-sleep 5 && octoprint serve --iknowwhatimdoing --basedir /data/octoprint --host 0.0.0.0 --port 80
+octoprint serve --iknowwhatimdoing --basedir /data/octoprint --host 0.0.0.0 --port 80
