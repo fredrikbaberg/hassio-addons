@@ -1,8 +1,8 @@
 # Changelog
 
-[0.0.3]
+[0.0.4]
 
-- Add option to set Ingress page
+- Use stream as Ingress page
 
 [0.0.1]
 
