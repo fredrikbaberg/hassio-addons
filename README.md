@@ -4,16 +4,14 @@ Intended home for hassio addons, if time allows.
 
 ## OctoPrint ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/fredrikbaberg/octoprint-amd64-image?sort=semver)
 
-Plugin to run OctoPrint as an addon in Home Assistant.
-
+Run OctoPrint as an addon in Home Assistant.
 
 Please report issues here, or through the following [thread](https://community.home-assistant.io/t/repository-octoprint/22883).
 
 
 ## OctoPrint dev ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/fredrikbaberg/octoprint-dev-amd64-image?sort=semver)
 
-Plugin to run OctoPrint as an addon in Home Assistant, Dev version
-
+Run OctoPrint as an addon in Home Assistant, Dev version
 
 Please report issues here, or through the following [thread](https://community.home-assistant.io/t/repository-octoprint/22883).
 
@@ -24,7 +22,7 @@ Addon for iPerf3 server/client
 
 ## mjpg-streamer ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/fredrikbaberg/addon-mjpg-streamer-amd64?sort=semver)
 
-mjpg-streamer
+Addon for mjpg-streamer, to stream camera to e.g. OctoPrint.
 
 ## ustreamer ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/fredrikbaberg/addon-ustreamer-amd64?sort=semver)
 
