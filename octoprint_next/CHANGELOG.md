@@ -1,5 +1,9 @@
 # Changelog
 
+[0.1.1]
+
+- Add mjpg-streamer to image
+
 [0.0.12]
 
 - Update configuration options

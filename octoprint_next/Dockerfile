@@ -16,8 +16,9 @@ RUN echo "Install base requirements for running." && \
         linux-headers \
         python3-dev \
         zlib-dev \
-        jpeg-dev
-        # libjpeg postgresql-libs
+        jpeg-dev \
+        libjpeg
+        # postgresql-libs
 RUN echo "Install packages for installing" && \
     apk add --no-cache --virtual .build-dependencies-octoprint \
         py3-virtualenv \
@@ -31,8 +32,17 @@ RUN echo "Install packages for installing" && \
     echo "Install OctoPrint" && \
     pip install ${PIP_FLAGS} \
         OctoPrint \
-        zeroconf \
-        pillow && \
+        zeroconf && \
+        # pillow && \
+    echo "Install mjpg-streamer." && \
+    apk add --no-cache --virtual .build-dependencies-mjpgstreamer make cmake build-base linux-headers libjpeg-turbo-dev && \
+    wget -qO- https://github.com/jacksonliam/mjpg-streamer/archive/master.tar.gz | tar xz -C /tmp && \
+    cd /tmp/mjpg-streamer-master/mjpg-streamer-experimental/ && \
+    make --silent && \
+    make install --silent && \
+    mv www/ /www_mjpg && \
+    rm -rf /tmp/mjpg-streamer-master && \
+    apk del --no-cache .build-dependencies-mjpgstreamer && \
     # Cleanup, move output
     find /data/python | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf && \
     find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf && \
