@@ -1,11 +1,9 @@
 name: iperf3
 
 on:
-  release:
-    types: 
-      published:
-        tags:
-          - iperf3-v*
+  push:
+    tags:
+      - iperf3-v*
 
 jobs:
   publish:
@@ -24,4 +22,5 @@ jobs:
       with:
         args: |
           --all \
+          --docker-hub-check \
           --target iperf3
