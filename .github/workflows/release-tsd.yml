@@ -1,10 +1,10 @@
-name: ustreamer
+name: tsd
 
 on:
   release:
     types: [published]
     tags:
-      - ustreamer-v*
+      - tsd-v*
 
 jobs:
   publish:
@@ -23,4 +23,4 @@ jobs:
       with:
         args: |
           --all \
-          --target ustreamer
+          --target tsd

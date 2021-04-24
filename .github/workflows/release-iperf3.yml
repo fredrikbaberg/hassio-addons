@@ -1,10 +1,10 @@
-name: ustreamer
+name: iperf3
 
 on:
   release:
     types: [published]
     tags:
-      - ustreamer-v*
+      - iperf3-v*
 
 jobs:
   publish:
@@ -23,4 +23,4 @@ jobs:
       with:
         args: |
           --all \
-          --target ustreamer
+          --target iperf3
