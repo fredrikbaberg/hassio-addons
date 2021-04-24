@@ -22,5 +22,4 @@ jobs:
       with:
         args: |
           --amd64 \
-          --docker-hub-check \
           --target tsd

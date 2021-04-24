@@ -22,5 +22,4 @@ jobs:
       with:
         args: |
           --all \
-          --docker-hub-check \
           --target iperf3
