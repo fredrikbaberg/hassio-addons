@@ -2,8 +2,10 @@ name: iperf3
 
 on:
   release:
-    tags:
-      - iperf3-v*
+    types: 
+      published:
+        tags:
+          - iperf3-v*
 
 jobs:
   publish:

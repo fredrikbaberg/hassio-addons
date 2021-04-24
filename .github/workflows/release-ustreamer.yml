@@ -2,8 +2,10 @@ name: ustreamer
 
 on:
   release:
-    tags:
-      - ustreamer-v*
+    types: 
+      published:
+        tags:
+          - ustreamer-v*
 
 jobs:
   publish:

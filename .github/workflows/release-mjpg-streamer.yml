@@ -2,8 +2,10 @@ name: mjpg-streamer
 
 on:
   release:
-    tags:
-      - mjpg-streamer-v*
+    types: 
+      published:
+        tags:
+          - mjpg-streamer-v*
 
 jobs:
   publish:

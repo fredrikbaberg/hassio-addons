@@ -2,8 +2,10 @@ name: tsd
 
 on:
   release:
-    tags:
-      - tsd-v*
+    types: 
+      published:
+        tags:
+          - tsd-v*
 
 jobs:
   publish:
