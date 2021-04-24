@@ -2,7 +2,6 @@ name: iperf3
 
 on:
   release:
-    types: [published]
     tags:
       - iperf3-v*
 
