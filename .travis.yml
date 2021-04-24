@@ -12,10 +12,6 @@ before_install:
 env:
   - ADDON="octoprint"
   - ADDON="octoprint_dev"
-  - ADDON="iperf3"
-  - ADDON="mjpg-streamer"
-  - ADDON="ustreamer"
-  - ADDON="tsd"
 script:
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
   - ./build.sh $ADDON
