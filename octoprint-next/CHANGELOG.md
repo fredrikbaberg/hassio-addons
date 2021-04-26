@@ -1,5 +1,9 @@
 # Changelog
 
+[0.1.2]
+
+- Add camera start stop actions
+
 [0.1.1]
 
 - Add mjpg-streamer to image
