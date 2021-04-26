@@ -62,4 +62,5 @@ RUN chmod a+x /restart.sh
 RUN chmod a+x /shutdown.sh
 WORKDIR /
 
+RUN chmod a+x /*.sh
 CMD [ "/run.sh" ]
