@@ -26,8 +26,8 @@
     ],
     "map": [],
     "environment": {
-        "S6_SERVICES_GRACETIME": 10000,
-        "S6_KILL_GRACETIME": 3000
+        "S6_SERVICES_GRACETIME": "10000",
+        "S6_KILL_GRACETIME": "3000"
     },
     "video": true,
     "gpio": true,
