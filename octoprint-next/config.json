@@ -1,6 +1,6 @@
 {
     "name": "OctoPrint Next",
-    "version": "0.1.2",
+    "version": "0.2.0",
     "slug": "octoprint-next",
     "description": "Next version of OctoPrint add-on for Home Assistant",
     "arch": ["armv7", "amd64", "armhf", "aarch64", "i386"],
@@ -9,11 +9,11 @@
     "webui": "http://[HOST]:[PORT:5000]",
     "boot": "manual",
     "ports": {
-        "5000/tcp": null,
+        "5000": null,
         "8000": null
     },
     "ports_description": {
-        "5000/tcp": "WebUI (Not required for Ingress)",
+        "5000": "WebUI (Not required for Ingress)",
         "8000": "Camera web UI"
     },
     "devices": [
@@ -25,21 +25,20 @@
         "SYS_RAWIO"
     ],
     "map": [],
-    "environment": {
-        "S6_SERVICES_GRACETIME": "10000",
-        "S6_KILL_GRACETIME": "3000"
-    },
+    "environment": {},
     "video": true,
     "gpio": true,
     "usb": true,
     "uart": true,
     "options": {
         "recovery": false,
-        "mjpg_input": "input_uvc.so -n"
+        "mjpg_input": "input_file.so -f /www_mjpg -e",
+        "autostart_mjpg_streamer": false
     },
     "schema": {
         "recovery": "bool",
-        "mjpg_input": "str?"
+        "mjpg_input": "str?",
+        "autostart_mjpg_streamer": "bool"
     },
     "image": "fredrikbaberg/addon-octoprint-next-{arch}",
     "tmpfs": true,

@@ -10,7 +10,11 @@ ENV PYTHONUSERBASE=/data/python
 
 # Install requirements to run
 RUN echo "Install base requirements for running." && \
-    apk add --no-cache --virtual .necessary python3 caddy ffmpeg && \
+    apk add --no-cache --virtual .necessary \
+        python3 \
+        caddy \
+        ffmpeg \
+        supervisor && \
     apk add --no-cache --virtual .extras \
         build-base \
         linux-headers \
@@ -57,3 +61,5 @@ COPY rootfs/ /
 RUN chmod a+x /restart.sh
 RUN chmod a+x /shutdown.sh
 WORKDIR /
+
+CMD [ "/run.sh" ]

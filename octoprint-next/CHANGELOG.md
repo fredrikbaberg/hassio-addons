@@ -1,5 +1,10 @@
 # Changelog
 
+[0.2.0]
+
+- Replace s6 with supervisor
+- Add option to set autostart of mjpg-streamer
+
 [0.1.2]
 
 - Add camera start stop actions
