@@ -2,6 +2,9 @@
     @ingress {
         remote_ip 172.30.32.2
     }
+    handle_path /webcam/* {
+        reverse_proxy http://127.0.0.1:8080
+    }
     handle {
         #insert_rescue
         reverse_proxy @ingress localhost:80 {
@@ -11,15 +14,16 @@
             header_up X-Forwarded-For 172.30.32.2
         }
     }
-    handle_path /webcam/* {
-        reverse_proxy http://localhost:8080/
-    }
 }
 
 :5000 {
-    reverse_proxy http://127.0.0.1:80
+    reverse_proxy http://127.0.0.1:80 {
+        header_up X-Scheme {scheme}
+    }
 }
 
 :8000 {
-    reverse_proxy http://localhost:8080/
+    reverse_proxy http://127.0.0.1:8080 {
+        header_up X-Scheme {scheme}
+    }
 }
