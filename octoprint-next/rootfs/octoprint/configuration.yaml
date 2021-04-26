@@ -19,10 +19,18 @@ folder:
     watched: /data/octoprint/watched
 server:
     commands:
-        serverRestartCommand: /restart.sh
+        serverRestartCommand: s6-svc -r /var/run/s6/services/octoprint
         systemRestartCommand: /restart.sh
         systemShutdownCommand: /shutdown.sh
 webcam:
     ffmpeg: /usr/bin/ffmpeg
-    snapshot: http://774437fd-ustreamer:80/snapshot
+    snapshot: http://localhost:8080/snapshot
     stream: webcam/?action=stream
+system:
+    actions:
+        -   action: camerastart
+            command:  s6-svc -wU -T 5000 -u /var/run/s6/services/mjpg-streamer
+            name: Start mjpg-streamer
+        -   action: camerastop
+            command: s6-svc -wD -d /var/run/s6/services/mjpg-streamer
+            name: Stop mjpg-streamer
