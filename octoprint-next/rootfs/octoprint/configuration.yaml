@@ -19,18 +19,17 @@ folder:
     watched: /data/octoprint/watched
 server:
     commands:
-        serverRestartCommand: supervisorctl restart octoprint
-        systemRestartCommand: /restart.sh
-        systemShutdownCommand: /shutdown.sh
+        serverRestartCommand: /octoprint_restart.sh
+        systemRestartCommand: /system_restart.sh
+        systemShutdownCommand: /system_shutdown.sh
 webcam:
     ffmpeg: /usr/bin/ffmpeg
     snapshot: http://127.0.0.1:8080/?action=snapshot
-    stream: webcam/?action=stream
 system:
     actions:
         -   action: camerastart
-            command:  supervisorctl start mjpg-streamer
+            command:  /camera_start.sh
             name: Start camera
         -   action: camerastop
-            command: supervisorctl stop mjpg-streamer
+            command: /camera_stop.sh
             name: Stop camera
