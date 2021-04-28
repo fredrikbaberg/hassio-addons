@@ -55,8 +55,10 @@ profile octoprint-next flags=(attach_disconnected,mediate_deleted) {
     # Receive signals from S6-Overlay
     signal receive,
     file,
+
+    /www_mjpg/** r,
     
-    # For access to GPIO
+    # For access to video
     /dev/video* rw,
   }
 }
