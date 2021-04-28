@@ -34,6 +34,8 @@ bashio::log.info "Prepare mjpg-streamer"
 sed -i "s#%%mjpg_input%%#mjpg_input=$(bashio::config 'mjpg_input')#g" /etc/supervisord.conf
 sed -i "s#%%autostart_mjpg_streamer%%#$(bashio::config 'autostart_mjpg_streamer')#g" /etc/supervisord.conf
 
+cat /etc/supervisord.conf
+
 ### Launch
 bashio::log.info "Launch"
 
