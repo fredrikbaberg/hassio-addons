@@ -1,6 +1,0 @@
-#!/usr/bin/with-contenv bashio
-
-## Preparations of OctoPrint is done in /etc/cont-init.d/octoprint.sh
-
-# Launch OctoPrint
-octoprint serve --iknowwhatimdoing --basedir /data/octoprint --host 0.0.0.0 --port 80

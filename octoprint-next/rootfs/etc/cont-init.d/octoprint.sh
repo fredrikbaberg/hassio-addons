@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bashio
 
-bashio::log.info "Prepare OctoPrint"
+bashio::log.info "OctoPrint cont-init.d"
 
 # Copy system data to persistent location, if missing.
 if [ ! -d /data/python ]; then
