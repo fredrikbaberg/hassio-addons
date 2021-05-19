@@ -1,5 +1,11 @@
 # Changelog
 
+[0.3.0]
+
+- s6 for most services; OctoPrint still runs under supervisor to reboot properly.
+- move scripts to separate folder.
+- remove autostart camera option, use events in OctoPrint if needed.
+
 [0.2.0]
 
 - Replace s6 with supervisor

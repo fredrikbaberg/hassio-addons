@@ -26,12 +26,8 @@ profile octoprint-next flags=(attach_disconnected,mediate_deleted) {
   /data/** rw,
 
   # Access to run scripts
-  # /run.sh rk,
-  # /system_restart.sh rk,
-  # /system_shutdown.sh rk,
-  # /camera_start.sh rk,
-  # /camera_stop.sh rk,
-
+  /scripts/** rk,
+  
   # Start new profile for service
   /data/python/bin/octoprint cx,
   

@@ -19,17 +19,25 @@ folder:
     watched: /data/octoprint/watched
 server:
     commands:
-        serverRestartCommand: /octoprint_restart.sh
-        systemRestartCommand: /system_restart.sh
-        systemShutdownCommand: /system_shutdown.sh
+        serverRestartCommand: /scripts/octoprint_restart.sh
+        systemRestartCommand: /scripts/system_restart.sh
+        systemShutdownCommand: /scripts/system_shutdown.sh
 webcam:
     ffmpeg: /usr/bin/ffmpeg
     snapshot: http://127.0.0.1:8080/?action=snapshot
+    stream: webcam/?action=stream
 system:
     actions:
         -   action: camerastart
-            command:  /camera_start.sh
             name: Start camera
+            command: /scripts/camera_start.sh
         -   action: camerastop
-            command: /camera_stop.sh
             name: Stop camera
+            command: /scripts/camera_stop.sh
+events:
+    enabled: true
+    subscriptions:
+    -   command: /scripts/camera_start.sh
+        enabled: false
+        event: Startup
+        type: system

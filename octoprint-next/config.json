@@ -1,6 +1,6 @@
 {
     "name": "OctoPrint Next",
-    "version": "0.2.1",
+    "version": "0.3.0",
     "slug": "octoprint-next",
     "description": "Next version of OctoPrint add-on for Home Assistant",
     "arch": ["armv7", "amd64", "armhf", "aarch64", "i386"],
@@ -32,15 +32,12 @@
     "uart": true,
     "options": {
         "recovery": false,
-        "mjpg_input": "input_file.so -f /www_mjpg -e",
-        "autostart_mjpg_streamer": false
+        "mjpg_input": "input_uvc.so -n"
     },
     "schema": {
         "recovery": "bool",
-        "mjpg_input": "str?",
-        "autostart_mjpg_streamer": "bool"
+        "mjpg_input": "str?"
     },
-    "image": "fredrikbaberg/addon-octoprint-next-{arch}",
     "tmpfs": true,
     "ingress": true,
     "panel_icon": "mdi:printer-3d",

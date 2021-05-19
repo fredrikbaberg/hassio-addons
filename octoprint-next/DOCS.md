@@ -8,7 +8,7 @@ For external access you can setup another user, or change the password of the us
 
 ## Configuration
 
-There is a toggle under options to force recovery mode.
+There is a toggle under options to force recovery mode. You may need to shutdown and then start the addon to return to the normal interface.
 
 ### Network
 
@@ -50,9 +50,8 @@ Start and stop of the camera is up to the user.
     - If you have ideas how to configure reverse proxy to get the camera stream through Ingress, please let me know.
 - How do I reset addon/OctoPrint data?
   - Uninstall and (re)install the addon to reset plugins etc.
-  - Use OctoPrint recovery mode.
 - `<plugin>` fails to install?
-  - Some dependencies may be missing, check the log and create an issue on GitHub.
+  - Some dependencies may be missing, check the log and create an issue on the GitHub repo or in the thread on the community.
 - How can I access GPIO?
   - Let me know if you have knowledge on AppArmor, I believe proper configuration is what is missing for GPIO support.
 

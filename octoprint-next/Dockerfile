@@ -9,12 +9,14 @@ ENV PATH=${PATH}:/data/python/bin
 ENV PYTHONUSERBASE=/data/python
 
 # Install requirements to run
-RUN echo "Install base requirements for running." && \
+RUN echo "Install base requirements" && \
     apk add --no-cache --virtual .necessary \
         python3 \
         caddy \
         ffmpeg \
-        supervisor && \
+        supervisor \
+        tinyproxy \
+        && \
     apk add --no-cache --virtual .extras \
         build-base \
         linux-headers \
@@ -23,7 +25,7 @@ RUN echo "Install base requirements for running." && \
         jpeg-dev \
         libjpeg
         # postgresql-libs
-RUN echo "Install packages for installing" && \
+RUN echo "Install build packages" && \
     apk add --no-cache --virtual .build-dependencies-octoprint \
         py3-virtualenv \
         python3-dev \
@@ -58,9 +60,5 @@ RUN echo "Install packages for installing" && \
 
 # Copy data from filesystem and previous stages
 COPY rootfs/ /
-RUN chmod a+x /restart.sh
-RUN chmod a+x /shutdown.sh
+RUN chmod a+x /scripts/*.sh
 WORKDIR /
-
-RUN chmod a+x /*.sh
-CMD [ "/run.sh" ]
