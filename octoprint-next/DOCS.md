@@ -28,17 +28,7 @@ Backup first, from within OctoPrint. It should be possible to update from within
 
 ### Camera
 
-You have to provide camera feed from another source, for instance the `mjpg-streamer` or `ustreamer` addon.
-The following excerpt from `config.yaml` may be helpful, the URL (e.g. `774437fd-ustreamer:80`) can be found for each addon.
-
-```
-webcam:
-    ffmpeg: /usr/bin/ffmpeg
-    stream: /webcam/?action=stream
-    snapshot: http://774437fd-ustreamer:80/?action=snapshot
-```
-
-Start and stop of the camera is up to the user.
+`mjpg-streamer` is included, but needs to be started manually through the power menu. Note that video does not work from within Ingress, you need to either expose the port for mjpg-streamer or use a reverse proxy. 
 
 ### Q and A
 
