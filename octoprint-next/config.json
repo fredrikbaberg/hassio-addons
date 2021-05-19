@@ -38,6 +38,7 @@
         "recovery": "bool",
         "mjpg_input": "str?"
     },
+    "image": "fredrikbaberg/addon-octoprint-next-{arch}",
     "tmpfs": true,
     "ingress": true,
     "panel_icon": "mdi:printer-3d",
