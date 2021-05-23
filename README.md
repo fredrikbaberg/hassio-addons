@@ -15,7 +15,7 @@ Run OctoPrint as an addon in Home Assistant, Dev version
 
 Please report issues here, or through the following [thread](https://community.home-assistant.io/t/repository-octoprint/22883).
 
-## OctoPrint Next [![octoprint-next](https://github.com/fredrikbaberg/hassio-addons/actions/workflows/release-octoprint-next.yml/badge.svg)](https://github.com/fredrikbaberg/hassio-addons/actions/workflows/release-octoprint-next.yml) ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/fredrikbaberg/octoprint-next-amd64-image?sort=semver)
+## OctoPrint Next [![octoprint-next](https://github.com/fredrikbaberg/hassio-addons/actions/workflows/release-octoprint-next.yml/badge.svg)](https://github.com/fredrikbaberg/hassio-addons/actions/workflows/release-octoprint-next.yml) ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/fredrikbaberg/addon-octoprint-next-amd64?sort=semver)
 
 Run OctoPrint as an addon in Home Assistant, Dev version
 
