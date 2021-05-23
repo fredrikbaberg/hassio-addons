@@ -1,5 +1,9 @@
 # Changelog
 
+[0.3.1]
+
+- Update command to terminate camera.
+
 [0.3.0]
 
 - s6 for most services; OctoPrint still runs under supervisor to reboot properly.
