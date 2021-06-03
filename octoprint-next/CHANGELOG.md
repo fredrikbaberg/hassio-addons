@@ -1,5 +1,10 @@
 # Changelog
 
+[0.3.2]
+
+- Clean additional installs in Dockerfile.
+- Move mjpg-streamer to supervisord.
+
 [0.3.1]
 
 - Update command to terminate camera.

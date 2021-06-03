@@ -14,9 +14,8 @@ RUN echo "Install base requirements" && \
         python3 \
         caddy \
         ffmpeg \
-        supervisor \
-        tinyproxy \
-        && \
+        supervisor
+RUN echo "Install extras" && \
     apk add --no-cache --virtual .extras \
         build-base \
         linux-headers \
@@ -24,7 +23,6 @@ RUN echo "Install base requirements" && \
         zlib-dev \
         jpeg-dev \
         libjpeg
-        # postgresql-libs
 RUN echo "Install build packages" && \
     apk add --no-cache --virtual .build-dependencies-octoprint \
         py3-virtualenv \
@@ -39,7 +37,6 @@ RUN echo "Install build packages" && \
     pip install ${PIP_FLAGS} \
         OctoPrint \
         zeroconf && \
-        # pillow && \
     echo "Install mjpg-streamer." && \
     apk add --no-cache --virtual .build-dependencies-mjpgstreamer make cmake build-base linux-headers libjpeg-turbo-dev && \
     wget -qO- https://github.com/jacksonliam/mjpg-streamer/archive/master.tar.gz | tar xz -C /tmp && \
