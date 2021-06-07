@@ -1,5 +1,9 @@
 # Changelog
 
+[0.3.3]
+
+- Add Gphoto2
+
 [0.3.2]
 
 - Clean additional installs in Dockerfile.
