@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv bashio
+
+bashio::log.info "Starting Klipper..."
+
+/data/klippy-env/bin/python /data/klipper/klippy/klippy.py /data/klipper/config/printer-creality-ender3-2018.cfg 

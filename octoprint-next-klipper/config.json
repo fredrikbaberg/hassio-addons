@@ -1,0 +1,49 @@
+{
+    "name": "OctoPrint Next Klipper",
+    "version": "0.1.0",
+    "slug": "octoprint-next-klipper",
+    "description": "Next version of OctoPrint add-on for Home Assistant",
+    "arch": ["armv7", "amd64", "armhf", "aarch64", "i386"],
+    "url": "https://github.com/fredrikbaberg/hassio-addons",
+    "startup": "application",
+    "webui": "http://[HOST]:[PORT:5000]",
+    "boot": "manual",
+    "ports": {
+        "5000": null,
+        "8000": null
+    },
+    "ports_description": {
+        "5000": "WebUI (Not required for Ingress)",
+        "8000": "Camera web UI"
+    },
+    "devices": [
+        "/dev/mem",
+        "/dev/gpiomem"
+    ],
+    "homeassistant": "2021.4.0",
+    "privileged": [
+        "SYS_RAWIO"
+    ],
+    "map": [],
+    "environment": {},
+    "video": true,
+    "gpio": true,
+    "usb": true,
+    "uart": true,
+    "options": {
+        "recovery": false,
+        "mjpg_input": "input_uvc.so -n"
+    },
+    "schema": {
+        "recovery": "bool",
+        "mjpg_input": "str?"
+    },
+    "tmpfs": true,
+    "ingress": true,
+    "panel_icon": "mdi:printer-3d",
+    "panel_title": "OctoPrint Next",
+    "panel_admin": false,
+    "snapshot_exclude": [],
+    "stage": "experimental",
+    "realtime": true
+}
