@@ -1,6 +1,6 @@
 {
     "name": "OctoPrint Next Klipper",
-    "version": "0.1.1",
+    "version": "0.2.0",
     "slug": "octoprint-next-klipper",
     "description": "Next version of OctoPrint add-on for Home Assistant",
     "arch": ["armv7", "amd64", "armhf", "aarch64", "i386"],

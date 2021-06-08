@@ -1,5 +1,10 @@
 # Changelog
 
+[0.2.0]
+
+- Clean up commands for init.
+- Add initial documentation
+
 [0.1.1]
 
 - Create logfile.

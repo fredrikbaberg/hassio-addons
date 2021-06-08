@@ -30,6 +30,10 @@ Backup first, from within OctoPrint. It should be possible to update from within
 
 `mjpg-streamer` is included, but needs to be started manually through the power menu. Note that video does not work from within Ingress, you need to either expose the port for mjpg-streamer or use a reverse proxy. 
 
+### Klipper
+
+Klipper printer config is stored in `/data/klipper/printer.cfg`.
+
 ### Q and A
 
 - I have multiple devices, what if ttyUSB0 is not the correct device?
