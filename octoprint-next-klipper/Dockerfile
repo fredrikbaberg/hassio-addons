@@ -50,7 +50,7 @@ ENV PATH=${PATH}:/data/python/bin
 ENV PYTHONUSERBASE=/data/python
 
 RUN echo "Install Klipper." && \
-    apk add --no-cache --virtual .build-dependencies-klipper \
+    apk add --no-cache --virtual .dependencies-klipper \
         build-base \
         python3-dev \
         py3-virtualenv \
@@ -78,7 +78,6 @@ RUN echo "Install Klipper." && \
     wget -qO- https://github.com/Doridian/klipper/archive/custom.tar.gz | tar xz -C /tmp && \
     mv /tmp/klipper-custom/ /root/klipper && \
     pip install ${PIP_FLAGS} -r /root/klipper/scripts/klippy-requirements.txt
-    apk del --no-cache .build-dependencies-klipper
 
 # Install requirements for running Klipper.
 RUN apk add --no-cache libffi
