@@ -1,5 +1,9 @@
 # Changelog
 
+[0.1.1]
+
+- Create logfile.
+
 [0.1.0]
 
 - Initial version, with Klipper.
