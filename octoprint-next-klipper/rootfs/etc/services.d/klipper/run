@@ -1,19 +1,12 @@
 #!/usr/bin/with-contenv bashio
 
-bashio::log.info "Starting Klipper..."
+bashio::log.info "Starting Klipper."
 
-PYTHONDIR=/root/klippy-env
-SRCDIR=/root/klipper
-CFGDIR=/data/klipper
-CFGFILE=${CFGDIR}/printer.cfg
-LOGFILE=/tmp/klippy.log
+KLIPPER_PYTHON=/root/klippy-env/bin/python
+KLIPPY=/root/klipper/klippy/klippy.py
+KLIPPER_CFG=${HOME}/printer.cfg
+KLIPPY_LOGFILE=/tmp/klippy.log
 
-mkdir -p ${CFGDIR}
-
-touch ${CFGFILE}
 touch ${LOGFILE}
 
-${PYTHONDIR}/bin/python ${SRCDIR}/klippy/klippy.py ${CFGFILE} -l ${LOGFILE}
-
-# /root/klippy-env/bin/python /root/klipper/klippy/klippy.py /data/klipper/config/printer.cfg
-# /data/klipper/config/printer-creality-ender3-2018.cfg 
+${KLIPPER_PYTHON} ${KLIPPY} ${KLIPPER_CFG} -l ${KLIPPY_LOGFILE}

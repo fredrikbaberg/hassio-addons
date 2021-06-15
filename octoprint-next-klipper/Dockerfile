@@ -1,23 +1,16 @@
-ARG BUILD_FROM="homeassistant/amd64-base:latest"
+ARG BUILD_FROM="fredrikbaberg/addon-octoprint-next-amd64:latest"
 
 FROM ${BUILD_FROM} AS final
-ENV LANG C.UTF-8
-ENV PIP_FLAGS="--no-cache-dir"
-ENV CFLAGS="-fcommon"
-ENV PYTHONPATH=/data/python
-ENV PATH=${PATH}:/data/python/bin
-ENV PYTHONUSERBASE=/data/python
 
-RUN echo "Install Klipper." && \
+RUN echo "Install dependencies." && \
     apk add --no-cache --virtual .dependencies-klipper \
         build-base \
         python3-dev \
         py3-virtualenv \
         libffi-dev \
-        libffi \
+        avrdude
     #     python2-dev && \
     #     ncurses-dev \
-    #     avrdude \
     #     gcc-avr \
     #     binutils-avr \
     #     avr-libc \
@@ -31,17 +24,19 @@ RUN echo "Install Klipper." && \
     #     tiff-dev \
     #     tk-dev \
     #     zlib-dev \
-    && \
+RUN echo "Get code." && \
+    wget -qO- https://github.com/Doridian/klipper/archive/custom.tar.gz | tar xz -C /tmp && \
+    mv /tmp/klipper-custom/ /root/klipper
+RUN echo "Install." && \
     virtualenv --python=python3 /root/klippy-env && \
     source /root/klippy-env/bin/activate && \
     /root/klippy-env/bin/python -m pip install ${PIP_FLAGS} --upgrade pip && \
-    wget -qO- https://github.com/Doridian/klipper/archive/custom.tar.gz | tar xz -C /tmp && \
-    mv /tmp/klipper-custom/ /root/klipper && \
-    pip install ${PIP_FLAGS} -r /root/klipper/scripts/klippy-requirements.txt
-
-# COPY --from=klipper /root/klippy-env/ /root/klippy-env/
-# COPY --from=klipper /root/klipper/ /root/klipper/
-
-# Copy data from filesystem and previous stages
+    # Install
+    pip install ${PIP_FLAGS} -r /root/klipper/scripts/klippy-requirements.txt \
+    pip install ${PIP_FLAGS} numpy && \
+    # Cleanup
+    find /root/klippy-env | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf && \
+    find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf && \
+    rm -rf /root/.cache
 COPY rootfs/ /
 WORKDIR /

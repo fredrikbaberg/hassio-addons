@@ -1,5 +1,13 @@
 # Changelog
 
+[0.3.0]
+
+- Add cont-init.d file for Klipper
+- Specify base image version for build
+- Cleanup Dockerfile
+- Add avrdude
+- Add numpy
+
 [0.2.0]
 
 - Clean up commands for init.

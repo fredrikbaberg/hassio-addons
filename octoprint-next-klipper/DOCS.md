@@ -32,7 +32,7 @@ Backup first, from within OctoPrint. It should be possible to update from within
 
 ### Klipper
 
-Klipper printer config is stored in `/data/klipper/printer.cfg`.
+Klipper is installed in a separate `virtualen` compared to OctoPrint. You can use the path `/root/printer.cfg` for printer config, this is linked to `/data/klipper/printer.cfg` for simplified config.
 
 ### Q and A
 
