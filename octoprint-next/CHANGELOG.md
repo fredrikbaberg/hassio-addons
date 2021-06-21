@@ -1,5 +1,10 @@
 # Changelog
 
+[0.3.4]
+
+- Add Gphoto2
+- Set camera stream encoding to identity in Caddy
+
 [0.3.2]
 
 - Clean additional installs in Dockerfile.

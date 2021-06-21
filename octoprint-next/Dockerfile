@@ -22,7 +22,8 @@ RUN echo "Install extras" && \
         python3-dev \
         zlib-dev \
         jpeg-dev \
-        libjpeg
+        libjpeg \
+        libgphoto2
 RUN echo "Install build packages" && \
     apk add --no-cache --virtual .build-dependencies-octoprint \
         py3-virtualenv \
@@ -38,7 +39,15 @@ RUN echo "Install build packages" && \
         OctoPrint \
         zeroconf && \
     echo "Install mjpg-streamer." && \
-    apk add --no-cache --virtual .build-dependencies-mjpgstreamer make cmake build-base linux-headers libjpeg-turbo-dev && \
+    # Libraries for Raspberry Pi
+    # apk add --no-cache raspberrypi-dev && \
+    apk add --no-cache --virtual .build-dependencies-mjpgstreamer \
+        make \
+        cmake \
+        build-base \
+        linux-headers \
+        libjpeg-turbo-dev \
+        libgphoto2-dev && \
     wget -qO- https://github.com/jacksonliam/mjpg-streamer/archive/master.tar.gz | tar xz -C /tmp && \
     cd /tmp/mjpg-streamer-master/mjpg-streamer-experimental/ && \
     make --silent && \
