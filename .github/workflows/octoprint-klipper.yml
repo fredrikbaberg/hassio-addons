@@ -1,6 +1,7 @@
 name: octoprint-klipper
 
 on:
+  on: workflow_dispatch
   push:
     tags:
       - octoprint-klipper-v*
