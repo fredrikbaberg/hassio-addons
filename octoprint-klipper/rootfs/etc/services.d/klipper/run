@@ -7,6 +7,6 @@ KLIPPY=/root/klipper/klippy/klippy.py
 KLIPPER_CFG=${HOME}/printer.cfg
 KLIPPY_LOGFILE=/tmp/klippy.log
 
-touch ${LOGFILE}
+touch ${KLIPPY_LOGFILE}
 
 ${KLIPPER_PYTHON} ${KLIPPY} ${KLIPPER_CFG} -l ${KLIPPY_LOGFILE}

@@ -1,5 +1,10 @@
 # Changelog
 
+[0.5.0]
+
+- Fix variable for logfile
+- Only support armhf for now
+
 [0.4.1]
 
 - Based on OctoPrint Next v0.3.5
