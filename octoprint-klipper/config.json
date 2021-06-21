@@ -3,7 +3,7 @@
     "version": "0.5.0",
     "slug": "octoprint-klipper",
     "description": "OctoPrint with Klipper add-on for Home Assistant",
-    "arch": ["armhf"],
+    "arch": ["armhf", "armv7", "amd64"],
     "url": "https://github.com/fredrikbaberg/hassio-addons",
     "startup": "application",
     "webui": "http://[HOST]:[PORT:5000]",

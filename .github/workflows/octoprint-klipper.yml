@@ -22,4 +22,5 @@ jobs:
       uses: home-assistant/builder@master
       with:
         args: |
+          --all
           --target octoprint-klipper

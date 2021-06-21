@@ -1,6 +1,8 @@
 {
     "build_from": {
-        "armhf": "fredrikbaberg/addon-octoprint-next-armhf:0.3.5"
+        "armhf": "fredrikbaberg/addon-octoprint-next-armhf:0.3.5",
+        "armv7": "fredrikbaberg/addon-octoprint-next-armv7:0.3.5",
+        "amd64": "fredrikbaberg/addon-octoprint-next-amd64:0.3.5"
     },
     "squash": false,
     "args": {}
