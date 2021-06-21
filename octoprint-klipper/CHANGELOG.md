@@ -1,5 +1,10 @@
 # Changelog
 
+[0.4.0]
+
+- Pre-built image
+- Based on OctoPrint Next v3.4.0
+
 [0.3.0]
 
 - Add cont-init.d file for Klipper

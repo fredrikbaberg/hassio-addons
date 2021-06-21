@@ -32,22 +32,20 @@ Backup first, from within OctoPrint. It should be possible to update from within
 
 ### Klipper
 
-Klipper is installed in a separate `virtualen` compared to OctoPrint. You can use the path `/root/printer.cfg` for printer config, this is linked to `/data/klipper/printer.cfg` for simplified config.
+Klipper is installed in a separate `virtualen` compared to OctoPrint. You can use the path `/root/printer.cfg` for printer config, this is linked to `/data/klipper/printer.cfg` for persistence.
 
 ### Q and A
 
 - I have multiple devices, what if ttyUSB0 is not the correct device?
   - Use device ID instead. In Home Assistant this can be found under "Supervisor" - "System" - "Hardware" `/dev/serial/by-id/usb-...`
 - Camera stream is not visible?
-  - Camera needs to be provided by another addon.
-  - Are you using Ingress for access? Try through WebUI (set port in configuration).
-    - If you have ideas how to configure reverse proxy to get the camera stream through Ingress, please let me know.
+  - You may need to setup a reverse proxy.
 - How do I reset addon/OctoPrint data?
   - Uninstall and (re)install the addon to reset plugins etc.
 - `<plugin>` fails to install?
   - Some dependencies may be missing, check the log and create an issue on the GitHub repo or in the thread on the community.
 - How can I access GPIO?
-  - Let me know if you have knowledge on AppArmor, I believe proper configuration is what is missing for GPIO support.
+  - GPIO support should be enabled. Make sure you are not using the same GPIO in Home Assistant or another addon at the same time.
 
 ## Versions
 
@@ -56,3 +54,5 @@ Not all software is installed for all images.
 
 - OctoPrint
   - Installed in a `virtualenv` from PyPI, using latest version.
+- Klipper
+  - Installed in a separate `virtualenv`, using `master` from GitHub.

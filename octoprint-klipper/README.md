@@ -1,4 +1,4 @@
-# Next version of OctoPrint add-on for Home Assistant, with Klipper.
+# OctoPrint add-on for Home Assistant, with Klipper.
 
 **This version is in early development.**
 
@@ -6,7 +6,7 @@
 
 ## About
 
-This Addon-on allows you to run [OctoPrint](https://octoprint.org) on a device running [Home Assistant](https://home-assistant.io/), with support for Klipper.
+This Addon-on allows you to run [OctoPrint](https://octoprint.org) with Klipper on a device running [Home Assistant](https://home-assistant.io/).
 
 ## Installation
 
