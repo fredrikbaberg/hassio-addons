@@ -1,5 +1,9 @@
 # Changelog
 
+[0.3.5]
+
+- Remove camera stream encoding
+
 [0.3.4]
 
 - Add Gphoto2
