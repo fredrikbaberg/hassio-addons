@@ -1,6 +1,6 @@
 # Changelog
 
-[0.3.3]
+[0.3.4]
 
 - Add Gphoto2
 - Set camera stream encoding to identity in Caddy
