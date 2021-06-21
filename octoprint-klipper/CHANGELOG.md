@@ -1,9 +1,13 @@
 # Changelog
 
+[0.4.1]
+
+- Based on OctoPrint Next v0.3.5
+
 [0.4.0]
 
 - Pre-built image
-- Based on OctoPrint Next v3.4.0
+- Based on OctoPrint Next v0.3.4
 
 [0.3.0]
 
