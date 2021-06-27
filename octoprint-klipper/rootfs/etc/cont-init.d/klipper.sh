@@ -6,7 +6,7 @@ mkdir -p /data/klipper/
 
 if bashio::config.true 'update_klipper'; then
     echo "Update Klipper"
-    cd /root/klipper && git pull
+    cd /root/klipper && git pull origin master
 fi
 
 if [ ! -f ${HOME}/printer.cfg ]; then
