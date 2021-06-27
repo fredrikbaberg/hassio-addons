@@ -1,6 +1,6 @@
 {
     "name": "OctoPrint Klipper",
-    "version": "0.5.0",
+    "version": "0.6.0",
     "slug": "octoprint-klipper",
     "description": "OctoPrint with Klipper add-on for Home Assistant",
     "arch": ["armhf", "armv7", "amd64"],
@@ -32,11 +32,13 @@
     "uart": true,
     "options": {
         "recovery": false,
-        "mjpg_input": "input_uvc.so -n"
+        "mjpg_input": "input_uvc.so -n",
+        "update_klipper": false
     },
     "schema": {
         "recovery": "bool",
-        "mjpg_input": "str?"
+        "mjpg_input": "str?",
+        "update_klipper": "bool"
     },
     "image": "fredrikbaberg/addon-octoprint-klipper-{arch}",
     "tmpfs": true,
