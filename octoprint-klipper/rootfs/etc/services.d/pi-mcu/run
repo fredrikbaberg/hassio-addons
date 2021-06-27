@@ -2,7 +2,7 @@
 
 bashio::log.info "Starting Klipper MCU Linux."
 
-[ -x $KLIPPER_HOST_MCU ] || return
+[ -x /usr/local/bin/klipper_mcu ] || return
 
 if [ -c /tmp/klipper_host_mcu ]; then
     log_daemon_msg "Attempting to shutdown host mcu..."

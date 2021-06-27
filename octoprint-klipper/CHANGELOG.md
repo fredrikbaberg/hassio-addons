@@ -1,5 +1,9 @@
 # Changelog
 
+[0.6.1]
+
+- Correction to MCU path
+
 [0.6.0]
 
 - Add support for Linux MCU

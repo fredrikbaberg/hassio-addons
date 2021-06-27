@@ -1,6 +1,6 @@
 {
     "name": "OctoPrint Klipper",
-    "version": "0.6.0",
+    "version": "0.6.1",
     "slug": "octoprint-klipper",
     "description": "OctoPrint with Klipper add-on for Home Assistant",
     "arch": ["armhf", "armv7", "amd64"],
