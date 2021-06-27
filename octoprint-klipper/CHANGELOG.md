@@ -1,5 +1,9 @@
 # Changelog
 
+[0.6.2]
+
+- Disable Linux MCU, due to "sched_setscheduler: (38)Function not implemented" error.
+
 [0.6.1]
 
 - Correction to MCU path
