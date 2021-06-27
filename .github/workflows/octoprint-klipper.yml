@@ -22,5 +22,7 @@ jobs:
       uses: home-assistant/builder@master
       with:
         args: |
-          --all \
+          --armhf \
+          --armv7 \
+          --amd64 \
           --target octoprint-klipper
