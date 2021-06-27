@@ -1,5 +1,10 @@
 # Changelog
 
+[0.6.0]
+
+- Add support for Linux MCU
+- Add option to update Klipper (git pull)
+
 [0.5.0]
 
 - Fix variable for logfile
