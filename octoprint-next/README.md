@@ -1,6 +1,4 @@
-# Next version of OctoPrint add-on for Home Assistant
-
-**This version is still in development, please use the one simply called "OctoPrint" for now.**
+# Newest version of OctoPrint add-on for Home Assistant
 
 **Always ensure you have a backup of your configuration.**
 

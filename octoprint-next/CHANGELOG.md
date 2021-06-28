@@ -1,5 +1,9 @@
 # Changelog
 
+[0.4.0]
+
+- Add numpy by default
+
 [0.3.5]
 
 - Remove camera stream encoding

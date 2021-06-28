@@ -4,7 +4,7 @@ FROM ${BUILD_FROM} AS final
 ENV LANG C.UTF-8
 ENV PIP_FLAGS="--no-cache-dir"
 ENV CFLAGS="-fcommon"
-ENV PYTHONPATH=/data/python
+ENV PYTHONPATH=/data/python:/usr/lib/python3.8/site-packages
 ENV PATH=${PATH}:/data/python/bin
 ENV PYTHONUSERBASE=/data/python
 
@@ -23,7 +23,8 @@ RUN echo "Install extras" && \
         zlib-dev \
         jpeg-dev \
         libjpeg \
-        libgphoto2
+        libgphoto2 \
+        py3-numpy
 RUN echo "Install build packages" && \
     apk add --no-cache --virtual .build-dependencies-octoprint \
         py3-virtualenv \
@@ -39,8 +40,6 @@ RUN echo "Install build packages" && \
         OctoPrint \
         zeroconf && \
     echo "Install mjpg-streamer." && \
-    # Libraries for Raspberry Pi
-    # apk add --no-cache raspberrypi-dev && \
     apk add --no-cache --virtual .build-dependencies-mjpgstreamer \
         make \
         cmake \
