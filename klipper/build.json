@@ -1,0 +1,7 @@
+{
+    "build_from": {
+        "armhf": "homeassistant/armhf-base-raspbian"
+    },
+    "squash": false,
+    "args": {}
+}
