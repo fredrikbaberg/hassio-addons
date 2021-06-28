@@ -32,7 +32,7 @@ Backup first, from within OctoPrint. It should be possible to update from within
 
 ### Klipper
 
-Klipper is installed in a separate `virtualen` compared to OctoPrint. You can use the path `/root/printer.cfg` for printer config, this is linked to `/data/klipper/printer.cfg` for persistence.
+Klipper is installed in a separate `virtualen` from OctoPrint. You can use the path `/root/printer.cfg` for printer config, this is linked to `/data/klipper/printer.cfg` for persistence.
 
 ### Q and A
 
