@@ -4,7 +4,7 @@ FROM ${BUILD_FROM} AS final
 ENV LANG C.UTF-8
 ENV PIP_FLAGS="--no-cache-dir"
 ENV CFLAGS="-fcommon"
-ENV PYTHONPATH=/data/python:/usr/lib/python3.8/site-packages
+ENV PYTHONPATH=/data/python
 ENV PATH=${PATH}:/data/python/bin
 ENV PYTHONUSERBASE=/data/python
 
@@ -32,7 +32,7 @@ RUN echo "Install build packages" && \
         build-base \
         linux-headers && \
     echo "Setup Python" && \
-    virtualenv --python=python3 /data/python && \
+    virtualenv --system-site-packages --python=python3 /data/python && \
     source /data/python/bin/activate && \
     pip install ${PIP_FLAGS} --upgrade pip && \
     echo "Install OctoPrint" && \
