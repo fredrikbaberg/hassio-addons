@@ -1,0 +1,47 @@
+{
+    "name": "Klipper",
+    "version": "0.1.0",
+    "slug": "klipper",
+    "description": "Klipper add-on for Home Assistant",
+    "arch": ["armhf"],
+    "url": "https://github.com/fredrikbaberg/hassio-addons",
+    "startup": "application",
+    "boot": "manual",
+    "ports": {
+    },
+    "ports_description": {
+    },
+    "devices": [
+        "/dev/mem",
+        "/dev/gpiomem"
+    ],
+    "homeassistant": "2021.4.0",
+    "privileged": [
+        "SYS_RAWIO"
+    ],
+    "map": [],
+    "environment": {},
+    "video": true,
+    "gpio": true,
+    "usb": true,
+    "uart": true,
+    "options": {
+        "mjpg_args": ["input_uvc.so -n", "output_http.so -f /www_mjpg"],
+        "run_mjpg": false,
+        "run_linux_mcu": false
+    },
+    "schema": {
+        "mjpg_input": ["str?"],
+        "run_mjpg": "bool",
+        "run_linux_mcu": "bool"
+    },
+    "image": "fredrikbaberg/addon-klipper-{arch}",
+    "tmpfs": true,
+    "ingress": true,
+    "panel_icon": "mdi:printer-3d-nozzle",
+    "panel_title": "Klipper",
+    "panel_admin": false,
+    "snapshot_exclude": [],
+    "stage": "experimental",
+    "realtime": true
+}
