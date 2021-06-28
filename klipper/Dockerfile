@@ -72,11 +72,11 @@ WORKDIR /root
 # Install packages required for running
 RUN apt update && apt install -y \
     python2-minimal \
-    libffi \
+    gcc \
     avrdude \
     binutils-avr \
     avr-libc \
     stm32flash \
-    gcc-arm-none-eabi \
     binutils-arm-none-eabi \
-    libusb-1.0
+    libusb-1.0 && \
+    rm -rf /var/lib/apt/lists/*
