@@ -1,6 +1,7 @@
 name: octoprint-next
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - octoprint-next-v*
