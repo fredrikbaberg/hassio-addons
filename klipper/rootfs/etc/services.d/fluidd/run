@@ -1,5 +1,0 @@
-#!/usr/bin/with-contenv bashio
-
-bashio::log.info "Starting Fluidd."
-
-caddy run -config /etc/caddy/Caddyfile
