@@ -26,6 +26,6 @@
     "ingress_port": 8099,
     "panel_icon": "mdi:camera",
     "panel_title": "ustreamer",
-    "stage": "experimental",
+    "stage": "deprecated",
     "image": "fredrikbaberg/addon-ustreamer-{arch}"
 }
