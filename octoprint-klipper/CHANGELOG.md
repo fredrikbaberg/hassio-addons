@@ -1,5 +1,9 @@
 # Changelog
 
+[0.7.1]
+
+- Update base image
+
 [0.6.2]
 
 - Disable Linux MCU, due to "sched_setscheduler: (38)Function not implemented" error.

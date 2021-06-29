@@ -1,8 +1,0 @@
-:8099 {
-   @ingress {
-        remote_ip 172.30.32.2
-   }
-   file_server @ingress {
-        root /frontend
-   }
-}

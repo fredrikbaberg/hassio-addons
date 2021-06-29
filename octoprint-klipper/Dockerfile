@@ -1,4 +1,4 @@
-ARG BUILD_FROM="fredrikbaberg/addon-octoprint-next-amd64:0.3.5"
+ARG BUILD_FROM="fredrikbaberg/addon-octoprint-next-amd64:0.4.0"
 
 FROM ${BUILD_FROM} AS octoklipper
 
@@ -18,14 +18,20 @@ FROM ${BUILD_FROM} AS klipperbase
 
 RUN echo "Get Klipper code" && \
     apk add --no-cache git && \
+    git clone https://github.com/KevinOConnor/klipper /root/klipper
+    # git clone https://github.com/Doridian/klipper /root/klipper
     # wget -qO- https://github.com/Doridian/klipper/archive/custom.tar.gz | tar xz -C /tmp && \
     # mv /tmp/klipper-custom/ /root/klipper && \
     # wget -qO- https://github.com/KevinOConnor/klipper/archive/master.tar.gz | tar xz -C /tmp && \
     # mv /tmp/klipper-master/ /root/klipper && \
-    git clone https://github.com/KevinOConnor/klipper /root/klipper
 COPY rootfs/root/klipper/.config /root/klipper/.config
 
 FROM ${BUILD_FROM} AS final
+
+# ENV PYTHONPATH=$PYTHONPATH:/usr/lib/python3.8/site-packages
+
+ENV PIP_FLAGS="--no-cache-dir"
+ENV CFLAGS="-fcommon"
 
 COPY --from=octoklipper /root/python.tar.gz /root/python.tar.gz
 COPY --from=klipperbase /root/klipper /root/klipper
@@ -68,8 +74,7 @@ RUN echo "Install build dependencies." && \
     source /root/klippy-env/bin/activate && \
     /root/klippy-env/bin/python -m pip install ${PIP_FLAGS} --upgrade pip && \
     echo "Install Klipper" && \
-    pip install ${PIP_FLAGS} -r /root/klipper/scripts/klippy-requirements.txt \
-    pip install ${PIP_FLAGS} numpy && \
+    pip install ${PIP_FLAGS} -r /root/klipper/scripts/klippy-requirements.txt && \
     echo "Compile for Linux MCU" && \
     cd /root/klipper && \
     make && \
