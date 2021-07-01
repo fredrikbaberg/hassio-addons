@@ -4,7 +4,7 @@ bashio::log.info "Starting Klipper."
 
 KLIPPER_PYTHON=/root/klippy-env/bin/python
 KLIPPY=/root/klipper/klippy/klippy.py
-KLIPPER_CFG=${HOME}/printer.cfg
+KLIPPER_CFG=/data/klipper/printer.cfg
 KLIPPY_LOGFILE=/tmp/klippy.log
 
 touch ${KLIPPY_LOGFILE}
