@@ -1,5 +1,10 @@
 # Changelog
 
+[0.7.2]
+
+- Use main file instead of symlink for Klipper launch
+- Include numpy and matplotlib for Klipper
+
 [0.7.1]
 
 - Update base image

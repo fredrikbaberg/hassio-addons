@@ -75,6 +75,9 @@ RUN echo "Install build dependencies." && \
     /root/klippy-env/bin/python -m pip install ${PIP_FLAGS} --upgrade pip && \
     echo "Install Klipper" && \
     pip install ${PIP_FLAGS} -r /root/klipper/scripts/klippy-requirements.txt && \
+    echo "Install numpy" && \
+    pip install ${PIP_FLAGS} numpy matplotlib && \
+    apk add --no-cache python-numpy python-matplotlib && \
     echo "Compile for Linux MCU" && \
     cd /root/klipper && \
     make && \
