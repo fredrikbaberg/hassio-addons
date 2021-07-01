@@ -1,4 +1,4 @@
-ARG BUILD_FROM="fredrikbaberg/addon-octoprint-next-amd64:0.4.0"
+ARG BUILD_FROM="fredrikbaberg/addon-octoprint-next-amd64:0.4.2"
 
 FROM ${BUILD_FROM} AS octoklipper
 
@@ -44,12 +44,10 @@ RUN echo "Install build dependencies." && \
         py3-virtualenv \
         libffi-dev \
         gcc-avr \
-    #     python2-dev && \
+        freetype-dev \
     #     ncurses-dev \
-    #     gcc-avr \
     #     binutils-avr \
     #     avr-libc \
-    #     freetype-dev \
     #     fribidi-dev \
     #     harfbuzz-dev \
     #     jpeg-dev \
@@ -67,6 +65,7 @@ RUN echo "Install build dependencies." && \
         avrdude \
         libgpiod \
         git \
+        libpng \
     && \
     echo "Setup virtual environment." && \
     # virtualenv --python=python3 /root/klippy-env && \
@@ -75,9 +74,8 @@ RUN echo "Install build dependencies." && \
     /root/klippy-env/bin/python -m pip install ${PIP_FLAGS} --upgrade pip && \
     echo "Install Klipper" && \
     pip install ${PIP_FLAGS} -r /root/klipper/scripts/klippy-requirements.txt && \
-    echo "Install numpy" && \
-    pip install ${PIP_FLAGS} numpy matplotlib && \
-    apk add --no-cache python-numpy python-matplotlib && \
+    echo "Install numpy and matplotlib" && \
+    /root/klippy-env/bin/python -m pip install ${PIP_FLAGS} numpy matplotlib && \
     echo "Compile for Linux MCU" && \
     cd /root/klipper && \
     make && \
