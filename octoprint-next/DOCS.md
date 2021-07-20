@@ -41,7 +41,7 @@ Updates of OctoPrint should be possible from inside the addon.
   - Camera needs to be provided by another addon.
   - Are you using Ingress for access? Try through WebUI (set port in configuration).
     - If you have ideas how to configure reverse proxy to get the camera stream through Ingress, please let me know.
-    - Did you start the camera? This has to be done manually, see previous section.
+  - Did you start the camera? This has to be done manually, see previous section.
 - How do I reset addon/OctoPrint data?
   - Uninstall and (re)install the addon to reset plugins etc.
 - `<plugin>` fails to install?
