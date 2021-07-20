@@ -2,7 +2,7 @@ ARG BUILD_FROM="homeassistant/amd64-base:latest"
 
 FROM ${BUILD_FROM} AS final
 ENV LANG C.UTF-8
-ENV PIP_FLAGS="--no-cache-dir"
+ENV PIP_FLAGS="--no-cache-dir --extra-index-url https://www.piwheels.org/simple"
 ENV CFLAGS="-fcommon"
 ENV PYTHONPATH=/data/python
 ENV PATH=${PATH}:/data/python/bin
@@ -33,14 +33,12 @@ RUN echo "Install build packages" && \
     echo "Setup Python" && \
     virtualenv --python=python3 /data/python && \
     source /data/python/bin/activate && \
-    pip install ${PIP_FLAGS} --upgrade pip && \
+    pip install ${PIP_FLAGS} --upgrade pip wheel && \
     echo "Install OctoPrint" && \
     pip install ${PIP_FLAGS} \
         OctoPrint \
         zeroconf && \
     echo "Install mjpg-streamer." && \
-    # Libraries for Raspberry Pi
-    # apk add --no-cache raspberrypi-dev && \
     apk add --no-cache --virtual .build-dependencies-mjpgstreamer \
         make \
         cmake \

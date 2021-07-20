@@ -1,5 +1,10 @@
 # Changelog
 
+[0.4.3]
+
+- Maintenance update
+- Attempt to add support for wheels
+
 [0.3.5]
 
 - Remove camera stream encoding

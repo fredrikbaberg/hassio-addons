@@ -16,4 +16,4 @@ fi
 
 # Ensure Ingress user (homeassistant) exist.
 new_password=$(date +%s | sha256sum | base64 | head -c 32 ; echo)
-octoprint --basedir /data/octoprint user add homeassistant --password "$new_password" --admin # 2> /dev/null
+/data/python/bin/python -m octoprint --basedir /data/octoprint user add homeassistant --password "$new_password" --admin # 2> /dev/null
