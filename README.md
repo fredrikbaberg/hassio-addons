@@ -21,6 +21,10 @@ Run OctoPrint as an addon in Home Assistant, Dev version
 
 Please report issues here, or through the following [thread](https://community.home-assistant.io/t/repository-octoprint/22883).
 
+## OctoPrint Klipper [![octoprint-klipper](https://github.com/fredrikbaberg/hassio-addons/actions/workflows/octoprint-klipper.yml/badge.svg)](https://github.com/fredrikbaberg/hassio-addons/actions/workflows/octoprint-klipper.yml) ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/fredrikbaberg/addon-octoprint-klipper-amd64?sort=semver)
+
+OctoPrint with Klipper. Please report issues here in GitHub.
+
 ## iPerf3 [![iperf3](https://github.com/fredrikbaberg/hassio-addons/actions/workflows/release-iperf3.yml/badge.svg)](https://github.com/fredrikbaberg/hassio-addons/actions/workflows/release-iperf3.yml) ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/fredrikbaberg/addon-iperf3-amd64?sort=semver)
 
 Addon for iPerf3 server/client
