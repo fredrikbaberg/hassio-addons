@@ -59,7 +59,7 @@ RUN echo "Install build dependencies." && \
     /root/klippy-env/bin/python -m pip install ${PIP_FLAGS} numpy matplotlib && \
     echo "Compile for Linux MCU" && \
     cd /root/klipper && \
-    make && \
+    make clean && make && \
     ./scripts/flash-linux.sh && \
     echo "Final cleanup" && \
     apk del --no-cache .build-dependencies-klipper && \
