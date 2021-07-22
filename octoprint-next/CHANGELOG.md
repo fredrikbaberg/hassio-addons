@@ -1,5 +1,9 @@
 # Changelog
 
+[0.4.4]
+
+- Correction to path for launching OctoPrint.
+
 [0.4.3]
 
 - Maintenance update

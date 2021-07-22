@@ -1,5 +1,9 @@
 # Changelog
 
+[0.7.4]
+
+- Fix incorrect Python path in base image.
+
 [0.7.3]
 
 - Maintenance update, up to date with latest octoprint-next.
