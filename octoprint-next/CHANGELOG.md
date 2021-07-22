@@ -1,13 +1,10 @@
 # Changelog
 
-[0.4.4]
-
-- Correction to path for launching OctoPrint.
-
-[0.4.3]
+[0.4.5]
 
 - Maintenance update
 - Attempt to add support for wheels
+- Correction to path for launching OctoPrint.
 
 [0.3.5]
 
