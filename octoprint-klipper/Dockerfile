@@ -1,4 +1,4 @@
-ARG BUILD_FROM="fredrikbaberg/addon-octoprint-next-amd64:0.4.2"
+ARG BUILD_FROM="fredrikbaberg/addon-octoprint-next-amd64:0.4.3"
 
 FROM ${BUILD_FROM} AS octoklipper
 

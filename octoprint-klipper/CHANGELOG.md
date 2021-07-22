@@ -1,5 +1,9 @@
 # Changelog
 
+[0.7.3]
+
+- Maintenance update, up to date with latest octoprint-next.
+
 [0.7.2]
 
 - Use main file instead of symlink for Klipper launch
