@@ -122,14 +122,14 @@ RUN chmod a+x /scripts/*.sh
 WORKDIR /
 
 # Cleanup, move output
-# RUN echo "Cleanup and move output" \
-#     && find /data/python/OctoPrint | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
-#     && find /data/python/Klipper | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
-#     && find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
-#     && rm -rf /root/.cache \
-#     && cd /data/python && tar -zcf /root/OctoPrint-python.tar.gz OctoPrint \
-#     && cd /data/config && tar -zcf /root/OctoPrint-config.tar.gz octoprint \
-#     && cd /data/python && tar -zcf /root/Klipper-python.tar.gz Klipper \
-#     && cd /data && tar -zcf /root/Klipper-src.tar.gz klipper \
-#     && cd /data/config && tar -zcf /root/Klipper-config.tar.gz klipper \
-#     && rm -rf /data/*
+RUN echo "Cleanup and move output" \
+    && find /data/python/OctoPrint | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
+    && find /data/python/Klipper | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
+    && find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
+    && rm -rf /root/.cache \
+    && cd /data/python && tar -zcf /root/OctoPrint-python.tar.gz OctoPrint \
+    && cd /data/config && tar -zcf /root/OctoPrint-config.tar.gz octoprint \
+    && cd /data/python && tar -zcf /root/Klipper-python.tar.gz Klipper \
+    && cd /data && tar -zcf /root/Klipper-src.tar.gz klipper \
+    && cd /data/config && tar -zcf /root/Klipper-config.tar.gz klipper \
+    && rm -rf /data/*
