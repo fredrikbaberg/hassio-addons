@@ -1,0 +1,127 @@
+ARG BUILD_FROM="homeassistant/amd64-base:latest"
+
+FROM ${BUILD_FROM} AS build-base
+ENV LANG C.UTF-8
+ENV PIP_FLAGS="--no-cache-dir --extra-index-url https://www.piwheels.org/simple"
+ENV CFLAGS="-fcommon"
+
+RUN apk add --no-cache --virtual .build \
+        build-base \
+        python3-dev \
+        python2-dev \
+        py3-virtualenv \
+        linux-headers \
+        git \
+        cmake
+
+
+FROM build-base AS octoprint
+ENV PYTHONPATH=/data/python/OctoPrint
+ENV PYTHONUSERBASE=/data/python/OctoPrint
+ENV PATH=${PATH}:/data/python/OctoPrint/bin
+
+RUN echo "Install OctoPrint" \
+    && python3 -m venv /data/python/OctoPrint \
+    && source /data/python/OctoPrint/bin/activate \
+    && pip install ${PIP_FLAGS} --upgrade pip wheel \
+    && pip install ${PIP_FLAGS} --upgrade OctoPrint
+COPY rootfs/data/config/octoprint /data/config/octoprint
+
+FROM build-base AS klipper
+ENV PYTHONPATH=/data/python/Klipper
+ENV PYTHONUSERBASE=/data/python/Klipper
+ENV PATH=${PATH}:/data/python/Klipper/bin
+
+RUN apk add --no-cache \
+        libffi-dev \
+        freetype-dev \
+        libpng-dev
+
+RUN echo "Install Klipper" \
+    && virtualenv --python=python2.7 /data/python/Klipper \
+    && source /data/python/Klipper/bin/activate \
+    && pip install ${PIP_FLAGS} --upgrade pip wheel \
+    && git clone https://github.com/KevinOConnor/klipper /data/klipper \
+    && pip install ${PIP_FLAGS} -r /data/klipper/scripts/klippy-requirements.txt \
+    && pip install ${PIP_FLAGS} --upgrade numpy
+COPY rootfs/data/klipper/.config /data/klipper/.config
+RUN cd /data/klipper \
+    && make clean \
+    && make \
+    && ./scripts/flash-linux.sh
+COPY rootfs/data/config/klipper/printer.cfg /data/config/klipper/printer.cfg
+
+FROM build-base AS mjpg-streamer
+RUN echo "Install mjpg-streamer" \
+    && apk add --no-ca \
+        libjpeg-turbo-dev \
+    && wget -qO- https://github.com/jacksonliam/mjpg-streamer/archive/master.tar.gz | tar xz -C /tmp \
+    && cd /tmp/mjpg-streamer-master/mjpg-streamer-experimental/ \
+    && make --silent \
+    && make install --silent \
+    && mv www/ /www_mjpg
+
+FROM build-base AS slicer
+# Does not work right now. Compiling deps does not work, cereal is not available so can't only use pre-built packages.
+RUN echo "Install Slicer" && \
+    git clone https://github.com/supermerill/SuperSlicer.git /SuperSlicer \
+    && cd /SuperSlicer && sed -i "s/+UNKNOWN/_$(date '+%F')/" version.inc \
+    && cd resources/profiles \
+    && git submodule update --init
+RUN apk add --no-cache boost-dev libtbb-dev curl-dev libpng-dev glew-dev eigen-dev expat-dev dbus-dev dbus-libs dbus-glib m4 perl-utils
+RUN mkdir -p /SuperSlicer/build\
+    && cd /SuperSlicer/build \
+    && cmake .. -DSLIC3R_STATIC=1
+
+FROM ${BUILD_FROM} AS final
+ENV LANG C.UTF-8
+ENV PIP_FLAGS="--no-cache-dir --extra-index-url https://www.piwheels.org/simple"
+ENV CFLAGS="-fcommon"
+ENV PATH=${PATH}:/data/python/OctoPrint/bin:/data/python/Klipper/bin
+
+# Copy files from build process
+
+# Install required packages for running
+
+RUN echo "Install required packages for running." \
+    && apk add --no-cache \
+        python2 \
+        python3 \
+        caddy
+
+RUN echo "Install additional packages" \
+    && apk add --no-cache --virtual .extras \
+        build-base \
+        linux-headers \
+        gphoto2
+
+# Copy data from filesystem and previous stages
+## OctoPrint
+COPY --from=octoprint /data/python/OctoPrint /data/python/OctoPrint
+COPY --from=octoprint /data/config/octoprint /data/config/octoprint
+## Klipper
+COPY --from=klipper /data/python/Klipper /data/python/Klipper
+COPY --from=klipper /data/klipper /data/klipper
+COPY --from=klipper /usr/local/bin/klipper_mcu /usr/local/bin/klipper_mcu
+## mjpg-streamer
+COPY --from=mjpg-streamer /usr/local/lib/mjpg-streamer /usr/local/lib/mjpg-streamer
+COPY --from=mjpg-streamer /usr/local/share/mjpg-streamer /usr/local/share/mjpg-streamer
+COPY --from=mjpg-streamer /usr/local/bin/mjpg_streamer /usr/local/bin/mjpg_streamer
+COPY --from=mjpg-streamer /www_mjpg /www_mjpg
+
+COPY rootfs/ /
+RUN chmod a+x /scripts/*.sh
+WORKDIR /
+
+# Cleanup, move output
+RUN echo "Cleanup and move output" \
+    && find /data/python/OctoPrint | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
+    && find /data/python/Klipper | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
+    && find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
+    && rm -rf /root/.cache \
+    && cd /data/python && tar -zcf /root/OctoPrint-python.tar.gz OctoPrint \
+    && cd /data/config && tar -zcf /root/OctoPrint-config.tar.gz octoprint \
+    && cd /data/python && tar -zcf /root/Klipper-python.tar.gz Klipper \
+    && cd /data && tar -zcf /root/Klipper-src.tar.gz klipper \
+    && cd /data/config && tar -zcf /root/Klipper-config.tar.gz klipper \
+    && rm -rf /data/*

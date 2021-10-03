@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv bashio
+
+bashio::log.info "Starting octoprint..."
+
+octoprint serve --iknowwhatimdoing --basedir /data/config/octoprint --host 0.0.0.0 --port 80

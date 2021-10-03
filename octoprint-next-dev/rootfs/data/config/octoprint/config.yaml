@@ -1,0 +1,55 @@
+accessControl:
+    autologinAs: homeassistant
+    autologinLocal: true
+    localNetworks:
+        - 172.30.32.2
+folder:
+    data: /data/config/octoprint/data
+    generated: /data/config/octoprint/generated
+    logs: /data/config/octoprint/logs
+    plugins: /data/config/octoprint/plugins
+    printerProfiles: /data/config/octoprint/printerProfiles
+    scripts: /data/config/octoprint/scripts
+    slicingProfiles: /data/config/octoprint/slicingProfiles
+    timelapse_tmp: /tmp
+    timelapse: /data/config/octoprint/timelapse
+    translations: /data/config/octoprint/translations
+    uploads: /data/config/octoprint/uploads
+    virtualSd: /data/config/octoprint/virtualSd
+    watched: /data/config/octoprint/watched
+server:
+    commands:
+        serverRestartCommand: /scripts/octoprint_restart.sh
+        systemRestartCommand: /scripts/system_restart.sh
+        systemShutdownCommand: /scripts/system_shutdown.sh
+webcam:
+    ffmpeg: /usr/bin/ffmpeg
+    snapshot: http://127.0.0.1:8080/?action=snapshot
+    stream: webcam/?action=stream
+system:
+    actions:
+        -   action: camerastart
+            name: Start camera
+            command: /scripts/camera_start.sh
+        -   action: camerastop
+            name: Stop camera
+            command: /scripts/camera_stop.sh
+        -   action: klipperstart
+            name: Start Klipper
+            command: /scripts/camera/klipper_start.sh
+        -   action: klipperstop
+            name: Stop Klipper
+            command: /scripts/camera/klipper_stop.sh
+        -   action: klipperlinuxstart
+            name: Start Klipper MCU Linux
+            command: /scripts/camera/klipper_linux_start.sh
+        -   action: klipperlinuxstop
+            name: Stop Klipper MCU Linux
+            command: /scripts/camera/klipper_linux_stop.sh
+events:
+    enabled: true
+    subscriptions:
+    -   command: /scripts/camera_start.sh
+        enabled: false
+        event: Startup
+        type: system
