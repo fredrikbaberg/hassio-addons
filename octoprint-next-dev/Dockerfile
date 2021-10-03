@@ -61,17 +61,17 @@ RUN echo "Install mjpg-streamer" \
     && make install --silent \
     && mv www/ /www_mjpg
 
-FROM build-base AS slicer
-# Does not work right now. Compiling deps does not work, cereal is not available so can't only use pre-built packages.
-RUN echo "Install Slicer" && \
-    git clone https://github.com/supermerill/SuperSlicer.git /SuperSlicer \
-    && cd /SuperSlicer && sed -i "s/+UNKNOWN/_$(date '+%F')/" version.inc \
-    && cd resources/profiles \
-    && git submodule update --init
-RUN apk add --no-cache boost-dev libtbb-dev curl-dev libpng-dev glew-dev eigen-dev expat-dev dbus-dev dbus-libs dbus-glib m4 perl-utils
-RUN mkdir -p /SuperSlicer/build\
-    && cd /SuperSlicer/build \
-    && cmake .. -DSLIC3R_STATIC=1
+# FROM build-base AS slicer
+# # Does not work right now. Compiling deps does not work, cereal is not available so can't only use pre-built packages.
+# RUN echo "Install Slicer" && \
+#     git clone https://github.com/supermerill/SuperSlicer.git /SuperSlicer \
+#     && cd /SuperSlicer && sed -i "s/+UNKNOWN/_$(date '+%F')/" version.inc \
+#     && cd resources/profiles \
+#     && git submodule update --init
+# RUN apk add --no-cache boost-dev libtbb-dev curl-dev libpng-dev glew-dev eigen-dev expat-dev dbus-dev dbus-libs dbus-glib m4 perl-utils
+# RUN mkdir -p /SuperSlicer/build\
+#     && cd /SuperSlicer/build \
+#     && cmake .. -DSLIC3R_STATIC=1
 
 FROM ${BUILD_FROM} AS final
 ENV LANG C.UTF-8
