@@ -22,3 +22,5 @@ if [ ! -d /data/klipper ]; then
     tar -zxf /root/Klipper-src.tar.gz -C /data/
     # rm -rf /root/Klipper-config.tar.gz
 fi
+
+touch /tmp/klippy.log

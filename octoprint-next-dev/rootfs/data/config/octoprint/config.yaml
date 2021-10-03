@@ -38,6 +38,7 @@ system:
         -   action: camerastop
             name: Stop camera
             command: /scripts/camera_stop.sh
+        -   action: divider
         -   action: klipperstart
             name: Start Klipper
             command: /scripts/klipper_start.sh

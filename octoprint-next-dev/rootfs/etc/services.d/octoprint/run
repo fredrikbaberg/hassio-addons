@@ -2,7 +2,7 @@
 
 bashio::log.info "Starting octoprint..."
 
-sleep 10
+sleep 5
 
 export PYTHONPATH=/data/python/OctoPrint
 export PYTHONUSERBASE=/data/python/OctoPrint
