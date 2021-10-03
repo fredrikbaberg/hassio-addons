@@ -45,6 +45,14 @@ RUN echo "Install Klipper" \
     && pip install ${PIP_FLAGS} -r /data/klipper/scripts/klippy-requirements.txt \
     && pip install ${PIP_FLAGS} --upgrade numpy
 COPY rootfs/data/klipper/.config /data/klipper/.config
+# Need to make two changes to /data/klipper/src/linux/main.c due to sched_setscheduler not being available in Alpine:
+# - Add #include<pthread.h>
+# - Replace the line:
+#     int ret = sched_setscheduler(0, SCHED_FIFO, &sp);
+#   by
+#     int ret = pthread_setschedparam(pthread_self(), SCHED_FIFO, &sp);
+RUN sed -i 's"// sched_main"// sched_main\n#include <pthread.h>"' /data/klipper/src/linux/main.c
+RUN sed -i 's/sched_setscheduler(0/pthread_setschedparam(pthread_self()/' /data/klipper/src/linux/main.c
 RUN cd /data/klipper \
     && make clean \
     && make \
@@ -114,14 +122,14 @@ RUN chmod a+x /scripts/*.sh
 WORKDIR /
 
 # Cleanup, move output
-RUN echo "Cleanup and move output" \
-    && find /data/python/OctoPrint | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
-    && find /data/python/Klipper | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
-    && find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
-    && rm -rf /root/.cache \
-    && cd /data/python && tar -zcf /root/OctoPrint-python.tar.gz OctoPrint \
-    && cd /data/config && tar -zcf /root/OctoPrint-config.tar.gz octoprint \
-    && cd /data/python && tar -zcf /root/Klipper-python.tar.gz Klipper \
-    && cd /data && tar -zcf /root/Klipper-src.tar.gz klipper \
-    && cd /data/config && tar -zcf /root/Klipper-config.tar.gz klipper \
-    && rm -rf /data/*
+# RUN echo "Cleanup and move output" \
+#     && find /data/python/OctoPrint | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
+#     && find /data/python/Klipper | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
+#     && find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
+#     && rm -rf /root/.cache \
+#     && cd /data/python && tar -zcf /root/OctoPrint-python.tar.gz OctoPrint \
+#     && cd /data/config && tar -zcf /root/OctoPrint-config.tar.gz octoprint \
+#     && cd /data/python && tar -zcf /root/Klipper-python.tar.gz Klipper \
+#     && cd /data && tar -zcf /root/Klipper-src.tar.gz klipper \
+#     && cd /data/config && tar -zcf /root/Klipper-config.tar.gz klipper \
+#     && rm -rf /data/*
