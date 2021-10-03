@@ -1,12 +1,11 @@
 #!/usr/bin/with-contenv bashio
 
-echo "Attempt to restart OctoPrint"
+bashio::log.info "Attempt to restart OctoPrint"
 
 s6-svc -wD -d -T2500 /var/run/s6/services/octoprint
-echo "Wait before restart."
-sleep 10
-echo "Try to start."
-s6-svc -wU -u -T2500 /var/run/s6/services/octoprint
+sleep 5
+bashio::log.info "Attempt to restart OctoPrint"
+# s6-svc -wU -u -T2500 /var/run/s6/services/octoprint
 
 # /bin/s6-svc -r /var/run/s6/services/octoprint
 # /bin/s6-svc -wU -u /var/run/s6/services/octoprint
