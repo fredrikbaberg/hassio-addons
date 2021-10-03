@@ -36,16 +36,16 @@ system:
             command: /scripts/camera_stop.sh
         -   action: klipperstart
             name: Start Klipper
-            command: /scripts/camera/klipper_start.sh
+            command: /scripts/klipper_start.sh
         -   action: klipperstop
             name: Stop Klipper
-            command: /scripts/camera/klipper_stop.sh
+            command: /scripts/klipper_stop.sh
         -   action: klipperlinuxstart
             name: Start Klipper MCU Linux
-            command: /scripts/camera/klipper_linux_start.sh
+            command: /scripts/klipper_linux_start.sh
         -   action: klipperlinuxstop
             name: Stop Klipper MCU Linux
-            command: /scripts/camera/klipper_linux_stop.sh
+            command: /scripts/klipper_linux_stop.sh
 events:
     enabled: true
     subscriptions:
