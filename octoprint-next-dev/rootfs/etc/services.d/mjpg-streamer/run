@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bashio
 
-bashio::log.info "Starting mjpg-streamer.."
+bashio::log.info "Starting mjpg-streamer..."
 
 # This should be modified to allow multiple input terms from bashio
 

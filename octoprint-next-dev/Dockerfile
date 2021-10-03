@@ -27,6 +27,7 @@ RUN echo "Install OctoPrint" \
     && pip install ${PIP_FLAGS} --upgrade OctoPrint
 COPY rootfs/data/config/octoprint /data/config/octoprint
 
+
 FROM build-base AS klipper
 ENV PYTHONPATH=/data/python/Klipper
 ENV PYTHONUSERBASE=/data/python/Klipper
@@ -47,10 +48,7 @@ RUN echo "Install Klipper" \
 COPY rootfs/data/klipper/.config /data/klipper/.config
 # Need to make two changes to /data/klipper/src/linux/main.c due to sched_setscheduler not being available in Alpine:
 # - Add #include<pthread.h>
-# - Replace the line:
-#     int ret = sched_setscheduler(0, SCHED_FIFO, &sp);
-#   by
-#     int ret = pthread_setschedparam(pthread_self(), SCHED_FIFO, &sp);
+# - Replace sched_setscheduler(0, SCHED_FIFO, &sp); with pthread_setschedparam(pthread_self(), SCHED_FIFO, &sp);
 RUN sed -i 's"// sched_main"// sched_main\n#include <pthread.h>"' /data/klipper/src/linux/main.c
 RUN sed -i 's/sched_setscheduler(0/pthread_setschedparam(pthread_self()/' /data/klipper/src/linux/main.c
 RUN cd /data/klipper \
@@ -69,7 +67,13 @@ RUN echo "Install mjpg-streamer" \
     && make install --silent \
     && mv www/ /www_mjpg
 
-# FROM build-base AS slicer
+FROM build-base AS slicer
+ARG CURA_VERSION=15.04.6
+RUN apk add --no-cache libexecinfo-dev \
+    && wget -qO- https://github.com/Ultimaker/CuraEngine/archive/${CURA_VERSION}.tar.gz | tar xz \
+    && cd CuraEngine-${CURA_VERSION} \
+    && make --silent \
+    && mv build/CuraEngine /CuraEngine
 # # Does not work right now. Compiling deps does not work, cereal is not available so can't only use pre-built packages.
 # RUN echo "Install Slicer" && \
 #     git clone https://github.com/supermerill/SuperSlicer.git /SuperSlicer \
@@ -80,6 +84,8 @@ RUN echo "Install mjpg-streamer" \
 # RUN mkdir -p /SuperSlicer/build\
 #     && cd /SuperSlicer/build \
 #     && cmake .. -DSLIC3R_STATIC=1
+# FROM alpine:latest AS curaengine-legacy
+
 
 FROM ${BUILD_FROM} AS final
 ENV LANG C.UTF-8
@@ -87,26 +93,25 @@ ENV PIP_FLAGS="--no-cache-dir --extra-index-url https://www.piwheels.org/simple"
 ENV CFLAGS="-fcommon"
 ENV PATH=${PATH}:/data/python/OctoPrint/bin:/data/python/Klipper/bin
 
-# Copy files from build process
-
-# Install required packages for running
-
 RUN echo "Install required packages for running." \
     && apk add --no-cache \
         python2 \
         python3 \
         caddy
-
 RUN echo "Install additional packages" \
     && apk add --no-cache --virtual .extras \
         build-base \
         linux-headers \
-        gphoto2
+        gphoto2 \
+        ffmpeg \
+        vim \
+        screen
 
-# Copy data from filesystem and previous stages
+# Copy data from previous stages and do some setup.
 ## OctoPrint
 COPY --from=octoprint /data/python/OctoPrint /data/python/OctoPrint
 COPY --from=octoprint /data/config/octoprint /data/config/octoprint
+RUN ln -s /data/config/octoprint $HOME/.octoprint
 ## Klipper
 COPY --from=klipper /data/python/Klipper /data/python/Klipper
 COPY --from=klipper /data/klipper /data/klipper
@@ -116,12 +121,14 @@ COPY --from=mjpg-streamer /usr/local/lib/mjpg-streamer /usr/local/lib/mjpg-strea
 COPY --from=mjpg-streamer /usr/local/share/mjpg-streamer /usr/local/share/mjpg-streamer
 COPY --from=mjpg-streamer /usr/local/bin/mjpg_streamer /usr/local/bin/mjpg_streamer
 COPY --from=mjpg-streamer /www_mjpg /www_mjpg
+## Slicer
+COPY --from=slicer /CuraEngine /usr/local/bin/CuraEngine
 
 COPY rootfs/ /
 RUN chmod a+x /scripts/*.sh
 WORKDIR /
 
-# Cleanup, move output
+# Cleanup, move files in /data to archives.
 RUN echo "Cleanup and move output" \
     && find /data/python/OctoPrint | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && find /data/python/Klipper | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \

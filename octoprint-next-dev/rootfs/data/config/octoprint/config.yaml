@@ -26,6 +26,10 @@ webcam:
     ffmpeg: /usr/bin/ffmpeg
     snapshot: http://127.0.0.1:8080/?action=snapshot
     stream: webcam/?action=stream
+plugins:
+    klipper:
+        configuration:
+            configpath: /data/config/klipper/printer.cfg
 system:
     actions:
         -   action: camerastart

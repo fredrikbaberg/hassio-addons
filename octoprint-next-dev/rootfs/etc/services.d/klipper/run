@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bashio
 
-bashio::log.info "Starting Klipper."
+bashio::log.info "Starting Klipper..."
 
 KLIPPER_PYTHON=/data/python/Klipper/bin/python
 KLIPPY=/data/klipper/klippy/klippy.py
