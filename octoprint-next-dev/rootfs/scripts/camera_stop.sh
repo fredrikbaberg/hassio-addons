@@ -2,6 +2,7 @@
 
 echo "Attempt to stop camera"
 
-s6-svc -t /var/run/s6/services/mjpg-streamer
+# /bin/s6-svc -wU -u /var/run/s6/services/mjpg-streamer
+/bin/s6-svc -wd -d /var/run/s6/services/mjpg-streamer
 
 # supervisorctl stop mjpg-streamer

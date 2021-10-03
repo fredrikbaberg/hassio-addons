@@ -5,9 +5,7 @@
 Configuration should only be needed for camera support, rescue/reset, and possibly if plugins are not installing due to missing components.
 
 - `mjpg_input`: Specify input arguments for mjpg_streamer.
-- `mjpg_output`: Specify output arguments for mjpg_streamer.
 - `request_rescue`: Reset Python install, normally not be needed.
-- `add_build_packages`: Install additional packages for installing certain plugins. Note that this will take 220+ MB additional space, and packages will be reinstalled on each restart (increased disk write).
 
 ### Network
 

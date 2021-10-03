@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv bashio
 
-s6-svc -t /var/run/s6/services/octoprint
+echo "Attempt to restart OctoPrint"
 
-# supervisorctl restart octoprint
+# /bin/s6-svc -wU -u /var/run/s6/services/octoprint
+/bin/s6-svc -wd -d /var/run/s6/services/octoprint
