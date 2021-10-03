@@ -1,0 +1,12 @@
+#!/usr/bin/with-contenv bashio
+
+bashio::log.info "Starting Klipper."
+
+KLIPPER_PYTHON=/data/python/Klipper/bin/python
+KLIPPY=/data/klipper/klippy/klippy.py
+KLIPPER_CFG=/data/config/klipper/printer.cfg
+KLIPPY_LOGFILE=/tmp/klippy.log
+
+touch ${KLIPPY_LOGFILE}
+
+${KLIPPER_PYTHON} ${KLIPPY} ${KLIPPER_CFG} -l ${KLIPPY_LOGFILE}
