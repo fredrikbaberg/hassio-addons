@@ -42,7 +42,7 @@ RUN echo "Install Klipper" \
     && virtualenv --python=python2.7 /data/python/Klipper \
     && source /data/python/Klipper/bin/activate \
     && pip install ${PIP_FLAGS} --upgrade pip wheel \
-    && git clone https://github.com/KevinOConnor/klipper /data/klipper \
+    && git clone https://github.com/Klipper3d/klipper.git /data/klipper \
     && pip install ${PIP_FLAGS} -r /data/klipper/scripts/klippy-requirements.txt \
     && pip install ${PIP_FLAGS} --upgrade numpy
 COPY rootfs/data/klipper/.config /data/klipper/.config
