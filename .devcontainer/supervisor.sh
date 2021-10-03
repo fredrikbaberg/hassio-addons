@@ -1,15 +1,19 @@
 #!/bin/bash
 set -eE
 
+SUPERVISOR_VERSON="$(curl -s https://version.home-assistant.io/dev.json | jq -e -r '.supervisor')"
 DOCKER_TIMEOUT=30
 DOCKER_PID=0
-
-SUPERVISOR_VERSON="$(curl -s https://version.home-assistant.io/dev.json | jq -e -r '.supervisor')"
-
 
 function start_docker() {
     local starttime
     local endtime
+
+    if grep -q 'Alpine|standard-WSL' /proc/version; then
+        # The docker daemon does not start when running WSL2 without adjusting iptables
+        update-alternatives --set iptables /usr/sbin/iptables-legacy || echo "Fails adjust iptables"
+        update-alternatives --set ip6tables /usr/sbin/iptables-legacy || echo "Fails adjust ip6tables"
+    fi
 
     echo "Starting docker."
     dockerd 2> /dev/null &
@@ -29,7 +33,6 @@ function start_docker() {
     done
     echo "Docker was initialized"
 }
-
 
 function stop_docker() {
     local starttime
@@ -76,13 +79,14 @@ function run_supervisor() {
     mkdir -p /tmp/supervisor_data
     docker run --rm --privileged \
         --name hassio_supervisor \
+        --privileged \
         --security-opt seccomp=unconfined \
-        --security-opt apparmor:unconfined \
+        --security-opt apparmor=unconfined \
         -v /run/docker.sock:/run/docker.sock:rw \
         -v /run/dbus:/run/dbus:ro \
         -v /run/udev:/run/udev:ro \
         -v /tmp/supervisor_data:/data:rw \
-        -v "/workspaces":/data/addons/local:rw \
+        -v "$WORKSPACE_DIRECTORY":/data/addons/local:rw \
         -v /etc/machine-id:/etc/machine-id:ro \
         -e SUPERVISOR_SHARE="/tmp/supervisor_data" \
         -e SUPERVISOR_NAME=hassio_supervisor \
