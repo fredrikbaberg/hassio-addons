@@ -97,7 +97,7 @@ RUN echo "Install required packages for running." \
     && apk add --no-cache \
         python2 \
         python3 \
-        caddy
+        nginx
 RUN echo "Install additional packages" \
     && apk add --no-cache --virtual .extras \
         build-base \

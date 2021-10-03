@@ -1,85 +1,53 @@
 # Documentation
 
+## How to use
+
+Start the addon and use Ingress for initial configuration.
+
+For external access you can setup another user, or change the password of the user `homeassistant`.
+
 ## Configuration
 
-Configuration should only be needed for camera support, rescue/reset, and possibly if plugins are not installing due to missing components.
-
-- `mjpg_input`: Specify input arguments for mjpg_streamer.
-- `request_rescue`: Reset Python install, normally not be needed.
+Under `options` there is a toggle to force recovery mode. To leave this mode and return to the normal interface you need to disable the toggle and completely shutdown the addon before starting it again.
 
 ### Network
 
-Two ports can be specified, both are disabled by default.
-
-- WebUI: Used to connect to OctoPrint outside of Ingress. E.g. have a slicer connect to OctoPrint.
-- mjpg-streamer: Port for mjpg-streamer to be externally available.
-
-
-## How to use
-
-Start the addon. First setup assumes Ingress is used.
-There is a default user (`homeassistant`) used for Ingress, the password is randomly generated on first launch. If this user is removed it will be re-created on next restart.
-
-If you need external access (e.g. connect from a slicer such as Cura) you need to set a port for WebUI (disabled by default). In case you need access outside of Ingress, feel free to change the password of user `homeassistant` or create a new user.
-
-OctoPrint config is stored in `config/octoprint` folder, however, plugins are not. If you reinstall the addon plugins will be lost (unless you use a backup).
+By default there is access through Ingress, but no ports are exposed outside of Home Assistant. To have external access, for instance to a slicer, you either need to specify a port or setup a proxy.
 
 ### Slicer
 
-CuraEngine Legacy is installed, in case you need to slice from within OctoPrint. A plugin is needed to use this, see [OctoPrint CuraLegacy plugin](https://plugins.octoprint.org/plugins/curalegacy/).
+No slicer included.
+
+To connect an external slicer, such as Cura, to OctoPrint you need to expose the WebUI port. It is not possible through Ingress.
 
 ### Credentials
 
-Through Ingress no password should be required. The initial password for user `homeassistant` is randomly generated, access OctoPrint through Ingress in order to create a new user or set a new password.
+One user, `homeassistant`, is created with a random password on first launch. You can use Ingress to automatically sign in as this user. From there you can change password, or create another user. Note that if the user `homeassistant` is removed, it will be recreated on the next restart.
 
 ### Updates
 
-Make sure to make a backup before updating. Backup can be created from within OctoPrint WebUI.
+First make a backup, from within OctoPrint.
+Updates of OctoPrint should be possible from inside the addon.
 
 ### Camera
 
-Basic camera support should now be in place. Snapshots should work without opening any port. Video stream requires at least one of the two ports enabled (5000/`WebUI` or 8000/`mjpg-streamer`).
-Some additional configuration may be needed, the following excerpt from `config.yaml` may be helpful:
-
-```
-webcam:
-    ffmpeg: /usr/bin/ffmpeg
-    snapshot: http://localhost:8080/?action=snapshot
-    stream: http://<device IP address>:5000/webcam/?action=stream
-```
+`mjpg-streamer` is included, but needs to be started manually through the power menu. Note that video does not work from within Ingress, you need to either expose the port for mjpg-streamer or use a reverse proxy. 
 
 ### Q and A
 
-- `pip` not found?
-  - Try to refresh the page, or restart the Add-On.
-- I have multiple devices, ttyUSB0 is not always the correct device?
-  - Use device ID instead. In Home Assistant this can be found under "Supervisor" - "System" - "Hardware" `/dev/serial/by-id/usb-...`
-- Camera stream is not visible?
-  - Is `mjpg-streamer` running? It can be started from OctoPrint UI, same menu as for stop and restart.
-  - Are you accessing through Ingress? Try through WebUI (set port in configuration).
-- How do I reset data?
-  This depends on what you need to reset.
-  - Delete the folder `config/octoprint` to reset OctoPrint settings.
-  - Set `request_rescue: true` in configuration, restart addon, then set it back to false. This will attempt to reset the Python install used.
-  - Uninstall and (re)install the addon.
-- How do I get Raspberry Pi camera to work in Home Assistant?
-  - Probably not officially supported, but based on [https://raspberrypi.stackexchange.com/a/51440](https://raspberrypi.stackexchange.com/a/51440) I did the steps related to `start_x.elf` and `fixup_x.dat`. Note that I skipped the `modprobe` and `v4l2-ctl` parts. Note that an update of `HassOS` requires you to re-download the files for the system to boot again.
-- I cannot install `<plugin>`?
-  - If there are missing dependencies, try to set `add_build_packages` to `true`. This will install additional packages (`build-base`, `linux-headers`, `python-dev`, `zlib-dev`, `jpeg-dev`) when the addon start. Note that this will require 220+ MB additional space, and on each restart the packages will be downloaded and installed again.
-- How do I autostart the camera?
-  - To start the camera with the addon you can use [event hooks](https://docs.octoprint.org/en/master/events/index.html). Add the following lines to `config.yaml`:
-    ```
-    events:
-    enabled: true
-    subscriptions:
-    -   command: supervisorctl start mjpg-streamer
-        enabled: true
-        event: Startup
-        type: system
-    ```
-- I pressed update, got an error about `gcc` or some other dependency missing, what do I do now?
-  - If OctoPrint still starts, you can set `add_build_packages` to `true`, restart the addon and try again. See ``I cannot install <plugin>?``. You may want to set it back to `false` when done.
-  - If it no longer starts, you were probably on OctoPrint 1.4.0 and tried to update. Set `request_rescue` to `true`, restart, and then back to `false`.
+- I have multiple devices connected, ttyUSB0 may not be my printer?
+  - Connect by device ID instead. In Home Assistant this can be found under "Supervisor" - "System" - "Hardware" `/dev/serial/by-id/usb-...`
+- The camera stream is not visible?
+  - Did you start the camera? This has to be done manually, see previous section.
+  - Are you using Ingress for access? Try through WebUI (set port in configuration).
+    - If you have ideas how to configure reverse proxy to get the camera stream through Ingress, please let me know.
+- How do I reset addon/OctoPrint data?
+  - Uninstall and (re)install the addon to reset plugins etc.
+- `<plugin>` fails to install?
+  - Some dependencies may be missing. Check the log and create an issue on the GitHub repo or in the thread on the community.
+- How can I access GPIO?
+  - Find a suitable plugin for OctoPrint.
+  - Make sure not to use the same GPIO in Home Assistant or another addon.
 
 ## Versions
 
@@ -87,13 +55,7 @@ Some notes regarding the software and versions.
 Not all software is installed for all images.
 
 - OctoPrint
-Installed in a `venv` from PyPI. The Add-on uses a pre-defined version of OctoPrint (currently 1.5.3), however, it should be possible to install updates.
-
-- CuraEngine
-A legacy version of CuraEngine is required to use Cura as slicer from within OctoPrint, for more information see [OctoPrint CuraLegacy plugin](https://plugins.octoprint.org/plugins/curalegacy/).
-
-- PyBonjour
-Not available from PyPI, so installed from external source. Port configuration probably prevents discovery.
+  - Installed in a `virtualenv` from PyPI, using latest version available when image was built.
 
 - mjpg-streamer
-Compiled from [https://github.com/jacksonliam/mjpg-streamer](https://github.com/jacksonliam/mjpg-streamer).
+  - Compiled from master branch of [https://github.com/jacksonliam/mjpg-streamer](https://github.com/jacksonliam/mjpg-streamer).
