@@ -67,25 +67,36 @@ RUN echo "Install mjpg-streamer" \
     && make install --silent \
     && mv www/ /www_mjpg
 
-FROM build-base AS slicer
+FROM build-base AS curaengine
 ARG CURA_VERSION=15.04.6
 RUN apk add --no-cache libexecinfo-dev \
     && wget -qO- https://github.com/Ultimaker/CuraEngine/archive/${CURA_VERSION}.tar.gz | tar xz \
     && cd CuraEngine-${CURA_VERSION} \
     && make --silent \
     && mv build/CuraEngine /CuraEngine
-# # Does not work right now. Compiling deps does not work, cereal is not available so can't only use pre-built packages.
-# RUN echo "Install Slicer" && \
-#     git clone https://github.com/supermerill/SuperSlicer.git /SuperSlicer \
-#     && cd /SuperSlicer && sed -i "s/+UNKNOWN/_$(date '+%F')/" version.inc \
-#     && cd resources/profiles \
-#     && git submodule update --init
-# RUN apk add --no-cache boost-dev libtbb-dev curl-dev libpng-dev glew-dev eigen-dev expat-dev dbus-dev dbus-libs dbus-glib m4 perl-utils
-# RUN mkdir -p /SuperSlicer/build\
-#     && cd /SuperSlicer/build \
-#     && cmake .. -DSLIC3R_STATIC=1
-# FROM alpine:latest AS curaengine-legacy
-
+# Should use Slic3r or a derivative at some point:
+####### Slic3r
+# apk add --no-cache git build-base perl-utils pkgconf boost boost-dev dbus-dev libtbb-dev curl-dev libpng-dev glew-dev eigen-dev 
+# wget -O - https://install.perlbrew.pl | sh -
+# ~/perl5/perlbrew/bin/perlbrew install perl5.26.1 -Dusethreads -Duselargefiles -Dcccdlflags=-fPIC -Doptimize=-O2 --as threaded-perl-5.26.1
+####### SuperSlicer
+# apk add --no-cache git cmake build-base glew-dev perl-utils
+# git clone https://github.com/supermerill/SuperSlicer.git
+# cd /SuperSlicer/resources/profiles && git submodule update --init
+# cd /SuperSlicer && sed -i "s/+UNKNOWN/_$(date '+%F')/" version.inc
+# # Deps
+# # Modifications for mallinfo() not in Alpine
+# sed -i '188,194 s#^#//#' /SuperSlicer/deps/build/dep_tbb-prefix/src/dep_tbb/src/tbbmalloc/proxy.cpp
+# # Need to also modify /SuperSlicer/deps/build/dep_openexr-prefix/src/dep_openexr/IlmBase/IexMath/IexMathFpu.cpp, struct _fpstate has no member cw; did you mean cwd.
+# mkdir -p /SuperSlicer/deps/build && cd /SuperSlicer/deps/build && cmake .. && make
+# cd /SuperSlicer/deps/build/destdir/usr/local/lib/ && cp libwxscintilla-3.1.a libwx_gtk2u_scintilla-3.1.a
+# ls /SuperSlicer/deps/build/destdir/usr/local/lib
+# rm -rf /SuperSlicer/deps/build/dep_*
+# # SuperSlicer build
+# mkdir -p /SuperSlicer/build
+# cd /SuperSlicer/build
+# cmake .. -DCMAKE_PREFIX_PATH="/SuperSlicer/deps/build/destdir/usr/local" -DSLIC3R_STATIC=1
+# make Slic3r
 
 FROM ${BUILD_FROM} AS final
 ENV LANG C.UTF-8
@@ -122,7 +133,7 @@ COPY --from=mjpg-streamer /usr/local/share/mjpg-streamer /usr/local/share/mjpg-s
 COPY --from=mjpg-streamer /usr/local/bin/mjpg_streamer /usr/local/bin/mjpg_streamer
 COPY --from=mjpg-streamer /www_mjpg /www_mjpg
 ## Slicer
-COPY --from=slicer /CuraEngine /usr/local/bin/CuraEngine
+COPY --from=curaengine /CuraEngine /usr/local/bin/CuraEngine
 
 COPY rootfs/ /
 RUN chmod a+x /scripts/*.sh
