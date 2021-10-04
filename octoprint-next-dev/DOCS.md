@@ -1,5 +1,7 @@
 # Documentation
 
+**May be out of date, as this is a development version.**
+
 ## How to use
 
 Start the addon and use Ingress for initial configuration.
@@ -8,15 +10,11 @@ For external access you can setup another user, or change the password of the us
 
 ## Configuration
 
-Under `options` there is a toggle to force recovery mode. To leave this mode and return to the normal interface you need to disable the toggle and completely shutdown the addon before starting it again.
-
 ### Network
 
 By default there is access through Ingress, but no ports are exposed outside of Home Assistant. To have external access, for instance to a slicer, you either need to specify a port or setup a proxy.
 
 ### Slicer
-
-No slicer included.
 
 To connect an external slicer, such as Cura, to OctoPrint you need to expose the WebUI port. It is not possible through Ingress.
 
@@ -59,3 +57,6 @@ Not all software is installed for all images.
 
 - mjpg-streamer
   - Compiled from master branch of [https://github.com/jacksonliam/mjpg-streamer](https://github.com/jacksonliam/mjpg-streamer).
+
+- Klipper
+  - Installed in a separate `virtualenv`, using branch `master` from GitHub.
