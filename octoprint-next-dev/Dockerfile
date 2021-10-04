@@ -15,6 +15,7 @@ RUN apk add --no-cache --virtual .build \
         cmake
 
 
+
 FROM build-base AS octoprint
 ENV PYTHONPATH=/data/python/OctoPrint
 ENV PYTHONUSERBASE=/data/python/OctoPrint
@@ -26,6 +27,7 @@ RUN echo "Install OctoPrint" \
     && pip install ${PIP_FLAGS} --upgrade pip wheel \
     && pip install ${PIP_FLAGS} --upgrade OctoPrint
 COPY rootfs/data/config/octoprint /data/config/octoprint
+
 
 
 FROM build-base AS klipper
@@ -57,6 +59,8 @@ RUN cd /data/klipper \
     && ./scripts/flash-linux.sh
 COPY rootfs/data/config/klipper/printer.cfg /data/config/klipper/printer.cfg
 
+
+
 FROM build-base AS mjpg-streamer
 RUN echo "Install mjpg-streamer" \
     && apk add --no-ca \
@@ -67,6 +71,8 @@ RUN echo "Install mjpg-streamer" \
     && make install --silent \
     && mv www/ /www_mjpg
 
+
+
 FROM build-base AS curaengine
 ARG CURA_VERSION=15.04.6
 RUN apk add --no-cache libexecinfo-dev \
@@ -75,42 +81,6 @@ RUN apk add --no-cache libexecinfo-dev \
     && make --silent \
     && mv build/CuraEngine /CuraEngine
 
-# Should use Slic3r or a derivative at some point:
-FROM build-base AS superslicer
-# RUN apk add --no-cache git cmake build-base glew-dev perl-utils
-RUN echo "Install dependencies" \
-    && apt update && apt install -y \
-        git \
-        libgtk2.0-dev \
-        libglew-dev \
-        libudev-dev \
-        libdbus-1-dev
-        build-essential \
-        cmake \
-        m4
-        # libwxgtk3.0-dev \
-        # libcairo2-dev \
-RUN echo "Prepare SuperSlicer files" \
-    && git clone https://github.com/supermerill/SuperSlicer.git \
-    && sed -i "s/+UNKNOWN/_$(date '+%F')/" /SuperSlicer/version.inc \
-    && cd /SuperSlicer/resources/profiles && git submodule update --init
-# # Modifications for mallinfo() not in Alpine
-# sed -i '188,194 s#^#//#' /SuperSlicer/deps/build/dep_tbb-prefix/src/dep_tbb/src/tbbmalloc/proxy.cpp
-# # Need to also modify /SuperSlicer/deps/build/dep_openexr-prefix/src/dep_openexr/IlmBase/IexMath/IexMathFpu.cpp, struct _fpstate has no member cw; did you mean cwd.
-RUN echo "Setup deps" \
-    && mkdir -p /SuperSlicer/deps/build && cd /SuperSlicer/deps/build \
-    && cmake .. \
-    && make \
-    && cd /SuperSlicer/deps/build/destdir/usr/local/lib/ \
-    && cp libwxscintilla-3.1.a libwx_gtk2u_scintilla-3.1.a \
-    && ls /SuperSlicer/deps/build/destdir/usr/local/lib \
-    && rm -rf /SuperSlicer/deps/build/dep_*
-RUN echo "Build SuperSlicer" \
-    && mkdir -p /SuperSlicer/build \
-    && cd /SuperSlicer/build \
-    && cmake .. -DCMAKE_PREFIX_PATH="/SuperSlicer/deps/build/destdir/usr/local" -DSLIC3R_STATIC=1 -DSLIC3R_FHS=1 -DSLIC3R_GUI=0 \
-    && make \
-    && make install
 
 
 FROM ${BUILD_FROM} AS final
