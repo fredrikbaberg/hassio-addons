@@ -75,35 +75,35 @@ RUN echo "Install CuraEngine" \
 
 
 
-FROM build-base AS superslicer
-RUN echo "Install dependencies" \
-    && apt update && apt install -y \
-        git \
-        libgtk2.0-dev \
-        libglew-dev \
-        libudev-dev \
-        libdbus-1-dev \
-        build-essential \
-        cmake \
-        m4
-RUN echo "Prepare SuperSlicer files" \
-    && git clone --depth 1 https://github.com/supermerill/SuperSlicer.git \
-    && sed -i "s/+UNKNOWN/_$(date '+%F')/" /SuperSlicer/version.inc \
-    && cd /SuperSlicer/resources/profiles && git submodule update --init
-RUN echo "Setup deps" \
-    && mkdir -p /SuperSlicer/deps/build && cd /SuperSlicer/deps/build \
-    && cmake .. \
-    && make --silent \
-    && cd /SuperSlicer/deps/build/destdir/usr/local/lib/ \
-    && cp libwxscintilla-3.1.a libwx_gtk2u_scintilla-3.1.a \
-    && ls /SuperSlicer/deps/build/destdir/usr/local/lib \
-    && rm -rf /SuperSlicer/deps/build/dep_*
-RUN echo "Build and install SuperSlicer" \
-    && mkdir -p /SuperSlicer/build \
-    && cd /SuperSlicer/build \
-    && cmake .. -DCMAKE_PREFIX_PATH="/SuperSlicer/deps/build/destdir/usr/local" -DSLIC3R_STATIC=1 -DSLIC3R_FHS=1 -DSLIC3R_GUI=0 \
-    && make --silent \
-    && make install --silent
+# FROM build-base AS superslicer
+# RUN echo "Install dependencies" \
+#     && apt update && apt install -y \
+#         git \
+#         libgtk2.0-dev \
+#         libglew-dev \
+#         libudev-dev \
+#         libdbus-1-dev \
+#         build-essential \
+#         cmake \
+#         m4
+# RUN echo "Prepare SuperSlicer files" \
+#     && git clone --depth 1 https://github.com/supermerill/SuperSlicer.git \
+#     && sed -i "s/+UNKNOWN/_$(date '+%F')/" /SuperSlicer/version.inc \
+#     && cd /SuperSlicer/resources/profiles && git submodule update --init
+# RUN echo "Setup deps" \
+#     && mkdir -p /SuperSlicer/deps/build && cd /SuperSlicer/deps/build \
+#     && cmake .. \
+#     && make --silent \
+#     && cd /SuperSlicer/deps/build/destdir/usr/local/lib/ \
+#     && cp libwxscintilla-3.1.a libwx_gtk2u_scintilla-3.1.a \
+#     && ls /SuperSlicer/deps/build/destdir/usr/local/lib \
+#     && rm -rf /SuperSlicer/deps/build/dep_*
+# RUN echo "Build and install SuperSlicer" \
+#     && mkdir -p /SuperSlicer/build \
+#     && cd /SuperSlicer/build \
+#     && cmake .. -DCMAKE_PREFIX_PATH="/SuperSlicer/deps/build/destdir/usr/local" -DSLIC3R_STATIC=1 -DSLIC3R_FHS=1 -DSLIC3R_GUI=0 \
+#     && make --silent \
+#     && make install --silent
 
 
 
