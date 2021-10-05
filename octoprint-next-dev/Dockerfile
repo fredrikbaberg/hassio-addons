@@ -117,6 +117,7 @@ RUN echo "Install required packages for running." \
     && apt install -y \
         python2 \
         python3 \
+        python3-distutils \
         nginx \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
