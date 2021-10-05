@@ -9,14 +9,7 @@ if [ ! -d /data/python/Klipper ]; then
     # rm -rf /root/Klipper-python.tar.gz
 fi
 
-# Copy config to persistent storage, if missing.
-if [ ! -d /data/config/klipper ]; then
-    mkdir -p /data/config/klipper
-    tar -zxf /root/Klipper-config.tar.gz -C /data/config/
-    # rm -rf /root/Klipper-config.tar.gz
-fi
-
-# Copy source persistent storage, if missing.
+# Copy source to persistent storage, if missing.
 if [ ! -d /data/klipper ]; then
     mkdir -p /data/klipper
     tar -zxf /root/Klipper-src.tar.gz -C /data/
@@ -24,3 +17,4 @@ if [ ! -d /data/klipper ]; then
 fi
 
 touch /tmp/klippy.log
+touch /data/config/klipper/printer.cfg

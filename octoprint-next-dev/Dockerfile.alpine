@@ -58,7 +58,7 @@ RUN cd /data/klipper \
     && make clean \
     && make \
     && ./scripts/flash-linux.sh
-COPY rootfs/data/config/klipper/printer.cfg /data/config/klipper/printer.cfg
+# COPY rootfs/data/config/klipper/printer.cfg /data/config/klipper/printer.cfg
 
 
 
