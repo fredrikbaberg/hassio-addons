@@ -37,8 +37,8 @@
         "recovery": false
     },
     "schema": {
-        "recovery": "bool",
-        "mjpg_input": "list(str)"
+        "mjpg_input": ["str"],
+        "recovery": "bool"
     },
     "tmpfs": true,
     "ingress": true,
