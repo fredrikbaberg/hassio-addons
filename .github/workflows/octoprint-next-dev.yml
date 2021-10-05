@@ -1,0 +1,27 @@
+name: octoprint-next-dev
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - octoprint-next-dev-v*
+
+jobs:
+  amd64:
+    name: amd64
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v2
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build and publish
+      uses: home-assistant/builder@master
+      with:
+        args: |
+          --amd64 \
+          --docker-hub-check \
+          --target octoprint-next-dev
