@@ -44,7 +44,7 @@
     "panel_icon": "mdi:printer-3d",
     "panel_title": "OctoPrint Next",
     "panel_admin": false,
-    "snapshot_exclude": [],
+    "backup_exclude": [],
     "stage": "experimental",
     "realtime": true
 }
