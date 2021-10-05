@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bashio
 
-bashio::log.info "Prepare mjpgstreamer"
+bashio::log.info "mjpgstreamer cont-init.d"
 
 # This file should update input arguments for script that launches mjpg-streamer.
 
