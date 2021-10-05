@@ -58,7 +58,7 @@
     "panel_icon": "mdi:puzzle",
     "panel_title": "TSD",
     "panel_admin": true,
-    "snapshot_exclude": [
+    "backup_exclude": [
         "/data/app",
         "/data/web"
     ],
