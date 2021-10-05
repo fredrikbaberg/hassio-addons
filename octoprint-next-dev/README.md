@@ -1,10 +1,10 @@
 # Newest Dev version of OctoPrint add-on for Home Assistant
 
-**Expect major changes between versions, reinstall may be required. Always ensure you have a backup of your configuration!**
+- **Expect major changes between versions, reinstall may be required. Always ensure you have a backup of your configuration!**
 
-**Documentation may be out of date**
+- **This version builds locally, and it will take a lot of time to do so!**
 
-**This version builds locally!**
+- **Documentation may be out of date**
 
 ## About
 
