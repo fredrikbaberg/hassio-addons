@@ -1,10 +1,10 @@
 ## Debian-based
 ARG BUILD_FROM="homeassistant/amd64-base-debian:latest"
 
+
 FROM ${BUILD_FROM} AS build-base
 ENV LANG C.UTF-8
 ENV PIP_FLAGS="--no-cache-dir --extra-index-url https://www.piwheels.org/simple"
-# ENV CFLAGS="-fcommon"
 
 RUN echo "Install core build dependencies" \
     && apt update \
@@ -129,13 +129,6 @@ RUN echo "Install additional packages" \
         screen \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
-    # && apk add --no-cache --virtual .extras \
-    #     build-base \
-    #     linux-headers \
-    #     gphoto2 \
-    #     ffmpeg \
-    #     vim \
-    #     screen
 
 # Copy data from previous stages and do some setup.
 ## OctoPrint
@@ -154,8 +147,8 @@ COPY --from=mjpg-streamer /www_mjpg /www_mjpg
 ## CuraEngine
 COPY --from=curaengine /usr/local/bin/CuraEngine /usr/local/bin/CuraEngine
 ## SuperSlicer
-COPY --from=superslicer /usr/local/share/SuperSlicer /usr/local/share/SuperSlicer
-COPY --from=superslicer /usr/local/bin/superslicer /usr/local/bin/superslicer
+# COPY --from=superslicer /usr/local/share/SuperSlicer /usr/local/share/SuperSlicer
+# COPY --from=superslicer /usr/local/bin/superslicer /usr/local/bin/superslicer
 
 COPY rootfs/ /
 RUN chmod a+x /scripts/*.sh
@@ -171,5 +164,4 @@ RUN echo "Cleanup and move output" \
     && cd /data/config && tar -zcf /root/OctoPrint-config.tar.gz octoprint \
     && cd /data/python && tar -zcf /root/Klipper-python.tar.gz Klipper \
     && cd /data && tar -zcf /root/Klipper-src.tar.gz klipper \
-    && cd /data/config && tar -zcf /root/Klipper-config.tar.gz klipper \
     && rm -rf /data/*
