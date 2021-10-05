@@ -16,5 +16,9 @@ if [ ! -d /data/klipper ]; then
     # rm -rf /root/Klipper-config.tar.gz
 fi
 
-touch /tmp/klippy.log
+# Make sure config file exists
+mkdir -p /data/config/klipper
 touch /data/config/klipper/printer.cfg
+
+# Make sure log file exists
+touch /tmp/klippy.log
