@@ -1,10 +1,10 @@
 ## Debian-based
 ARG BUILD_FROM="homeassistant/amd64-base-debian:latest"
 
+
 FROM ${BUILD_FROM} AS build-base
 ENV LANG C.UTF-8
 ENV PIP_FLAGS="--no-cache-dir --extra-index-url https://www.piwheels.org/simple"
-# ENV CFLAGS="-fcommon"
 
 RUN echo "Install core build dependencies" \
     && apt update \
@@ -75,35 +75,35 @@ RUN echo "Install CuraEngine" \
 
 
 
-FROM build-base AS superslicer
-RUN echo "Install dependencies" \
-    && apt update && apt install -y \
-        git \
-        libgtk2.0-dev \
-        libglew-dev \
-        libudev-dev \
-        libdbus-1-dev \
-        build-essential \
-        cmake \
-        m4
-RUN echo "Prepare SuperSlicer files" \
-    && git clone --depth 1 https://github.com/supermerill/SuperSlicer.git \
-    && sed -i "s/+UNKNOWN/_$(date '+%F')/" /SuperSlicer/version.inc \
-    && cd /SuperSlicer/resources/profiles && git submodule update --init
-RUN echo "Setup deps" \
-    && mkdir -p /SuperSlicer/deps/build && cd /SuperSlicer/deps/build \
-    && cmake .. \
-    && make --silent \
-    && cd /SuperSlicer/deps/build/destdir/usr/local/lib/ \
-    && cp libwxscintilla-3.1.a libwx_gtk2u_scintilla-3.1.a \
-    && ls /SuperSlicer/deps/build/destdir/usr/local/lib \
-    && rm -rf /SuperSlicer/deps/build/dep_*
-RUN echo "Build and install SuperSlicer" \
-    && mkdir -p /SuperSlicer/build \
-    && cd /SuperSlicer/build \
-    && cmake .. -DCMAKE_PREFIX_PATH="/SuperSlicer/deps/build/destdir/usr/local" -DSLIC3R_STATIC=1 -DSLIC3R_FHS=1 -DSLIC3R_GUI=0 \
-    && make --silent \
-    && make install --silent
+# FROM build-base AS superslicer
+# RUN echo "Install dependencies" \
+#     && apt update && apt install -y \
+#         git \
+#         libgtk2.0-dev \
+#         libglew-dev \
+#         libudev-dev \
+#         libdbus-1-dev \
+#         build-essential \
+#         cmake \
+#         m4
+# RUN echo "Prepare SuperSlicer files" \
+#     && git clone --depth 1 https://github.com/supermerill/SuperSlicer.git \
+#     && sed -i "s/+UNKNOWN/_$(date '+%F')/" /SuperSlicer/version.inc \
+#     && cd /SuperSlicer/resources/profiles && git submodule update --init
+# RUN echo "Setup deps" \
+#     && mkdir -p /SuperSlicer/deps/build && cd /SuperSlicer/deps/build \
+#     && cmake .. \
+#     && make --silent \
+#     && cd /SuperSlicer/deps/build/destdir/usr/local/lib/ \
+#     && cp libwxscintilla-3.1.a libwx_gtk2u_scintilla-3.1.a \
+#     && ls /SuperSlicer/deps/build/destdir/usr/local/lib \
+#     && rm -rf /SuperSlicer/deps/build/dep_*
+# RUN echo "Build and install SuperSlicer" \
+#     && mkdir -p /SuperSlicer/build \
+#     && cd /SuperSlicer/build \
+#     && cmake .. -DCMAKE_PREFIX_PATH="/SuperSlicer/deps/build/destdir/usr/local" -DSLIC3R_STATIC=1 -DSLIC3R_FHS=1 -DSLIC3R_GUI=0 \
+#     && make --silent \
+#     && make install --silent
 
 
 
@@ -129,13 +129,6 @@ RUN echo "Install additional packages" \
         screen \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
-    # && apk add --no-cache --virtual .extras \
-    #     build-base \
-    #     linux-headers \
-    #     gphoto2 \
-    #     ffmpeg \
-    #     vim \
-    #     screen
 
 # Copy data from previous stages and do some setup.
 ## OctoPrint
@@ -154,8 +147,8 @@ COPY --from=mjpg-streamer /www_mjpg /www_mjpg
 ## CuraEngine
 COPY --from=curaengine /usr/local/bin/CuraEngine /usr/local/bin/CuraEngine
 ## SuperSlicer
-COPY --from=superslicer /usr/local/share/SuperSlicer /usr/local/share/SuperSlicer
-COPY --from=superslicer /usr/local/bin/superslicer /usr/local/bin/superslicer
+# COPY --from=superslicer /usr/local/share/SuperSlicer /usr/local/share/SuperSlicer
+# COPY --from=superslicer /usr/local/bin/superslicer /usr/local/bin/superslicer
 
 COPY rootfs/ /
 RUN chmod a+x /scripts/*.sh
@@ -171,5 +164,4 @@ RUN echo "Cleanup and move output" \
     && cd /data/config && tar -zcf /root/OctoPrint-config.tar.gz octoprint \
     && cd /data/python && tar -zcf /root/Klipper-python.tar.gz Klipper \
     && cd /data && tar -zcf /root/Klipper-src.tar.gz klipper \
-    && cd /data/config && tar -zcf /root/Klipper-config.tar.gz klipper \
     && rm -rf /data/*
