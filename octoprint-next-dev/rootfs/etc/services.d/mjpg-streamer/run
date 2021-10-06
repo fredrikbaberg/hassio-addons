@@ -2,6 +2,6 @@
 
 bashio::log.info "Starting mjpg-streamer..."
 
-# This should be modified to allow multiple input terms from bashio
+echo $(printf ' -i \"%s\"' "${bashio::config 'mjpg_input'[@]}")
 
-mjpg_streamer -i "$(bashio::config 'mjpg_input')" -o "output_http.so -w /www_mjpg -p 8080"
+mjpg_streamer -o "output_http.so -w /www_mjpg -p 8080" $(printf ' -i \"%s\"' "${bashio::config 'mjpg_input'[@]}")

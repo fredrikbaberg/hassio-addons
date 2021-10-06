@@ -1,6 +1,7 @@
 worker_processes  1;
 pid /var/run/nginx.pid;
-error_log /dev/stdout info;
+error_log none;
+user root root;
 daemon off;
 
 events {
@@ -29,7 +30,6 @@ http {
         deny    all;
 
         server_name _;
-        access_log /dev/stdout combined;
 
         client_max_body_size 4G;
         keepalive_timeout 5;
