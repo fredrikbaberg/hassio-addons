@@ -1,6 +1,6 @@
 {
     "name": "OctoPrint Next Dev",
-    "version": "0.4.49",
+    "version": "0.4.50",
     "slug": "octoprint-next-dev",
     "description": "OctoPrint add-on for Home Assistant",
     "arch": ["amd64","armv7","armhf"],
@@ -47,6 +47,8 @@
     "panel_icon": "mdi:printer-3d",
     "panel_title": "OctoPrint Next Dev",
     "panel_admin": false,
-    "backup_exclude": [],
+    "backup_exclude": [
+        "/data/klipper"
+    ],
     "stage": "experimental"
 }
