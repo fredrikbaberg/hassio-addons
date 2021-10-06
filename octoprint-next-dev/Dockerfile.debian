@@ -172,6 +172,6 @@ RUN echo "Cleanup and move output" \
     && rm -rf /root/.cache \
     && cd /data/python && tar -zcf /root/OctoPrint-python.tar.gz OctoPrint \
     && cd /data/config && tar -zcf /root/OctoPrint-config.tar.gz octoprint \
-    # && cd /data/python && tar -zcf /root/Klipper-python.tar.gz Klipper \
-    # && cd /data && tar -zcf /root/Klipper-src.tar.gz klipper \
+    && cd /data/python && tar -zcf /root/Klipper-python.tar.gz Klipper \
+    && cd /data && tar -zcf /root/Klipper-src.tar.gz klipper \
     && rm -rf /data/*
