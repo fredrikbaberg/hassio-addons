@@ -30,6 +30,8 @@ plugins:
     klipper:
         configuration:
             configpath: /data/config/klipper/printer.cfg
+    cura:
+        cura_engine: /usr/local/bin/CuraEngine
 system:
     actions:
         -   action: camerastart

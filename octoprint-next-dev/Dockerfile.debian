@@ -166,8 +166,11 @@ WORKDIR /
 
 # Cleanup, move files in /data to archives.
 RUN echo "Cleanup and move output" \
+    && mkdir -p /data/python/OctoPrint \
+    && mkdir -p /data/python/Klipper \
+    && mkdir -p /data/klipper
     && find /data/python/OctoPrint | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
-    # && find /data/python/Klipper | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
+    && find /data/python/Klipper | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && rm -rf /root/.cache \
     && cd /data/python && tar -zcf /root/OctoPrint-python.tar.gz OctoPrint \
