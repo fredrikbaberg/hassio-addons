@@ -1,5 +1,5 @@
 ## Debian-based
-ARG BUILD_FROM="homeassistant/amd64-base-debian:latest"
+ARG BUILD_FROM="homeassistant/amd64-base-debian:bullseye"
 
 
 FROM ${BUILD_FROM} AS build-base
