@@ -131,6 +131,9 @@ RUN echo "Install additional packages" \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 
+RUN rm -rf /var/log/nginx \
+    && mkdir -p /var/log/nginx
+
 # Copy data from previous stages and do some setup.
 ## OctoPrint
 COPY --from=octoprint /data/python/OctoPrint /data/python/OctoPrint

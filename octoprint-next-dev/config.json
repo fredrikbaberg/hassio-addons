@@ -1,6 +1,6 @@
 {
     "name": "OctoPrint Next Dev",
-    "version": "0.4.21",
+    "version": "0.4.22",
     "slug": "octoprint-next-dev",
     "description": "OctoPrint add-on for Home Assistant",
     "arch": ["amd64"],
@@ -40,6 +40,7 @@
         "mjpg_input": ["str"],
         "recovery": "bool"
     },
+    "image": "fredrikbaberg/addon-octoprint-next-dev-{arch}",
     "tmpfs": true,
     "ingress": true,
     "panel_icon": "mdi:printer-3d",
