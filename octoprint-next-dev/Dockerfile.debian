@@ -1,5 +1,5 @@
 ## Debian-based
-ARG BUILD_FROM="homeassistant/amd64-base-debian:latest"
+ARG BUILD_FROM="homeassistant/amd64-base-debian:bullseye"
 
 
 FROM ${BUILD_FROM} AS build-base
@@ -129,7 +129,6 @@ RUN echo "Install required packages for running." \
         python2 \
         python3 \
         python3-distutils \
-        nginx \
         haproxy \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
