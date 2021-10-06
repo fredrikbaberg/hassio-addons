@@ -50,6 +50,8 @@ RUN echo "Install Klipper" \
     && pip install ${PIP_FLAGS} -r /data/klipper/scripts/klippy-requirements.txt \
     && pip install ${PIP_FLAGS} --upgrade numpy
 COPY rootfs/data/klipper/.config /data/klipper/.config
+RUN sed -i 's"// sched_main"// sched_main\n#include <pthread.h>"' /data/klipper/src/linux/main.c
+RUN sed -i 's/sched_setscheduler(0/pthread_setschedparam(pthread_self()/' /data/klipper/src/linux/main.c
 RUN cd /data/klipper \
     && make clean \
     && make \
