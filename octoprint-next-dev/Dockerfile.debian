@@ -40,6 +40,9 @@ ENV PYTHONUSERBASE=/data/python/Klipper
 ENV PATH=${PATH}:/data/python/Klipper/bin
 
 RUN echo "Install Klipper" \
+    && apt update \
+    && apt install -y \
+        libffi-dev \
     && virtualenv --python=python2.7 /data/python/Klipper \
     && source /data/python/Klipper/bin/activate \
     && pip install ${PIP_FLAGS} --upgrade pip wheel \
