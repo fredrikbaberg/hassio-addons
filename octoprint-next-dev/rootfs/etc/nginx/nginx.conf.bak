@@ -1,6 +1,7 @@
 worker_processes  1;
 pid /var/run/nginx.pid;
-error_log stderr;
+error_log none;
+user root root;
 daemon off;
 
 events {
