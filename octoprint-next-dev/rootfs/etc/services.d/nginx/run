@@ -1,8 +1,8 @@
 #!/usr/bin/with-contenv bashio
 # ==============================================================================
-# Start HAProxy service
+# Start nginx service
 # ==============================================================================
 
-bashio::log.info "Starting HAProxy..."
+bashio::log.info "Starting nginx..."
 
-exec haproxy -p /tmp/haproxy.pid -f /etc/haproxy/haproxy.cfg -db
+exec nginx
