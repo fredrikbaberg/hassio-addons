@@ -14,4 +14,4 @@ if [ -c /tmp/klipper_host_mcu ]; then
     set +e
 fi
 
-/usr/local/bin/klipper_mcu -r
+exec /usr/local/bin/klipper_mcu -r

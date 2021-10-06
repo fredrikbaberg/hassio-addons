@@ -125,6 +125,7 @@ RUN echo "Install required packages for running." \
         python3 \
         python3-distutils \
         nginx \
+        haproxy \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 RUN echo "Install additional packages" \
