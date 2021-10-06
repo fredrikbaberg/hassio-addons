@@ -14,7 +14,9 @@ RUN echo "Install core build dependencies" \
         python2-dev \
         virtualenv \
         build-essential \
-        cmake
+        cmake \
+    && apt clean \
+    && rm -rf /var/lib/apt/lists/*
 
 
 
@@ -61,7 +63,9 @@ RUN echo "Install mjpg-streamer" \
     && cd /mjpg-streamer/mjpg-streamer-experimental/ \
     && make --silent \
     && make install --silent \
-    && mv www/ /www_mjpg
+    && mv www/ /www_mjpg \
+    && apt clean \
+    && rm -rf /var/lib/apt/lists/*
 
 
 
@@ -85,20 +89,22 @@ RUN echo "Install CuraEngine" \
 #         libdbus-1-dev \
 #         build-essential \
 #         cmake \
-#         m4
-# RUN echo "Prepare SuperSlicer files" \
+#         m4 \
+#     && apt clean \
+#     && rm -rf /var/lib/apt/lists/* \
+#     && echo "Prepare SuperSlicer files" \
 #     && git clone --depth 1 https://github.com/supermerill/SuperSlicer.git \
 #     && sed -i "s/+UNKNOWN/_$(date '+%F')/" /SuperSlicer/version.inc \
-#     && cd /SuperSlicer/resources/profiles && git submodule update --init
-# RUN echo "Setup deps" \
+#     && cd /SuperSlicer/resources/profiles && git submodule update --init \
+#     && echo "Setup deps" \
 #     && mkdir -p /SuperSlicer/deps/build && cd /SuperSlicer/deps/build \
 #     && cmake .. \
 #     && make --silent \
 #     && cd /SuperSlicer/deps/build/destdir/usr/local/lib/ \
 #     && cp libwxscintilla-3.1.a libwx_gtk2u_scintilla-3.1.a \
 #     && ls /SuperSlicer/deps/build/destdir/usr/local/lib \
-#     && rm -rf /SuperSlicer/deps/build/dep_*
-# RUN echo "Build and install SuperSlicer" \
+#     && rm -rf /SuperSlicer/deps/build/dep_* \
+#     && echo "Build and install SuperSlicer" \
 #     && mkdir -p /SuperSlicer/build \
 #     && cd /SuperSlicer/build \
 #     && cmake .. -DCMAKE_PREFIX_PATH="/SuperSlicer/deps/build/destdir/usr/local" -DSLIC3R_STATIC=1 -DSLIC3R_FHS=1 -DSLIC3R_GUI=0 \
@@ -130,9 +136,6 @@ RUN echo "Install additional packages" \
         screen \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
-
-RUN rm -rf /var/log/nginx \
-    && mkdir -p /var/log/nginx
 
 # Copy data from previous stages and do some setup.
 ## OctoPrint
