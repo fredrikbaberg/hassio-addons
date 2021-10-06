@@ -128,7 +128,6 @@ RUN echo "Install required packages for running." \
         python3 \
         python3-distutils \
         nginx \
-        haproxy \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 RUN echo "Install additional packages" \
@@ -136,29 +135,27 @@ RUN echo "Install additional packages" \
     && apt install -y --no-install-recommends \
         gphoto2 \
         ffmpeg \
-        vim \
-        screen \
         build-essential \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy data from previous stages and do some setup.
-## OctoPrint
+# ## OctoPrint
 COPY --from=octoprint /data/python/OctoPrint /data/python/OctoPrint
 COPY --from=octoprint /data/config/octoprint /data/config/octoprint
 RUN ln -s /data/config/octoprint $HOME/.octoprint
-## Klipper
+# ## Klipper
 COPY --from=klipper /data/python/Klipper /data/python/Klipper
 COPY --from=klipper /data/klipper /data/klipper
 COPY --from=klipper /usr/local/bin/klipper_mcu /usr/local/bin/klipper_mcu
-## mjpg-streamer
+# ## mjpg-streamer
 COPY --from=mjpg-streamer /usr/local/lib/mjpg-streamer /usr/local/lib/mjpg-streamer
 COPY --from=mjpg-streamer /usr/local/share/mjpg-streamer /usr/local/share/mjpg-streamer
 COPY --from=mjpg-streamer /usr/local/bin/mjpg_streamer /usr/local/bin/mjpg_streamer
 COPY --from=mjpg-streamer /www_mjpg /www_mjpg
-## CuraEngine
+# ## CuraEngine
 COPY --from=curaengine /usr/local/bin/CuraEngine /usr/local/bin/CuraEngine
-## SuperSlicer
+# ## SuperSlicer
 # COPY --from=superslicer /usr/local/share/SuperSlicer /usr/local/share/SuperSlicer
 # COPY --from=superslicer /usr/local/bin/superslicer /usr/local/bin/superslicer
 
@@ -169,11 +166,11 @@ WORKDIR /
 # Cleanup, move files in /data to archives.
 RUN echo "Cleanup and move output" \
     && find /data/python/OctoPrint | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
-    && find /data/python/Klipper | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
+    # && find /data/python/Klipper | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && rm -rf /root/.cache \
     && cd /data/python && tar -zcf /root/OctoPrint-python.tar.gz OctoPrint \
     && cd /data/config && tar -zcf /root/OctoPrint-config.tar.gz octoprint \
-    && cd /data/python && tar -zcf /root/Klipper-python.tar.gz Klipper \
-    && cd /data && tar -zcf /root/Klipper-src.tar.gz klipper \
+    # && cd /data/python && tar -zcf /root/Klipper-python.tar.gz Klipper \
+    # && cd /data && tar -zcf /root/Klipper-src.tar.gz klipper \
     && rm -rf /data/*
