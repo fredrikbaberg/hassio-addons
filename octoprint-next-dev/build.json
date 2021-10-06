@@ -4,5 +4,6 @@
         "armhf": "homeassistant/armhf-base-debian:latest",
         "armv7": "homeassistant/armv7-base-debian:latest"
     },
+    "squash": false,
     "args": {}
 }

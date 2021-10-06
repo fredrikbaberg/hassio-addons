@@ -133,11 +133,12 @@ RUN echo "Install required packages for running." \
     && rm -rf /var/lib/apt/lists/*
 RUN echo "Install additional packages" \
     && apt update \
-    && apt install -y \
+    && apt install -y --no-install-recommends \
         gphoto2 \
         ffmpeg \
         vim \
         screen \
+        build-essential \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 
