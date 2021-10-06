@@ -4,8 +4,10 @@ bashio::log.info "Starting mjpg-streamer..."
 
 # This should be modified to allow multiple input terms from bashio
 
-mjpg_streamer -i "$(bashio::config 'mjpg_input')" -o "output_http.so -w /www_mjpg -p 8080"
+delim=" -i "
+printf -v var "$delim \"%s\"" "${bashio::config 'mjpg_input'[@]}"
+var="${var%$delim}"
 
-mjpg_input = ("")
+echo $var
 
-services=($(echo $* | tr -d '/'))
+mjpg_streamer -o "output_http.so -w /www_mjpg -p 8080" $var
