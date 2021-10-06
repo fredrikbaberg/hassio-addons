@@ -5,4 +5,4 @@
 
 bashio::log.info "Starting Nginx..."
 
-nginx
+exec nginx
