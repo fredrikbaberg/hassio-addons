@@ -1,5 +1,0 @@
-#!/usr/bin/with-contenv bashio
-
-bashio::log.info "Finish up OctoPrint"
-
-bashio::addon.stop
