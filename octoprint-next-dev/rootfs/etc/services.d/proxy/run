@@ -1,8 +1,8 @@
 #!/usr/bin/with-contenv bashio
 # ==============================================================================
-# Start nginx service
+# Start proxy service
 # ==============================================================================
 
-bashio::log.info "Starting nginx..."
+bashio::log.info "Starting proxy..."
 
-exec nginx
+exec tinyproxy -d -c /etc/tinyproxy/tinyproxy-ingress.conf
