@@ -1,6 +1,6 @@
 {
     "name": "OctoPrint Next Dev",
-    "version": "0.4.60",
+    "version": "0.4.61",
     "slug": "octoprint-next-dev",
     "description": "OctoPrint add-on for Home Assistant",
     "arch": ["amd64","armv7","armhf"],
@@ -22,8 +22,7 @@
     ],
     "homeassistant": "0.108.0",
     "privileged": [
-        "SYS_RAWIO",
-        "SYS_NICE"
+        "SYS_RAWIO"
     ],
     "map": [],
     "environment": {},
