@@ -94,12 +94,14 @@ RUN echo "Install TinyProxy" \
     && git clone -b ${TINYPROXY_VERSION} --depth 1 https://github.com/tinyproxy/tinyproxy \
     && cd tinyproxy \
     && ./autogen.sh \
-    && ./configure --enable-reverse --enable-debug \
+    && ./configure --enable-reverse \
     && make \
     && make install \
     && make clean \
     && apt clean \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir -p /usr/share/tinyproxy/ \
+    && cp data/templates/*.html /usr/share/tinyproxy/
 
 
 # FROM build-base AS superslicer
@@ -165,6 +167,7 @@ COPY --from=octoprint /data/config/octoprint /data/config/octoprint
 RUN ln -s /data/config/octoprint $HOME/.octoprint
 # ## TinyProxy
 COPY --from=tinyproxy /usr/local/bin/tinyproxy /usr/local/bin/tinyproxy
+COPY --from=tinyproxy /usr/share/tinyproxy/ /usr/share/tinyproxy/
 # ## Klipper
 COPY --from=klipper /data/python/Klipper /data/python/Klipper
 COPY --from=klipper /data/klipper /data/klipper
