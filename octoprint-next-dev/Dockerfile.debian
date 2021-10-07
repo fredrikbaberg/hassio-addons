@@ -83,26 +83,6 @@ RUN echo "Install CuraEngine" \
     && mv build/CuraEngine /usr/local/bin/CuraEngine
 
 
-FROM build-base as tinyproxy
-ARG TINYPROXY_VERSION=1.11.0
-RUN echo "Install TinyProxy" \
-    && apt update \
-    && apt install -y \
-        git \
-        build-essential \
-        autoconf \
-    && git clone -b ${TINYPROXY_VERSION} --depth 1 https://github.com/tinyproxy/tinyproxy \
-    && cd tinyproxy \
-    && ./autogen.sh \
-    && ./configure --enable-reverse \
-    && make \
-    && make install \
-    && make clean \
-    && apt clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && mkdir -p /usr/share/tinyproxy/ \
-    && cp data/templates/*.html /usr/share/tinyproxy/
-
 
 # FROM build-base AS superslicer
 # RUN echo "Install dependencies" \
@@ -149,6 +129,7 @@ RUN echo "Install required packages for running." \
         python2 \
         python3 \
         python3-distutils \
+        haproxy \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 RUN echo "Install additional packages" \
@@ -165,9 +146,6 @@ RUN echo "Install additional packages" \
 COPY --from=octoprint /data/python/OctoPrint /data/python/OctoPrint
 COPY --from=octoprint /data/config/octoprint /data/config/octoprint
 RUN ln -s /data/config/octoprint $HOME/.octoprint
-# ## TinyProxy
-COPY --from=tinyproxy /usr/local/bin/tinyproxy /usr/local/bin/tinyproxy
-COPY --from=tinyproxy /usr/share/tinyproxy/ /usr/share/tinyproxy/
 # ## Klipper
 COPY --from=klipper /data/python/Klipper /data/python/Klipper
 COPY --from=klipper /data/klipper /data/klipper
