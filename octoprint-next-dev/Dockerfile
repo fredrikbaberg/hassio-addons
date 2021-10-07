@@ -138,6 +138,7 @@ RUN echo "Install additional packages" \
         gphoto2 \
         ffmpeg \
         build-essential \
+        vim \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 
