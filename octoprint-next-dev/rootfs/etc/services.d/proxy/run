@@ -5,5 +5,6 @@
 
 bashio::log.info "Starting proxy..."
 
-exec haproxy -p /tmp/haproxy.pid -f /etc/haproxy/haproxy.cfg -db
+caddy run -config /etc/caddy/Caddyfile
+# exec haproxy -p /tmp/haproxy.pid -f /etc/haproxy/haproxy.cfg -db
 # exec tinyproxy -d -c /etc/tinyproxy/tinyproxy-ingress.conf
