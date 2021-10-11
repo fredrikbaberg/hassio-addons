@@ -2,10 +2,11 @@
 
 bashio::log.info "Starting mjpg-streamer..."
 
-# join with separator
-join_ws() { local d=$1 s=$2; shift 2 && printf %s "$s${@/#/$d}"; }
-
 mjpg_input=$(bashio::config 'mjpg_input')
+m_input=$(printf " -i \"%s\"" "${mjpg_input[@]}")
+echo $m_input
 mjpg_output=$(bashio::config 'mjpg_output')
+m_output=$(printf " -o \"%s\"" "${mjpg_output[@]}")
+echo $m_output
 
-exec mjpg_streamer ${join_ws '-o ' mjpg_output} ${join_ws '-i ' mjpg_input}
+exec mjpg_streamer $m_output $m_input
