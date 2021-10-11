@@ -144,6 +144,7 @@ RUN echo "Install additional packages" \
         gphoto2 \
         ffmpeg \
         build-essential \
+        python3-dev \
         vim \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*

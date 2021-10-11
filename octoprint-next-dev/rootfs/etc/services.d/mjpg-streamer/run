@@ -2,6 +2,5 @@
 
 bashio::log.info "Starting mjpg-streamer..."
 
-# echo $(printf ' -i \"%s\"' "${bashio::config 'mjpg_input'[@]}")
-# exec mjpg_streamer -o "output_http.so -w /www_mjpg -p 8080" $(printf ' -i \"%s\"' "${bashio::config 'mjpg_input'[@]}")
-exec mjpg_streamer -o "output_http.so -w /www_mjpg -p 8080" ${mjpg_input}[@]
+mjpg_arguments=$(bashio::config 'mjpg_arguments')[@]
+exec mjpg_streamer $mjpg_arguments
