@@ -2,10 +2,10 @@
 
 bashio::log.info "Starting mjpg-streamer..."
 
-mjpg_arguments=$(bashio::config 'mjpg_arguments')
-echo $mjpg_arguments
-mjpg_arguments=${mjpg_arguments[*]}
-echo $mjpg_arguments
-mjpg_arguments=${mjpg_arguments// / }
-echo $mjpg_arguments
-exec mjpg_streamer $mjpg_arguments
+# join with separator
+join_ws() { local d=$1 s=$2; shift 2 && printf %s "$s${@/#/$d}"; }
+
+mjpg_input=$(bashio::config 'mjpg_input')
+mjpg_output=$(bashio::config 'mjpg_output')
+
+exec mjpg_streamer ${join_ws '-o ' mjpg_output} ${join_ws '-i ' mjpg_input}
