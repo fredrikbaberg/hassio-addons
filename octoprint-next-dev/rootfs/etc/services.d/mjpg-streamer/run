@@ -2,4 +2,10 @@
 
 bashio::log.info "Starting mjpg-streamer..."
 
-exec mjpg_streamer %%mjpg_arguments%%
+mjpg_arguments=$(bashio::config 'mjpg_arguments')
+echo $mjpg_arguments
+mjpg_arguments=${mjpg_arguments[*]}
+echo $mjpg_arguments
+mjpg_arguments=${mjpg_arguments// / }
+echo $mjpg_arguments
+exec mjpg_streamer $mjpg_arguments
