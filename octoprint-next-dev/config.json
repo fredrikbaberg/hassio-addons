@@ -1,6 +1,6 @@
 {
     "name": "OctoPrint Next Dev",
-    "version": "0.4.76",
+    "version": "0.4.77",
     "slug": "octoprint-next-dev",
     "description": "OctoPrint add-on for Home Assistant",
     "arch": ["amd64","armv7","armhf"],
@@ -31,11 +31,14 @@
     "usb": true,
     "uart": true,
     "options": {
-        "mjpg_arguments": "-o \"output_http.so --www /www_mjpg --port 8080\" -i \"input_uvc.so -n\"",
+        "mjpg_arguments": [
+            "-o \"output_http.so -w /www_mjpg -p 8080\"",
+            "-i \"input_uvc.so -n\""
+        ],
         "recovery": false
     },
     "schema": {
-        "mjpg_arguments": "str",
+        "mjpg_arguments": ["str"],
         "recovery": "bool"
     },
     "tmpfs": true,
