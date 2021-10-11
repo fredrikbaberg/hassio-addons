@@ -55,6 +55,7 @@ profile octoprint-next-dev flags=(attach_disconnected,mediate_deleted) {
     file,
 
     /www_mjpg/** r,
+    /usr/local/lib/mjpg-streamer/** r,
     
     # For access to video
     /dev/video* rw,
