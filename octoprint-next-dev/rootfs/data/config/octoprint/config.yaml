@@ -53,6 +53,9 @@ system:
         -   action: klipperlinuxstop
             name: Stop Klipper MCU Linux
             command: /scripts/klipper_linux_stop.sh
+        -   action: klipperupgrade
+            name: Update Klipper from git
+            command: /scripts/klipper_update.sh
 events:
     enabled: true
     subscriptions:
