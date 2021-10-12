@@ -2,8 +2,6 @@
 
 - **Expect major changes between versions, reinstall may be required. Always ensure you have a backup of your configuration!**
 
-- **This version builds locally, and it will take a lot of time to do so!**
-
 - **Documentation may be out of date**
 
 ## About

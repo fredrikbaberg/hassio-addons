@@ -32,6 +32,8 @@ plugins:
             configpath: /data/config/klipper/printer.cfg
     cura:
         cura_engine: /usr/local/bin/CuraEngine
+    slic3r:
+        slic3r_engine: /usr/bin/slic3r
 system:
     actions:
         -   action: camerastart
