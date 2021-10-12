@@ -2,7 +2,8 @@
     @ingress {
         remote_ip 172.30.32.2
     }
-    handle_path /webcam/* {
+    handle_path %%ingress_entry%%/webcam/* {
+        http-request replace-path %%ingress_entry%%/webcam/(.*)   /\1
         reverse_proxy http://127.0.0.1:8080
     }
     handle {

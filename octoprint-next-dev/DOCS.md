@@ -18,6 +18,10 @@ By default there is access through Ingress, but no ports are exposed outside of 
 
 To connect an external slicer, such as Cura, to OctoPrint you need to expose the WebUI port. It is not possible through Ingress.
 
+Two slicers are available with the addon, CuraEngine 15.04.6 and Slic3r 1.3.0. The path should already be set in the initial config file, but are also stated here:
+- CuraEngine: `/usr/local/bin/CuraEngine`
+- Slic3r: `/usr/bin/slic3r`
+
 ### Credentials
 
 One user, `homeassistant`, is created with a random password on first launch. You can use Ingress to automatically sign in as this user. From there you can change password, or create another user. Note that if the user `homeassistant` is removed, it will be recreated on the next restart.
@@ -29,7 +33,9 @@ Updates of OctoPrint should be possible from inside the addon.
 
 ### Camera
 
-`mjpg-streamer` is included, but needs to be started manually through the power menu. Note that video does not work from within Ingress, you need to either expose the port for mjpg-streamer or use a reverse proxy. 
+`mjpg-streamer` is included, but needs to be started manually through the power menu. Note that video does not work from within Ingress, you need to either expose the port for mjpg-streamer or use a reverse proxy.
+
+If you want to use OctoLapse with a DSLR, `gphoto2` is preinstalled and a script to capture images is available in `/scripts/take_snapshot.sh`. Some additional configuration could be needed.
 
 ### Q and A
 
@@ -60,3 +66,10 @@ Not all software is installed for all images.
 
 - Klipper
   - Installed in a separate `virtualenv`, using branch `master` from GitHub.
+
+- CuraEngine
+  - CuraEngine 15.04.6, works with the plugin CuraEngine Legacy.
+- Slic3r
+  - Slic3r 1.3.0, installed from APT.
+- gphoto2
+  - Installed with APT
