@@ -145,6 +145,7 @@ RUN echo "Install additional packages" \
         ffmpeg \
         build-essential \
         python3-dev \
+        slic3r \
         vim \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
