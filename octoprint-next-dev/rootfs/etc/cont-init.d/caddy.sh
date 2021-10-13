@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bashio
 
-bashio::log.info "proxy cont-init.d"
+bashio::log.info "Caddy cont-init.d"
 
 ingress_entry=$(bashio::addon.ingress_entry)
 sed -i "s#%%ingress_entry%%#$(bashio::addon.ingress_entry)#g" /etc/caddy/Caddyfile
