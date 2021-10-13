@@ -4,6 +4,6 @@
         "armhf": "homeassistant/armhf-base-debian:bullseye",
         "armv7": "homeassistant/armv7-base-debian:bullseye"
     },
-    "squash": false,
+    "squash": true,
     "args": {}
 }
