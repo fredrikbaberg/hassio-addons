@@ -143,8 +143,8 @@ RUN echo "Install additional packages" \
     && apt install -y --no-install-recommends \
         gphoto2 \
         ffmpeg \
-        libjpeg \
-        zlib \
+        libjpeg-dev \
+        zlib1g \
         build-essential \
         python3-dev \
         slic3r \
