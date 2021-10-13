@@ -10,7 +10,7 @@ if [ ! -d /data/python/OctoPrint ]; then
 fi
 
 # Copy config to persistent storage, if missing.
-if [ ! -d /data/config/octoprint ]; then
+if [ ! -f /data/config/octoprint/config.yaml ]; then
     mkdir -p /data/config/octoprint
     tar -zxf /root/OctoPrint-config.tar.gz -C /data/config/
     # rm -rf /root/OctoPrint-config.tar.gz
