@@ -148,8 +148,9 @@ RUN echo "Install additional packages" \
         slic3r \
         vim \
         avrdude \
-        stm32flash \
+        dfu-programmer \
         dfu-util \
+        stm32flash \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 

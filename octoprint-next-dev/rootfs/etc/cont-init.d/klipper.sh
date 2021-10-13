@@ -17,8 +17,8 @@ if [ ! -d /data/klipper ]; then
 fi
 
 # Make sure config file exists
-mkdir -p /data/config/klipper
-touch /data/config/klipper/printer.cfg
+mkdir -p /data/config/octoprint/klipper
+touch /data/config/octoprint/klipper/printer.cfg
 
 # Make sure log file exists
 touch /tmp/klippy.log

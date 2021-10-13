@@ -29,11 +29,17 @@ webcam:
 plugins:
     klipper:
         configuration:
-            configpath: /data/config/klipper/printer.cfg
+            configpath: /data/config/octoprint/klipper/printer.cfg
     cura:
         cura_engine: /usr/local/bin/CuraEngine
     slic3r:
         slic3r_engine: /usr/bin/slic3r
+    firmwareupdater:
+        avrdude_path: /usr/bin/avrdude
+        dfuutil_path: /usr/bin/dfu-util
+        dfuprog_path: /usr/bin/dfu-programmer
+        flash_method: stm32flash
+        stm32flash_path: /usr/bin/stm32flash
 system:
     actions:
         -   action: camerastart

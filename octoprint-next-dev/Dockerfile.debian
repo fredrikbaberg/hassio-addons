@@ -147,6 +147,10 @@ RUN echo "Install additional packages" \
         python3-dev \
         slic3r \
         vim \
+        avrdude \
+        dfu-programmer \
+        dfu-util \
+        stm32flash \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 
