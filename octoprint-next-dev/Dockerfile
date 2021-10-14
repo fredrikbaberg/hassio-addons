@@ -7,16 +7,13 @@ ENV LANG C.UTF-8
 ENV PIP_FLAGS="--no-cache-dir --extra-index-url https://www.piwheels.org/simple"
 
 RUN echo "Install core build dependencies" \
-    && apt update \
-    && apt install -y \
+    && apt update && apt install -y \
         git \
         python3-dev \
         python2-dev \
         virtualenv \
         build-essential \
-        cmake \
-    && apt clean \
-    && rm -rf /var/lib/apt/lists/*
+        cmake
 
 
 
@@ -30,7 +27,18 @@ RUN echo "Install OctoPrint" \
     && source /data/python/OctoPrint/bin/activate \
     && pip install ${PIP_FLAGS} --upgrade pip wheel \
     && pip install ${PIP_FLAGS} --upgrade OctoPrint
-COPY rootfs/data/config/octoprint /data/config/octoprint
+
+
+
+FROM build-base AS mjpg-streamer
+RUN echo "Install mjpg-streamer" \
+    && apt update && apt install -y \
+        libjpeg-dev \
+    && git clone --depth 1 https://github.com/jacksonliam/mjpg-streamer \
+    && cd mjpg-streamer/mjpg-streamer-experimental/ \
+    && make --silent \
+    && make install --silent \
+    && mv www/ /www_mjpg
 
 
 
@@ -40,8 +48,7 @@ ENV PYTHONUSERBASE=/data/python/Klipper
 ENV PATH=${PATH}:/data/python/Klipper/bin
 
 RUN echo "Install Klipper" \
-    && apt update \
-    && apt install -y \
+    && apt update && apt install -y \
         libffi-dev \
     && virtualenv --python=python2.7 /data/python/Klipper \
     && source /data/python/Klipper/bin/activate \
@@ -50,6 +57,9 @@ RUN echo "Install Klipper" \
     && pip install ${PIP_FLAGS} -r /data/klipper/scripts/klippy-requirements.txt \
     && pip install ${PIP_FLAGS} --upgrade numpy
 COPY rootfs/data/klipper/.config /data/klipper/.config
+# Need to make two changes to /data/klipper/src/linux/main.c due to sched_setscheduler not being available in Alpine:
+# - Add #include<pthread.h>
+# - Replace sched_setscheduler(0, SCHED_FIFO, &sp); with pthread_setschedparam(pthread_self(), SCHED_FIFO, &sp);
 RUN sed -i 's"// sched_main"// sched_main\n#include <pthread.h>"' /data/klipper/src/linux/main.c
 RUN sed -i 's/sched_setscheduler(0/pthread_setschedparam(pthread_self()/' /data/klipper/src/linux/main.c
 RUN cd /data/klipper \
@@ -57,20 +67,6 @@ RUN cd /data/klipper \
     && make \
     && ./scripts/flash-linux.sh
 
-
-
-FROM build-base AS mjpg-streamer
-RUN echo "Install mjpg-streamer" \
-    && apt update \
-    && apt install -y \
-        libjpeg-dev \
-    && git clone --depth 1 https://github.com/jacksonliam/mjpg-streamer \
-    && cd /mjpg-streamer/mjpg-streamer-experimental/ \
-    && make --silent \
-    && make install --silent \
-    && mv www/ /www_mjpg \
-    && apt clean \
-    && rm -rf /var/lib/apt/lists/*
 
 
 
@@ -124,8 +120,7 @@ ENV PIP_FLAGS="--no-cache-dir --extra-index-url https://www.piwheels.org/simple"
 ENV PATH=${PATH}:/data/python/OctoPrint/bin:/data/python/Klipper/bin
 
 RUN echo "Install required packages for running." \
-    && apt update \
-    && apt install -y \
+    && apt update && apt install -y \
         python2 \
         python3 \
         python3-distutils \
@@ -139,8 +134,7 @@ RUN echo "Install required packages for running." \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 RUN echo "Install additional packages" \
-    && apt update \
-    && apt install -y --no-install-recommends \
+    && apt update && apt install -y --no-install-recommends \
         gphoto2 \
         ffmpeg \
         libjpeg-dev \
@@ -160,17 +154,17 @@ RUN echo "Install additional packages" \
 # Copy data from previous stages and do some setup.
 # ## OctoPrint
 COPY --from=octoprint /data/python/OctoPrint /data/python/OctoPrint
-COPY --from=octoprint /data/config/octoprint /data/config/octoprint
+COPY rootfs/data/config/octoprint /data/config/octoprint
 RUN ln -s /data/config/octoprint $HOME/.octoprint
-# ## Klipper
-COPY --from=klipper /data/python/Klipper /data/python/Klipper
-COPY --from=klipper /data/klipper /data/klipper
-COPY --from=klipper /usr/local/bin/klipper_mcu /usr/local/bin/klipper_mcu
 # ## mjpg-streamer
 COPY --from=mjpg-streamer /usr/local/lib/mjpg-streamer /usr/local/lib/mjpg-streamer
 COPY --from=mjpg-streamer /usr/local/share/mjpg-streamer /usr/local/share/mjpg-streamer
 COPY --from=mjpg-streamer /usr/local/bin/mjpg_streamer /usr/local/bin/mjpg_streamer
 COPY --from=mjpg-streamer /www_mjpg /www_mjpg
+# ## Klipper
+COPY --from=klipper /data/python/Klipper /data/python/Klipper
+COPY --from=klipper /data/klipper /data/klipper
+COPY --from=klipper /usr/local/bin/klipper_mcu /usr/local/bin/klipper_mcu
 # ## CuraEngine
 COPY --from=curaengine /usr/local/bin/CuraEngine /usr/local/bin/CuraEngine
 # ## SuperSlicer
