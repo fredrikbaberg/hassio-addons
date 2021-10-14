@@ -30,6 +30,18 @@ RUN echo "Install OctoPrint" \
 
 
 
+FROM build-base AS mjpg-streamer
+RUN echo "Install mjpg-streamer" \
+    && apt update && apt install -y \
+        libjpeg-dev \
+    && git clone --depth 1 https://github.com/jacksonliam/mjpg-streamer \
+    && cd mjpg-streamer/mjpg-streamer-experimental/ \
+    && make --silent \
+    && make install --silent \
+    && mv www/ /www_mjpg
+
+
+
 FROM build-base AS klipper
 ENV PYTHONPATH=/data/python/Klipper
 ENV PYTHONUSERBASE=/data/python/Klipper
@@ -55,17 +67,6 @@ RUN cd /data/klipper \
     && make \
     && ./scripts/flash-linux.sh
 
-
-
-FROM build-base AS mjpg-streamer
-RUN echo "Install mjpg-streamer" \
-    && apt update && apt install -y \
-        libjpeg-dev \
-    && git clone --depth 1 https://github.com/jacksonliam/mjpg-streamer \
-    && cd mjpg-streamer/mjpg-streamer-experimental/ \
-    && make --silent \
-    && make install --silent \
-    && mv www/ /www_mjpg
 
 
 
