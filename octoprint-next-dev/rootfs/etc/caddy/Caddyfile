@@ -9,8 +9,8 @@
         #insert_rescue
         # Should rewrite /plugin/* to /api/hassio_ingress/<ingress_entry>/plugin/*
         reverse_proxy @ingress localhost:80 {
-            # header_up -Origin
-            # header_up Origin 172.30.32.2
+            header_up -Origin
+            header_up Origin 172.30.32.2
             header_up X-Script-Name %%ingress_entry%%
             header_up X-Forwarded-For 172.30.32.2
         }
