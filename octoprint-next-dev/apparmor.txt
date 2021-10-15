@@ -41,6 +41,8 @@ profile octoprint-next-dev flags=(attach_disconnected,mediate_deleted) {
     
     # For access to GPIO
     /dev/gpiomem rw,
+    # May be needed for gphoto2
+    # /dev/sg0 rw,
   }
 
   # Start new profile for service

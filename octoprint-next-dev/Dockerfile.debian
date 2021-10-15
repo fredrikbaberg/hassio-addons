@@ -148,6 +148,7 @@ RUN echo "Install additional packages" \
         dfu-programmer \
         dfu-util \
         stm32flash \
+        clang \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 
