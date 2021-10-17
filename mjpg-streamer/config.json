@@ -1,6 +1,6 @@
 {
     "name": "mjpg-streamer",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "slug": "mjpg-streamer",
     "description": "mjpg-streamer add-on for Home Assistant",
     "arch": ["armv7", "amd64", "armhf", "aarch64", "i386"],
@@ -11,7 +11,7 @@
         "8000/tcp": null
     },
     "ports_description": {
-        "8000/tcp": "Web-based interface)"
+        "8000/tcp": "Web-based interface"
     },
     "homeassistant": "2021.1.0",
     "video": true,
