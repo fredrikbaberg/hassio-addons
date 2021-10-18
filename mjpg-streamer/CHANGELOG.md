@@ -1,5 +1,10 @@
 # Changelog
 
+[0.3.1]
+
+- Cleanup proxy settings
+- Rename config files
+
 [0.3.0]
 
 - Update tinyproxy version (1.11.0 at time of build)
