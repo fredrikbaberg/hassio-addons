@@ -1,4 +1,4 @@
-name: octoprint-klipper
+name: octoprint-base
 
 on:
   workflow_dispatch:
