@@ -1,0 +1,8 @@
+#!/usr/bin/with-contenv bashio
+# ==============================================================================
+# Start Caddy service
+# ==============================================================================
+
+bashio::log.info "Starting Caddy..."
+
+caddy run -config /etc/caddy/Caddyfile

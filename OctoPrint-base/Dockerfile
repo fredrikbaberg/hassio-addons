@@ -7,13 +7,13 @@ ENV PIP_FLAGS="--no-cache-dir --extra-index-url https://www.piwheels.org/simple"
 ENV CFLAGS="-fcommon"
 
 RUN apk add --no-cache --virtual .build \
-        git \
-        python3-dev \
-        python2-dev \
-        py3-virtualenv \
         build-base \
+        cmake \
+        git \
         linux-headers \
-        cmake
+        py3-virtualenv \
+        python2-dev \
+        python3-dev
 
 
 
@@ -46,10 +46,9 @@ ENV PATH=${PATH}:/data/python/OctoPrint/bin
 RUN echo "Install required packages for running." \
     && apk add --no-cache \
         python3 \
-        tinyproxy
+        caddy
 
-# Copy data from previous stages and do some setup.
-# ## OctoPrint
+# Copy data from previous stages
 COPY --from=octoprint /root/OctoPrint.tar.gz /root/OctoPrint.tar.gz
 COPY rootfs/data/config/octoprint /root/config/octoprint
 RUN ln -s /data/config/octoprint $HOME/.octoprint

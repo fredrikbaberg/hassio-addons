@@ -4,7 +4,7 @@
 
 This Addon-on allows you to run [OctoPrint](https://octoprint.org) on a device running [Home Assistant](https://home-assistant.io/).
 
-It contains only the basic features, to keep it as small as possible. An extended version will be available with support for camera, Klipper, build tools etc.
+It contains only the basic features, to keep a small file size. An extended version will be available with support for camera, Klipper, build tools etc.
 
 ## Installation
 
