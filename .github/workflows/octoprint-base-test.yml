@@ -1,0 +1,101 @@
+name: octoprint-base
+
+on:
+  workflow_dispatch:
+
+jobs:
+  armhf:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v2
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build and publish
+      uses: home-assistant/builder@master
+      with:
+        args: |
+          --test \
+          --armhf \
+          --target octoprint-base \
+          --docker-hub-check \
+          --no-latest
+  armv7:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v2
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build and publish
+      uses: home-assistant/builder@master
+      with:
+        args: |
+          --test \
+          --armv7 \
+          --target octoprint-base \
+          --docker-hub-check \
+          --no-latest
+  amd64:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v2
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build and publish
+      uses: home-assistant/builder@master
+      with:
+        args: |
+          --test \
+          --amd64 \
+          --target octoprint-base \
+          --docker-hub-check \
+          --no-latest
+  aarch64:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v2
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build and publish
+      uses: home-assistant/builder@master
+      with:
+        args: |
+          --test \
+          --aarch64 \
+          --target octoprint-base \
+          --docker-hub-check \
+          --no-latest
+  i386:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v2
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build and publish
+      uses: home-assistant/builder@master
+      with:
+        args: |
+          --test \
+          --i386 \
+          --target octoprint-base \
+          --docker-hub-check \
+          --no-latest
