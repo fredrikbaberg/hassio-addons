@@ -34,6 +34,7 @@
     "schema": {
         "recovery": "bool"
     },
+    "image": "fredrikbaberg/addon-octoprint-base-{arch}",
     "tmpfs": true,
     "ingress": true,
     "panel_icon": "mdi:printer-3d",
