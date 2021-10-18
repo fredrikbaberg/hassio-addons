@@ -134,7 +134,6 @@ RUN echo "Install required packages for running." \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 RUN echo "Install additional packages" \
-    && pip3 install ${PIP_FLAGS} cython \
     && apt update && apt install -y --no-install-recommends \
         gphoto2 \
         ffmpeg \
@@ -173,6 +172,9 @@ COPY --from=curaengine /usr/local/bin/CuraEngine /usr/local/bin/CuraEngine
 # ## SuperSlicer
 # COPY --from=superslicer /usr/local/share/SuperSlicer /usr/local/share/SuperSlicer
 # COPY --from=superslicer /usr/local/bin/superslicer /usr/local/bin/superslicer
+
+# Additional installs
+RUN /data/python/OctoPrint/bin/pip install ${PIP_FLAGS} cython
 
 COPY rootfs/ /
 RUN chmod a+x /scripts/*.sh
