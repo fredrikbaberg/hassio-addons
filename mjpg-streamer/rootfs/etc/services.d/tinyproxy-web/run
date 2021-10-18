@@ -2,4 +2,4 @@
 
 bashio::log.info "Starting tinyproxy for Ingress..."
 
-tinyproxy -d -c tinyproxy.conf
+tinyproxy -d -c tinyproxy-web.conf
