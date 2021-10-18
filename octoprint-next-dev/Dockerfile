@@ -134,6 +134,7 @@ RUN echo "Install required packages for running." \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 RUN echo "Install additional packages" \
+    && pip3 install ${PIP_FLAGS} cython \
     && apt update && apt install -y --no-install-recommends \
         gphoto2 \
         ffmpeg \
@@ -150,6 +151,7 @@ RUN echo "Install additional packages" \
         stm32flash \
         clang \
     && apt clean \
+    && apt autoremove -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy data from previous stages and do some setup.
