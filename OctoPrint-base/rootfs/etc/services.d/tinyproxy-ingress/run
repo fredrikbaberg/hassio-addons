@@ -1,0 +1,11 @@
+#!/usr/bin/with-contenv bashio
+# ==============================================================================
+# Start Proxy-Ingress service
+# ==============================================================================
+
+bashio::log.info "Starting TinyProxy-Ingress..."
+
+ingress_entry=$(bashio::addon.ingress_entry)
+sed -i "s#%%ingress_entry%%#$(bashio::addon.ingress_entry)#g" tinyproxy-ingress.conf
+
+tinyproxy -d -c tinyproxy-ingress.conf

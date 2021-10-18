@@ -1,0 +1,59 @@
+## Alpine-based
+ARG BUILD_FROM="homeassistant/amd64-base:latest"
+
+FROM ${BUILD_FROM} AS build-base
+ENV LANG C.UTF-8
+ENV PIP_FLAGS="--no-cache-dir --extra-index-url https://www.piwheels.org/simple"
+ENV CFLAGS="-fcommon"
+
+RUN apk add --no-cache --virtual .build \
+        git \
+        python3-dev \
+        python2-dev \
+        py3-virtualenv \
+        build-base \
+        linux-headers \
+        cmake
+
+
+
+FROM build-base AS octoprint
+ENV PYTHONPATH=/data/python/OctoPrint
+ENV PYTHONUSERBASE=/data/python/OctoPrint
+ENV PATH=${PATH}:/data/python/OctoPrint/bin
+
+RUN echo "Install OctoPrint" \
+    && virtualenv --python=python3 /data/python/OctoPrint \
+    && source /data/python/OctoPrint/bin/activate \
+    && pip install ${PIP_FLAGS} --upgrade \
+        pip \
+        wheel \
+    && pip install ${PIP_FLAGS} --upgrade \
+        OctoPrint \
+    && find /data/python/OctoPrint | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
+    && find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
+    && rm -rf /root/.cache \
+    && cd /data/python && tar -zcf /root/OctoPrint.tar.gz OctoPrint
+
+
+
+FROM ${BUILD_FROM} AS final
+ENV LANG C.UTF-8
+ENV PIP_FLAGS="--no-cache-dir --extra-index-url https://www.piwheels.org/simple"
+ENV CFLAGS="-fcommon"
+ENV PATH=${PATH}:/data/python/OctoPrint/bin
+
+RUN echo "Install required packages for running." \
+    && apk add --no-cache \
+        python3 \
+        tinyproxy
+
+# Copy data from previous stages and do some setup.
+# ## OctoPrint
+COPY --from=octoprint /root/OctoPrint.tar.gz /root/OctoPrint.tar.gz
+COPY rootfs/data/config/octoprint /root/config/octoprint
+RUN ln -s /data/config/octoprint $HOME/.octoprint
+
+COPY rootfs/ /
+RUN chmod a+x /scripts/*.sh
+WORKDIR /
