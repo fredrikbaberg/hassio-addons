@@ -1,4 +1,4 @@
-name: octoprint-base
+name: octoprint-base-test
 
 on:
   workflow_dispatch:
