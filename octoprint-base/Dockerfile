@@ -46,12 +46,15 @@ ENV PATH=${PATH}:/data/python/OctoPrint/bin
 RUN echo "Install required packages for running." \
     && apk add --no-cache \
         python3 \
-        caddy
+        haproxy
 
 # Copy data from previous stages
 COPY --from=octoprint /root/OctoPrint.tar.gz /root/OctoPrint.tar.gz
 COPY rootfs/data/config/octoprint /root/config/octoprint
 RUN ln -s /data/config/octoprint $HOME/.octoprint
+
+# Cleanup
+RUN find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf
 
 COPY rootfs/ /
 RUN chmod a+x /scripts/*.sh
