@@ -1,63 +1,27 @@
 #include <tunables/global>
 
-/usr/sbin/nginx {
-  #include <abstractions/base>
-  #include <abstractions/nameservice>
-  #include <abstractions/openssl>
-
-  capability setgid,
-
-  /usr/sbin/nginx mr,
-  owner /etc/nginx/http.d/** r,
-  owner /etc/nginx/mime.types r,
-  owner /etc/nginx/nginx.conf r,
-  owner /var/run/nginx.pid rw,
-  owner /var/log/nginx/** w,
-  owner /var/lib/nginx/** w,
-}
-
 profile OctoPrint-Base flags=(attach_disconnected,mediate_deleted) {
-  #include <abstractions/base>
-  
-  # Capabilities
-  file,
-  signal,
 
-  # S6-Overlay
-  /init rix,
-  /bin/** ix,
-  /usr/bin/** ix,
-  /etc/s6/** rix,
-  /run/s6/** rwix,
-  /etc/services.d/** rwix,
-  /etc/cont-init.d/** rwix,
-  /etc/cont-finish.d/** rwix,
-  /run/** rwk,
-
-  # Bashio
-  /usr/lib/bashio/** ix,
-  /tmp/** rw,
-
-  # Access to Options.json and other files within your addon
-  /data/** rw,
-  
-  profile /data/python/OctoPrint/bin/octoprint flags=(attach_disconnected,mediate_deleted) {
+  /usr/sbin/nginx {
     #include <abstractions/base>
-    #include <abstractions/nameservice>
-  
-    # Receive signals from S6-Overlay
-    signal receive,
-    file,
-    
-    # For access to GPIO
-    /dev/gpiomem rw,
 
-    # Access to run scripts
-    /scripts/** rk,
+    capability dac_override,
+    capability dac_read_search,
+    capability net_bind_service,
+    capability setgid,
+    capability setuid,
 
-    profile /usr/sbin/nginx flags=(attach_disconnected,mediate_deleted) {
-      capability setgid,
-      capability setuid,
-    }
+    # binary, pid
+    /usr/sbin/nginx mr,
+    /run/nginx.pid rw,
+
+    # configuration
+    /etc/nginx/mime.types r,
+    /etc/nginx/nginx.conf r,
+    /etc/nginx/http.d/* r,
+
+    # logs
+    /var/log/nginx/* w,
+
   }
 }
