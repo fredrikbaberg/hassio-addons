@@ -1,4 +1,4 @@
-name: octoprint-base-test
+name: octoprint-extended-test
 
 on:
   workflow_dispatch:
@@ -19,7 +19,7 @@ jobs:
       with:
         args: |
           --armhf \
-          --target octoprint-base \
+          --target octoprint-extended \
           --docker-hub-check \
           --no-latest \
           --test
@@ -38,7 +38,7 @@ jobs:
       with:
         args: |
           --armv7 \
-          --target octoprint-base \
+          --target octoprint-extended \
           --docker-hub-check \
           --no-latest \
           --test
@@ -57,7 +57,7 @@ jobs:
       with:
         args: |
           --amd64 \
-          --target octoprint-base \
+          --target octoprint-extended \
           --docker-hub-check \
           --no-latest \
           --test
@@ -76,7 +76,7 @@ jobs:
       with:
         args: |
           --aarch64 \
-          --target octoprint-base \
+          --target octoprint-extended \
           --docker-hub-check \
           --no-latest \
           --test
@@ -95,7 +95,7 @@ jobs:
       with:
         args: |
           --i386 \
-          --target octoprint-base \
+          --target octoprint-extended \
           --docker-hub-check \
           --no-latest \
           --test

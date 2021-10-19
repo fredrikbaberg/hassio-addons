@@ -1,8 +1,8 @@
 #!/usr/bin/with-contenv bashio
 # ==============================================================================
-# Start Caddy service
+# Start proxy service
 # ==============================================================================
 
-bashio::log.info "Starting Caddy..."
+bashio::log.info "Starting proxy..."
 
-caddy run -config /etc/caddy/Caddyfile
+exec haproxy -db -f /etc/haproxy/haproxy.cfg
