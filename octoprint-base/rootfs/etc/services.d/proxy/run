@@ -5,4 +5,4 @@
 
 bashio::log.info "Starting proxy..."
 
-exec nginx
+exec caddy run -config /etc/caddy/Caddyfile
