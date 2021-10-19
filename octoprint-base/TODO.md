@@ -10,5 +10,5 @@
 - Addon start
 - Access through Ingress
 - Add user and access through external port
-- Install plugin
+- Install plugins
 - Take and restore backup
