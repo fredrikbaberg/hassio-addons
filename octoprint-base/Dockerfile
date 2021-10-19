@@ -48,7 +48,7 @@ ENV PATH=${PATH}:/data/python/OctoPrint/bin
 RUN echo "Install required packages for running." \
     && apk add --no-cache \
         python3 \
-        haproxy
+        nginx
 
 # Copy data from previous stages
 COPY --from=octoprint /copy /

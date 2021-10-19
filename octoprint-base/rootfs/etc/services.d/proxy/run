@@ -5,4 +5,4 @@
 
 bashio::log.info "Starting proxy..."
 
-exec haproxy -db -f /etc/haproxy/haproxy.cfg
+exec nginx -g "daemon off; error_log /dev/stdout debug;"
