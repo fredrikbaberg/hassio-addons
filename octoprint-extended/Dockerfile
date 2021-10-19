@@ -49,19 +49,22 @@ RUN echo "Install Klipper" \
         libpng-dev \
     && virtualenv --python=python2.7 /data/python/Klipper \
     && source /data/python/Klipper/bin/activate \
-    && pip install ${PIP_FLAGS} --upgrade pip wheel \
+    && pip install ${PIP_FLAGS} --upgrade \
+        pip \
+        wheel \
     && git clone --depth 1 https://github.com/Klipper3d/klipper.git /data/klipper \
     && pip install ${PIP_FLAGS} -r /data/klipper/scripts/klippy-requirements.txt \
-    && pip install ${PIP_FLAGS} --upgrade numpy \
+    && pip install ${PIP_FLAGS} --upgrade \
+        numpy \
     && find /data/python/Klipper | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && rm -rf /root/.cache
-COPY rootfs/data/klipper/.config /data/klipper/.config
 # Need to make two changes to /data/klipper/src/linux/main.c due to sched_setscheduler not being available in Alpine:
 # - Add #include<pthread.h>
 # - Replace sched_setscheduler(0, SCHED_FIFO, &sp); with pthread_setschedparam(pthread_self(), SCHED_FIFO, &sp);
 RUN sed -i 's"// sched_main"// sched_main\n#include <pthread.h>"' /data/klipper/src/linux/main.c
 RUN sed -i 's/sched_setscheduler(0/pthread_setschedparam(pthread_self()/' /data/klipper/src/linux/main.c
+COPY rootfs/root/klipper/.config /data/klipper/.config
 RUN cd /data/klipper \
     && make clean \
     && make \
@@ -69,11 +72,11 @@ RUN cd /data/klipper \
     && make clean
 RUN echo "Copy files to single folder" \
     && mkdir -p /copy/root \
-    && cd /data/python && tar -zcf /copy/root/Klipper.tar.gz Klipper \
-    && mkdir -p /copy/data/klipper \
-    && cp -R /data/klipper/.config /copy/data/klipper/.config \
+    && cd /data && tar -zcf /copy/root/Klipper-src.tar.gz klipper \
+    && cd /data/python && tar -zcf /copy/root/Klipper-python.tar.gz Klipper \
     && mkdir -p /copy/usr/local/bin \
     && cp /usr/local/bin/klipper_mcu /copy/usr/local/bin/klipper_mcu
+
 
 
 FROM build-base AS curaengine
@@ -93,11 +96,28 @@ RUN echo "Copy files to single folder" \
 FROM ${BUILD_FROM} AS final
 ENV PATH=${PATH}:/data/python/Klipper/bin
 
+RUN echo "Install required packages for running." \
+    && apk add --no-cache \
+        python2
+# RUN echo "Install additional packages" \
+#     && apk add --no-cache \
+#         ffmpeg \
+#         gphoto2 \
+#         libjpeg-turbo \
+#         zlib \
+#         build-base \
+#         linux-headers \
+#         vim \
+#         git \
+#         avrdude \
+#         stm32flash
+
+# Copy data from previous stages
 # ## mjpg-streamer
 COPY --from=mjpg-streamer /copy /
 # ## Klipper
 COPY --from=klipper /copy /
-# ## CuraEngine
+# ## CuraEngineLegacy
 COPY --from=curaengine /copy /
 
 COPY rootfs/ /

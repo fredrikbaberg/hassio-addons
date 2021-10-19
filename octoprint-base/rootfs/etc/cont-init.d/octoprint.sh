@@ -5,7 +5,7 @@ bashio::log.info "OctoPrint cont-init.d"
 # Copy OctoPrint install to persistent storage, if missing.
 if [ ! -d /data/python/OctoPrint ]; then
     mkdir -p /data/python
-    tar -zxf /root/OctoPrint.tar.gz -C /data/python/
+    tar -zxf /root/OctoPrint-python.tar.gz -C /data/python/
 fi
 
 # Copy config to persistent storage, if missing.

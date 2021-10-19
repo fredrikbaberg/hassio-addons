@@ -1,6 +1,6 @@
 build_from:
-    armhf: fredrikbaberg/addon-octoprint-base-armhf:0.0.3
-    armv7: fredrikbaberg/addon-octoprint-base-armv7:0.0.3
-    amd64: fredrikbaberg/addon-octoprint-base-amd64:0.0.3
-    aarch64: fredrikbaberg/addon-octoprint-base-aarch64:0.0.3
-    i386: fredrikbaberg/addon-octoprint-base-i386:0.0.3
+    armhf: fredrikbaberg/addon-octoprint-base-armhf:0.0.4
+    armv7: fredrikbaberg/addon-octoprint-base-armv7:0.0.4
+    amd64: fredrikbaberg/addon-octoprint-base-amd64:0.0.4
+    aarch64: fredrikbaberg/addon-octoprint-base-aarch64:0.0.4
+    i386: fredrikbaberg/addon-octoprint-base-i386:0.0.4
