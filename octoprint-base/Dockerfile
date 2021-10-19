@@ -32,8 +32,10 @@ RUN echo "Install OctoPrint" \
         OctoPrint \
     && find /data/python/OctoPrint | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
-    && rm -rf /root/.cache \
-    && cd /data/python && tar -zcf /root/OctoPrint.tar.gz OctoPrint
+    && rm -rf /root/.cache
+RUN echo "Copy files to single folder" \
+    && mkdir -p /copy/root \
+    && cd /data/python && tar -zcf /copy/root/OctoPrint-python.tar.gz OctoPrint
 
 
 
@@ -49,12 +51,8 @@ RUN echo "Install required packages for running." \
         haproxy
 
 # Copy data from previous stages
-COPY --from=octoprint /root/OctoPrint.tar.gz /root/OctoPrint.tar.gz
-COPY rootfs/data/config/octoprint /root/config/octoprint
+COPY --from=octoprint /copy /
 RUN ln -s /data/config/octoprint $HOME/.octoprint
-
-# Cleanup
-RUN find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf
 
 COPY rootfs/ /
 RUN chmod a+x /scripts/*.sh
