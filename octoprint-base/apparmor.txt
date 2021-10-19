@@ -1,27 +1,42 @@
 #include <tunables/global>
 
 profile OctoPrint-Base flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+  
+  # Capabilities
+  file,
+  signal,
 
-  /usr/sbin/nginx {
+  # S6-Overlay
+  /init rix,
+  /bin/** ix,
+  /usr/bin/** ix,
+  /etc/s6/** rix,
+  /run/s6/** rwix,
+  /etc/services.d/** rwix,
+  /etc/cont-init.d/** rwix,
+  /etc/cont-finish.d/** rwix,
+  /run/** rwk,
+
+  # Bashio
+  /usr/lib/bashio/** ix,
+  /tmp/** rw,
+
+  # Access to Options.json and other files within your addon
+  /data/** rw,
+  
+  profile /data/python/OctoPrint/bin/octoprint flags=(attach_disconnected,mediate_deleted) {
     #include <abstractions/base>
+    #include <abstractions/nameservice>
+  
+    # Receive signals from S6-Overlay
+    signal receive,
+    file,
+    
+    # For access to GPIO
+    /dev/gpiomem rw,
 
-    capability dac_override,
-    capability dac_read_search,
-    capability net_bind_service,
-    capability setgid,
-    capability setuid,
-
-    # binary, pid
-    /usr/sbin/nginx mr,
-    /run/nginx.pid rw,
-
-    # configuration
-    /etc/nginx/mime.types r,
-    /etc/nginx/nginx.conf r,
-    /etc/nginx/http.d/* r,
-
-    # logs
-    /var/log/nginx/* w,
-
+    # Access to run scripts
+    /scripts/** rk,
   }
 }
