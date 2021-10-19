@@ -50,6 +50,9 @@ RUN echo "Install required packages for running." \
         python3 \
         nginx
 
+# Clean up nginx config
+RUN rm -rf /etc/nginx/http.d/*
+
 # Copy data from previous stages
 COPY --from=octoprint /copy /
 RUN ln -s /data/config/octoprint $HOME/.octoprint
