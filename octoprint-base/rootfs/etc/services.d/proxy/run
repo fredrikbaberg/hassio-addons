@@ -5,4 +5,4 @@
 
 bashio::log.info "Starting proxy..."
 
-exec haproxy -db -f /etc/haproxy/haproxy.cfg
+exec caddy run -config /etc/caddy/Caddyfile
