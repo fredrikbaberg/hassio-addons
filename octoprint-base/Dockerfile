@@ -51,9 +51,7 @@ RUN echo "Install required packages for running." \
         nginx
 
 # Clean up nginx config
-RUN rm -rf /etc/nginx/http.d/* \
-    && chown -R root:root /var/lib/nginx \
-    && chown -R root:root /var/log/nginx
+RUN rm -rf /etc/nginx/http.d/*
 
 # Copy data from previous stages
 COPY --from=octoprint /copy /

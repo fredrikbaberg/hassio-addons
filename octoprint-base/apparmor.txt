@@ -1,5 +1,19 @@
 #include <tunables/global>
 
+/usr/sbin/nginx {
+  #include <abstractions/base>
+  #include <abstractions/nameservice>
+  #include <abstractions/openssl>
+
+  /usr/sbin/nginx mr,
+  owner /etc/nginx/http.d/** r,
+  owner /etc/nginx/mime.types r,
+  owner /etc/nginx/nginx.conf r,
+  owner /var/run/nginx.pid rw,
+  owner /var/log/nginx/** w,
+  owner /var/lib/nginx/** w,
+}
+
 profile OctoPrint-Base flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
   
@@ -38,5 +52,10 @@ profile OctoPrint-Base flags=(attach_disconnected,mediate_deleted) {
 
     # Access to run scripts
     /scripts/** rk,
+
+    profile /usr/sbin/nginx flags=(attach_disconnected,mediate_deleted) {
+      capability setgid,
+      capability setuid,
+    }
   }
 }
