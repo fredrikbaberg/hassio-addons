@@ -1,6 +1,6 @@
 #include <tunables/global>
 
-profile OctoPrint-Base flags=(attach_disconnected,mediate_deleted) {
+profile OctoPrint-Extended flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
   
   # Capabilities
