@@ -11,3 +11,5 @@ server:
         serverRestartCommand: /scripts/octoprint_restart.sh
         systemRestartCommand: /scripts/system_restart.sh
         systemShutdownCommand: /scripts/system_shutdown.sh
+webcam:
+    ffmpeg: /usr/bin/ffmpeg
