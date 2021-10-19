@@ -5,4 +5,4 @@
 
 bashio::log.info "Starting proxy..."
 
-exec nginx -g "daemon off; error_log /dev/stdout debug;"
+exec nginx -g "daemon off;error_log /dev/stdout debug;"
