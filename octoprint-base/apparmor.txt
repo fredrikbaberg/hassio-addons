@@ -5,6 +5,8 @@
   #include <abstractions/nameservice>
   #include <abstractions/openssl>
 
+  capability setgid,
+
   /usr/sbin/nginx mr,
   owner /etc/nginx/http.d/** r,
   owner /etc/nginx/mime.types r,
