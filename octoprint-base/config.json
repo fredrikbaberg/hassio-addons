@@ -24,7 +24,7 @@
     ],
     "map": [],
     "environment": {},
-    "video": true,
+    "video": false,
     "gpio": true,
     "usb": true,
     "uart": true,
