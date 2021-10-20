@@ -28,12 +28,8 @@
     "gpio": true,
     "usb": true,
     "uart": true,
-    "options": {
-        "recovery": false
-    },
-    "schema": {
-        "recovery": "bool"
-    },
+    "options": {},
+    "schema": {},
     "image": "fredrikbaberg/addon-octoprint-base-{arch}",
     "tmpfs": true,
     "ingress": true,
