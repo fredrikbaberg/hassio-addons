@@ -98,6 +98,8 @@ ENV PATH=${PATH}:/data/python/Klipper/bin
 
 RUN echo "Install required packages for plugins." \
     && apk add --no-cache \
+        build-base \
+        linux-headers
 RUN echo "Install required packages for Klipper." \
     && apk add --no-cache \
         python2 \
