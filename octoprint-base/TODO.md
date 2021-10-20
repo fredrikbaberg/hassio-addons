@@ -7,8 +7,11 @@
 - Sync OctoPrint config between base and extended to facilitate upgrade
 
 ## Test
-- Addon start
+- Addon starts
 - Access through Ingress
-- Add user and access through external port
+- Access through external port
 - Install plugins
-- Take and restore backup
+- Restart OctoPrint
+- Restart addon
+- Stop and start addon
+- Create and restore backup
