@@ -96,21 +96,30 @@ RUN echo "Copy files to single folder" \
 FROM ${BUILD_FROM} AS final
 ENV PATH=${PATH}:/data/python/Klipper/bin
 
-RUN echo "Install required packages for running." \
+RUN echo "Install required packages for plugins." \
     && apk add --no-cache \
-        python2
+RUN echo "Install required packages for Klipper." \
+    && apk add --no-cache \
+        python2 \
+        build-base \
+        linux-headers \
+        git
+RUN echo "Install required packages for camera (mjpg-streamer, gphoto2)." \
+    && apk add --no-cache \
+        ffmpeg \
+        gphoto2
+RUN echo "Install required packages for firmware update." \
+    && apk add --no-cache \
+        avrdude \
+        stm32flash
+RUN echo "Install useful packages for debugging." \
+    && apk add --no-cache \
+        vim
 # RUN echo "Install additional packages" \
 #     && apk add --no-cache \
-#         ffmpeg \
-#         gphoto2 \
 #         libjpeg-turbo \
 #         zlib \
-#         build-base \
-#         linux-headers \
 #         vim \
-#         git \
-#         avrdude \
-#         stm32flash
 
 # Copy data from previous stages
 # ## mjpg-streamer
