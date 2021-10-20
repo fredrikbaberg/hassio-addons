@@ -1,6 +1,6 @@
 {
     "name": "OctoPrint (base)",
-    "version": "0.1.7",
+    "version": "0.1.8",
     "slug": "octoprint-base",
     "description": "Base OctoPrint add-on for Home Assistant",
     "arch": ["armhf", "armv7", "amd64", "aarch64", "i386"],
@@ -28,9 +28,12 @@
     "gpio": true,
     "usb": true,
     "uart": true,
-    "options": {},
-    "schema": {},
-    "image": "fredrikbaberg/addon-octoprint-base-{arch}",
+    "options": {
+        "recovery": false
+    },
+    "schema": {
+        "recovery": "bool"
+    },
     "tmpfs": true,
     "ingress": true,
     "panel_icon": "mdi:printer-3d",

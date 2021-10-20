@@ -3,6 +3,7 @@
 		remote_ip 172.30.32.2
 	}
 	handle {
+		#recovery
 		reverse_proxy @ingress localhost:80 {
 			header_up X-Script-Name %%ingress_entry%%
 			header_up -Origin
