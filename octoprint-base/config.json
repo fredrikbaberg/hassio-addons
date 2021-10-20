@@ -1,8 +1,8 @@
 {
     "name": "OctoPrint (base)",
-    "version": "0.1.5",
+    "version": "0.1.6",
     "slug": "octoprint-base",
-    "description": "OctoPrint add-on for Home Assistant",
+    "description": "Base OctoPrint add-on for Home Assistant",
     "arch": ["armhf", "armv7", "amd64", "aarch64", "i386"],
     "url": "https://github.com/fredrikbaberg/hassio-addons",
     "startup": "application",
