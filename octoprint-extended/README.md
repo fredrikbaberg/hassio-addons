@@ -1,12 +1,12 @@
-# OctoPrint add-on for Home Assistant
+# Extended OctoPrint add-on for Home Assistant
 
-**Work in progress, not ready to be used**
+**Work in progress, not tested**
 
 ## About
 
 This Addon-on allows you to run [OctoPrint](https://octoprint.org) on a device running [Home Assistant](https://home-assistant.io/).
 
-It contains extended features. If you only need a base OctoPrint install, see octoprint-base.
+It contains extended features such as camera (mjpg-streamer and gphoto2), Klipper, build tools. If you only need a base OctoPrint install, see octoprint-base.
 
 ## Installation
 

@@ -1,8 +1,8 @@
 {
     "name": "OctoPrint (extended)",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "slug": "octoprint-extended",
-    "description": "OctoPrint add-on for Home Assistant",
+    "description": "Extended OctoPrint add-on for Home Assistant",
     "arch": ["armhf", "armv7", "amd64", "aarch64", "i386"],
     "url": "https://github.com/fredrikbaberg/hassio-addons",
     "startup": "application",
@@ -14,7 +14,7 @@
     },
     "ports_description": {
         "5000/tcp": "WebUI (Not required for Ingress)",
-        "8000/tcp": "Camera web UI"
+        "8000/tcp": "Camera UI"
     },
     "devices": [
         "/dev/mem",
