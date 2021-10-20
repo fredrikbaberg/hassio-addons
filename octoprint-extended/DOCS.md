@@ -1,6 +1,6 @@
 # Documentation
 
-**May be out of date, as this is a development version.**
+**May be out of date or incomplete.**
 
 ## How to use
 
@@ -12,15 +12,15 @@ For external access you can setup another user, or change the password of the us
 
 ### Network
 
-By default there is access through Ingress, but no ports are exposed outside of Home Assistant. To have external access, for instance to a slicer, you either need to specify a port or setup a proxy.
+By default access is available through Ingress. For external access you need to set a port in addon settings.
 
 ### Slicer
 
-To connect an external slicer such as Cura to OctoPrint you need to expose the WebUI port. It is **not** possible through Ingress.
+To connect an external slicer such as Cura to OctoPrint you need to set a port for WebUI in addon settings. It is **not** possible to connect through Ingress.
 
 ### Credentials
 
-One user, `homeassistant`, is created with a random password on first launch. You can use Ingress to automatically sign in as this user. From there you can change password, or create another user. Note that if the user `homeassistant` is removed, it will be recreated on the next restart.
+One user, `homeassistant`, is created with a random password on first launch. This user will automatically be logged in when you access through Ingress. If removed, the account will be recreated on next restart. You are free to change the password, it will not affect access through Ingress.
 
 ### Updates
 
