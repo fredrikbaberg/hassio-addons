@@ -23,9 +23,8 @@ plugins:
         cura_engine: /usr/local/bin/CuraEngineLegacy
     firmwareupdater:
         avrdude_path: /usr/bin/avrdude
-        dfuutil_path: /usr/bin/dfu-util
-        dfuprog_path: /usr/bin/dfu-programmer
-        flash_method: stm32flash
+        # dfuutil_path: /usr/bin/dfu-util
+        # dfuprog_path: /usr/bin/dfu-programmer
         stm32flash_path: /usr/bin/stm32flash
 system:
     actions:
