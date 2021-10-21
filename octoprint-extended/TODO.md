@@ -24,5 +24,6 @@
         "https://github.com/vitormhenrique/OctoPrint-Enclosure/archive/master.zip" \
         "https://github.com/thelastWallE/OctoprintKlipperPlugin/archive/master.zip" \
         "https://github.com/OctoPrint/OctoPrint-FirmwareUpdater/archive/master.zip" \
-        "https://github.com/jneilliii/OctoPrint-MyMiniFactory/archive/master.zip"
+        "https://github.com/jneilliii/OctoPrint-MyMiniFactory/archive/master.zip" \
+        "https://github.com/kennethjiang/OctoPrint-Slicer/archive/master.zip"
     ```
