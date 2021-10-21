@@ -48,6 +48,10 @@ system:
         -   action: klipperlinuxstop
             name: Stop Klipper MCU Linux
             command: /scripts/klipper_linux_stop.sh
+        -   action: divider
+        -   action: extendoctoprint
+            name: Extend OctoPrint with additional build packages
+            command: /scripts/extend_octoprint.sh
         -   action: klipperupgrade
             name: Update Klipper from git
             command: /scripts/klipper_update.sh
