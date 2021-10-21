@@ -50,5 +50,6 @@
     "backup_exclude": [
         "/data/klipper"
     ],
-    "stage": "experimental"
+    "stage": "experimental",
+    "realtime": true
 }
