@@ -47,6 +47,12 @@ system:
         -   action: klipperlinuxstop
             name: Stop Klipper MCU Linux
             command: /scripts/klipper_linux_stop.sh
+        -   action: moonrakerstart
+            name: Start Moonraker
+            command: /scripts/moonraker_start.sh
+        -   action: moonrakerstop
+            name: Stop Moonraker
+            command: /scripts/moonraker_stop.sh
         -   action: divider
         -   action: extendoctoprint
             name: Extend OctoPrint with additional build packages

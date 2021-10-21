@@ -74,6 +74,29 @@ RUN echo "Copy files to single folder" \
 
 
 
+FROM build-base AS moonraker
+ENV PYTHONPATH=/data/python/Moonraker
+ENV PYTHONUSERBASE=/data/python/Moonraker
+ENV PATH=${PATH}:/data/python/Moonraker/bin
+
+RUN echo "Install Moonraker" \
+    && apk add --no-cache \
+        curl-dev \
+        libjpeg-turbo-dev \
+    && virtualenv --python=python3 /data/python/Moonraker \
+    && source /data/python/Moonraker/bin/activate \
+    && pip install ${PIP_FLAGS} --upgrade \
+        pip \
+        wheel \
+    && git clone --depth 1 https://github.com/Arksine/moonraker.git /data/moonraker \
+    && pip install -r /data/moonraker/scripts/moonraker-requirements.txt
+RUN echo "Copy files to single folder" \
+    && mkdir -p /copy/root \
+    && cd /data && tar -zcf /copy/root/Moonraker-src.tar.gz moonraker \
+    && cd /data/python && tar -zcf /copy/root/Moonraker-python.tar.gz Moonraker
+
+
+
 FROM build-base AS curaengine
 ARG CURA_VERSION=15.04.6
 RUN echo "Install CuraEngine" \
@@ -116,15 +139,18 @@ RUN echo "Install required packages for firmware update." \
 RUN echo "Install useful packages for debugging." \
     && apk add --no-cache \
         screen \
+        tree \
         vim
 
 # Copy data from previous stages
 # ## mjpg-streamer
 COPY --from=mjpg-streamer /copy /
-# ## Klipper
-COPY --from=klipper /copy /
 # ## CuraEngineLegacy
 COPY --from=curaengine /copy /
+# ## Klipper
+COPY --from=klipper /copy /
+# ## Moonraker
+COPY --from=moonraker /copy /
 
 COPY rootfs/ /
 RUN chmod a+x /scripts/*.sh
