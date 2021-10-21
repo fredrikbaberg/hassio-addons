@@ -128,6 +128,9 @@ RUN echo "Install required packages for Klipper." \
         git \
         linux-headers \
         python2
+RUN echo "Install required packages for Moonraker." \
+    && apk add --no-cache \
+        curl-dev
 RUN echo "Install required packages for camera (mjpg-streamer, gphoto2)." \
     && apk add --no-cache \
         ffmpeg \
