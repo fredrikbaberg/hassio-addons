@@ -99,10 +99,11 @@ ENV PATH=${PATH}:/data/python/Klipper/bin
 RUN echo "Install required packages for plugins." \
     && apk add --no-cache \
         build-base \
-        libjpeg-turbo \
+        libjpeg-turbo-dev \
         linux-headers \
+        postgresql-dev \
         python3-dev \
-        zlib
+        zlib-dev
 RUN echo "Install required packages for Klipper." \
     && apk add --no-cache \
         build-base \
@@ -119,6 +120,7 @@ RUN echo "Install required packages for firmware update." \
         stm32flash
 RUN echo "Install useful packages for debugging." \
     && apk add --no-cache \
+        screen \
         vim
 
 # Copy data from previous stages
