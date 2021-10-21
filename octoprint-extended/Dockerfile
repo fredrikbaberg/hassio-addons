@@ -60,6 +60,11 @@ RUN echo "Install Klipper" \
     && find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && rm -rf /root/.cache
 COPY rootfs/root/klipper/.config /data/klipper/.config
+# Need to make two changes to /data/klipper/src/linux/main.c due to sched_setscheduler not being available in Alpine:
+# - Add #include<pthread.h>
+# - Replace sched_setscheduler(0, SCHED_FIFO, &sp); with pthread_setschedparam(pthread_self(), SCHED_FIFO, &sp);
+RUN sed -i 's"// sched_main"// sched_main\n#include <pthread.h>"' /data/klipper/src/linux/main.c
+RUN sed -i 's/sched_setscheduler(0/pthread_setschedparam(pthread_self()/' /data/klipper/src/linux/main.c
 RUN cd /data/klipper \
     && make clean \
     && make \
