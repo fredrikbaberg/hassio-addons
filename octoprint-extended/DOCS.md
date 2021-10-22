@@ -23,7 +23,7 @@ CuraEngine 15.04.6 is pre-installed. To use it, install the plugin [CuraEngine L
 ### Camera
 
 mjpg-streamer is available for camera and snapshots. There are issues with the remote proxy and Ingress, to have a video feed you need it to be able outside of Ingress. This is not the case for snapshots, which is pre-configured.
-`gphoto2` is also available, useful for using a [DSLR](https://github.com/FormerLurker/Octolapse/wiki/V0.4---Configuring-a-DSLR). Configure OctoLapse with the script `/scripts/take_snapshot.sh´.
+`gphoto2` is also available, for using a [DSLR with OctoLapse](https://github.com/FormerLurker/Octolapse/wiki/V0.4---Configuring-a-DSLR). The script is located at `/scripts/take_snapshot.sh`, note the `_` instead of `-` (dash) in the filename.
 
 ### Klipper
 
