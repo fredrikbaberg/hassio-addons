@@ -35,6 +35,8 @@ profile OctoPrint-Extended flags=(attach_disconnected,mediate_deleted) {
     
     # For access to GPIO
     /dev/gpiomem rw,
+    # For access to scripts
+    /dev/spidev* rw,
 
     # Access to run scripts
     /scripts/** rk,
