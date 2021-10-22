@@ -1,6 +1,6 @@
 {
     "name": "OctoPrint (extended)",
-    "version": "0.0.13",
+    "version": "0.0.14",
     "slug": "octoprint-extended",
     "description": "Extended OctoPrint add-on for Home Assistant",
     "arch": ["armhf", "armv7", "amd64", "aarch64", "i386"],
@@ -10,11 +10,13 @@
     "boot": "auto",
     "ports": {
         "5000/tcp": null,
-        "8000/tcp": null
+        "8000/tcp": null,
+        "7125/tcp": null
     },
     "ports_description": {
         "5000/tcp": "WebUI (Not required for Ingress)",
-        "8000/tcp": "Camera UI"
+        "8000/tcp": "Camera UI",
+        "7125/tcp": "Moonraker"
     },
     "devices": [
         "/dev/mem",
