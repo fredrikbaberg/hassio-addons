@@ -4,14 +4,22 @@ bashio::log.info "OctoPrint cont-init.d"
 
 # Copy OctoPrint install to persistent storage, if missing.
 if [ ! -d /data/python/OctoPrint ]; then
-    mkdir -p /data/python
-    tar -zxf /root/OctoPrint-python.tar.gz -C /data/python/
+    if [ -f /root/OctoPrint-python.tar.gz ]; then
+        mkdir -p /data/python
+        tar -zxf /root/OctoPrint-python.tar.gz -C /data/python/
+    else
+        bashio::log.info "OctoPrint Python archive not found"
+    fi
 fi
 
 # Copy config to persistent storage, if missing.
 if [ ! -f /data/config/octoprint/config.yaml ]; then
-    mkdir -p /data/config/octoprint
-    cp -r /root/config/octoprint /data/config/
+    if [ -d /root/config/octoprint ]; then
+        mkdir -p /data/config/octoprint
+        cp -r /root/config/octoprint /data/config/
+    else
+        bashio::log.info "Default OctoPrint config not found"
+    fi
 fi
 
 # Ensure Ingress user (homeassistant) exist.

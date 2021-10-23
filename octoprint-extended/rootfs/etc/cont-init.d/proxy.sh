@@ -4,8 +4,10 @@ bashio::log.info "Proxy cont-init.d"
 
 ingress_entry=$(bashio::addon.ingress_entry)
 
-sed -i "s#%%ingress_entry%%#${ingress_entry}#g" /etc/caddy/Caddyfile
+sed -i "s#%%ingress_entry%%#${ingress_entry}#g" /root/proxy/ingress.conf
 
-if bashio::config.true 'recovery'; then
-    sed -i "s%#recovery%rewrite / /recovery%g" /etc/caddy/Caddyfile
-fi
+# sed -i "s#%%ingress_entry%%#${ingress_entry}#g" /etc/caddy/Caddyfile
+
+# if bashio::config.true 'recovery'; then
+#     sed -i "s%#recovery%rewrite / /recovery%g" /etc/caddy/Caddyfile
+# fi
