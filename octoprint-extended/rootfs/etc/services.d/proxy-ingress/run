@@ -3,6 +3,6 @@
 # Start proxy service
 # ==============================================================================
 
-bashio::log.info "Starting proxy..."
+bashio::log.info "Starting proxy (Ingress)..."
 
-exec caddy run -config /etc/caddy/Caddyfile
+exec tinyproxy -d -c /root/proxy/ingress.conf

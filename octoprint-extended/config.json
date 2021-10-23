@@ -1,6 +1,6 @@
 {
     "name": "OctoPrint (extended)",
-    "version": "0.0.15",
+    "version": "0.0.16",
     "slug": "octoprint-extended",
     "description": "Extended OctoPrint add-on for Home Assistant",
     "arch": ["armhf", "armv7", "amd64", "aarch64", "i386"],
@@ -41,7 +41,6 @@
         "mjpg_arguments": ["str"],
         "recovery": "bool"
     },
-    "image": "fredrikbaberg/addon-octoprint-extended-{arch}",
     "tmpfs": true,
     "ingress": true,
     "panel_icon": "mdi:printer-3d",
