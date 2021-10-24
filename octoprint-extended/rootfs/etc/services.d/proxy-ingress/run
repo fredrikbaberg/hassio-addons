@@ -5,4 +5,4 @@
 
 bashio::log.info "Starting proxy (Ingress)..."
 
-exec haproxy -db -f /data/proxy/haproxy.cfg
+exec haproxy -db -f /etc/haproxy/haproxy.cfg
