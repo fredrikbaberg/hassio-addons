@@ -18,5 +18,10 @@ if [ ! -d /data/klipper ]; then
     fi
 fi
 
+if bashio::config.true 'klipper'; then
+    rm /etc/services.d/klipper/down
+    rm /etc/services.d/klipper/finish
+fi
+
 # Make sure log file exists
 touch /tmp/klippy.log

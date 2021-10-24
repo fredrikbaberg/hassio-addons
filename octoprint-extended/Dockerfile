@@ -251,3 +251,6 @@ WORKDIR /
 
 
 FROM final-extended AS final
+ENV LANG C.UTF-8
+ENV PIP_FLAGS="--no-cache-dir --extra-index-url https://www.piwheels.org/simple"
+ENV CFLAGS="-fcommon"
