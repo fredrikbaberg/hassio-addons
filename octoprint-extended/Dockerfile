@@ -1,29 +1,73 @@
-ARG BUILD_FROM
+ARG BUILD_FROM="homeassistant/amd64-base:latest"
+ARG OCTOPRINT_VERSION="1.6.1"
+ARG MJPG_STREAMER_VERSION="v1.0.0"
+ARG KLIPPER_VERSION="v0.10.0"
 
 FROM ${BUILD_FROM} AS build-base
 ENV LANG C.UTF-8
 ENV PIP_FLAGS="--no-cache-dir --extra-index-url https://www.piwheels.org/simple"
 ENV CFLAGS="-fcommon"
 
-RUN apk add --no-cache --virtual .build \
-        git \
-        python3-dev \
-        python2-dev \
-        py3-virtualenv \
+# RUN apk add --no-cache --virtual .build \
+#         build-base \
+#         cmake \
+#         git \
+#         linux-headers \
+#         py3-virtualenv \
+#         python2-dev \
+#         python3-dev \
+#     && echo "Done"
+
+
+
+FROM build-base AS octoprint
+ARG OCTOPRINT_VERSION
+ENV PYTHONPATH=/data/python/OctoPrint
+ENV PYTHONUSERBASE=/data/python/OctoPrint
+ENV PATH=${PATH}:/data/python/OctoPrint/bin
+
+RUN echo "Install OctoPrint" \
+    && apk add --no-cache \
         build-base \
         linux-headers \
-        cmake
+        py3-virtualenv \
+        python3-dev \
+    && echo "Done with apk add"
+RUN echo "Install" \
+    && virtualenv --python=python3 /data/python/OctoPrint \
+    && source /data/python/OctoPrint/bin/activate \
+    && pip install ${PIP_FLAGS} --upgrade \
+        pip \
+        wheel \
+        cython \
+    && pip install ${PIP_FLAGS} --upgrade \
+        OctoPrint==${OCTOPRINT_VERSION} \
+    && find /data/python/OctoPrint | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
+    && find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
+    && rm -rf /root/.cache
+RUN echo "Copy files to single folder" \
+    && mkdir -p /copy/root \
+    && cd /data/python && tar -zcf /copy/root/OctoPrint-python.tar.gz OctoPrint \
+    && ln -s /data/config/octoprint /copy/root/.octoprint
 
 
 
 FROM build-base AS mjpg-streamer
+ARG MJPG_STREAMER_VERSION
 RUN echo "Install mjpg-streamer" \
     && apk add --no-cache \
         libjpeg-turbo-dev \
-    && git clone --depth 1 https://github.com/jacksonliam/mjpg-streamer \
+        git \
+        build-base \
+        cmake \
+        linux-headers \
+    && echo "Done with apk add"
+RUN echo "Install" \
+    && git clone --single-branch --branch ${MJPG_STREAMER_VERSION} https://github.com/jacksonliam/mjpg-streamer \
     && cd mjpg-streamer/mjpg-streamer-experimental/ \
     && make --silent \
     && make install --silent \
+    && make clean \
     && mv www /www_mjpg
 RUN echo "Copy files to single folder" \
     && mkdir -p /copy \
@@ -38,33 +82,33 @@ RUN echo "Copy files to single folder" \
 
 
 FROM build-base AS klipper
+ARG KLIPPER_VERSION
 ENV PYTHONPATH=/data/python/Klipper
 ENV PYTHONUSERBASE=/data/python/Klipper
 ENV PATH=${PATH}:/data/python/Klipper/bin
 
 RUN echo "Install Klipper" \
     && apk add --no-cache \
+        build-base \
+        git \
         libffi-dev \
-        freetype-dev \
-        libpng-dev \
+        py3-virtualenv \
+        python2-dev \
+    && echo "Done with apk add"
+RUN echo "Install" \
     && virtualenv --python=python2.7 /data/python/Klipper \
     && source /data/python/Klipper/bin/activate \
     && pip install ${PIP_FLAGS} --upgrade \
         pip \
         wheel \
-    && git clone --depth 1 https://github.com/Klipper3d/klipper.git /data/klipper \
+    && git clone --single-branch --branch ${KLIPPER_VERSION} https://github.com/Klipper3d/klipper.git /data/klipper \
     && pip install ${PIP_FLAGS} -r /data/klipper/scripts/klippy-requirements.txt \
-    && pip install ${PIP_FLAGS} --upgrade \
-        numpy \
+    # && pip install ${PIP_FLAGS} --upgrade \
+    #     numpy \
     && find /data/python/Klipper | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && rm -rf /root/.cache
 COPY rootfs/root/klipper/.config /data/klipper/.config
-# Need to make two changes to /data/klipper/src/linux/main.c due to sched_setscheduler not being available in Alpine:
-# - Add #include<pthread.h>
-# - Replace sched_setscheduler(0, SCHED_FIFO, &sp); with pthread_setschedparam(pthread_self(), SCHED_FIFO, &sp);
-RUN sed -i 's"// sched_main"// sched_main\n#include <pthread.h>"' /data/klipper/src/linux/main.c
-RUN sed -i 's/sched_setscheduler(0/pthread_setschedparam(pthread_self()/' /data/klipper/src/linux/main.c
 RUN cd /data/klipper \
     && make clean \
     && make \
@@ -79,33 +123,44 @@ RUN echo "Copy files to single folder" \
 
 
 
-# FROM build-base AS moonraker
-# ENV PYTHONPATH=/data/python/Moonraker
-# ENV PYTHONUSERBASE=/data/python/Moonraker
-# ENV PATH=${PATH}:/data/python/Moonraker/bin
+FROM build-base AS moonraker
+ENV PYTHONPATH=/data/python/Moonraker
+ENV PYTHONUSERBASE=/data/python/Moonraker
+ENV PATH=${PATH}:/data/python/Moonraker/bin
 
-# RUN echo "Install Moonraker" \
-#     && apk add --no-cache \
-#         curl-dev \
-#         libjpeg-turbo-dev \
-#     && virtualenv --python=python3 /data/python/Moonraker \
-#     && source /data/python/Moonraker/bin/activate \
-#     && pip install ${PIP_FLAGS} --upgrade \
-#         pip \
-#         wheel \
-#     && git clone --depth 1 https://github.com/Arksine/moonraker.git /data/moonraker \
-#     && pip install -r /data/moonraker/scripts/moonraker-requirements.txt
-# RUN echo "Copy files to single folder" \
-#     && mkdir -p /copy/root \
-#     && cd /data && tar -zcf /copy/root/Moonraker-src.tar.gz moonraker \
-#     && cd /data/python && tar -zcf /copy/root/Moonraker-python.tar.gz Moonraker
+RUN echo "Install Moonraker" \
+    && apk add --no-cache \
+        build-base \
+        curl-dev \
+        git \
+        libjpeg-turbo-dev \
+        py3-virtualenv \
+        python3-dev \
+    && echo "Done with apk add"
+RUN echo "Install" \
+    && virtualenv --python=python3 /data/python/Moonraker \
+    && source /data/python/Moonraker/bin/activate \
+    && pip install ${PIP_FLAGS} --upgrade \
+        pip \
+        wheel \
+    && git clone --depth 1 https://github.com/Arksine/moonraker.git /data/moonraker \
+    && pip install -r /data/moonraker/scripts/moonraker-requirements.txt
+RUN echo "Copy files to single folder" \
+    && mkdir -p /copy/root \
+    && cd /data && tar -zcf /copy/root/Moonraker-src.tar.gz moonraker \
+    && cd /data/python && tar -zcf /copy/root/Moonraker-python.tar.gz Moonraker
 
 
 
 FROM build-base AS curaengine
 ARG CURA_VERSION=15.04.6
 RUN echo "Install CuraEngine" \
-    && apk add --no-cache libexecinfo-dev \
+    && apk add --no-cache \
+        libexecinfo-dev \
+        git \
+        build-base \
+    && echo "Done with apk add"
+RUN echo "Install" \
     && git clone -b ${CURA_VERSION} --depth 1 https://github.com/Ultimaker/CuraEngine \
     && cd CuraEngine \
     && make --silent \
@@ -116,10 +171,50 @@ RUN echo "Copy files to single folder" \
 
 
 
-FROM ${BUILD_FROM} AS final
-ENV PATH=${PATH}:/data/python/Klipper/bin
+FROM ${BUILD_FROM} AS final-slim
+ENV PATH=${PATH}:/data/python/OctoPrint/bin
 
-RUN echo "Install required packages for plugins." \
+RUN echo "Install required packages for proxy" \
+    && apk add --no-cache \
+        haproxy
+RUN echo "Install required packages for OctoPrint" \
+    && apk add --no-cache \
+        python3
+RUN echo "Install required packages for camera (mjpg-streamer, gphoto2)." \
+    && apk add --no-cache \
+        ffmpeg
+# Copy data from previous stages
+# ## octoprint
+COPY --from=octoprint /copy /
+COPY rootfs/ /
+RUN chmod a+x /scripts/*.sh
+WORKDIR /
+
+
+
+FROM ${BUILD_FROM} AS final-extended
+ENV PATH=${PATH}:/data/python/OctoPrint/bin:/data/python/Klipper/bin
+
+RUN echo "Install required packages for proxy" \
+    && apk add --no-cache \
+        tinyproxy
+RUN echo "Install required packages for OctoPrint" \
+    && apk add --no-cache \
+        python3
+RUN echo "Install required packages for camera (mjpg-streamer, gphoto2)." \
+    && apk add --no-cache \
+        ffmpeg \
+        gphoto2
+RUN echo "Install required packages for Klipper." \
+    && apk add --no-cache \
+        build-base \
+        linux-headers \
+        python2
+RUN echo "Install required packages for Moonraker." \
+    && apk add --no-cache \
+        curl-dev \
+        libsodium-dev
+RUN echo "Install development packages for different plugins etc." \
     && apk add --no-cache \
         build-base \
         libjpeg-turbo-dev \
@@ -127,20 +222,6 @@ RUN echo "Install required packages for plugins." \
         postgresql-dev \
         python3-dev \
         zlib-dev
-RUN echo "Install required packages for Klipper." \
-    && apk add --no-cache \
-        build-base \
-        git \
-        linux-headers \
-        python2
-# RUN echo "Install required packages for Moonraker." \
-#     && apk add --no-cache \
-#         curl-dev \
-#         libsodium-dev
-RUN echo "Install required packages for camera (mjpg-streamer, gphoto2)." \
-    && apk add --no-cache \
-        ffmpeg \
-        gphoto2
 RUN echo "Install required packages for firmware update." \
     && apk add --no-cache \
         avrdude \
@@ -152,15 +233,21 @@ RUN echo "Install useful packages for debugging." \
         vim
 
 # Copy data from previous stages
+# ## octoprint
+COPY --from=octoprint /copy /
 # ## mjpg-streamer
 COPY --from=mjpg-streamer /copy /
 # ## CuraEngineLegacy
 COPY --from=curaengine /copy /
 # ## Klipper
 COPY --from=klipper /copy /
-# # ## Moonraker
-# COPY --from=moonraker /copy /
+# ## Moonraker
+COPY --from=moonraker /copy /
 
 COPY rootfs/ /
 RUN chmod a+x /scripts/*.sh
 WORKDIR /
+
+
+
+FROM final-extended AS final
