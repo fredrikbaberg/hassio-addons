@@ -1,6 +1,6 @@
 {
     "name": "OctoPrint (extended)",
-    "version": "0.0.25",
+    "version": "0.0.26",
     "slug": "octoprint-extended",
     "description": "Extended OctoPrint add-on for Home Assistant",
     "arch": ["armhf", "armv7", "amd64", "aarch64", "i386"],
@@ -36,12 +36,14 @@
             "-i \"input_uvc.so -n\""
         ],
         "recovery": false,
-        "klipper": false
+        "autostart_klipper": false,
+        "autostart_mjpg-streamer": false
     },
     "schema": {
         "mjpg_arguments": ["str"],
         "recovery": "bool",
-        "klipper": "bool"
+        "autostart_klipper": "bool",
+        "autostart_mjpg-streamer": "bool"
     },
     "image": "fredrikbaberg/addon-octoprint-extended-{arch}",
     "tmpfs": true,

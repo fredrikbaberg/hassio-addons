@@ -9,3 +9,12 @@ for I in $(bashio::config 'mjpg_arguments'); do
 done
 
 echo "exec mjpg_streamer $MJPG_ARGUMENTS" >> /etc/services.d/mjpg-streamer/run
+
+# Configure autostart of service
+if bashio::config.true 'autostart_mjpg-streamer'; then
+    rm /etc/services.d/mjpg-streamer/down
+    rm /etc/services.d/mjpg-streamer/finish
+else
+    touch /etc/services.d/mjpg-streamer/down
+    touch /etc/services.d/mjpg-streamer/finish
+fi

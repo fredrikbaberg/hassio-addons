@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bashio
 
-echo "Update Klipper to latest version"
+echo "Update Klipper to latest version (git master branch)"
 
 cd /data/klipper
 # Stash changes

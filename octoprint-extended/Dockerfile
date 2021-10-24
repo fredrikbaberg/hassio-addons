@@ -225,6 +225,7 @@ RUN echo "Install development packages for different plugins etc." \
 RUN echo "Install required packages for firmware update." \
     && apk add --no-cache \
         avrdude \
+        git \
         stm32flash
 RUN echo "Install useful packages for debugging." \
     && apk add --no-cache \

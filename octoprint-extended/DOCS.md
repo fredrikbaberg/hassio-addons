@@ -27,8 +27,8 @@ mjpg-streamer is available for camera and snapshots. There are issues with the r
 
 ### Klipper
 
-Klipper is pre-installed, so that you can install the plugin OctoPrinter and get started *assuming you already have your printer setup for Klipper*. A script is available to get the latest source from GitHub.
-There is a Linux host process available, intended for using a [Raspberry Pi as a secondary MCU](https://www.klipper3d.org/RPi_microcontroller.html). **Not tested**
+This addon comes with Klipper pre-installed. To use it, install the plugin OctoKlipper. *Note that this addon will **not** change the firmware of the printer, you are required to do that setup separately*.
+Linux host process is available, intended for using a [Raspberry Pi as a secondary MCU](https://www.klipper3d.org/RPi_microcontroller.html). *This is not tested*.
 
 ### Credentials
 
