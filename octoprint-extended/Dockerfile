@@ -176,7 +176,7 @@ ENV PATH=${PATH}:/data/python/OctoPrint/bin
 
 RUN echo "Install required packages for proxy" \
     && apk add --no-cache \
-        haproxy
+        caddy
 RUN echo "Install required packages for OctoPrint" \
     && apk add --no-cache \
         python3
@@ -197,7 +197,7 @@ ENV PATH=${PATH}:/data/python/OctoPrint/bin:/data/python/Klipper/bin
 
 RUN echo "Install required packages for proxy" \
     && apk add --no-cache \
-        tinyproxy
+        caddy
 RUN echo "Install required packages for OctoPrint" \
     && apk add --no-cache \
         python3
