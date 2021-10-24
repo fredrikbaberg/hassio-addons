@@ -5,4 +5,4 @@
 
 bashio::log.info "Starting proxy (Ingress)..."
 
-exec tinyproxy -d -c /data/proxy/ingress.conf
+exec haproxy -db -f /data/proxy/haproxy.cfg
