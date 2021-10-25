@@ -9,7 +9,13 @@
 - marlin-binary-transfer
 
 ## Test
-
+- Addon starts
+- Access through Ingress
+- Access through external port
+- Install plugins
+- Stop/Restart addon
+- Restart OctoPrint
+- Create and restore backup
 - GPIO
 - Camera (mjpg-streamer)
 - Camera (gphoto2)

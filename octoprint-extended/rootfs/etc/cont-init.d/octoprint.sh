@@ -27,10 +27,8 @@ new_password=$(date +%s | sha256sum | base64 | head -c 32 ; echo)
 octoprint --basedir /data/config/octoprint user add homeassistant --password "$new_password" --admin # 2> /dev/null
 
 # Configure autostart of service
-if bashio::config.true 'autostart_octoprint'; then
+if bashio::config.is_empty 'autostart_octoprint' || bashio::config.true 'autostart_octoprint'; then
     rm -f /etc/services.d/octoprint/down
-    rm -f /etc/services.d/octoprint/finish
 else
     touch /etc/services.d/octoprint/down
-    touch /etc/services.d/octoprint/finish
 fi

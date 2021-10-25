@@ -1,6 +1,6 @@
 {
     "name": "OctoPrint (extended)",
-    "version": "0.0.28",
+    "version": "0.0.30",
     "slug": "octoprint-extended",
     "description": "Extended OctoPrint add-on for Home Assistant",
     "arch": ["armhf", "armv7", "amd64", "aarch64", "i386"],
@@ -35,21 +35,20 @@
             "-o \"output_http.so -w /www_mjpg -p 8080\"",
             "-i \"input_uvc.so -n\""
         ],
-        "autostart_octoprint": true,
+        "recovery": false,
         "autostart_mjpg_streamer": false,
         "autostart_klipper": false,
         "autostart_moonraker": false,
-        "autostart_klipper_linux_host": false,
-        "recovery": false
+        "autostart_klipper_linux_host": false
     },
     "schema": {
         "mjpg_arguments": ["str"],
-        "autostart_octoprint": "bool",
-        "autostart_mjpg_streamer": "bool",
-        "autostart_klipper": "bool",
-        "autostart_moonraker": "bool",
-        "autostart_klipper_linux_host": "bool",
-        "recovery": "bool"
+        "recovery": "bool",
+        "autostart_octoprint": "bool?",
+        "autostart_mjpg_streamer": "bool?",
+        "autostart_klipper": "bool?",
+        "autostart_moonraker": "bool?",
+        "autostart_klipper_linux_host": "bool?"
     },
     "image": "fredrikbaberg/addon-octoprint-extended-{arch}",
     "tmpfs": true,
@@ -57,10 +56,7 @@
     "panel_icon": "mdi:printer-3d",
     "panel_title": "OctoPrint (extended)",
     "panel_admin": false,
-    "backup_exclude": [
-        "/data/klipper",
-        "/data/moonraker"
-    ],
+    "backup_exclude": [],
     "stage": "experimental",
     "realtime": true
 }
