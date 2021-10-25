@@ -1,7 +1,7 @@
 ARG BUILD_FROM="homeassistant/amd64-base:latest"
 ARG OCTOPRINT_VERSION="1.6.1"
 ARG MJPG_STREAMER_VERSION="v1.0.0"
-ARG KLIPPER_VERSION="v0.10.0"
+ARG KLIPPER_VERSION="master"
 
 FROM ${BUILD_FROM} AS build-base
 ENV LANG C.UTF-8
@@ -9,36 +9,37 @@ ENV PIP_FLAGS="--no-cache-dir --extra-index-url https://www.piwheels.org/simple"
 ENV CFLAGS="-fcommon"
 
 RUN echo "Install common dependencies" \
-    apk add --no-cache --virtual .build \
-        # OctoPrint
+    && apk add --no-cache --virtual .build \
+        ## OctoPrint \
         build-base \
         linux-headers \
         py3-virtualenv \
         python3-dev \
-        # mjpg-streamer
+        ## mjpg-streamer \
         libjpeg-turbo-dev \
         git \
         build-base \
         cmake \
         linux-headers \
-        # Klipper
+        ## Klipper \
         build-base \
         git \
         libffi-dev \
         py3-virtualenv \
-        python2-dev \
-        # Moonraker
-        build-base \
-        curl-dev \
-        git \
-        libjpeg-turbo-dev \
-        py3-virtualenv \
+        python2 \
         python3-dev \
-        # Cura
+        ## Moonraker \
+        # build-base \
+        # curl-dev \
+        # git \
+        # libjpeg-turbo-dev \
+        # py3-virtualenv \
+        # python3-dev \
+        ## Cura \
         libexecinfo-dev \
         git \
         build-base \
-    echo "Done with build-base"
+    && echo "Done with build-base"
 
 
 FROM build-base AS octoprint
@@ -114,10 +115,11 @@ RUN echo "Install Klipper" \
         git \
         libffi-dev \
         py3-virtualenv \
-        python2-dev \
+        python2 \
+        python3-dev \
     && echo "Done with apk add"
 RUN echo "Install" \
-    && virtualenv --python=python2.7 /data/python/Klipper \
+    && virtualenv --python=python3 /data/python/Klipper \
     && source /data/python/Klipper/bin/activate \
     && pip install ${PIP_FLAGS} --upgrade \
         pip \
@@ -144,32 +146,32 @@ RUN echo "Copy files to single folder" \
 
 
 
-FROM build-base AS moonraker
-ENV PYTHONPATH=/data/python/Moonraker
-ENV PYTHONUSERBASE=/data/python/Moonraker
-ENV PATH=${PATH}:/data/python/Moonraker/bin
+# FROM build-base AS moonraker
+# ENV PYTHONPATH=/data/python/Moonraker
+# ENV PYTHONUSERBASE=/data/python/Moonraker
+# ENV PATH=${PATH}:/data/python/Moonraker/bin
 
-RUN echo "Install Moonraker" \
-    && apk add --no-cache \
-        build-base \
-        curl-dev \
-        git \
-        libjpeg-turbo-dev \
-        py3-virtualenv \
-        python3-dev \
-    && echo "Done with apk add"
-RUN echo "Install" \
-    && virtualenv --python=python3 /data/python/Moonraker \
-    && source /data/python/Moonraker/bin/activate \
-    && pip install ${PIP_FLAGS} --upgrade \
-        pip \
-        wheel \
-    && git clone --depth 1 https://github.com/Arksine/moonraker.git /data/moonraker \
-    && pip install -r /data/moonraker/scripts/moonraker-requirements.txt
-RUN echo "Copy files to single folder" \
-    && mkdir -p /copy/root \
-    && cd /data && tar -zcf /copy/root/Moonraker-src.tar.gz moonraker \
-    && cd /data/python && tar -zcf /copy/root/Moonraker-python.tar.gz Moonraker
+# RUN echo "Install Moonraker" \
+#     && apk add --no-cache \
+#         build-base \
+#         curl-dev \
+#         git \
+#         libjpeg-turbo-dev \
+#         py3-virtualenv \
+#         python3-dev \
+#     && echo "Done with apk add"
+# RUN echo "Install" \
+#     && virtualenv --python=python3 /data/python/Moonraker \
+#     && source /data/python/Moonraker/bin/activate \
+#     && pip install ${PIP_FLAGS} --upgrade \
+#         pip \
+#         wheel \
+#     && git clone --depth 1 https://github.com/Arksine/moonraker.git /data/moonraker \
+#     && pip install -r /data/moonraker/scripts/moonraker-requirements.txt
+# RUN echo "Copy files to single folder" \
+#     && mkdir -p /copy/root \
+#     && cd /data && tar -zcf /copy/root/Moonraker-src.tar.gz moonraker \
+#     && cd /data/python && tar -zcf /copy/root/Moonraker-python.tar.gz Moonraker
 
 
 
@@ -200,8 +202,8 @@ RUN echo "Install required packages for proxy" \
         caddy
 RUN echo "Install required packages for OctoPrint" \
     && apk add --no-cache \
-        python3
-RUN echo "Install required packages for camera (mjpg-streamer, gphoto2)." \
+        python3 \
+RUN echo "Install required packages for camera stream." \
     && apk add --no-cache \
         ffmpeg
 # Copy data from previous stages
@@ -230,11 +232,12 @@ RUN echo "Install required packages for Klipper." \
     && apk add --no-cache \
         build-base \
         linux-headers \
+        python3 \
         python2
-RUN echo "Install required packages for Moonraker." \
-    && apk add --no-cache \
-        curl-dev \
-        libsodium-dev
+# RUN echo "Install required packages for Moonraker." \
+#     && apk add --no-cache \
+#         curl-dev \
+#         libsodium-dev
 RUN echo "Install development packages for different plugins etc." \
     && apk add --no-cache \
         build-base \
@@ -264,7 +267,7 @@ COPY --from=curaengine /copy /
 # ## Klipper
 COPY --from=klipper /copy /
 # ## Moonraker
-COPY --from=moonraker /copy /
+# COPY --from=moonraker /copy /
 
 COPY rootfs/ /
 RUN chmod a+x /scripts/*.sh
@@ -274,5 +277,4 @@ WORKDIR /
 
 FROM final-extended AS final
 ENV LANG C.UTF-8
-ENV PIP_FLAGS="--no-cache-dir --extra-index-url https://www.piwheels.org/simple"
 ENV CFLAGS="-fcommon"
