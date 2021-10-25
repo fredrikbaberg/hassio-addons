@@ -8,16 +8,37 @@ ENV LANG C.UTF-8
 ENV PIP_FLAGS="--no-cache-dir --extra-index-url https://www.piwheels.org/simple"
 ENV CFLAGS="-fcommon"
 
-# RUN apk add --no-cache --virtual .build \
-#         build-base \
-#         cmake \
-#         git \
-#         linux-headers \
-#         py3-virtualenv \
-#         python2-dev \
-#         python3-dev \
-#     && echo "Done"
-
+RUN echo "Install common dependencies" \
+    apk add --no-cache --virtual .build \
+        # OctoPrint
+        build-base \
+        linux-headers \
+        py3-virtualenv \
+        python3-dev \
+        # mjpg-streamer
+        libjpeg-turbo-dev \
+        git \
+        build-base \
+        cmake \
+        linux-headers \
+        # Klipper
+        build-base \
+        git \
+        libffi-dev \
+        py3-virtualenv \
+        python2-dev \
+        # Moonraker
+        build-base \
+        curl-dev \
+        git \
+        libjpeg-turbo-dev \
+        py3-virtualenv \
+        python3-dev \
+        # Cura
+        libexecinfo-dev \
+        git \
+        build-base \
+    echo "Done with build-base"
 
 
 FROM build-base AS octoprint
