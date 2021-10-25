@@ -20,8 +20,8 @@ fi
 
 # Configure autostart of service
 if bashio::config.true 'autostart_klipper'; then
-    rm /etc/services.d/klipper/down
-    rm /etc/services.d/klipper/finish
+    rm -f /etc/services.d/klipper/down
+    rm -f /etc/services.d/klipper/finish
 else
     touch /etc/services.d/klipper/down
     touch /etc/services.d/klipper/finish

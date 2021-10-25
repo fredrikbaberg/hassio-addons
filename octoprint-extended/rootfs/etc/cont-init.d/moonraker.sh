@@ -20,3 +20,12 @@ fi
 
 # Make sure log file exists
 touch /tmp/moonraker.log
+
+# Configure autostart of service
+if bashio::config.true 'autostart_moonraker'; then
+    rm -f /etc/services.d/moonraker/down
+    rm -f /etc/services.d/moonraker/finish
+else
+    touch /etc/services.d/moonraker/down
+    touch /etc/services.d/moonraker/finish
+fi

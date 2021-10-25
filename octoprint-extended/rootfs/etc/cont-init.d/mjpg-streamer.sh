@@ -11,9 +11,9 @@ done
 echo "exec mjpg_streamer $MJPG_ARGUMENTS" >> /etc/services.d/mjpg-streamer/run
 
 # Configure autostart of service
-if bashio::config.true 'autostart_mjpg-streamer'; then
-    rm /etc/services.d/mjpg-streamer/down
-    rm /etc/services.d/mjpg-streamer/finish
+if bashio::config.true 'autostart_mjpg_streamer'; then
+    rm -f /etc/services.d/mjpg-streamer/down
+    rm -f /etc/services.d/mjpg-streamer/finish
 else
     touch /etc/services.d/mjpg-streamer/down
     touch /etc/services.d/mjpg-streamer/finish
