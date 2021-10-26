@@ -24,9 +24,6 @@ profile OctoPrint-Extended flags=(attach_disconnected,mediate_deleted) {
 
   # Access to Options.json and other files within your addon
   /data/** rw,
-
-  # For access to SPI
-  /dev/spidev* rw,
   
   profile /data/python/OctoPrint/bin/octoprint flags=(attach_disconnected,mediate_deleted) {
     #include <abstractions/base>
@@ -41,5 +38,16 @@ profile OctoPrint-Extended flags=(attach_disconnected,mediate_deleted) {
 
     # Access to run scripts
     /scripts/** rk,
+  }
+
+  # Start new profile for klipper_mcu
+  /usr/local/bin/klipper_mcu cx,
+  profile /usr/local/bin/klipper_mcu flags=(attach_disconnected,mediate_deleted) {
+
+    # For access to GPIO
+    /dev/gpiomem rw,
+    
+    # For access to SPI
+    /dev/spidev* rw,
   }
 }
