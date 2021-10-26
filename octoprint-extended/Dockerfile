@@ -13,6 +13,7 @@ RUN echo "Install common dependencies" \
         ## OctoPrint \
         build-base \
         linux-headers \
+        postgresql-dev \
         py3-virtualenv \
         python3-dev \
         ## mjpg-streamer \
@@ -52,6 +53,7 @@ RUN echo "Install OctoPrint" \
     && apk add --no-cache \
         build-base \
         linux-headers \
+        postgresql-dev \
         py3-virtualenv \
         python3-dev \
     && echo "Done with apk add"
@@ -129,8 +131,8 @@ RUN echo "Install" \
         wheel \
     && git clone --single-branch --branch ${KLIPPER_VERSION} https://github.com/Klipper3d/klipper.git /data/klipper \
     && pip install ${PIP_FLAGS} -r /data/klipper/scripts/klippy-requirements.txt \
-    && pip install ${PIP_FLAGS} --upgrade \
-        numpy \
+    # && pip install ${PIP_FLAGS} --upgrade \
+    #     numpy \
     && find /data/python/Klipper | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && rm -rf /root/.cache
