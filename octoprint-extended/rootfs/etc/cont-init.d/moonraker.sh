@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bashio
 
-# bashio::log.info "Moonraker cont-init.d"
+bashio::log.info "Moonraker cont-init.d (not implemented)"
 
 # # Copy Moonraker install to persistent storage, if missing.
 # if [ ! -d /data/python/Moonraker ]; then
