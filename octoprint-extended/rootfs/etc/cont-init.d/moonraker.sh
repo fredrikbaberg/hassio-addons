@@ -18,6 +18,16 @@ bashio::log.info "Moonraker cont-init.d (not implemented)"
 #     fi
 # fi
 
+# # Copy config to persistent storage, if missing.
+# if [ ! -f /data/config/octoprint/klipper/moonraker.conf ]; then
+#     if [ -f /root/config/octoprint/klipper/moonraker.conf ]; then
+#         mkdir -p /data/config/octoprint/klipper
+#         cp /root/config/octoprint/klipper/moonraker.conf /data/config/octoprint/klipper/moonraker.conf
+#     else
+#         bashio::log.info "Default Moonraker config not found"
+#     fi
+# fi
+
 # # Make sure log file exists
 # touch /tmp/moonraker.log
 
