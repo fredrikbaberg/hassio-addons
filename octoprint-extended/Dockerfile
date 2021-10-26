@@ -64,6 +64,9 @@ RUN echo "Install" \
         cython \
     && pip install ${PIP_FLAGS} --upgrade \
         OctoPrint==${OCTOPRINT_VERSION} \
+    && pip install ${PIP_FLAGS} \
+        marlin-binary-protocol \
+        psycopg2 \
     && find /data/python/OctoPrint | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && rm -rf /root/.cache
@@ -126,8 +129,8 @@ RUN echo "Install" \
         wheel \
     && git clone --single-branch --branch ${KLIPPER_VERSION} https://github.com/Klipper3d/klipper.git /data/klipper \
     && pip install ${PIP_FLAGS} -r /data/klipper/scripts/klippy-requirements.txt \
-    # && pip install ${PIP_FLAGS} --upgrade \
-    #     numpy \
+    && pip install ${PIP_FLAGS} --upgrade \
+        numpy \
     && find /data/python/Klipper | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && rm -rf /root/.cache
