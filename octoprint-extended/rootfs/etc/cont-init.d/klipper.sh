@@ -18,6 +18,16 @@ if [ ! -d /data/klipper ]; then
     fi
 fi
 
+# Copy config to persistent storage, if missing.
+if [ ! -f /data/config/octoprint/klipper/printer.cfg ]; then
+    if [ -f /root/config/octoprint/klipper/printer.cfg ]; then
+        mkdir -p /data/config/octoprint/klipper
+        cp /root/config/octoprint/klipper/printer.cfg /data/config/octoprint/klipper/printer.cfg
+    else
+        bashio::log.info "Default Klipper config not found"
+    fi
+fi
+
 # Configure autostart of service
 if bashio::config.true 'autostart_klipper'; then
     rm -f /etc/services.d/klipper/down

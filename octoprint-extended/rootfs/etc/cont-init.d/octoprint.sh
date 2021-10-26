@@ -14,9 +14,9 @@ fi
 
 # Copy config to persistent storage, if missing.
 if [ ! -f /data/config/octoprint/config.yaml ]; then
-    if [ -d /root/config/octoprint ]; then
+    if [ -f /root/config/octoprint/config.yaml ]; then
         mkdir -p /data/config/octoprint
-        cp -r /root/config/octoprint /data/config/
+        cp /root/config/octoprint/config.yaml /data/config/octoprint/config.yaml
     else
         bashio::log.info "Default OctoPrint config not found"
     fi

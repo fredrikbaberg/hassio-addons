@@ -13,6 +13,7 @@ RUN echo "Install common dependencies" \
         ## OctoPrint \
         build-base \
         linux-headers \
+        postgresql-dev \
         py3-virtualenv \
         python3-dev \
         ## mjpg-streamer \
@@ -52,6 +53,7 @@ RUN echo "Install OctoPrint" \
     && apk add --no-cache \
         build-base \
         linux-headers \
+        postgresql-dev \
         py3-virtualenv \
         python3-dev \
     && echo "Done with apk add"
@@ -64,6 +66,9 @@ RUN echo "Install" \
         cython \
     && pip install ${PIP_FLAGS} --upgrade \
         OctoPrint==${OCTOPRINT_VERSION} \
+    && pip install ${PIP_FLAGS} \
+        marlin-binary-protocol \
+        psycopg2 \
     && find /data/python/OctoPrint | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && rm -rf /root/.cache

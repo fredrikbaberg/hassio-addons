@@ -1,6 +1,6 @@
 {
     "name": "OctoPrint (extended)",
-    "version": "0.0.30",
+    "version": "0.0.31",
     "slug": "octoprint-extended",
     "description": "Extended OctoPrint add-on for Home Assistant",
     "arch": ["armhf", "armv7", "amd64", "aarch64", "i386"],
@@ -37,9 +37,7 @@
         ],
         "recovery": false,
         "autostart_mjpg_streamer": false,
-        "autostart_klipper": false,
-        "autostart_moonraker": false,
-        "autostart_klipper_linux_host": false
+        "autostart_klipper": false
     },
     "schema": {
         "mjpg_arguments": ["str"],
