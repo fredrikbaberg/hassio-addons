@@ -38,10 +38,6 @@ system:
         -   action: klipperrestart
             name: Restart Klipper
             command: /scripts/klipper_restart.sh
-        -   action: divider
-        -   action: extendoctoprint
-            name: Extend OctoPrint with additional build packages
-            command: /scripts/extend_octoprint.sh
         -   action: klipperupgrade
-            name: Update Klipper from git
+            name: Update Klipper source from git
             command: /scripts/klipper_update.sh
