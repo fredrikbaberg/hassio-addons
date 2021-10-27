@@ -1,8 +1,8 @@
 {
-    "name": "OctoPrint (extended)",
-    "version": "0.0.31",
-    "slug": "octoprint-extended",
-    "description": "Extended OctoPrint add-on for Home Assistant",
+    "name": "3DPrinter",
+    "version": "0.0.1",
+    "slug": "3dprinter",
+    "description": "3DPrinter add-on for Home Assistant. OctoPrint, Klipper and more.",
     "arch": ["armhf", "armv7", "amd64", "aarch64", "i386"],
     "url": "https://github.com/fredrikbaberg/hassio-addons",
     "startup": "application",
@@ -10,11 +10,13 @@
     "boot": "auto",
     "ports": {
         "5000/tcp": null,
-        "8000/tcp": null
+        "8000/tcp": null,
+        "6000/tcp": null
     },
     "ports_description": {
-        "5000/tcp": "WebUI (Not required for Ingress)",
-        "8000/tcp": "Camera UI"
+        "5000/tcp": "OctoPrint WebUI (Not required for Ingress)",
+        "8000/tcp": "Camera WebUI",
+        "6000/tcp": "Fluidd"
     },
     "devices": [
         "/dev/mem",
@@ -36,6 +38,7 @@
             "-i \"input_uvc.so -n\""
         ],
         "recovery": false,
+        "ingress_ui": "list(octoprint|fluidd)",
         "autostart_mjpg_streamer": false,
         "autostart_klipper": false
     },
@@ -48,11 +51,11 @@
         "autostart_moonraker": "bool?",
         "autostart_klipper_linux_host": "bool?"
     },
-    "image": "fredrikbaberg/addon-octoprint-extended-{arch}",
+    "image": "fredrikbaberg/addon-3dprinter-{arch}",
     "tmpfs": true,
     "ingress": true,
     "panel_icon": "mdi:printer-3d",
-    "panel_title": "OctoPrint (extended)",
+    "panel_title": "3DPrinter",
     "panel_admin": false,
     "backup_exclude": [],
     "stage": "experimental",

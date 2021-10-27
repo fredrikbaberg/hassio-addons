@@ -51,10 +51,6 @@ Updates of OctoPrint should be possible from inside the addon.
 
 A backup from within OctoPrint should be sufficient, as it will include both OctoPrint and Klipper configuration files.
 
-### Extra dependencies
-
-Some additional `pip` packages may be needed, for instance `marlin-binary-protocol`. Those can be installed through the script "Extend OctoPrint with additional build packages" (`/scripts/extend_octoprint.sh`). Installation is made to persistent storage, so the command should only be needed once.
-
 ## Versions
 
 Some notes regarding the software and versions.

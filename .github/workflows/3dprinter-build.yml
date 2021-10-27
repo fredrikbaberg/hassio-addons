@@ -1,4 +1,4 @@
-name: octoprint-extended-build
+name: 3dprinter-build
 
 on:
   workflow_dispatch:
@@ -25,7 +25,7 @@ jobs:
       with:
         args: |
           --armhf \
-          --target octoprint-extended \
+          --target 3dprinter \
           --docker-hub-check
   armv7:
     runs-on: ubuntu-latest
@@ -42,7 +42,7 @@ jobs:
       with:
         args: |
           --armv7 \
-          --target octoprint-extended \
+          --target 3dprinter \
           --docker-hub-check
   amd64:
     runs-on: ubuntu-latest
@@ -59,7 +59,7 @@ jobs:
       with:
         args: |
           --amd64 \
-          --target octoprint-extended \
+          --target 3dprinter \
           --docker-hub-check
   aarch64:
     runs-on: ubuntu-latest
@@ -76,7 +76,7 @@ jobs:
       with:
         args: |
           --aarch64 \
-          --target octoprint-extended \
+          --target 3dprinter \
           --docker-hub-check
   i386:
     runs-on: ubuntu-latest
@@ -93,5 +93,5 @@ jobs:
       with:
         args: |
           --i386 \
-          --target octoprint-extended \
+          --target 3dprinter \
           --docker-hub-check

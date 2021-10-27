@@ -1,7 +1,7 @@
 ARG BUILD_FROM="homeassistant/amd64-base:latest"
 ARG OCTOPRINT_VERSION="1.6.1"
 ARG MJPG_STREAMER_VERSION="v1.0.0"
-ARG KLIPPER_VERSION="master"
+ARG KLIPPER_VERSION="v0.10.0"
 
 FROM ${BUILD_FROM} AS build-base
 ENV LANG C.UTF-8
@@ -30,12 +30,12 @@ RUN echo "Install common dependencies" \
         python2 \
         python3-dev \
         ## Moonraker \
-        # build-base \
-        # curl-dev \
-        # git \
-        # libjpeg-turbo-dev \
-        # py3-virtualenv \
-        # python3-dev \
+        build-base \
+        curl-dev \
+        git \
+        libjpeg-turbo-dev \
+        py3-virtualenv \
+        python3-dev \
         ## Cura \
         libexecinfo-dev \
         git \
@@ -108,6 +108,25 @@ RUN echo "Copy files to single folder" \
 
 
 
+FROM build-base AS curaengine
+ARG CURA_VERSION=15.04.6
+RUN echo "Install CuraEngine" \
+    && apk add --no-cache \
+        libexecinfo-dev \
+        git \
+        build-base \
+    && echo "Done with apk add"
+RUN echo "Install" \
+    && git clone -b ${CURA_VERSION} --depth 1 https://github.com/Ultimaker/CuraEngine \
+    && cd CuraEngine \
+    && make --silent \
+    && mv build/CuraEngine /usr/local/bin/CuraEngine
+RUN echo "Copy files to single folder" \
+    && mkdir -p /copy/usr/local/bin/ \
+    && cp /usr/local/bin/CuraEngine /copy/usr/local/bin/CuraEngineLegacy
+
+
+
 FROM build-base AS klipper
 ARG KLIPPER_VERSION
 ENV PYTHONPATH=/data/python/Klipper
@@ -151,51 +170,40 @@ RUN echo "Copy files to single folder" \
 
 
 
-# FROM build-base AS moonraker
-# ENV PYTHONPATH=/data/python/Moonraker
-# ENV PYTHONUSERBASE=/data/python/Moonraker
-# ENV PATH=${PATH}:/data/python/Moonraker/bin
+FROM build-base AS moonraker
+ENV PYTHONPATH=/root/moonraker/python
+ENV PYTHONUSERBASE=/root/moonraker/python
+ENV PATH=${PATH}:/root/moonraker/python/bin
 
-# RUN echo "Install Moonraker" \
-#     && apk add --no-cache \
-#         build-base \
-#         curl-dev \
-#         git \
-#         libjpeg-turbo-dev \
-#         py3-virtualenv \
-#         python3-dev \
-#     && echo "Done with apk add"
-# RUN echo "Install" \
-#     && virtualenv --python=python3 /data/python/Moonraker \
-#     && source /data/python/Moonraker/bin/activate \
-#     && pip install ${PIP_FLAGS} --upgrade \
-#         pip \
-#         wheel \
-#     && git clone --depth 1 https://github.com/Arksine/moonraker.git /data/moonraker \
-#     && pip install -r /data/moonraker/scripts/moonraker-requirements.txt
-# RUN echo "Copy files to single folder" \
-#     && mkdir -p /copy/root \
-#     && cd /data && tar -zcf /copy/root/Moonraker-src.tar.gz moonraker \
-#     && cd /data/python && tar -zcf /copy/root/Moonraker-python.tar.gz Moonraker
-
-
-
-FROM build-base AS curaengine
-ARG CURA_VERSION=15.04.6
-RUN echo "Install CuraEngine" \
+RUN echo "Install Moonraker" \
     && apk add --no-cache \
-        libexecinfo-dev \
-        git \
         build-base \
+        curl-dev \
+        git \
+        libjpeg-turbo-dev \
+        py3-virtualenv \
+        python3-dev \
     && echo "Done with apk add"
 RUN echo "Install" \
-    && git clone -b ${CURA_VERSION} --depth 1 https://github.com/Ultimaker/CuraEngine \
-    && cd CuraEngine \
-    && make --silent \
-    && mv build/CuraEngine /usr/local/bin/CuraEngine
+    && virtualenv --python=python3 /root/moonraker/python \
+    && source /root/moonraker/python/bin/activate \
+    && pip install ${PIP_FLAGS} --upgrade \
+        pip \
+        wheel \
+    && git clone --depth 1 https://github.com/Arksine/moonraker.git /root/moonraker/src \
+    && pip install -r /root/moonraker/src/scripts/moonraker-requirements.txt
 RUN echo "Copy files to single folder" \
-    && mkdir -p /copy/usr/local/bin/ \
-    && cp /usr/local/bin/CuraEngine /copy/usr/local/bin/CuraEngineLegacy
+    && mkdir -p /copy/root \
+    && cp -R /root/moonraker /copy/root/moonraker
+
+
+
+FROM build-base AS fluidd
+ADD https://github.com/cadriel/fluidd/releases/latest/download/fluidd.zip /tmp
+RUN unzip /tmp/fluidd.zip -d /root/fluidd
+RUN echo "Copy files to single folder" \
+    && mkdir -p /copy/root \
+    && cp -R /root/fluidd /copy/root/fluidd
 
 
 
@@ -239,10 +247,10 @@ RUN echo "Install required packages for Klipper." \
         linux-headers \
         python3 \
         python2
-# RUN echo "Install required packages for Moonraker." \
-#     && apk add --no-cache \
-#         curl-dev \
-#         libsodium-dev
+RUN echo "Install required packages for Moonraker." \
+    && apk add --no-cache \
+        curl-dev \
+        libsodium-dev
 RUN echo "Install development packages for different plugins etc." \
     && apk add --no-cache \
         build-base \
@@ -264,15 +272,17 @@ RUN echo "Install useful packages for debugging." \
 
 # Copy data from previous stages
 # ## octoprint
-COPY --from=octoprint /copy /
-# ## mjpg-streamer
-COPY --from=mjpg-streamer /copy /
-# ## CuraEngineLegacy
-COPY --from=curaengine /copy /
-# ## Klipper
-COPY --from=klipper /copy /
-# ## Moonraker
-# COPY --from=moonraker /copy /
+# COPY --from=octoprint /copy /
+# # ## mjpg-streamer
+# COPY --from=mjpg-streamer /copy /
+# # ## CuraEngineLegacy
+# COPY --from=curaengine /copy /
+# # ## Klipper
+# COPY --from=klipper /copy /
+# # ## Moonraker
+COPY --from=moonraker /copy /
+# ## Fluidd
+COPY --from=fluidd /copy /
 
 COPY rootfs/ /
 RUN chmod a+x /scripts/*.sh
