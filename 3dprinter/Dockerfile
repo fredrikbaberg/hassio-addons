@@ -1,7 +1,9 @@
 ARG BUILD_FROM="homeassistant/amd64-base:latest"
 ARG OCTOPRINT_VERSION="1.6.1"
-ARG MJPG_STREAMER_VERSION="v1.0.0"
-ARG KLIPPER_VERSION="v0.10.0"
+ARG MJPG_STREAMER_BRANCH="v1.0.0"
+ARG CURA_LEGACY_BRANCH="15.04.6"
+ARG KLIPPER_BRANCH="master"
+ARG MOONRAKER_BRANCH="master"
 
 FROM ${BUILD_FROM} AS build-base
 ENV LANG C.UTF-8
@@ -27,7 +29,7 @@ RUN echo "Install common dependencies" \
         git \
         libffi-dev \
         py3-virtualenv \
-        python2 \
+        python2-dev \
         python3-dev \
         ## Moonraker \
         build-base \
@@ -36,10 +38,10 @@ RUN echo "Install common dependencies" \
         libjpeg-turbo-dev \
         py3-virtualenv \
         python3-dev \
-        ## Cura \
-        libexecinfo-dev \
-        git \
+        ## Cura Engine \
         build-base \
+        git \
+        libexecinfo-dev \
     && echo "Done with build-base"
 
 
@@ -80,7 +82,7 @@ RUN echo "Copy files to single folder" \
 
 
 FROM build-base AS mjpg-streamer
-ARG MJPG_STREAMER_VERSION
+ARG MJPG_STREAMER_BRANCH
 RUN echo "Install mjpg-streamer" \
     && apk add --no-cache \
         libjpeg-turbo-dev \
@@ -90,7 +92,7 @@ RUN echo "Install mjpg-streamer" \
         linux-headers \
     && echo "Done with apk add"
 RUN echo "Install" \
-    && git clone --single-branch --branch ${MJPG_STREAMER_VERSION} https://github.com/jacksonliam/mjpg-streamer \
+    && git clone --single-branch --branch ${MJPG_STREAMER_BRANCH} https://github.com/jacksonliam/mjpg-streamer \
     && cd mjpg-streamer/mjpg-streamer-experimental/ \
     && make --silent \
     && make install --silent \
@@ -109,15 +111,15 @@ RUN echo "Copy files to single folder" \
 
 
 FROM build-base AS curaengine
-ARG CURA_VERSION=15.04.6
+ARG CURA_LEGACY_BRANCH
 RUN echo "Install CuraEngine" \
     && apk add --no-cache \
-        libexecinfo-dev \
-        git \
         build-base \
+        git \
+        libexecinfo-dev \
     && echo "Done with apk add"
 RUN echo "Install" \
-    && git clone -b ${CURA_VERSION} --depth 1 https://github.com/Ultimaker/CuraEngine \
+    && git clone --single-branch --branch ${CURA_LEGACY_BRANCH} https://github.com/Ultimaker/CuraEngine \
     && cd CuraEngine \
     && make --silent \
     && mv build/CuraEngine /usr/local/bin/CuraEngine
@@ -128,7 +130,7 @@ RUN echo "Copy files to single folder" \
 
 
 FROM build-base AS klipper
-ARG KLIPPER_VERSION
+ARG KLIPPER_BRANCH
 ENV PYTHONPATH=/data/python/Klipper
 ENV PYTHONUSERBASE=/data/python/Klipper
 ENV PATH=${PATH}:/data/python/Klipper/bin
@@ -139,7 +141,7 @@ RUN echo "Install Klipper" \
         git \
         libffi-dev \
         py3-virtualenv \
-        python2 \
+        python2-dev \
         python3-dev \
     && echo "Done with apk add"
 RUN echo "Install" \
@@ -148,7 +150,7 @@ RUN echo "Install" \
     && pip install ${PIP_FLAGS} --upgrade \
         pip \
         wheel \
-    && git clone --single-branch --branch ${KLIPPER_VERSION} https://github.com/Klipper3d/klipper.git /data/klipper \
+    && git clone --single-branch --branch ${KLIPPER_BRANCH} https://github.com/Klipper3d/klipper.git /data/klipper \
     && pip install ${PIP_FLAGS} -r /data/klipper/scripts/klippy-requirements.txt \
     # && pip install ${PIP_FLAGS} --upgrade \
     #     numpy \
@@ -163,17 +165,18 @@ RUN cd /data/klipper \
     && make clean
 RUN echo "Copy files to single folder" \
     && mkdir -p /copy/root \
-    && cd /data && tar -zcf /copy/root/Klipper-src.tar.gz klipper \
     && cd /data/python && tar -zcf /copy/root/Klipper-python.tar.gz Klipper \
+    && cd /data && tar -zcf /copy/root/Klipper-src.tar.gz klipper \
     && mkdir -p /copy/usr/local/bin \
     && cp /usr/local/bin/klipper_mcu /copy/usr/local/bin/klipper_mcu
 
 
 
 FROM build-base AS moonraker
-ENV PYTHONPATH=/root/moonraker/python
-ENV PYTHONUSERBASE=/root/moonraker/python
-ENV PATH=${PATH}:/root/moonraker/python/bin
+ARG MOONRAKER_BRANCH
+ENV PYTHONPATH=/data/python/Moonraker
+ENV PYTHONUSERBASE=/data/python/Moonraker
+ENV PATH=${PATH}:/data/python/Moonraker/bin
 
 RUN echo "Install Moonraker" \
     && apk add --no-cache \
@@ -185,51 +188,35 @@ RUN echo "Install Moonraker" \
         python3-dev \
     && echo "Done with apk add"
 RUN echo "Install" \
-    && virtualenv --python=python3 /root/moonraker/python \
-    && source /root/moonraker/python/bin/activate \
+    && virtualenv --python=python3 /data/python/Moonraker \
+    && source /data/python/Moonraker/bin/activate \
     && pip install ${PIP_FLAGS} --upgrade \
         pip \
         wheel \
-    && git clone --depth 1 https://github.com/Arksine/moonraker.git /root/moonraker/src \
-    && pip install -r /root/moonraker/src/scripts/moonraker-requirements.txt
+    && git clone --single-branch --branch ${MOONRAKER_BRANCH} https://github.com/Arksine/moonraker.git /data/moonraker \
+    && pip install -r /data/moonraker/scripts/moonraker-requirements.txt \
+    && find /data/python/Moonraker | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
+    && find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
 RUN echo "Copy files to single folder" \
     && mkdir -p /copy/root \
-    && cp -R /root/moonraker /copy/root/moonraker
+    && cd /data/python && tar -zcf /copy/root/Moonraker-python.tar.gz Moonraker \
+    && cd /data && tar -zcf /copy/root/Moonraker-src.tar.gz moonraker
 
 
 
 FROM build-base AS fluidd
 ADD https://github.com/cadriel/fluidd/releases/latest/download/fluidd.zip /tmp
-RUN unzip /tmp/fluidd.zip -d /root/fluidd
+RUN mkdir -p /data/fluidd \
+    && unzip /tmp/fluidd.zip -d /data/fluidd
 RUN echo "Copy files to single folder" \
     && mkdir -p /copy/root \
-    && cp -R /root/fluidd /copy/root/fluidd
+    && cd /data && tar -zcf /copy/root/Fluidd.tar.gz fluidd
 
 
 
-FROM ${BUILD_FROM} AS final-slim
-ENV PATH=${PATH}:/data/python/OctoPrint/bin
-
-RUN echo "Install required packages for proxy" \
-    && apk add --no-cache \
-        caddy
-RUN echo "Install required packages for OctoPrint" \
-    && apk add --no-cache \
-        python3
-RUN echo "Install required packages for camera stream." \
-    && apk add --no-cache \
-        ffmpeg
-# Copy data from previous stages
-# ## octoprint
-COPY --from=octoprint /copy /
-COPY rootfs/ /
-RUN chmod a+x /scripts/*.sh
-WORKDIR /
-
-
-
-FROM ${BUILD_FROM} AS final-extended
-ENV PATH=${PATH}:/data/python/OctoPrint/bin:/data/python/Klipper/bin
+FROM ${BUILD_FROM} AS final
+ENV CFLAGS="-fcommon"
+ENV PATH=${PATH}:/data/python/OctoPrint/bin:/data/python/Klipper/bin:/data/python/Moonraker/bin
 
 RUN echo "Install required packages for proxy" \
     && apk add --no-cache \
@@ -272,13 +259,13 @@ RUN echo "Install useful packages for debugging." \
 
 # Copy data from previous stages
 # ## octoprint
-# COPY --from=octoprint /copy /
+COPY --from=octoprint /copy /
 # # ## mjpg-streamer
-# COPY --from=mjpg-streamer /copy /
+COPY --from=mjpg-streamer /copy /
 # # ## CuraEngineLegacy
-# COPY --from=curaengine /copy /
+COPY --from=curaengine /copy /
 # # ## Klipper
-# COPY --from=klipper /copy /
+COPY --from=klipper /copy /
 # # ## Moonraker
 COPY --from=moonraker /copy /
 # ## Fluidd
@@ -287,9 +274,3 @@ COPY --from=fluidd /copy /
 COPY rootfs/ /
 RUN chmod a+x /scripts/*.sh
 WORKDIR /
-
-
-
-FROM final-extended AS final
-ENV LANG C.UTF-8
-ENV CFLAGS="-fcommon"

@@ -33,23 +33,22 @@
     "usb": true,
     "uart": true,
     "options": {
-        "mjpg_arguments": [
-            "-o \"output_http.so -w /www_mjpg -p 8080\"",
-            "-i \"input_uvc.so -n\""
-        ],
+        "mjpg_input": "-i \"input_uvc.so -n\"",
+        "mjpg_output": "-o \"output_http.so -w /www_mjpg -p 8080\"",
         "recovery": false,
-        "ingress_ui": "list(octoprint|fluidd)",
-        "autostart_mjpg_streamer": false,
-        "autostart_klipper": false
+        "octoprint": true,
+        "ingress_ui": "octoprint"
     },
     "schema": {
-        "mjpg_arguments": ["str"],
+        "mjpg_input": "str",
+        "mjpg_output": "str",
         "recovery": "bool",
-        "autostart_octoprint": "bool?",
-        "autostart_mjpg_streamer": "bool?",
-        "autostart_klipper": "bool?",
-        "autostart_moonraker": "bool?",
-        "autostart_klipper_linux_host": "bool?"
+        "octoprint": "bool",
+        "mjpg_streamer": "bool?",
+        "klipper": "bool?",
+        "moonraker": "bool?",
+        "klipper_linux_host": "bool?",
+        "ingress_ui": "list(octoprint|fluidd)"
     },
     "image": "fredrikbaberg/addon-3dprinter-{arch}",
     "tmpfs": true,
@@ -57,7 +56,11 @@
     "panel_icon": "mdi:printer-3d",
     "panel_title": "3DPrinter",
     "panel_admin": false,
-    "backup_exclude": [],
+    "backup_exclude": [
+        "*/*/fluidd",
+        "*/*/klipper",
+        "*/*/moonraker"
+    ],
     "stage": "experimental",
     "realtime": true
 }
