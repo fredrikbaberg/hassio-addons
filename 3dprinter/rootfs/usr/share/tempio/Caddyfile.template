@@ -3,6 +3,7 @@
 		remote_ip 172.30.32.2
 	}
 	handle {
+		{{ if eq .ingress_ui "octoprint" }}
 		{{ if .recovery }}
 		rewrite / /recovery
 		{{ end }}
@@ -12,6 +13,12 @@
 			header_up Origin 172.30.32.2
 			header_up X-Forwarded-For 172.30.32.2
 		}
+		{{else if eq .ingress_ui "fluidd" }}
+		root * /data/fluidd
+		file_server
+		{{ else }}
+		# Ingress not set
+		{{ end }}
 	}
 }
 

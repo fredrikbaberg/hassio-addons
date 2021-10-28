@@ -10,7 +10,8 @@ if bashio::config.true 'recovery'; then
     sed -i "s%#recovery%rewrite / /recovery%g" /etc/caddy/Caddyfile
 fi
 
-# tempio \
-#     -conf /data/options.json \
-#     -template /usr/share/tempio/Caddyfile.template
-#     # -out /etc/caddy/Caddyfile
+export ingress_entry=$ingress_entry
+tempio \
+    -conf /data/options.json \
+    -template /usr/share/tempio/Caddyfile.template
+    -out /etc/caddy/Caddyfile
