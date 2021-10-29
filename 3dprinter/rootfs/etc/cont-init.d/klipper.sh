@@ -24,16 +24,16 @@ if [ ! -d /data/klipper ]; then
     fi
 fi
 
-# Copy config to persistent storage, if missing.
-if [ ! -f /data/config/klipper/printer.cfg ]; then
-    if [ -f /root/config/klipper/printer.cfg ]; then
-        mkdir -p /data/config/klipper
-        cp /root/config/klipper/printer.cfg /data/config/klipper/printer.cfg
-        bashio::log.notice "Default Klipper config copied"
-    else
-        bashio::log.warning "Default Klipper config not found"
-    fi
-fi
+# # Copy config to persistent storage, if missing.
+# if [ ! -f /data/config/klipper/printer.cfg ]; then
+#     if [ -f /root/config/klipper/printer.cfg ]; then
+#         mkdir -p /data/config/klipper
+#         cp /root/config/klipper/printer.cfg /data/config/klipper/printer.cfg
+#         bashio::log.notice "Default Klipper config copied"
+#     else
+#         bashio::log.warning "Default Klipper config not found"
+#     fi
+# fi
 
 # Make sure log file exists
 touch /tmp/klippy.log
