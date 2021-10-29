@@ -206,7 +206,7 @@ RUN echo "Copy files to single folder" \
 
 FROM build-base AS fluidd
 ADD https://github.com/cadriel/fluidd/releases/latest/download/fluidd.zip /tmp
-RUN mkdir -p /data/fluidd \
+RUN mkdir -p /data \
     && unzip /tmp/fluidd.zip -d /data/fluidd
 RUN echo "Copy files to single folder" \
     && mkdir -p /copy/root \

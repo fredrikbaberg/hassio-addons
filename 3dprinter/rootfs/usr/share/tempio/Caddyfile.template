@@ -14,8 +14,11 @@
 			header_up X-Forwarded-For 172.30.32.2
 		}
 		{{else if eq .ingress_ui "fluidd" }}
-		root * /data/fluidd
-		file_server
+		route {{ env "ingress_entry" }}* {
+			uri strip_prefix {{ env "ingress_entry"" }}
+			root * /data/fluidd
+			file_server
+		}
 		{{ else }}
 		# Ingress not set
 		{{ end }}
@@ -42,8 +45,8 @@
 
 {{ if .fluidd }}
 # Fluidd
-:6000 {
-	root * /fluidd
+:9000 {
+	root * /data/fluidd
 	file_server
 }
 {{ end }}
