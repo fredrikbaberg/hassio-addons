@@ -28,21 +28,27 @@
 	}
 }
 
-# Camera
-:8000 {
-	reverse_proxy http://127.0.0.1:8080 {
-		header_up X-Scheme {scheme}
-	}
-}
-
 # Fluidd
-:9000 {
+:5001 {
 	root * /data/fluidd
 	file_server
 }
 
 # Mainsail
-:9001 {
+:5002 {
 	root * /data/mainsail
 	file_server
+}
+
+# Moonraker
+:7125 {
+	reverse_proxy http://127.0.0.1:7125
+}
+
+
+# Camera
+:8000 {
+	reverse_proxy http://127.0.0.1:8080 {
+		header_up X-Scheme {scheme}
+	}
 }
