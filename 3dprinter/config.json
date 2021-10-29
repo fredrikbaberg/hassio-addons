@@ -1,6 +1,6 @@
 {
     "name": "3DPrinter",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "slug": "3dprinter",
     "description": "3DPrinter add-on for Home Assistant. OctoPrint, Klipper and more.",
     "arch": ["armhf", "armv7", "amd64", "aarch64", "i386"],
@@ -41,6 +41,7 @@
         "mjpg_output": "-o \"output_http.so -w /www_mjpg -p 8080\"",
         "recovery": false,
         "octoprint": true,
+        "mjpg_streamer": false,
         "ingress_ui": "octoprint"
     },
     "schema": {
@@ -48,13 +49,13 @@
         "mjpg_output": "str",
         "recovery": "bool",
         "octoprint": "bool",
-        "mjpg_streamer": "bool?",
+        "mjpg_streamer": "bool",
         "klipper": "bool?",
         "moonraker": "bool?",
         "klipper_linux_host": "bool?",
         "fluidd": "bool?",
         "mainsail": "bool?",
-        "ingress_ui": "list(octoprint|mainsail|fluidd)"
+        "ingress_ui": "list(octoprint)"
     },
     "image": "fredrikbaberg/addon-3dprinter-{arch}",
     "tmpfs": true,

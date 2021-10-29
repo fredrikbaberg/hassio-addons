@@ -1,9 +1,13 @@
 :8099 {
+	log {
+		output stdout
+		format console
+	}
 	@ingress {
 		remote_ip 172.30.32.2
 	}
+	{{ if eq .ingress_ui "octoprint" }}
 	handle {
-		{{ if eq .ingress_ui "octoprint" }}
 		{{ if .recovery }}
 		rewrite / /recovery
 		{{ end }}
@@ -13,51 +17,37 @@
 			header_up Origin 172.30.32.2
 			header_up X-Forwarded-For 172.30.32.2
 		}
-		{{else if eq .ingress_ui "fluidd" }}
-		route {{ env "ingress_entry" }}* {
-			uri strip_prefix {{ env "ingress_entry" }}
-			root * /data/fluidd
-			file_server
-		}
-		{{else if eq .ingress_ui "mainsail" }}
-			root * /data/mainsail
-			file_server
-		{{ else }}
-		# Ingress not set
-		{{ end }}
 	}
+	{{ end }}
 }
 
-{{ if .octoprint }}
 # OctoPrint WebUI
 :5000 {
 	reverse_proxy http://127.0.0.1:80 {
 		header_up X-Scheme {scheme}
 	}
 }
-{{ end }}
 
-{{ if .mjpg_streamer }}
 # Camera
 :8000 {
 	reverse_proxy http://127.0.0.1:8080 {
 		header_up X-Scheme {scheme}
 	}
 }
-{{ end }}
 
-{{ if .fluidd }}
 # Fluidd
 :9000 {
 	root * /data/fluidd
 	file_server
 }
-{{ end }}
 
-{{ if .mainsail }}
 # Mainsail
 :9001 {
 	root * /data/mainsail
+
+	handle /websocket {
+		reverse_proxy http://127.0.0.1:7125
+	}
+	
 	file_server
 }
-{{ end }}
