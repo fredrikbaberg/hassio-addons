@@ -1,6 +1,6 @@
 {
     "name": "3DPrinter",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "slug": "3dprinter",
     "description": "3DPrinter add-on for Home Assistant. OctoPrint, Klipper and more.",
     "arch": ["armhf", "armv7", "amd64", "aarch64", "i386"],
@@ -12,13 +12,15 @@
         "5000/tcp": null,
         "8000/tcp": null,
         "7125/tcp": null,
-        "9000/tcp": null
+        "9000/tcp": null,
+        "9001/tcp": null
     },
     "ports_description": {
         "5000/tcp": "OctoPrint WebUI (Not required for Ingress)",
         "8000/tcp": "Camera WebUI",
         "7125/tcp": "Moonraker",
-        "9000/tcp": "Fluidd"
+        "9000/tcp": "Fluidd",
+        "9001/tcp": "Mainsail"
     },
     "devices": [
         "/dev/mem",
@@ -51,7 +53,8 @@
         "moonraker": "bool?",
         "klipper_linux_host": "bool?",
         "fluidd": "bool?",
-        "ingress_ui": "list(octoprint|fluidd)"
+        "mainsail": "bool?",
+        "ingress_ui": "list(octoprint|mainsail|fluidd)"
     },
     "image": "fredrikbaberg/addon-3dprinter-{arch}",
     "tmpfs": true,

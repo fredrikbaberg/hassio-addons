@@ -13,5 +13,5 @@ fi
 export ingress_entry=$ingress_entry
 tempio \
     -conf /data/options.json \
-    -template /usr/share/tempio/Caddyfile.template \
+    -template /usr/share/tempio/Caddyfile \
     -out /etc/caddy/Caddyfile

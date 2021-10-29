@@ -19,6 +19,9 @@
 			root * /data/fluidd
 			file_server
 		}
+		{{else if eq .ingress_ui "mainsail" }}
+			root * /data/mainsail
+			file_server
 		{{ else }}
 		# Ingress not set
 		{{ end }}
@@ -47,6 +50,14 @@
 # Fluidd
 :9000 {
 	root * /data/fluidd
+	file_server
+}
+{{ end }}
+
+{{ if .mainsail }}
+# Mainsail
+:9001 {
+	root * /data/mainsail
 	file_server
 }
 {{ end }}
