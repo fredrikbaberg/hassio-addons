@@ -44,10 +44,5 @@
 # Mainsail
 :9001 {
 	root * /data/mainsail
-
-	handle /websocket {
-		reverse_proxy http://127.0.0.1:7125
-	}
-	
 	file_server
 }
