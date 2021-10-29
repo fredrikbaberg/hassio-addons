@@ -18,6 +18,29 @@
 			header_up X-Forwarded-For 172.30.32.2
 		}
 	}
+	{{ else if eq .ingress_ui "mainsail" }}
+	handle /printer* {
+		reverse_proxy http://127.0.0.1:7125
+	}
+	handle /api* {
+		reverse_proxy http://127.0.0.1:7125
+	}
+	handle /access* {
+		reverse_proxy http://127.0.0.1:7125
+	}
+	handle /websocket* {
+		reverse_proxy http://127.0.0.1:7125
+	}
+	handle /machine* {
+		reverse_proxy http://127.0.0.1:7125
+	}
+	handle /server* {
+		reverse_proxy http://127.0.0.1:7125
+	}
+	handle /* {
+		root * /data/mainsail
+		file_server
+	}
 	{{ end }}
 }
 

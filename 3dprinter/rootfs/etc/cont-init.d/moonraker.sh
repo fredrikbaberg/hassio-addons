@@ -27,7 +27,7 @@ fi
 # Copy config to persistent storage, if missing.
 if [ ! -f /data/config/klipper/moonraker.conf ]; then
     if [ -f /root/config/klipper/moonraker.conf ]; then
-        mkdir -p /data/config/moonraker
+        mkdir -p /data/config/klipper
         cp /root/config/klipper/moonraker.conf /data/config/klipper/moonraker.conf
         bashio::log.notice "Default Moonraker config copied"
     else

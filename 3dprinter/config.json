@@ -1,6 +1,6 @@
 {
     "name": "3DPrinter",
-    "version": "0.0.17",
+    "version": "0.0.18",
     "slug": "3dprinter",
     "description": "3DPrinter add-on for Home Assistant. OctoPrint, Klipper and more.",
     "arch": ["armhf", "armv7", "amd64", "aarch64", "i386"],
@@ -54,7 +54,7 @@
         "klipper_linux_host": "bool?",
         "fluidd": "bool?",
         "mainsail": "bool?",
-        "ingress_ui": "list(octoprint)"
+        "ingress_ui": "list(octoprint|mainsail)"
     },
     "image": "fredrikbaberg/addon-3dprinter-{arch}",
     "tmpfs": true,
