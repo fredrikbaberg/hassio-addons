@@ -46,10 +46,6 @@
 
 # OctoPrint WebUI
 :5000 {
-	log {
-		output stdout
-		format console
-	}
 	reverse_proxy http://127.0.0.1:80 {
 		header_up X-Scheme {scheme}
 	}
@@ -57,10 +53,6 @@
 
 # Fluidd
 :5001 {
-	log {
-		output stdout
-		format console
-	}
 	handle_path /websocket {
 		reverse_proxy http://127.0.0.1:7125
 	}
@@ -72,10 +64,6 @@
 
 # Mainsail
 :5002 {
-	log {
-		output stdout
-		format console
-	}
 	handle_path /websocket {
 		reverse_proxy http://127.0.0.1:7125
 	}
