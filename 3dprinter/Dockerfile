@@ -230,7 +230,7 @@ ENV PATH=${PATH}:/data/python/OctoPrint/bin:/data/python/Klipper/bin:/data/pytho
 
 RUN echo "Install required packages for proxy" \
     && apk add --no-cache \
-        caddy
+        nginx
 RUN echo "Install required packages for OctoPrint" \
     && apk add --no-cache \
         python3
