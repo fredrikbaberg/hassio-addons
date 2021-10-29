@@ -23,6 +23,10 @@
 
 # OctoPrint WebUI
 :5000 {
+	log {
+		output stdout
+		format console
+	}
 	reverse_proxy http://127.0.0.1:80 {
 		header_up X-Scheme {scheme}
 	}
@@ -30,21 +34,35 @@
 
 # Fluidd
 :5001 {
-	root * /data/fluidd
-	file_server
+	log {
+		output stdout
+		format console
+	}
+	handle_path /websocket {
+		reverse_proxy http://127.0.0.1:7125
+	}
+	handle {
+		root * /data/fluidd
+		file_server
+	}
 }
 
 # Mainsail
 :5002 {
-	root * /data/mainsail
-	file_server
+	log {
+		output stdout
+		format console
+	}
+	handle_path /websocket {
+		reverse_proxy http://127.0.0.1:7125
+	}
+	handle {
+		root * /data/mainsail
+		file_server
+	}
 }
 
-# Moonraker
-:7125 {
-	reverse_proxy http://127.0.0.1:7125
-}
-
+# Moonraker - expose as-is.
 
 # Camera
 :8000 {
