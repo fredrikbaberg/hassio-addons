@@ -1,6 +1,6 @@
 {
     "name": "3DPrinter",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "slug": "3dprinter",
     "description": "3DPrinter add-on for Home Assistant. OctoPrint, Klipper and more.",
     "arch": ["armhf", "armv7", "amd64", "aarch64", "i386"],

@@ -15,7 +15,7 @@
 		}
 		{{else if eq .ingress_ui "fluidd" }}
 		route {{ env "ingress_entry" }}* {
-			uri strip_prefix {{ env "ingress_entry"" }}
+			uri strip_prefix {{ env "ingress_entry" }}
 			root * /data/fluidd
 			file_server
 		}
