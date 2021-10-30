@@ -6,6 +6,9 @@
 	@ingress {
 		remote_ip 172.30.32.2
 	}
+	handle_path /webcam* {
+		reverse_proxy http://127.0.0.1:8080
+	}
 	{{ if eq .ingress_ui "octoprint" }}
 	handle {
 		{{ if .recovery }}
