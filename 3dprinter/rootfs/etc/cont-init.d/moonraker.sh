@@ -25,15 +25,15 @@ if [ ! -d /data/moonraker ]; then
 fi
 
 # Copy config to persistent storage, if missing.
-if [ ! -f /data/config/klipper/moonraker.conf ]; then
-    if [ -f /root/config/klipper/moonraker.conf ]; then
-        mkdir -p /data/config/klipper
-        cp /root/config/klipper/moonraker.conf /data/config/klipper/moonraker.conf
-        bashio::log.notice "Default Moonraker config copied"
-    else
-        bashio::log.warning "Default Moonraker config not found"
-    fi
-fi
+# if [ ! -f /data/config/klipper/moonraker.conf ]; then
+#     if [ -f /root/config/klipper/moonraker.conf ]; then
+#         mkdir -p /data/config/klipper
+#         cp /root/config/klipper/moonraker.conf /data/config/klipper/moonraker.conf
+#         bashio::log.notice "Default Moonraker config copied"
+#     else
+#         bashio::log.warning "Default Moonraker config not found"
+#     fi
+# fi
 
 # Make sure log file exists
 touch /tmp/moonraker.log
