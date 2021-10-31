@@ -27,7 +27,7 @@ if bashio::config.true 'octoprint'; then
 
     # Ensure Ingress user (homeassistant) exist.
     new_password=$(date +%s | sha256sum | base64 | head -c 32 ; echo)
-    octoprint --basedir /data/config/octoprint user add homeassistant --password "$new_password" --admin # 2> /dev/null
+    octoprint --basedir /data/config/octoprint user add homeassistant --password "$new_password" --group users --group admins # 2> /dev/null
 
     # Configure autostart of service
     rm -f /etc/services.d/octoprint/down
