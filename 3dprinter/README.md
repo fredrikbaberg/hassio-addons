@@ -10,6 +10,7 @@ It contains:
 - [mjpg-streamer](https://github.com/jacksonliam/mjpg-streamer)
 - [gphoto2](http://gphoto.org/)
 - [Klipper](https://www.klipper3d.org/)
+- [Moonraker](https://moonraker.readthedocs.io/)
 
 ## Installation
 

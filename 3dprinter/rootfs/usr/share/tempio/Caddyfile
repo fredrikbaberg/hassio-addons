@@ -1,15 +1,12 @@
 :8099 {
-	log {
-		output stdout
-		format console
-	}
 	@ingress {
 		remote_ip 172.30.32.2
 	}
+	{{ if .mjpg_streamer }}
 	handle_path /webcam* {
 		reverse_proxy http://127.0.0.1:8080
 	}
-	{{ if eq .ingress_ui "octoprint" }}
+	{{ end }}
 	handle {
 		{{ if .recovery }}
 		rewrite / /recovery
@@ -21,30 +18,6 @@
 			header_up X-Forwarded-For 172.30.32.2
 		}
 	}
-	{{ else if eq .ingress_ui "mainsail" }}
-	handle /printer* {
-		reverse_proxy http://127.0.0.1:7125
-	}
-	handle /api* {
-		reverse_proxy http://127.0.0.1:7125
-	}
-	handle /access* {
-		reverse_proxy http://127.0.0.1:7125
-	}
-	handle /websocket* {
-		reverse_proxy http://127.0.0.1:7125
-	}
-	handle /machine* {
-		reverse_proxy http://127.0.0.1:7125
-	}
-	handle /server* {
-		reverse_proxy http://127.0.0.1:7125
-	}
-	handle /* {
-		root * /data/mainsail
-		file_server
-	}
-	{{ end }}
 }
 
 # OctoPrint WebUI
@@ -54,33 +27,11 @@
 	}
 }
 
-# Fluidd
-:5001 {
-	handle_path /websocket {
-		reverse_proxy http://127.0.0.1:7125
-	}
-	handle {
-		root * /data/fluidd
-		file_server
-	}
-}
-
-# Mainsail
-:5002 {
-	handle_path /websocket {
-		reverse_proxy http://127.0.0.1:7125
-	}
-	handle {
-		root * /data/mainsail
-		file_server
-	}
-}
-
-# Moonraker - expose as-is.
-
 # Camera
 :8000 {
 	reverse_proxy http://127.0.0.1:8080 {
 		header_up X-Scheme {scheme}
 	}
 }
+
+# Moonraker - expose as-is.

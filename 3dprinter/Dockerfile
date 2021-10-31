@@ -204,26 +204,6 @@ RUN echo "Copy files to single folder" \
 
 
 
-FROM build-base AS fluidd
-ADD https://github.com/cadriel/fluidd/releases/latest/download/fluidd.zip /tmp
-RUN mkdir -p /data \
-    && unzip /tmp/fluidd.zip -d /data/fluidd
-RUN echo "Copy files to single folder" \
-    && mkdir -p /copy/root \
-    && cd /data && tar -zcf /copy/root/Fluidd.tar.gz fluidd
-
-
-
-FROM build-base AS mainsail
-ADD https://github.com/meteyou/mainsail/releases/latest/download/mainsail.zip /tmp
-RUN mkdir -p /data \
-    && unzip /tmp/mainsail.zip -d /data/mainsail
-RUN echo "Copy files to single folder" \
-    && mkdir -p /copy/root \
-    && cd /data && tar -zcf /copy/root/Mainsail.tar.gz mainsail
-
-
-
 FROM ${BUILD_FROM} AS final
 ENV CFLAGS="-fcommon"
 ENV PATH=${PATH}:/data/python/OctoPrint/bin:/data/python/Klipper/bin:/data/python/Moonraker/bin
@@ -278,10 +258,6 @@ COPY --from=curaengine /copy /
 COPY --from=klipper /copy /
 # # ## Moonraker
 COPY --from=moonraker /copy /
-# ## Fluidd
-COPY --from=fluidd /copy /
-# ## Mainsail
-COPY --from=mainsail /copy /
 
 COPY rootfs/ /
 RUN chmod a+x /scripts/*.sh

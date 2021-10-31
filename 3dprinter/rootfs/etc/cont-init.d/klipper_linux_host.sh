@@ -6,7 +6,4 @@ bashio::log.info "Klipper Linux Host cont-init.d"
 if bashio::config.true 'klipper_linux_host'; then
     rm -f /etc/services.d/klipper-linux-host/down
     rm -f /etc/services.d/klipper-linux-host/finish
-else
-    touch /etc/services.d/klipper-linux-host/down
-    touch /etc/services.d/klipper-linux-host/finish
 fi

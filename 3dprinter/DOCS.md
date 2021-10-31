@@ -36,11 +36,10 @@ This addon comes with Klipper pre-installed. To use it, install the plugin OctoK
 The config option `autostart_klipper` lets Klipper autostart, instead of manually starting from within OctoPrint.
 Linux host process is available, intended for using a [Raspberry Pi as a secondary MCU](https://www.klipper3d.org/RPi_microcontroller.html). *Not working as intended*.
 
-<!--
 #### Moonraker
 
-Moonraker is installed but not configured. Suggestions on configuration are welcome.
--->
+Moonraker is installed but will most likely require additional configuration. Suggestions on default configuration are appreciated.
+
 
 ### Updates
 
@@ -49,12 +48,11 @@ Updates of OctoPrint should be possible from inside the addon.
 
 ### Backups
 
-A backup from within OctoPrint should be sufficient, as it will include both OctoPrint and Klipper configuration files.
+If you use Klipper or Moonraker you want to use Home Assistant backup as `printer.cfg` and Moonraker configuration is **not** backed up through OctoPrint backups.
 
 ## Versions
 
 Some notes regarding the software and versions.
-Not all software is installed for all images.
 
 - OctoPrint
   - Installed in a `virtualenv` from PyPI, using numbered version (e.g. `1.6.1`) from when image was built.
@@ -63,7 +61,7 @@ Not all software is installed for all images.
   - Compiled from tagged branch of [https://github.com/jacksonliam/mjpg-streamer](https://github.com/jacksonliam/mjpg-streamer), e.g. `v1.0.0`.
 
 - Klipper
-  - Installed in a separate `virtualenv`, using [https://github.com/Klipper3d/klipper](https://github.com/Klipper3d/klipper). There is a script available for updating to latest version (`master` branch).
+  - Installed in a separate `virtualenv`, using [https://github.com/Klipper3d/klipper](https://github.com/Klipper3d/klipper).
 
 - CuraEngine
   - CuraEngine 15.04.6, works with the plugin CuraEngine Legacy.

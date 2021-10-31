@@ -1,6 +1,6 @@
 {
     "name": "3DPrinter",
-    "version": "0.0.19",
+    "version": "0.0.20",
     "slug": "3dprinter",
     "description": "3DPrinter add-on for Home Assistant. OctoPrint, Klipper and more.",
     "arch": ["armhf", "armv7", "amd64", "aarch64", "i386"],
@@ -9,15 +9,11 @@
     "boot": "auto",
     "ports": {
         "5000/tcp": null,
-        "5001/tcp": null,
-        "5002/tcp": null,
         "7125/tcp": null,
         "8000/tcp": null
     },
     "ports_description": {
-        "5000/tcp": "OctoPrint WebUI (Not required for Ingress)",
-        "5001/tcp": "Fluidd",
-        "5002/tcp": "Mainsail",
+        "5000/tcp": "OctoPrint WebUI",
         "7125/tcp": "Moonraker",
         "8000/tcp": "Camera WebUI"
     },
@@ -38,23 +34,19 @@
     "options": {
         "mjpg_input": "-i \"input_uvc.so -n\"",
         "mjpg_output": "-o \"output_http.so -w /www_mjpg -p 8080\"",
-        "recovery": false,
         "octoprint": true,
         "mjpg_streamer": false,
-        "ingress_ui": "octoprint"
+        "recovery": false
     },
     "schema": {
         "mjpg_input": "str",
         "mjpg_output": "str",
-        "recovery": "bool",
         "octoprint": "bool",
         "mjpg_streamer": "bool",
         "klipper": "bool?",
-        "moonraker": "bool?",
         "klipper_linux_host": "bool?",
-        "fluidd": "bool?",
-        "mainsail": "bool?",
-        "ingress_ui": "list(octoprint|mainsail)"
+        "moonraker": "bool?",
+        "recovery": "bool"
     },
     "image": "fredrikbaberg/addon-3dprinter-{arch}",
     "tmpfs": true,
@@ -62,11 +54,7 @@
     "panel_icon": "mdi:printer-3d",
     "panel_title": "3DPrinter",
     "panel_admin": false,
-    "backup_exclude": [
-        "*/*/fluidd",
-        "*/*/klipper",
-        "*/*/moonraker"
-    ],
+    "backup_exclude": [],
     "stage": "experimental",
     "realtime": true
 }
