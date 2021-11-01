@@ -26,7 +26,7 @@ profile 3DPrinter flags=(attach_disconnected,mediate_deleted,audit) {
   /data/** rw,
 
   # Audit
-  audit /** # w,
+  audit /** w,
 
 #  # Access to run scripts
 #  /scripts/** rk,
@@ -48,7 +48,7 @@ profile 3DPrinter flags=(attach_disconnected,mediate_deleted,audit) {
 #    signal receive,
 #    file,
 #    # For access to GPIO
-#    /dev/gpiomem # rw,
+#    /dev/gpiomem rw,
 #    # Access to run scripts
 #    /scripts/** rk,
 #    # Access to config files
@@ -80,7 +80,7 @@ profile 3DPrinter flags=(attach_disconnected,mediate_deleted,audit) {
 #   # Start new profile for klipper_mcu
 #   /usr/local/bin/klipper_mcu Cx,
 #   profile /usr/local/bin/klipper_mcu flags=(attach_disconnected,mediate_deleted,audit) {
-#     include <abstractions/# base>
+#     include <abstractions/base>
 #     # Receive signals from S6-Overlay
 #     signal receive,
 #     file,
