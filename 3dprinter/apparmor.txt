@@ -59,8 +59,6 @@ profile 3DPrinter flags=(attach_disconnected,mediate_deleted) {
   }
 
   # Start new profile for Klipper
-
-  # Start new profile for OctoPrint
   /data/klipper/klippy/klippy.py cx,
   
   profile /data/klipper/klippy/klippy.py flags=(attach_disconnected,mediate_deleted) {
@@ -81,5 +79,11 @@ profile 3DPrinter flags=(attach_disconnected,mediate_deleted) {
     
     # Access to SPI
     /dev/spidev* rw,
+  }
+
+  # Start new profile for moonraker
+  /data/moonraker/moonraker/moonraker.py cx,
+
+  profile /data/moonraker/moonraker/moonraker.py flags=(attach_disconnected,mediate_deleted) {
   }
 }

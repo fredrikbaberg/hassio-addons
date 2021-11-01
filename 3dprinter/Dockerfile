@@ -159,6 +159,8 @@ RUN echo "Install" \
     && rm -rf /root/.cache
 COPY rootfs/root/klipper/.config /data/klipper/.config
 RUN cd /data/klipper \
+    && sed -i 's"// sched_main"// sched_main\n#include <pthread.h>"' /data/klipper/src/linux/main.c \
+    && sed -i 's/sched_setscheduler(0/pthread_setschedparam(pthread_self()/' /data/klipper/src/linux/main.c \
     && make clean \
     && make \
     && ./scripts/flash-linux.sh \
@@ -227,7 +229,8 @@ RUN echo "Install required packages for Klipper." \
 RUN echo "Install required packages for Moonraker." \
     && apk add --no-cache \
         curl-dev \
-        libsodium-dev
+        libsodium-dev \
+        sudo
 RUN echo "Install development packages for different plugins etc." \
     && apk add --no-cache \
         build-base \
