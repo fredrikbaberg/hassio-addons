@@ -219,7 +219,8 @@ RUN echo "Install required packages for OctoPrint" \
 RUN echo "Install required packages for camera (mjpg-streamer, gphoto2)." \
     && apk add --no-cache \
         ffmpeg \
-        gphoto2
+        gphoto2 \
+        v4l-utils
 RUN echo "Install required packages for Klipper." \
     && apk add --no-cache \
         build-base \
