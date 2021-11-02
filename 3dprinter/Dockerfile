@@ -63,7 +63,7 @@ RUN echo "Install" \
     && virtualenv --python=python3 /data/python/octoprint \
     && source /data/python/octoprint/bin/activate \
     && pip install ${PIP_FLAGS} --upgrade \
-        # pip \
+        pip \
         wheel \
         cython \
     && pip install ${PIP_FLAGS} --upgrade \
@@ -148,7 +148,7 @@ RUN echo "Install" \
     && virtualenv --python=python3 /data/python/klipper \
     && source /data/python/klipper/bin/activate \
     && pip install ${PIP_FLAGS} --upgrade \
-        # pip \
+        pip \
         wheel \
     && git clone --single-branch --branch ${KLIPPER_BRANCH} https://github.com/Klipper3d/klipper.git /data/src/klipper \
     && pip install ${PIP_FLAGS} -r /data/src/klipper/scripts/klippy-requirements.txt \
@@ -193,7 +193,7 @@ RUN echo "Install" \
     && virtualenv --python=python3 /data/python/moonraker \
     && source /data/python/moonraker/bin/activate \
     && pip install ${PIP_FLAGS} --upgrade \
-        # pip \
+        pip \
         wheel \
     && git clone --single-branch --branch ${MOONRAKER_BRANCH} https://github.com/Arksine/moonraker.git /data/src/moonraker \
     && pip install ${PIP_FLAGS} -r /data/src/moonraker/scripts/moonraker-requirements.txt \
