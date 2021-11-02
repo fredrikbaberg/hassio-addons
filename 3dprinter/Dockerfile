@@ -196,7 +196,7 @@ RUN echo "Install" \
         pip \
         wheel \
     && git clone --single-branch --branch ${MOONRAKER_BRANCH} https://github.com/Arksine/moonraker.git /data/src/moonraker \
-    && pip install -r /data/src/moonraker/scripts/moonraker-requirements.txt \
+    && pip install ${PIP_FLAGS} -r /data/src/moonraker/scripts/moonraker-requirements.txt \
     && find /data/python/moonraker | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
 RUN echo "Copy files to single folder" \
