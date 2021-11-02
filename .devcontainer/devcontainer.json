@@ -10,7 +10,8 @@
 	},
 	"extensions": [
 		"timonwong.shellcheck",
-		"esbenp.prettier-vscode"
+		"esbenp.prettier-vscode",
+		"pjbgf.apparmor"
 	],
 	"settings": { 
 		"terminal.integrated.shell.linux": "/bin/bash"

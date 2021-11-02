@@ -6,5 +6,6 @@
         "markdown",
         "latex",
         "plaintext"
-    ]
+    ],
+    "caddyfile.executable": "C:\\Users\\fredr\\Documents\\Caddy\\caddy"
 }
