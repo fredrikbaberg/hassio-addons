@@ -55,10 +55,10 @@
     "panel_title": "3DPrinter",
     "panel_admin": false,
     "backup_exclude": [
-        "klipper/",
-        "moonraker/",
-        "pyhon/Klipper/",
-        "pyhon/Moonraker/"
+        "klipper",
+        "moonraker",
+        "python/Klipper",
+        "python/Moonraker"
     ],
     "stage": "experimental",
     "realtime": true
