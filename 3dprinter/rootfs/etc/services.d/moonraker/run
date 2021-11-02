@@ -2,8 +2,8 @@
 
 bashio::log.info "Starting Moonraker..."
 
-MOONRAKER_PYTHON=/data/python/Moonraker/bin/python
-MOONRAKER=/data/moonraker/moonraker/moonraker.py
+MOONRAKER_PYTHON=/data/python/moonraker/bin/python
+MOONRAKER=/data/src/moonraker/moonraker/moonraker.py
 MOONRAKER_CFG=/data/config/klipper/moonraker.conf
 MOONRAKER_LOGFILE=/tmp/moonraker.log
 

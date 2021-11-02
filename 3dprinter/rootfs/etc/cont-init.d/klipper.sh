@@ -4,10 +4,9 @@ bashio::log.info "Klipper cont-init.d"
 
 if bashio::config.true 'klipper'; then
     # Copy Klipper install to persistent storage, if missing.
-    if [ ! -d /data/python/Klipper ]; then
-        if [ -f /root/Klipper-python.tar.gz ]; then
-            mkdir -p /data/python
-            tar -zxf /root/Klipper-python.tar.gz -C /data/python/
+    if [ ! -d /data/python/klipper ]; then
+        if [ -f /root/klipper-python.tar.gz ]; then
+            tar -zxf /root/klipper-python.tar.gz -C /data
             bashio::log.notice "Klipper Python extracted"
         else
             bashio::log.warning "Klipper Python not found"
@@ -16,9 +15,8 @@ if bashio::config.true 'klipper'; then
 
     # Copy source to persistent storage, if missing.
     if [ ! -d /data/klipper ]; then
-        if [ -f /root/Klipper-src.tar.gz ]; then
-            mkdir -p /data/klipper
-            tar -zxf /root/Klipper-src.tar.gz -C /data/
+        if [ -f /root/klipper-src.tar.gz ]; then
+            tar -zxf /root/klipper-src.tar.gz -C /data
             bashio::log.notice "Klipper src extracted"
         else
             bashio::log.warning "Klipper src not found"

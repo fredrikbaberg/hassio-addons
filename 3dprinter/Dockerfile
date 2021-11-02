@@ -1,5 +1,5 @@
 ARG BUILD_FROM="homeassistant/amd64-base:latest"
-ARG OCTOPRINT_VERSION="1.6.1"
+ARG OCTOPRINT_VERSION="1.7.1"
 ARG MJPG_STREAMER_BRANCH="v1.0.0"
 ARG CURA_LEGACY_BRANCH="15.04.6"
 ARG KLIPPER_BRANCH="master"
@@ -47,9 +47,9 @@ RUN echo "Install common dependencies" \
 
 FROM build-base AS octoprint
 ARG OCTOPRINT_VERSION
-ENV PYTHONPATH=/data/python/OctoPrint
-ENV PYTHONUSERBASE=/data/python/OctoPrint
-ENV PATH=${PATH}:/data/python/OctoPrint/bin
+ENV PYTHONPATH=/data/python/octoprint
+ENV PYTHONUSERBASE=/data/python/octoprint
+ENV PATH=${PATH}:/data/python/octoprint/bin
 
 RUN echo "Install OctoPrint" \
     && apk add --no-cache \
@@ -60,8 +60,8 @@ RUN echo "Install OctoPrint" \
         python3-dev \
     && echo "Done with apk add"
 RUN echo "Install" \
-    && virtualenv --python=python3 /data/python/OctoPrint \
-    && source /data/python/OctoPrint/bin/activate \
+    && virtualenv --python=python3 /data/python/octoprint \
+    && source /data/python/octoprint/bin/activate \
     && pip install ${PIP_FLAGS} --upgrade \
         pip \
         wheel \
@@ -71,12 +71,12 @@ RUN echo "Install" \
     && pip install ${PIP_FLAGS} \
         marlin-binary-protocol \
         psycopg2 \
-    && find /data/python/OctoPrint | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
+    && find /data/python/octoprint | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && rm -rf /root/.cache
 RUN echo "Copy files to single folder" \
     && mkdir -p /copy/root \
-    && cd /data/python && tar -zcf /copy/root/OctoPrint-python.tar.gz OctoPrint \
+    && cd /data && tar -zcf /copy/root/octoprint-python.tar.gz python/octoprint \
     && ln -s /data/config/octoprint /copy/root/.octoprint
 
 
@@ -131,9 +131,9 @@ RUN echo "Copy files to single folder" \
 
 FROM build-base AS klipper
 ARG KLIPPER_BRANCH
-ENV PYTHONPATH=/data/python/Klipper
-ENV PYTHONUSERBASE=/data/python/Klipper
-ENV PATH=${PATH}:/data/python/Klipper/bin
+ENV PYTHONPATH=/data/python/klipper
+ENV PYTHONUSERBASE=/data/python/klipper
+ENV PATH=${PATH}:/data/python/klipper/bin
 
 RUN echo "Install Klipper" \
     && apk add --no-cache \
@@ -145,30 +145,30 @@ RUN echo "Install Klipper" \
         python3-dev \
     && echo "Done with apk add"
 RUN echo "Install" \
-    && virtualenv --python=python3 /data/python/Klipper \
-    && source /data/python/Klipper/bin/activate \
+    && virtualenv --python=python3 /data/python/klipper \
+    && source /data/python/klipper/bin/activate \
     && pip install ${PIP_FLAGS} --upgrade \
         pip \
         wheel \
-    && git clone --single-branch --branch ${KLIPPER_BRANCH} https://github.com/Klipper3d/klipper.git /data/klipper \
-    && pip install ${PIP_FLAGS} -r /data/klipper/scripts/klippy-requirements.txt \
+    && git clone --single-branch --branch ${KLIPPER_BRANCH} https://github.com/Klipper3d/klipper.git /data/src/klipper \
+    && pip install ${PIP_FLAGS} -r /data/src/klipper/scripts/klippy-requirements.txt \
     # && pip install ${PIP_FLAGS} --upgrade \
     #     numpy \
-    && find /data/python/Klipper | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
+    && find /data/python/klipper | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && rm -rf /root/.cache
-COPY rootfs/root/klipper/.config /data/klipper/.config
-RUN cd /data/klipper \
-    && sed -i 's"// sched_main"// sched_main\n#include <pthread.h>"' /data/klipper/src/linux/main.c \
-    && sed -i 's/sched_setscheduler(0/pthread_setschedparam(pthread_self()/' /data/klipper/src/linux/main.c \
+COPY rootfs/root/src/klipper/.config /data/src/klipper/.config
+RUN cd /data/src/klipper \
+    && sed -i 's"// sched_main"// sched_main\n#include <pthread.h>"' /data/src/klipper/src/linux/main.c \
+    && sed -i 's/sched_setscheduler(0/pthread_setschedparam(pthread_self()/' /data/src/klipper/src/linux/main.c \
     && make clean \
     && make \
     && ./scripts/flash-linux.sh \
     && make clean
 RUN echo "Copy files to single folder" \
     && mkdir -p /copy/root \
-    && cd /data/python && tar -zcf /copy/root/Klipper-python.tar.gz Klipper \
-    && cd /data && tar -zcf /copy/root/Klipper-src.tar.gz klipper \
+    && cd /data && tar -zcf /copy/root/klipper-python.tar.gz python/klipper \
+    && cd /data && tar -zcf /copy/root/klipper-src.tar.gz src/klipper \
     && mkdir -p /copy/usr/local/bin \
     && cp /usr/local/bin/klipper_mcu /copy/usr/local/bin/klipper_mcu
 
@@ -176,9 +176,9 @@ RUN echo "Copy files to single folder" \
 
 FROM build-base AS moonraker
 ARG MOONRAKER_BRANCH
-ENV PYTHONPATH=/data/python/Moonraker
-ENV PYTHONUSERBASE=/data/python/Moonraker
-ENV PATH=${PATH}:/data/python/Moonraker/bin
+ENV PYTHONPATH=/data/python/moonraker
+ENV PYTHONUSERBASE=/data/python/moonraker
+ENV PATH=${PATH}:/data/python/moonraker/bin
 
 RUN echo "Install Moonraker" \
     && apk add --no-cache \
@@ -190,25 +190,25 @@ RUN echo "Install Moonraker" \
         python3-dev \
     && echo "Done with apk add"
 RUN echo "Install" \
-    && virtualenv --python=python3 /data/python/Moonraker \
-    && source /data/python/Moonraker/bin/activate \
+    && virtualenv --python=python3 /data/python/moonraker \
+    && source /data/python/moonraker/bin/activate \
     && pip install ${PIP_FLAGS} --upgrade \
         pip \
         wheel \
-    && git clone --single-branch --branch ${MOONRAKER_BRANCH} https://github.com/Arksine/moonraker.git /data/moonraker \
-    && pip install -r /data/moonraker/scripts/moonraker-requirements.txt \
-    && find /data/python/Moonraker | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
+    && git clone --single-branch --branch ${MOONRAKER_BRANCH} https://github.com/Arksine/moonraker.git /data/src/moonraker \
+    && pip install -r /data/src/moonraker/scripts/moonraker-requirements.txt \
+    && find /data/python/moonraker | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
 RUN echo "Copy files to single folder" \
     && mkdir -p /copy/root \
-    && cd /data/python && tar -zcf /copy/root/Moonraker-python.tar.gz Moonraker \
-    && cd /data && tar -zcf /copy/root/Moonraker-src.tar.gz moonraker
+    && cd /data && tar -zcf /copy/root/moonraker-python.tar.gz python/moonraker \
+    && cd /data && tar -zcf /copy/root/moonraker-src.tar.gz src/moonraker
 
 
 
 FROM ${BUILD_FROM} AS final
 ENV CFLAGS="-fcommon"
-ENV PATH=${PATH}:/data/python/OctoPrint/bin:/data/python/Klipper/bin:/data/python/Moonraker/bin
+ENV PATH=${PATH}:/data/python/octoprint/bin:/data/python/klipper/bin:/data/python/moonraker/bin
 
 RUN echo "Install required packages for proxy" \
     && apk add --no-cache \

@@ -2,4 +2,4 @@
 
 bashio::log.info "Starting mjpg-streamer..."
 
-# Command is added by /etc/cont-init.d/mjpg-streamer.sh.
+# Command added by /etc/cont-init.d/mjpg-streamer.sh.

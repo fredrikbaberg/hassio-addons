@@ -2,7 +2,7 @@
 
 bashio::log.info "Starting octoprint..."
 
-export PYTHONPATH=/data/python/OctoPrint
-export PYTHONUSERBASE=/data/python/OctoPrint
+export PYTHONPATH=/data/python/octoprint
+export PYTHONUSERBASE=/data/python/octoprint
 
 exec octoprint serve --iknowwhatimdoing --host 0.0.0.0 --port 80 --basedir /data/config/octoprint

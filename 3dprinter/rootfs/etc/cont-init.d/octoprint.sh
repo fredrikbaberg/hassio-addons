@@ -4,10 +4,9 @@ bashio::log.info "OctoPrint cont-init.d"
 
 if bashio::config.true 'octoprint'; then
     # Copy OctoPrint install to persistent storage, if missing.
-    if [ ! -d /data/python/OctoPrint ]; then
-        if [ -f /root/OctoPrint-python.tar.gz ]; then
-            mkdir -p /data/python
-            tar -zxf /root/OctoPrint-python.tar.gz -C /data/python/
+    if [ ! -d /data/python/octoprint ]; then
+        if [ -f /root/octoprint-python.tar.gz ]; then
+            tar -zxf /root/octoprint-python.tar.gz -C /data
             bashio::log.notice "OctoPrint Python extracted"
         else
             bashio::log.warning "OctoPrint Python not found"

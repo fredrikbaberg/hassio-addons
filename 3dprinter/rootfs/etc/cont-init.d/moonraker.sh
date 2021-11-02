@@ -4,10 +4,9 @@ bashio::log.info "Moonraker cont-init.d"
 
 if bashio::config.true 'moonraker'; then
     # Copy Moonraker install to persistent storage, if missing.
-    if [ ! -d /data/python/Moonraker ]; then
-        if [ -f /root/Moonraker-python.tar.gz ]; then
-            mkdir -p /data/python
-            tar -zxf /root/Moonraker-python.tar.gz -C /data/python/
+    if [ ! -d /data/python/moonraker ]; then
+        if [ -f /root/moonraker-python.tar.gz ]; then
+            tar -zxf /root/moonraker-python.tar.gz -C /data
             echo "Moonraker Python extracted"
         else
             echo "Moonraker Python archive not found"
@@ -16,9 +15,8 @@ if bashio::config.true 'moonraker'; then
 
     # Copy source to persistent storage, if missing.
     if [ ! -d /data/moonraker ]; then
-        if [ -f /root/Moonraker-src.tar.gz ]; then
-            mkdir -p /data/moonraker
-            tar -zxf /root/Moonraker-src.tar.gz -C /data/
+        if [ -f /root/moonraker-src.tar.gz ]; then
+            tar -zxf /root/moonraker-src.tar.gz -C /data
             bashio::log.notice "Moonraker src extracted"
         else
             bashio::log.warning "Moonraker src not found"
