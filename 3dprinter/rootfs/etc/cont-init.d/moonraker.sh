@@ -14,7 +14,7 @@ if bashio::config.true 'moonraker'; then
     fi
 
     # Copy source to persistent storage, if missing.
-    if [ ! -d /data/moonraker ]; then
+    if [ ! -d /data/src/moonraker ]; then
         if [ -f /root/moonraker-src.tar.gz ]; then
             tar -zxf /root/moonraker-src.tar.gz -C /data
             bashio::log.notice "Moonraker src extracted"

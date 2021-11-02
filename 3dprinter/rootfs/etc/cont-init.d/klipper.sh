@@ -14,7 +14,7 @@ if bashio::config.true 'klipper'; then
     fi
 
     # Copy source to persistent storage, if missing.
-    if [ ! -d /data/klipper ]; then
+    if [ ! -d /data/src/klipper ]; then
         if [ -f /root/klipper-src.tar.gz ]; then
             tar -zxf /root/klipper-src.tar.gz -C /data
             bashio::log.notice "Klipper src extracted"
