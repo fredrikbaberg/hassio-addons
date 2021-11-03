@@ -20,9 +20,9 @@ One user, `homeassistant`, is created with a random password on first launch. Th
 
 ### Camera
 
-mjpg-streamer is available for camera and snapshots. There are issues with the remote proxy and Ingress, to have a video feed you need it to be able outside of Ingress. This is not the case for snapshots, which is pre-configured.
+mjpg-streamer is available for camera and snapshots. There are issues with the remote proxy and Ingress, to have a video feed you need it to be able outside of Ingress. Snapshots should work with the default configuration.
 
-`gphoto2` is also available, for using a [DSLR with OctoLapse](https://github.com/FormerLurker/Octolapse/wiki/V0.4---Configuring-a-DSLR). The script is located at `/scripts/take_snapshot.sh`, note the `_` instead of `-` (dash) in the filename.
+`gphoto2` is also available, e.g. for using a [DSLR with OctoLapse](https://github.com/FormerLurker/Octolapse/wiki/V0.4---Configuring-a-DSLR). The script is located at `/scripts/take_snapshot.sh`, note the `_` instead of `-` (dash) in the filename.
 
 ### Slicer
 
@@ -32,39 +32,48 @@ CuraEngine 15.04.6 is pre-installed. To use it, install the plugin [CuraEngine L
 
 ### Klipper
 
-This addon comes with Klipper pre-installed. To use it, install the plugin OctoKlipper. *Note that this addon will **not** change the firmware of the printer, you are required to do that setup separately*.
-The config option `autostart_klipper` lets Klipper autostart, instead of manually starting from within OctoPrint.
-Linux host process is available, intended for using a [Raspberry Pi as a secondary MCU](https://www.klipper3d.org/RPi_microcontroller.html). *Not working as intended*.
+This addon comes with Klipper pre-installed. *Note that this addon will **not** change the firmware of the printer, that is up to the user*.
+To use it with OctoPrint, install the plugin OctoKlipper.
+
+A Linux host process is also available, intended for using a [Raspberry Pi as a secondary MCU](https://www.klipper3d.org/RPi_microcontroller.html). *Not working as intended*.
+
+*Klipper and Moonraker does not seem fully designed to run on Alpine Linux. There may be some modifications in place for it to compile and/or run. Please take this into consideration if you ask for help as it is not a stock install.*
 
 #### Moonraker
 
-Moonraker is installed but will most likely require additional configuration. Suggestions on default configuration are appreciated.
+Moonraker is pre-installed, for use with e.g. Mainsail or Fluidd (not included).
+A `moonraker.conf` is included, to override this place your own file in `/data/config/klipper/moonraker.conf`.
 
+If you want to use Moonraker and Klipper instead of OctoPrint, you can disable `octoprint` in the addon config.
 
 ### Updates
 
-First make a backup from within OctoPrint.
-Updates of OctoPrint should be possible from inside the addon.
+Make sure to create a backup first, either using Home Assistant backup option or the backup option from within OctoPrint.
+OctoPrint can be updated normally.
 
 ### Backups
 
-If you use Klipper or Moonraker you want to use Home Assistant backup as `printer.cfg` and Moonraker configuration is **not** backed up through OctoPrint backups.
+Backups from within OctoPrint will **only** backup OctoPrint, no configuration of Klipper or Moonraker will be included.
+For Klipper and Moonraker configuration you want to use the backup feature of Home Assistant, or copy the files from `/data/config/klipper`.
 
 ## Versions
 
 Some notes regarding the software and versions.
 
 - OctoPrint
-  - Installed in a `virtualenv` from PyPI, using numbered version (e.g. `1.6.1`) from when image was built.
+  - Installed in a `virtualenv` from PyPI, using numbered version (e.g. `1.7.2`) from when image was built.
 
 - mjpg-streamer
   - Compiled from tagged branch of [https://github.com/jacksonliam/mjpg-streamer](https://github.com/jacksonliam/mjpg-streamer), e.g. `v1.0.0`.
 
-- Klipper
-  - Installed in a separate `virtualenv`, using [https://github.com/Klipper3d/klipper](https://github.com/Klipper3d/klipper).
-
 - CuraEngine
-  - CuraEngine 15.04.6, works with the plugin CuraEngine Legacy.
+  - CuraEngine 15.04.6, for use with the plugin CuraEngine Legacy.
 
 - gphoto2
   - Installed through package manager.
+
+- Klipper
+  - Installed in a separate `virtualenv`, using branch `master` of [https://github.com/Klipper3d/klipper](https://github.com/Klipper3d/klipper).
+
+- Moonraker
+  - Installed in a separate `virtualenv`, using branch `master` from [https://github.com/Arksine/moonraker](https://github.com/Arksine/moonraker).

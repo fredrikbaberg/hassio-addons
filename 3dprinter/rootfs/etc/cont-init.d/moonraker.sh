@@ -7,9 +7,9 @@ if bashio::config.true 'moonraker'; then
     if [ ! -d /data/python/moonraker ]; then
         if [ -f /root/moonraker-python.tar.gz ]; then
             tar -zxf /root/moonraker-python.tar.gz -C /data
-            echo "Moonraker Python extracted"
+            bashio::log.notice "Moonraker Python extracted"
         else
-            echo "Moonraker Python archive not found"
+            bashio::log.warning "Moonraker Python archive not found"
         fi
     fi
 
@@ -20,17 +20,6 @@ if bashio::config.true 'moonraker'; then
             bashio::log.notice "Moonraker src extracted"
         else
             bashio::log.warning "Moonraker src not found"
-        fi
-    fi
-
-    # Copy config to persistent storage, if missing.
-    if [ ! -f /data/config/klipper/moonraker.conf ]; then
-        if [ -f /root/config/klipper/moonraker.conf ]; then
-            mkdir -p /data/config/klipper
-            cp /root/config/klipper/moonraker.conf /data/config/klipper/moonraker.conf
-            bashio::log.notice "Default Moonraker config copied"
-        else
-            bashio::log.warning "Default Moonraker config not found"
         fi
     fi
 
