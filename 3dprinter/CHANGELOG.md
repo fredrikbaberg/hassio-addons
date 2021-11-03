@@ -1,5 +1,7 @@
 # Changelog
 
-[0.0.31]
+[2021.11.0]
 
-- Update to OctoPrint 1.7.2
+- Use custom `moonraker.conf` if available
+- Update documentation
+- Change version number system
