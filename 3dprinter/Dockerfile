@@ -1,5 +1,5 @@
 ARG BUILD_FROM="homeassistant/amd64-base:latest"
-ARG OCTOPRINT_VERSION="1.7.1"
+ARG OCTOPRINT_VERSION="1.7.2"
 ARG MJPG_STREAMER_BRANCH="v1.0.0"
 ARG CURA_LEGACY_BRANCH="15.04.6"
 ARG KLIPPER_BRANCH="master"
@@ -245,11 +245,11 @@ RUN echo "Install required packages for firmware update." \
         avrdude \
         git \
         stm32flash
-RUN echo "Install useful packages for debugging." \
-    && apk add --no-cache \
-        screen \
-        tree \
-        vim
+# RUN echo "Install useful packages for debugging." \
+#     && apk add --no-cache \
+#         screen \
+#         tree \
+#         vim
 
 # Copy data from previous stages
 # ## octoprint
