@@ -2,9 +2,15 @@
 
 Some addons for Home Assistant.
 
+## 3DPrinter ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/fredrikbaberg/addon-3dprinter-amd64?sort=semver)
+
+Addon for use with a 3D printer. Includes OctoPrint, mjpg-streamer, Klipper, Moonraker etc.
+This addon is intended to replace all variations of "OctoPrint" below by the end of 2021.
+
+
 ## OctoPrint
 
-There are currently multiple versions of OctoPrint addons in this repository. By the end of 2021 those will be replaced by two versions, one with basic features (smaller image size) and one with *"everything"*.
+There are currently multiple versions of OctoPrint addons in this repository. By the end of 2021 those will be replaced by "3DPrinter".
 
 ### OctoPrint ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/fredrikbaberg/octoprint-amd64-image?sort=semver)
 
