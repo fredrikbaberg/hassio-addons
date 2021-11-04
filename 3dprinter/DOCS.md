@@ -56,6 +56,10 @@ OctoPrint can be updated normally.
 Backups from within OctoPrint will **only** backup OctoPrint, no configuration of Klipper or Moonraker will be included.
 For Klipper and Moonraker configuration you want to use the backup feature of Home Assistant, or copy the files from `/data/config/klipper`.
 
+### Home Assistant integration
+
+Home Assistant may find the OctoPrint instance, however, it will be discovered with an internal IP address which may not work. To configure the integration use username `homeassistant` and host `774437fd-3dprinter`, and approve the connection from OctoPrint.
+
 ## Versions
 
 Some notes regarding the software and versions.
