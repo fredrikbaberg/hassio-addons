@@ -1,5 +1,10 @@
 # Changelog
 
+[2021.11.1]
+
+- Add repair option
+- Fix Klipper update script
+
 [2021.11.0]
 
 - Use custom `moonraker.conf` if available
