@@ -36,7 +36,8 @@
         "mjpg_output": "-o \"output_http.so -w /www_mjpg -p 8080\"",
         "octoprint": true,
         "mjpg_streamer": false,
-        "recovery": false
+        "recovery": false,
+        "repair": false
     },
     "schema": {
         "mjpg_input": "str",
@@ -46,7 +47,8 @@
         "klipper": "bool?",
         "klipper_linux_host": "bool?",
         "moonraker": "bool?",
-        "recovery": "bool"
+        "recovery": "bool",
+        "repair": "bool"
     },
     "image": "fredrikbaberg/addon-3dprinter-{arch}",
     "tmpfs": true,

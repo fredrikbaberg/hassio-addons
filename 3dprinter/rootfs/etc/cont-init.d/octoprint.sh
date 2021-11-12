@@ -24,6 +24,10 @@ if bashio::config.true 'octoprint'; then
         fi
     fi
 
+    if bashio::config.true 'repair'; then
+        pip install OctoPrint
+    fi
+
     # Ensure Ingress user (homeassistant) exist.
     new_password=$(date +%s | sha256sum | base64 | head -c 32 ; echo)
     octoprint --basedir /data/config/octoprint user add homeassistant --password "$new_password" --group users --group admins # 2> /dev/null
