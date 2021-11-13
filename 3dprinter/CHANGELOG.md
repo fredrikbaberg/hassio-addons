@@ -3,6 +3,7 @@
 [2021.11.2]
 
 - Add validation for OctoPrint command, with automatic attempt at repair on fail.
+- Remove repair option
 
 [2021.11.1]
 
