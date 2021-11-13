@@ -215,7 +215,8 @@ RUN echo "Install required packages for proxy" \
         caddy
 RUN echo "Install required packages for OctoPrint" \
     && apk add --no-cache \
-        python3
+        python3 \
+        py-netifaces
 RUN echo "Install required packages for camera (mjpg-streamer, gphoto2)." \
     && apk add --no-cache \
         ffmpeg \
