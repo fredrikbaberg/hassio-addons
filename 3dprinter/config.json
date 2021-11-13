@@ -1,6 +1,6 @@
 {
     "name": "3DPrinter",
-    "version": "2021.11.1",
+    "version": "2021.11.2",
     "slug": "3dprinter",
     "description": "3DPrinter add-on for Home Assistant. OctoPrint, Klipper and more.",
     "arch": ["armhf", "armv7", "amd64", "aarch64", "i386"],
@@ -36,8 +36,7 @@
         "mjpg_output": "-o \"output_http.so -w /www_mjpg -p 8080\"",
         "octoprint": true,
         "mjpg_streamer": false,
-        "recovery": false,
-        "repair": false
+        "recovery": false
     },
     "schema": {
         "mjpg_input": "str",
@@ -47,8 +46,7 @@
         "klipper": "bool?",
         "klipper_linux_host": "bool?",
         "moonraker": "bool?",
-        "recovery": "bool",
-        "repair": "bool"
+        "recovery": "bool"
     },
     "image": "fredrikbaberg/addon-3dprinter-{arch}",
     "tmpfs": true,
