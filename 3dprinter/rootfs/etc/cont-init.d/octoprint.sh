@@ -24,9 +24,22 @@ if bashio::config.true 'octoprint'; then
         fi
     fi
 
-    # Ensure Ingress user (homeassistant) exist.
-    new_password=$(date +%s | sha256sum | base64 | head -c 32 ; echo)
-    octoprint --basedir /data/config/octoprint user add homeassistant --password "$new_password" --group users --group admins # 2> /dev/null
+    { # try
+        bashio::log.notice "Verify that OctoPrint can be called"
+        octoprint --version
+    } || { # catch
+        bashio::log.warning "OctoPrint command failed, attempt pip reinstall"
+        pip freeze > /tmp/pip_freeze.txt
+        pip install -r /tmp/pip_freeze.txt
+    }
+
+    { # try
+        bashio::log.notice "Ensure Ingress user (homeassistant) exist."
+        new_password=$(date +%s | sha256sum | base64 | head -c 32 ; echo)
+        octoprint --basedir /data/config/octoprint user add homeassistant --password "$new_password" --group users --group admins # 2> /dev/null
+    } || { # catch
+        bashio::log.warning "Failed to ensure Ingress user exists, may not be able to launch."
+    }
 
     # Configure autostart of service
     rm -f /etc/services.d/octoprint/down

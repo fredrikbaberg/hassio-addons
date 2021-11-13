@@ -2,12 +2,13 @@
 
 echo "Update Klipper source to latest version (git master branch)"
 
-cd /data/klipper
+cd /data/src/klipper
 # Stash changes
 git stash
 # Update from repository
 git checkout master
 git pull
+git stash pop
 # git pull origin master
 # # Apply fix for scheduler
 # sed -i 's"// sched_main"// sched_main\n#include <pthread.h>"' /data/klipper/src/linux/main.c
