@@ -28,9 +28,10 @@ if bashio::config.true 'octoprint'; then
         bashio::log.notice "Verify that OctoPrint can be called"
         octoprint --version
     } || { # catch
-        bashio::log.warning "OctoPrint command failed, attempt pip reinstall"
+        bashio::log.warning "OctoPrint command failed, attempt pip reinstall. This will take a while!"
         pip freeze > /tmp/pip_freeze.txt
-        pip install -r /tmp/pip_freeze.txt
+        pip install -r /tmp/pip_freeze.txt --force-reinstall
+        bashio::log.notice "Re-install completed."
     }
 
     { # try
