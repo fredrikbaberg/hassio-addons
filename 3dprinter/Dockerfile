@@ -1,4 +1,4 @@
-ARG BUILD_FROM="homeassistant/amd64-base:latest"
+ARG BUILD_FROM="ghcr.io/home-assistant/amd64-base:3.14"
 ARG OCTOPRINT_VERSION="1.7.2"
 ARG MJPG_STREAMER_BRANCH="v1.0.0"
 ARG CURA_LEGACY_BRANCH="15.04.6"
