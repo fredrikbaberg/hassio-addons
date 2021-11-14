@@ -41,7 +41,7 @@ schema:
     klipper: "bool?"
     klipper_linux_host: "bool?"
     moonraker: "bool?"
-    recovery: "bool
+    recovery: "bool"
 image: "ghcr.io/fredrikbaberg/addon-3dprinter-{arch}"
 tmpfs: true
 ingress: true
