@@ -1,5 +1,5 @@
 name: 3DPrinter
-version: "2021.11.4"
+version: "2021.11.5"
 slug: 3dprinter
 description: 3DPrinter add-on for Home Assistant. OctoPrint, Klipper and more.
 url: "https://github.com/fredrikbaberg/hassio-addons/tree/master/3dprinter"
