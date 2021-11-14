@@ -1,5 +1,9 @@
 # Changelog
 
+[2021.11.4]
+
+- Change from Docker Hub to ghcr.io.
+
 [2021.11.3]
 
 - Add `py-netifaces` to image
