@@ -5,7 +5,5 @@
         "amd64": "fredrikbaberg/addon-octoprint-next-amd64:0.4.5",
         "aarch64": "fredrikbaberg/addon-octoprint-next-aarch64:0.4.5",
         "i386": "fredrikbaberg/addon-octoprint-next-i386:0.4.5"
-    },
-    "squash": false,
-    "args": {}
+    }
 }
