@@ -1,5 +1,7 @@
 # 3DPrinter add-on for Home Assistant
 
+**There are currently issues with 32-bit installs, working on it.**
+
 ## About
 
 This add-on allows you to connect to and control your 3D printer on a device running [Home Assistant](https://home-assistant.io/).
