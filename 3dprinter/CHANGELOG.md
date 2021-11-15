@@ -1,5 +1,10 @@
 # Changelog
 
+[2021.11.6]
+
+- Add check to only attempt reinstall once per addon version
+- Add repair for Klipper
+
 [2021.11.5]
 
 - Updated OctoPrint startup repair to force reinstall pip packages.

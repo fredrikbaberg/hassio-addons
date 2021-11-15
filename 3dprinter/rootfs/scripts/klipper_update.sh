@@ -16,5 +16,7 @@ git stash pop
 # # Make, install and clean
 # make clean
 # make
-# ./scripts/flash-linux.sh
+# mkdir -p /data/bin
+# rm -rf /data/bin/klipper_mcu
+# cp out/klipper.elf /data/bin/klipper_mcu
 # make clean
