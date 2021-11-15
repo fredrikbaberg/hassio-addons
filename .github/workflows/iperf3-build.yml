@@ -1,4 +1,4 @@
-name: iperf3 manual build
+name: iPerf3 manual build
 
 on:
   workflow_dispatch:

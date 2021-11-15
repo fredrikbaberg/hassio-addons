@@ -1,7 +1,4 @@
-name: 3dprinter manual build
-
-env:
-  ADDON: "3dprinter"
+name: 3DPrinter manual build
 
 on:
   workflow_dispatch:
@@ -9,10 +6,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Build ${{ matrix.addon }} ${{ matrix.arch }} add-on
+    name: Build ${{ matrix.arch }} ${{ matrix.addon }} add-on
     strategy:
       matrix:
-        addon: ${{ env.ADDON }}
+        addon: ["3dprinter"]
         arch: ["aarch64", "amd64", "armhf", "armv7", "i386"]
     steps:
       - name: Check out the repository
