@@ -1,7 +1,10 @@
-name: mjpg-streamer manual build
+name: TSD tag or manual build
 
 on:
   workflow_dispatch:
+  push:
+    tags:
+      - tsd-v*
 
 jobs:
   build:
@@ -9,7 +12,7 @@ jobs:
     name: Build ${{ matrix.arch }} ${{ matrix.addon }} add-on
     strategy:
       matrix:
-        addon: ["mjpg-streamer"]
+        addon: ["tsd"]
         arch: ["aarch64", "amd64", "armhf", "armv7", "i386"]
     steps:
       - name: Check out the repository

@@ -1,7 +1,10 @@
-name: 3DPrinter manual build
+name: 3DPrinter tag or manual build
 
 on:
   workflow_dispatch:
+  push:
+    tags:
+      - 3dprinter-v*
 
 jobs:
   build:
