@@ -1,5 +1,9 @@
 # Changelog
 
+[2021.11.5]
+
+- Updated OctoPrint startup repair to force reinstall pip packages.
+
 [2021.11.4]
 
 - Change from Docker Hub to ghcr.io.

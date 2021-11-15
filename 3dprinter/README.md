@@ -1,6 +1,6 @@
 # 3DPrinter add-on for Home Assistant
 
-**There are currently issues with 32-bit installs, working on it.**
+**Note: There is an issue with 32-bit installs, see notes below.**
 
 ## About
 
@@ -19,6 +19,10 @@ Add the repository [https://github.com/fredrikbaberg/hassio-addons](https://gith
 ## Documentation
 
 See the tab _Documentation_ in Home Assistant addon page, or the file `DOCS.md`.
+
+## 32-bit installs
+
+If you are running a 32-bit install of Home Assistant OS (`armv7`) the default virtual environment is broken. The current options are to disable architecture `armv7` or implement a workaround, for now the workaround is in place. This reinstalls all packages in the Python virtual environment, however, this will take a lot of time.
 
 ## Support
 
