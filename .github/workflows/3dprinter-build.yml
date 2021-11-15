@@ -19,21 +19,21 @@ jobs:
         uses: actions/checkout@v2.4.0
 
       - name: Get information
-          id: info
-          uses: home-assistant/actions/helpers/info@master
-          with:
-            path: "./${{ matrix.addon }}"
+        id: info
+        uses: home-assistant/actions/helpers/info@master
+        with:
+          path: "./${{ matrix.addon }}"
 
       - name: Check if add-on should be built
-          id: check
-          run: |
-            if [[ "${{ steps.info.outputs.architectures }}" =~ ${{ matrix.arch }} ]]; then
-              echo "::set-output name=build_arch::true";
-              echo "::set-output name=image::$(echo ${{ steps.info.outputs.image }} | cut -d'/' -f3)";
-            else
-              echo "${{ matrix.arch }} is not a valid arch for ${{ matrix.addon }}, skipping build";
-              echo "::set-output name=build_arch::false";
-            fi
+        id: check
+        run: |
+          if [[ "${{ steps.info.outputs.architectures }}" =~ ${{ matrix.arch }} ]]; then
+            echo "::set-output name=build_arch::true";
+            echo "::set-output name=image::$(echo ${{ steps.info.outputs.image }} | cut -d'/' -f3)";
+          else
+            echo "${{ matrix.arch }} is not a valid arch for ${{ matrix.addon }}, skipping build";
+            echo "::set-output name=build_arch::false";
+          fi
 
       - name: Login to GitHub Container Registry
         if: env.BUILD_ARGS != '--test'
