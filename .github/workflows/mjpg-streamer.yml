@@ -1,7 +1,10 @@
-name: iPerf3 manual build
+name: mjpg-streamer tag or manual build
 
 on:
   workflow_dispatch:
+  push:
+    tags:
+      - mjpg-streamer-v*
 
 jobs:
   build:
@@ -9,7 +12,7 @@ jobs:
     name: Build ${{ matrix.arch }} ${{ matrix.addon }} add-on
     strategy:
       matrix:
-        addon: ["iperf3"]
+        addon: ["mjpg-streamer"]
         arch: ["aarch64", "amd64", "armhf", "armv7", "i386"]
     steps:
       - name: Check out the repository
