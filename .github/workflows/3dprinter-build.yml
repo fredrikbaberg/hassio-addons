@@ -1,132 +1,57 @@
-name: 3dprinter-build
+name: 3dprinter manual build
+
+env:
+  ADDON: "3dprinter"
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  armhf:
+  build:
     runs-on: ubuntu-latest
+    name: Build ${{ matrix.addon }} ${{ matrix.arch }} add-on
+    strategy:
+      matrix:
+        addon: ${{ env.ADDON }}
+        arch: ["aarch64", "amd64", "armhf", "armv7", "i386"]
     steps:
-    - name: Checkout the repository
-      uses: actions/checkout@v2
-    - name: Login to DockerHub
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v1.10.0
-      with:
-        registry: ghcr.io
-        username: ${{ github.repository_owner }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-    - name: Build and publish image
-      uses: home-assistant/builder@master
-      with:
-        args: |
-          --armhf \
-          --target 3dprinter \
-          --docker-hub-check \
-          --docker-hub "ghcr.io/${{ github.repository_owner }}"
-  armv7:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout the repository
-      uses: actions/checkout@v2
-    - name: Login to DockerHub
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v1.10.0
-      with:
-        registry: ghcr.io
-        username: ${{ github.repository_owner }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-    - name: Build and publish image
-      uses: home-assistant/builder@master
-      with:
-        args: |
-          --armv7 \
-          --target 3dprinter \
-          --docker-hub-check \
-          --docker-hub "ghcr.io/${{ github.repository_owner }}"
-  amd64:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout the repository
-      uses: actions/checkout@v2
-    - name: Login to DockerHub
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v1.10.0
-      with:
-        registry: ghcr.io
-        username: ${{ github.repository_owner }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-    - name: Build and publish image
-      uses: home-assistant/builder@master
-      with:
-        args: |
-          --amd64 \
-          --target 3dprinter \
-          --docker-hub-check \
-          --docker-hub "ghcr.io/${{ github.repository_owner }}"
-  aarch64:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout the repository
-      uses: actions/checkout@v2
-    - name: Login to DockerHub
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v1.10.0
-      with:
-        registry: ghcr.io
-        username: ${{ github.repository_owner }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-    - name: Build and publish image
-      uses: home-assistant/builder@master
-      with:
-        args: |
-          --aarch64 \
-          --target 3dprinter \
-          --docker-hub-check \
-          --docker-hub "ghcr.io/${{ github.repository_owner }}"
-  i386:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout the repository
-      uses: actions/checkout@v2
-    - name: Login to DockerHub
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v1.10.0
-      with:
-        registry: ghcr.io
-        username: ${{ github.repository_owner }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-    - name: Build and publish image
-      uses: home-assistant/builder@master
-      with:
-        args: |
-          --i386 \
-          --target 3dprinter \
-          --docker-hub-check \
-          --docker-hub "ghcr.io/${{ github.repository_owner }}"
+      - name: Check out the repository
+        uses: actions/checkout@v2.4.0
+
+      - name: Get information
+          id: info
+          uses: home-assistant/actions/helpers/info@master
+          with:
+            path: "./${{ matrix.addon }}"
+
+      - name: Check if add-on should be built
+          id: check
+          run: |
+            if [[ "${{ steps.info.outputs.architectures }}" =~ ${{ matrix.arch }} ]]; then
+              echo "::set-output name=build_arch::true";
+              echo "::set-output name=image::$(echo ${{ steps.info.outputs.image }} | cut -d'/' -f3)";
+            else
+              echo "${{ matrix.arch }} is not a valid arch for ${{ matrix.addon }}, skipping build";
+              echo "::set-output name=build_arch::false";
+            fi
+
+      - name: Login to GitHub Container Registry
+        if: env.BUILD_ARGS != '--test'
+        uses: docker/login-action@v1.10.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build ${{ matrix.addon }} add-on
+        if: steps.check.outputs.build_arch == 'true'
+        uses: home-assistant/builder@2021.09.0
+        with:
+          args: |
+            ${{ env.BUILD_ARGS }} \
+            --${{ matrix.arch }} \
+            --target /data/${{ matrix.addon }} \
+            --image "${{ steps.check.outputs.image }}" \
+            --docker-hub "ghcr.io/${{ github.repository_owner }}" \
+            --addon \
+            --docker-hub-check
