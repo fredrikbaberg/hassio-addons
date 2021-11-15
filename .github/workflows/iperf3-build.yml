@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Build ${{ matrix.addon }} ${{ matrix.arch }} add-on
+    name: Build ${{ env.ADDON }} ${{ matrix.arch }} add-on
     strategy:
       matrix:
         arch: ["aarch64", "amd64", "armhf", "armv7", "i386"]
@@ -30,7 +30,7 @@ jobs:
             echo "::set-output name=build_arch::true";
             echo "::set-output name=image::$(echo ${{ steps.info.outputs.image }} | cut -d'/' -f3)";
           else
-            echo "${{ matrix.arch }} is not a valid arch for ${{ matrix.addon }}, skipping build";
+            echo "${{ matrix.arch }} is not a valid arch for ${{ env.ADDON }}, skipping build";
             echo "::set-output name=build_arch::false";
           fi
 
@@ -42,14 +42,14 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build ${{ matrix.addon }} add-on
+      - name: Build ${{ env.ADDON }} add-on
         if: steps.check.outputs.build_arch == 'true'
         uses: home-assistant/builder@2021.09.0
         with:
           args: |
             ${{ env.BUILD_ARGS }} \
             --${{ matrix.arch }} \
-            --target /data/${{ matrix.addon }} \
+            --target /data/${{ env.ADDON }} \
             --image "${{ steps.check.outputs.image }}" \
             --docker-hub "ghcr.io/${{ github.repository_owner }}" \
             --addon \
