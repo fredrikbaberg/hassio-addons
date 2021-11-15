@@ -21,5 +21,5 @@
     "schema": {
         "arguments": "str"
     },
-    "image": "fredrikbaberg/addon-iperf3-{arch}"
+    "image": "ghcr.io/fredrikbaberg/addon-iperf3-{arch}"
 }
