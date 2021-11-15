@@ -34,6 +34,27 @@ if bashio::config.true 'klipper'; then
         fi
     fi
 
+    # Test install
+    { # try
+        bashio::log.notice "Verify that Klipper can be called"
+        KLIPPER_PYTHON=/data/python/klipper/bin/python
+        KLIPPY=/data/src/klipper/klippy/klippy.py
+        ${KLIPPER_PYTHON} ${KLIPPY} -h
+    } || { # catch
+        bashio::log.warning "Klipper help command failed."
+        if [ ! -f /data/python/klipper/REPAIRED_$(bashio::addon.version) ]; then
+            bashio::log.notice "Attempt pip reinstall, this may take a while!"
+            source /data/python/klipper/bin/activate
+            pip freeze > /tmp/pip_freeze_klipper
+            pip install --force-reinstall -r /tmp/pip_freeze_klipper
+            deactivate
+            touch /data/python/klipper/REPAIRED_$(bashio::addon.version)
+            bashio::log.notice "Re-install completed."
+        else
+            bahsio::log.error "Repair previously attempted, won't try again."
+        fi
+    }
+
     # Make sure log file exists
     touch /tmp/klippy.log
 

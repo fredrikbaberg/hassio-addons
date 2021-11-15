@@ -208,15 +208,14 @@ RUN echo "Copy files to single folder" \
 
 FROM ${BUILD_FROM} AS final
 ENV CFLAGS="-fcommon"
-ENV PATH=${PATH}:/data/python/octoprint/bin:/data/python/klipper/bin:/data/python/moonraker/bin
+ENV PATH=/data/python/octoprint/bin:/data/python/klipper/bin:/data/python/moonraker/bin:/data/bin:${PATH}
 
 RUN echo "Install required packages for proxy" \
     && apk add --no-cache \
         caddy
 RUN echo "Install required packages for OctoPrint" \
     && apk add --no-cache \
-        python3 \
-        py-netifaces
+        python3
 RUN echo "Install required packages for camera (mjpg-streamer, gphoto2)." \
     && apk add --no-cache \
         ffmpeg \
@@ -225,9 +224,10 @@ RUN echo "Install required packages for camera (mjpg-streamer, gphoto2)." \
 RUN echo "Install required packages for Klipper." \
     && apk add --no-cache \
         build-base \
+        libffi-dev \
         linux-headers \
-        python3 \
-        python2
+        python2 \
+        python3
 RUN echo "Install required packages for Moonraker." \
     && apk add --no-cache \
         curl-dev \
