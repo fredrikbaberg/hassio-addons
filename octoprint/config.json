@@ -1,5 +1,5 @@
 {
-    "name": "(Deprecated) OctoPrint",
+    "name": "OctoPrint (Deprecated)",
     "version": "0.4.4",
     "slug": "octoprint",
     "description": "OctoPrint add-on for Home Assistant",
