@@ -1,8 +1,6 @@
 # OctoPrint add-on for Home Assistant, with Klipper.
 
-**This version is in early development.**
-
-**Always ensure you have a backup of your configuration.**
+**This addon will not be updated, please use addon 3DPrinter instead.**
 
 ## About
 

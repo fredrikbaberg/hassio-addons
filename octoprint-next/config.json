@@ -1,5 +1,5 @@
 {
-    "name": "OctoPrint Next",
+    "name": "(Deprecated) OctoPrint Next",
     "version": "0.3.5",
     "slug": "octoprint-next",
     "description": "Next version of OctoPrint add-on for Home Assistant",
@@ -43,6 +43,6 @@
     "panel_title": "OctoPrint Next",
     "panel_admin": false,
     "backup_exclude": [],
-    "stage": "experimental",
+    "stage": "deprecated",
     "realtime": true
 }

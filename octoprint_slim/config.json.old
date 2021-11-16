@@ -1,5 +1,5 @@
 {
-    "name": "OctoPrint Slim",
+    "name": "(Deprecated) OctoPrint Slim",
     "version": "0.0.4",
     "slug": "octoprint-slim",
     "description": "Octoprint add-on for Hass.io, slimmed version (untested)",

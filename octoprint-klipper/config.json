@@ -1,5 +1,5 @@
 {
-    "name": "OctoPrint Klipper",
+    "name": "(Deprecated) OctoPrint Klipper",
     "version": "0.7.2",
     "slug": "octoprint-klipper",
     "description": "OctoPrint with Klipper add-on for Home Assistant",
@@ -45,6 +45,6 @@
     "panel_title": "OctoPrint Klipper",
     "panel_admin": false,
     "backup_exclude": [],
-    "stage": "experimental",
+    "stage": "deprecated",
     "realtime": true
 }
