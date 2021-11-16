@@ -1,5 +1,5 @@
 {
-    "name": "OctoPrint",
+    "name": "(Deprecated) OctoPrint",
     "version": "0.4.4",
     "slug": "octoprint",
     "description": "OctoPrint add-on for Home Assistant",
@@ -33,5 +33,6 @@
     "panel_icon": "mdi:printer-3d",
     "panel_title": "OctoPrint",
     "image": "fredrikbaberg/octoprint-{arch}-image",
-    "video": true
+    "video": true,
+    "stage": "deprecated"
 }

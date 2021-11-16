@@ -1,6 +1,6 @@
 # OctoPrint add-on for Home Assistant
 
-**Ensure you have a backup of your configuration.**
+**This addon will not be updated, please use addon 3DPrinter instead.**
 
 ## About
 

@@ -1,8 +1,6 @@
 # Development version of OctoPrint add-on for Home Assistant
 
-**This version is VERY EXPERIMENTAL, please use the one simply called "OctoPrint" for now.**
-
-**Ensure you have a backup of your configuration.**
+**This addon will not be updated, please use addon 3DPrinter instead.**
 
 ## About
 
