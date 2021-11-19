@@ -12,7 +12,7 @@ ENV LANG C.UTF-8
 
 RUN echo "Install common dependencies" \
     && apt update \
-    && apt install -y \
+    && apt install --yes --no-install-recommends \
         ## OctoPrint \
         build-essential \
         python3-dev \
@@ -57,13 +57,13 @@ ENV PYTHONUSERBASE=/data/python/octoprint
 ENV PATH=${PATH}:/data/python/octoprint/bin
 
 RUN echo "Install OctoPrint" \
-    && apt install -y --no-install-recommends  \
+    && apt install --yes --no-install-recommends  \
         build-essential \
         python3-dev \
         virtualenv \
     && echo "Done with install system packages"
 RUN echo "Install" \
-    && virtualenv --python=python3 --system-site-packages /data/python/octoprint \
+    && virtualenv --python=python3 /data/python/octoprint \
     && source /data/python/octoprint/bin/activate \
     && pip install ${PIP_FLAGS} --upgrade \
         pip \
@@ -87,7 +87,7 @@ RUN echo "Copy files to single folder" \
 FROM build-base AS mjpg-streamer
 ARG MJPG_STREAMER_BRANCH
 RUN echo "Install mjpg-streamer" \
-    && apt install -y --no-install-recommends \
+    && apt install --yes --no-install-recommends \
         build-essential \
         cmake \
         git \
@@ -115,7 +115,7 @@ RUN echo "Copy files to single folder" \
 FROM build-base AS curaengine
 ARG CURA_LEGACY_BRANCH
 RUN echo "Install CuraEngine" \
-    && apt install -y --no-install-recommends \
+    && apt install --yes --no-install-recommends \
         build-essential \
         git \
     && echo "Done with install system packages"
@@ -137,7 +137,7 @@ ENV PYTHONUSERBASE=/data/python/klipper
 ENV PATH=${PATH}:/data/python/klipper/bin
 
 RUN echo "Install Klipper" \
-    && apt install -y --no-install-recommends \
+    && apt install --yes --no-install-recommends \
         build-essential \
         git \
         libffi-dev \
@@ -182,7 +182,7 @@ ENV PYTHONUSERBASE=/data/python/moonraker
 ENV PATH=${PATH}:/data/python/moonraker/bin
 
 RUN echo "Install Moonraker" \
-    && apt install -y --no-install-recommends \
+    && apt install --yes --no-install-recommends \
         build-essential \
         curl \
         git \
@@ -222,43 +222,43 @@ RUN echo "Install required packages for proxy" \
     && curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | tee /etc/apt/trusted.gpg.d/caddy-stable.asc \
     && curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | tee /etc/apt/sources.list.d/caddy-stable.list \
     && apt update \
-    && apt install -y --no-install-recommends \
+    && apt install --yes --no-install-recommends \
         caddy \
     && apt clean
 RUN echo "Install required packages for OctoPrint" \
     && apt update \
-    && apt install -y \
+    && apt install --yes\
         python3 \
     && apt clean
 RUN echo "Install required packages for camera (mjpg-streamer, gphoto2)." \
     && apt update \
-    && apt install -y --no-install-recommends \
+    && apt install --yes --no-install-recommends \
         ffmpeg \
         gphoto2 \
         v4l-utils \
     && apt clean
 RUN echo "Install required packages for Klipper." \
-    && apt install -y --no-install-recommends \
+    && apt install --yes --no-install-recommends \
         build-essential \
         libffi-dev \
         python2 \
         python3 \
     && apt clean
 RUN echo "Install required packages for Moonraker." \
-    && apt install -y --no-install-recommends \
+    && apt install --yes --no-install-recommends \
         curl \
         libsodium-dev \
         sudo \
     && apt clean
 RUN echo "Install development packages for different plugins etc." \
-    && apt install -y --no-install-recommends \
+    && apt install --yes --no-install-recommends \
         build-essential \
         libjpeg62-turbo-dev \
         python3-dev \
         zlib1g-dev \
     && apt clean
 RUN echo "Install required packages for firmware update." \
-    && apt install -y --no-install-recommends \
+    && apt install --yes --no-install-recommends \
         avrdude \
         git \
         stm32flash \
