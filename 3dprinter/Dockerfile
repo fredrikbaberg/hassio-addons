@@ -207,7 +207,7 @@ RUN echo "Copy files to single folder" \
 
 
 FROM ${BUILD_FROM} AS final
-ARG PIP_FLAGS
+ENV PIP_FLAGS="--no-cache-dir --extra-index-url https://www.piwheels.org/simple"
 ENV CFLAGS="-fcommon"
 ENV PATH=/data/python/octoprint/bin:/data/python/klipper/bin:/data/python/moonraker/bin:/data/bin:${PATH}
 
