@@ -1,0 +1,19 @@
+#!/usr/bin/with-contenv bashio
+
+bashio::log.info "Starting Moonraker..."
+
+MOONRAKER_PYTHON=/data/python/moonraker/bin/python
+MOONRAKER=/data/src/moonraker/moonraker/moonraker.py
+if [ -f /data/config/klipper/moonraker.conf ]; then
+    bashio::log.notice "Using custom moonraker.conf"
+    MOONRAKER_CFG=/data/config/klipper/moonraker.conf
+else
+    bashio::log.notice "Using default moonraker.conf"
+    MOONRAKER_CFG=/root/config/moonraker/moonraker.conf
+fi
+MOONRAKER_LOGFILE=/tmp/moonraker.log
+
+touch ${MOONRAKER_LOGFILE}
+touch ${MOONRAKER_CFG}
+
+exec ${MOONRAKER_PYTHON} ${MOONRAKER} -c ${MOONRAKER_CFG} -l ${MOONRAKER_LOGFILE}
