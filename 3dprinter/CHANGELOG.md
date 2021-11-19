@@ -1,5 +1,14 @@
 # Changelog
 
+[2021.11.7]
+
+- Add PIP_FLAGS to final image
+- Add repair for Moonraker
+- Add script for Moonraker update
+- Update script for Klipper update
+- Update path for klipper_mcu binary
+
+
 [2021.11.6]
 
 - Add check to only attempt reinstall once per addon version
