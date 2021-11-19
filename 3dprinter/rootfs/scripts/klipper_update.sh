@@ -1,22 +1,25 @@
 #!/usr/bin/with-contenv bashio
 
-echo "Update Klipper source to latest version (git master branch)"
+echo "Update Klipper to latest version (git master branch)"
 
 cd /data/src/klipper
-# Stash changes
 git stash
-# Update from repository
 git checkout master
 git pull
 git stash pop
-# git pull origin master
+
+# Update Python install
+source /data/python/klipper/bin/activate
+pip install ${PIP_FLAGS} -r /data/src/klipper/scripts/klippy-requirements.txt
+deactivate
+
+# Update klipper_mcu
+make clean
 # # Apply fix for scheduler
 # sed -i 's"// sched_main"// sched_main\n#include <pthread.h>"' /data/klipper/src/linux/main.c
 # sed -i 's/sched_setscheduler(0/pthread_setschedparam(pthread_self()/' /data/klipper/src/linux/main.c
-# # Make, install and clean
-# make clean
-# make
-# mkdir -p /data/bin
-# rm -rf /data/bin/klipper_mcu
-# cp out/klipper.elf /data/bin/klipper_mcu
-# make clean
+make
+mkdir -p /data/bin
+rm -rf /data/bin/klipper_mcu
+cp out/klipper.elf /data/bin/klipper_mcu
+make clean
