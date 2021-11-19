@@ -23,6 +23,27 @@ if bashio::config.true 'moonraker'; then
         fi
     fi
 
+    # Test install
+    { # try
+        bashio::log.notice "Verify that Moonraker can be called"
+        MOONRAKER_PYTHON=/data/python/moonraker/bin/python
+        MOONRAKER=/data/src/moonraker/moonraker/moonraker.py
+        ${MOONRAKER_PYTHON} ${MOONRAKER} -h
+    } || { # catch
+        bashio::log.warning "Moonraker help command failed."
+        if [ ! -f /data/python/moonraker/REPAIRED_$(bashio::addon.version) ]; then
+            bashio::log.notice "Attempt pip reinstall, this may take a while!"
+            source /data/python/moonraker/bin/activate
+            pip freeze > /tmp/pip_freeze_moonraker
+            pip install --force-reinstall -r /tmp/pip_freeze_moonraker
+            deactivate
+            touch /data/python/moonraker/REPAIRED_$(bashio::addon.version)
+            bashio::log.notice "Re-install completed."
+        else
+            bahsio::log.error "Repair previously attempted, won't try again."
+        fi
+    }
+
     # Make sure log file exists
     touch /tmp/moonraker.log
 
