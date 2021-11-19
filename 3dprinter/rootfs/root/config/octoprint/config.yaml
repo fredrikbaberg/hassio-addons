@@ -39,5 +39,8 @@ system:
             name: Restart Klipper
             command: /scripts/klipper_restart.sh
         -   action: klipperupgrade
-            name: Update Klipper source from git
+            name: Update Klipper from git
             command: /scripts/klipper_update.sh
+        -   action: moonrakerupgrade
+            name: Update Moonraker from git
+            command: /scripts/moonraker_update.sh

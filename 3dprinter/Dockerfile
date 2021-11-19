@@ -207,6 +207,7 @@ RUN echo "Copy files to single folder" \
 
 
 FROM ${BUILD_FROM} AS final
+ENV PIP_FLAGS="--no-cache-dir --extra-index-url https://www.piwheels.org/simple"
 ENV CFLAGS="-fcommon"
 ENV PATH=/data/python/octoprint/bin:/data/python/klipper/bin:/data/python/moonraker/bin:/data/bin:${PATH}
 
@@ -246,11 +247,6 @@ RUN echo "Install required packages for firmware update." \
         avrdude \
         git \
         stm32flash
-# RUN echo "Install useful packages for debugging." \
-#     && apk add --no-cache \
-#         screen \
-#         tree \
-#         vim
 
 # Copy data from previous stages
 # ## octoprint

@@ -2,7 +2,7 @@
 
 bashio::log.info "Starting Klipper MCU Linux..."
 
-[ -x /usr/local/bin/klipper_mcu ] || return
+[ -x /data/bin/klipper_mcu ] || return
 
 if [ -c /tmp/klipper_host_mcu ]; then
     echo "Attempting to shutdown host mcu..."
@@ -14,4 +14,4 @@ if [ -c /tmp/klipper_host_mcu ]; then
     set +e
 fi
 
-exec /usr/local/bin/klipper_mcu -r
+exec /data/bin/klipper_mcu -r
