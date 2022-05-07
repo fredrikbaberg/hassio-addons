@@ -1,6 +1,0 @@
-#!/usr/bin/with-contenv bashio
-
-bashio::log.info "Starting mjpg-streamer..."
-
-# The command is added to this file by /etc/cont-init.d/mjpg-streamer.sh.
-# exec mjpg_streamer %%mjpg_arguments%%
