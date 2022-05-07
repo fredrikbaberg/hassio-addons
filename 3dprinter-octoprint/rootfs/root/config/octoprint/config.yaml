@@ -1,0 +1,46 @@
+accessControl:
+    autologinAs: homeassistant
+    autologinLocal: true
+    localNetworks:
+        - 172.30.32.2
+folder:
+    generated: /tmp/octoprint/generated
+    timelapse_tmp: /tmp/octoprint/timelapse/tmp
+server:
+    commands:
+        serverRestartCommand: /scripts/octoprint_restart.sh
+        systemRestartCommand: /scripts/system_restart.sh
+        systemShutdownCommand: /scripts/system_shutdown.sh
+webcam:
+    ffmpeg: /usr/bin/ffmpeg
+    snapshot: http://127.0.0.1:8080/?action=snapshot
+    stream: webcam/?action=stream
+plugins:
+    klipper:
+        configuration:
+            configpath: /data/config/klipper/printer.cfg
+    cura:
+        cura_engine: /usr/local/bin/CuraEngineLegacy
+    firmwareupdater:
+        avrdude_path: /usr/bin/avrdude
+        # dfuutil_path: /usr/bin/dfu-util
+        # dfuprog_path: /usr/bin/dfu-programmer
+        stm32flash_path: /usr/bin/stm32flash
+system:
+    actions:
+        -   action: camerastart
+            name: Start camera
+            command: /scripts/camera_start.sh
+        -   action: camerastop
+            name: Stop camera
+            command: /scripts/camera_stop.sh
+        -   action: divider
+        -   action: klipperrestart
+            name: Restart Klipper
+            command: /scripts/klipper_restart.sh
+        -   action: klipperupgrade
+            name: Update Klipper from git
+            command: /scripts/klipper_update.sh
+        -   action: moonrakerupgrade
+            name: Update Moonraker from git
+            command: /scripts/moonraker_update.sh
