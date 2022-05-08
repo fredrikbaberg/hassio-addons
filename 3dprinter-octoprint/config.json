@@ -1,6 +1,6 @@
 {
     "name": "3DPrinter-OctoPrint",
-    "version": "2022.05.05",
+    "version": "2022.05.06",
     "slug": "3dprinter-octoprint",
     "description": "3DPrinter-OctoPrint add-on for Home Assistant.",
     "url": "https://github.com/fredrikbaberg/hassio-addons/tree/master/3dprinter-octoprint",

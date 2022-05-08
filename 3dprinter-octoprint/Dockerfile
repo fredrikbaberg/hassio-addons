@@ -51,6 +51,18 @@ RUN echo "Copy files to single folder" \
     && cp /usr/local/bin/CuraEngine /copy/usr/local/bin/CuraEngineLegacy
 
 
+FROM ${BUILD_FROM} as caddy
+RUN echo "deb http://deb.debian.org/debian bullseye-backports main contrib non-free" > /etc/apt/sources.list.d/bullseye-backports.list \
+    && apt update \
+    && apt install -y \
+        golang-1.18-go \
+    && /usr/lib/go-1.18/bin/go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest \
+    && export PATH=$PATH:/usr/lib/go-1.18/bin:$HOME/go/bin \
+    && xcaddy build \
+    && mkdir -p /copy/usr/local/bin/ \
+    && cp caddy /copy/usr/local/bin/caddy
+
+
 FROM ${BUILD_FROM} as final
 ARG OCTOPRINT_VERSION
 ENV PYTHONPATH=/data/python/octoprint
@@ -81,15 +93,6 @@ RUN echo "Preliminaries" \
     && rm -rf /data \
     && apt install -y \
         build-essential \
-    && echo "Install Caddy" \
-    && apt install -y \
-        debian-keyring \
-        debian-archive-keyring \
-        apt-transport-https \
-    && curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | tee /etc/apt/trusted.gpg.d/caddy-stable.asc \
-    && curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | tee /etc/apt/sources.list.d/caddy-stable.list \
-    && apt update \
-    && apt install caddy \
     && echo "Cleanup" \
     && apt clean
 
@@ -98,6 +101,8 @@ RUN echo "Preliminaries" \
 COPY --from=mjpg-streamer /copy /
 ## CuraEngineLegacy
 COPY --from=curaengine /copy /
+## Caddy proxy
+COPY --from=caddy /copy /
 
 # Copy files into image.
 COPY rootfs/ /
