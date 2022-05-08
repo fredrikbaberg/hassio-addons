@@ -75,6 +75,7 @@ RUN echo "Preliminaries" \
     && apt install -y --no-install-recommends \
         python3-venv \
         python3-dev \
+        build-essential \
     && python3 -m venv /data/python/octoprint \
     && source /data/python/octoprint/bin/activate \
     && pip install --upgrade \
@@ -92,8 +93,6 @@ RUN echo "Preliminaries" \
     && cd /data && tar -zcf /root/octoprint-python.tar.gz python/octoprint \
     && ln -s /data/config/octoprint /root/.octoprint \
     && rm -rf /data \
-    && apt install -y \
-        build-essential \
     && echo "Cleanup" \
     && apt clean
 
