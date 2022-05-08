@@ -4,7 +4,7 @@
     "slug": "3dprinter-octoprint",
     "description": "3DPrinter-OctoPrint add-on for Home Assistant.",
     "url": "https://github.com/fredrikbaberg/hassio-addons/tree/master/3dprinter-octoprint",
-    "arch": ["armhf", "armv7", "amd64", "aarch64", "i386"],
+    "arch": ["armhf", "armv7", "amd64", "aarch64"],
     "ports": {
         "5000/tcp": null,
         "7125/tcp": null,
