@@ -1,5 +1,5 @@
 ARG BUILD_FROM="homeassistant/amd64-base-debian:bullseye"
-ARG OCTOPRINT_VERSION="1.8.0rc5"
+ARG OCTOPRINT_VERSION="1.7.3"
 ARG MJPG_STREAMER_BRANCH="v1.0.0"
 ARG CURA_LEGACY_BRANCH="1.15.04.6"
 
@@ -32,6 +32,7 @@ RUN echo "Copy files to single folder" \
     && mkdir -p /copy/usr/local/bin/ \
     && cp -R /usr/local/bin/mjpg_streamer /copy/usr/local/bin/
 
+
 FROM ${BUILD_FROM} AS curaengine
 ARG CURA_LEGACY_BRANCH
 RUN echo "Install CuraEngine" \
@@ -49,6 +50,7 @@ RUN echo "Copy files to single folder" \
     && mkdir -p /copy/usr/local/bin/ \
     && cp /usr/local/bin/CuraEngine /copy/usr/local/bin/CuraEngineLegacy
 
+
 FROM ${BUILD_FROM} as final
 ARG OCTOPRINT_VERSION
 ENV PYTHONPATH=/data/python/octoprint
@@ -60,30 +62,44 @@ RUN echo "Preliminaries" \
     && apt update \
     && apt install -y --no-install-recommends \
         python3-venv \
-        # python3-pip \
     && python3 -m venv /data/python/octoprint \
     && source /data/python/octoprint/bin/activate \
     && pip install --upgrade \
         pip \
         wheel \
-    && echo "OctoPrint: Install OctoPrint" \
+    && echo "Install OctoPrint" \
     && pip install --upgrade \
         OctoPrint==${OCTOPRINT_VERSION} \
-    && echo "OctoPrint: Cleanup" \
-    && apt clean \
+    && echo "Cleanup OctoPrint install" \
     && find /data/python/octoprint | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && find /usr/lib/python* | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
     && rm -rf /root/.cache \
-    && echo "Copy files to single folder" \
+    && echo "Package OctoPrint" \
     && mkdir -p /root \
     && cd /data && tar -zcf /root/octoprint-python.tar.gz python/octoprint \
-    && ln -s /data/config/octoprint /root/.octoprint
+    && ln -s /data/config/octoprint /root/.octoprint \
+    && rm -rf /data \
+    && apt install -y \
+        build-essential \
+    && echo "Install Caddy" \
+    && apt install -y \
+        debian-keyring \
+        debian-archive-keyring \
+        apt-transport-https \
+    && curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | tee /etc/apt/trusted.gpg.d/caddy-stable.asc \
+    && curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | tee /etc/apt/sources.list.d/caddy-stable.list \
+    && apt update \
+    && apt install caddy \
+    && echo "Cleanup" \
+    && apt clean
+
 # Copy data from previous stages
 ## mjpg-streamer
 COPY --from=mjpg-streamer /copy /
 ## CuraEngineLegacy
 COPY --from=curaengine /copy /
 
+# Copy files into image.
 COPY rootfs/ /
 RUN chmod a+x /scripts/*.sh
 WORKDIR /
