@@ -80,7 +80,6 @@ RUN echo "Preliminaries" \
     && python3 -m venv /data/python/octoprint \
     && source /data/python/octoprint/bin/activate \
     && pip install --upgrade \
-        pip \
         wheel \
     && echo "Install OctoPrint" \
     && pip install --upgrade \
