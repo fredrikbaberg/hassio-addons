@@ -7,7 +7,7 @@ FROM ${BUILD_FROM} AS mjpg-streamer
 ARG MJPG_STREAMER_BRANCH
 RUN echo "Install mjpg-streamer" \
     && apt update \
-    && apt install -y \
+    && apt install --no-install-recommends -y \
         git \
         make \
         cmake \
@@ -37,10 +37,11 @@ FROM ${BUILD_FROM} AS curaengine
 ARG CURA_LEGACY_BRANCH
 RUN echo "Install CuraEngine" \
     && apt update \
-    && apt install -y \
+    && apt install --no-install-recommends -y \
         git \
         cmake \
-        g++
+        g++ \
+        make
 RUN echo "Install" \
     && git clone --single-branch --branch ${CURA_LEGACY_BRANCH} https://github.com/Ultimaker/CuraEngine \
     && cd CuraEngine \
@@ -54,7 +55,7 @@ RUN echo "Copy files to single folder" \
 FROM ${BUILD_FROM} as caddy
 RUN echo "deb http://deb.debian.org/debian bullseye-backports main contrib non-free" > /etc/apt/sources.list.d/bullseye-backports.list \
     && apt update \
-    && apt install -y \
+    && apt install --no-install-recommends -y \
         golang-1.18-go \
     && /usr/lib/go-1.18/bin/go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest \
     && export PATH=$PATH:/usr/lib/go-1.18/bin:$HOME/go/bin \
@@ -72,7 +73,7 @@ ENV PATH=${PATH}:/data/python/octoprint/bin
 # Start size: 105M
 RUN echo "Preliminaries" \
     && apt update \
-    && apt install -y --no-install-recommends \
+    && apt install --no-install-recommends -y \
         python3-venv \
         python3-dev \
         build-essential \
@@ -93,6 +94,10 @@ RUN echo "Preliminaries" \
     && cd /data && tar -zcf /root/octoprint-python.tar.gz python/octoprint \
     && ln -s /data/config/octoprint /root/.octoprint \
     && rm -rf /data \
+    && echo "Install additional packages" \
+    && apt install --no-install-recommends -y \
+        # mjpg-streamer, camera
+        gphoto2 \
     && echo "Cleanup" \
     && apt clean
 
@@ -108,47 +113,3 @@ COPY --from=caddy /copy /
 COPY rootfs/ /
 RUN chmod a+x /scripts/*.sh
 WORKDIR /
-
-
-# FROM ${BUILD_FROM} AS final
-# ENV PIP_FLAGS="--no-cache-dir --extra-index-url https://www.piwheels.org/simple"
-# ENV CFLAGS="-fcommon"
-# ENV PATH=/data/python/octoprint/bin:/data/python/klipper/bin:/data/python/moonraker/bin:/data/bin:${PATH}
-
-# RUN echo "Install required packages for proxy" \
-#     && apk add --no-cache \
-#         caddy
-# RUN echo "Install required packages for OctoPrint" \
-#     && apk add --no-cache \
-#         python3
-# RUN echo "Install required packages for camera (mjpg-streamer, gphoto2)." \
-#     && apk add --no-cache \
-#         ffmpeg \
-#         gphoto2 \
-#         v4l-utils
-# RUN echo "Install required packages for Klipper." \
-#     && apk add --no-cache \
-#         build-base \
-#         libffi-dev \
-#         linux-headers \
-#         python2 \
-#         python3
-# RUN echo "Install required packages for Moonraker." \
-#     && apk add --no-cache \
-#         curl-dev \
-#         libsodium-dev \
-#         sudo
-# RUN echo "Install development packages for different plugins etc." \
-#     && apk add --no-cache \
-#         build-base \
-#         libjpeg-turbo-dev \
-#         linux-headers \
-#         postgresql-dev \
-#         python3-dev \
-#         zlib-dev
-# RUN echo "Install required packages for firmware update." \
-#     && apk add --no-cache \
-#         avrdude \
-#         git \
-#         stm32flash
-

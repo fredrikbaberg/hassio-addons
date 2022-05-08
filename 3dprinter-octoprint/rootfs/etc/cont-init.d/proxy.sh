@@ -5,7 +5,8 @@ bashio::log.info "Proxy cont-init.d"
 ingress_entry=$(bashio::addon.ingress_entry)
 export ingress_entry=${ingress_entry}
 
-ls -lah /etc/caddy
+# Make sure output folder exists.
+mkdir -p /etc/caddy
 
 tempio \
     -conf /data/options.json \

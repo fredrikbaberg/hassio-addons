@@ -32,19 +32,11 @@ CuraEngine 15.04.6 is pre-installed. To use it, install the plugin [CuraEngine L
 
 ### Klipper
 
-This addon comes with Klipper pre-installed. *Note that this addon will **not** change the firmware of the printer, that is up to the user*.
-To use it with OctoPrint, install the plugin OctoKlipper.
-
-A Linux host process is also available, intended for using a [Raspberry Pi as a secondary MCU](https://www.klipper3d.org/RPi_microcontroller.html). *Not working as intended*.
-
-*Klipper and Moonraker does not seem fully designed to run on Alpine Linux. There may be some modifications in place for it to compile and/or run. Please take this into consideration if you ask for help as it is not a stock install.*
+Klipper is not included.
 
 #### Moonraker
 
-Moonraker is pre-installed, for use with e.g. Mainsail or Fluidd (not included).
-A `moonraker.conf` is included, to override this place your own file in `/data/config/klipper/moonraker.conf`.
-
-If you want to use Moonraker and Klipper instead of OctoPrint, you can disable `octoprint` in the addon config.
+Moonraker is not included.
 
 ### Updates
 
@@ -53,8 +45,7 @@ OctoPrint can be updated normally.
 
 ### Backups
 
-Backups from within OctoPrint will **only** backup OctoPrint, no configuration of Klipper or Moonraker will be included.
-For Klipper and Moonraker configuration you want to use the backup feature of Home Assistant, or copy the files from `/data/config/klipper`.
+Backup of addon will include OctoPrint install. You should also be able to make a backup from within OctoPrint.
 
 ### Home Assistant integration
 
@@ -65,7 +56,7 @@ Home Assistant may find the OctoPrint instance, however, it will be discovered w
 Some notes regarding the software and versions.
 
 - OctoPrint
-  - Installed in a `virtualenv` from PyPI, using numbered version (e.g. `1.7.2`) from when image was built.
+  - Installed in a `virtualenv` from PyPI, using numbered version (e.g. `1.7.3`) from when image was built.
 
 - mjpg-streamer
   - Compiled from tagged branch of [https://github.com/jacksonliam/mjpg-streamer](https://github.com/jacksonliam/mjpg-streamer), e.g. `v1.0.0`.
@@ -75,9 +66,3 @@ Some notes regarding the software and versions.
 
 - gphoto2
   - Installed through package manager.
-
-- Klipper
-  - Installed in a separate `virtualenv`, using branch `master` of [https://github.com/Klipper3d/klipper](https://github.com/Klipper3d/klipper).
-
-- Moonraker
-  - Installed in a separate `virtualenv`, using branch `master` from [https://github.com/Arksine/moonraker](https://github.com/Arksine/moonraker).
