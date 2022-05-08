@@ -74,6 +74,7 @@ RUN echo "Preliminaries" \
     && apt update \
     && apt install -y --no-install-recommends \
         python3-venv \
+        python3-dev \
     && python3 -m venv /data/python/octoprint \
     && source /data/python/octoprint/bin/activate \
     && pip install --upgrade \
