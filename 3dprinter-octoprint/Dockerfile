@@ -97,6 +97,7 @@ RUN echo "Preliminaries" \
     && apt install --no-install-recommends -y \
         # mjpg-streamer, camera
         gphoto2 \
+        nano \
     && echo "Cleanup" \
     && apt clean
 
