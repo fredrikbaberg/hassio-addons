@@ -17,7 +17,7 @@ RUN echo "Install common dependencies" \
         linux-headers \
         postgresql-dev \
         py3-virtualenv \
-        python3-dev \
+        python3 \
         ## mjpg-streamer \
         libjpeg-turbo-dev \
         git \
@@ -57,7 +57,7 @@ RUN echo "Install OctoPrint" \
         linux-headers \
         postgresql-dev \
         py3-virtualenv \
-        python3-dev \
+        python3 \
     && echo "Done with apk add"
 RUN echo "Install" \
     && virtualenv --python=python3 /data/python/octoprint \
