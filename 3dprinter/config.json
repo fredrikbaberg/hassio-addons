@@ -56,5 +56,6 @@
         "python/moonraker"
     ],
     "stage": "experimental",
+    "init": false,
     "realtime": true
 }
