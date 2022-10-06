@@ -263,4 +263,5 @@ COPY --from=moonraker /copy /
 
 COPY rootfs/ /
 RUN chmod a+x /scripts/*.sh
+RUN chmod a+x /etc/cont-init.d/*.sh
 WORKDIR /

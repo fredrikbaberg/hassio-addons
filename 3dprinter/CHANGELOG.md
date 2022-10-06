@@ -3,7 +3,7 @@
 [2022.10.0]
 
 - Fix issues with Ingress after update to 1.8.3 (attempt).
-- Update Home Assistant base image.
+- Correction to s6 init.
 
 [2021.11.7]
 
