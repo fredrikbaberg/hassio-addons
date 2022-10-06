@@ -4,6 +4,7 @@
 
 - Fix issues with Ingress after update to 1.8.3 (attempt).
 - Correction to s6 init.
+- Add debug info to Caddy
 
 [2021.11.7]
 
