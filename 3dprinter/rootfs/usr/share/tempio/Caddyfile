@@ -10,11 +10,13 @@
 	}
 	{{ end }}
 	handle {
+		uri strip_prefix {{ env "ingress_entry" }}
 		{{ if .recovery }}
 		rewrite / /recovery
 		{{ end }}
 		reverse_proxy @ingress localhost:80 {
 			header_up X-Script-Name {{ env "ingress_entry" }}
+			header_up X-Scheme {scheme}
 			header_up -Origin
 			header_up Origin 172.30.32.2
 			header_up X-Forwarded-For 172.30.32.2
