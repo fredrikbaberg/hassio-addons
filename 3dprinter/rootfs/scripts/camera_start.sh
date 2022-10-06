@@ -2,4 +2,4 @@
 
 echo "Attempt to start camera"
 
-/bin/s6-svc -wu -u /var/run/s6/services/mjpg-streamer
+/bin/s6-svc -wu -u /var/run/s6/legacy-services/mjpg-streamer
