@@ -1,3 +1,10 @@
+{
+	debug
+	log {
+        format console
+		output file /var/log/caddy.log
+    }
+}
 :8099 {
 	@ingress {
 		remote_ip 172.30.32.2
