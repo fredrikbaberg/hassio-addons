@@ -7,7 +7,8 @@ ARG MOONRAKER_BRANCH="master"
 
 FROM ${BUILD_FROM} AS build-base
 ENV LANG C.UTF-8
-ENV PIP_FLAGS="--no-cache-dir --extra-index-url https://www.piwheels.org/simple"
+ENV PIP_FLAGS="--no-cache-dir"
+# ENV PIP_FLAGS="--no-cache-dir --extra-index-url https://www.piwheels.org/simple"
 ENV CFLAGS="-fcommon"
 
 RUN echo "Install common dependencies" \
