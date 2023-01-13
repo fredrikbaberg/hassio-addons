@@ -1,6 +1,6 @@
 {
     "name": "3DPrinter",
-    "version": "2021.11.7",
+    "version": "2023.1.0",
     "slug": "3dprinter",
     "description": "3DPrinter add-on for Home Assistant. OctoPrint, Klipper and more.",
     "url": "https://github.com/fredrikbaberg/hassio-addons/tree/master/3dprinter",
@@ -31,7 +31,8 @@
         "mjpg_output": "-o \"output_http.so -w /www_mjpg -p 8080\"",
         "octoprint": true,
         "mjpg_streamer": false,
-        "recovery": false
+        "recovery": false,
+        "downgrade_octoprint": false
     },
     "schema": {
         "mjpg_input": "str",
@@ -41,7 +42,8 @@
         "klipper": "bool?",
         "klipper_linux_host": "bool?",
         "moonraker": "bool?",
-        "recovery": "bool"
+        "recovery": "bool",
+        "downgrade_octoprint": "bool"
     },
     "image": "ghcr.io/fredrikbaberg/addon-3dprinter-{arch}",
     "tmpfs": true,
@@ -56,5 +58,6 @@
         "python/moonraker"
     ],
     "stage": "experimental",
-    "realtime": true
+    "realtime": true,
+    "init": false
 }
