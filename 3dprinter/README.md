@@ -7,7 +7,9 @@
 A security update prevents Ingress from working if you update to OctoPrint 1.8.x. There is now an experimental option to downgrade to 1.7.3 in case you get locked out of the addon.
 This solution is just for you to have a chance to get access to your data again, it is not a long-term solution.
 If you are using this add-on with OctoPrint, please read through the following instructions:
-* Select option `downgrade octoprint` in add-on configuration; restart addon.
+* Make a backup of the addon.
+* Upgrade addon to 2023.1.0 (or newer).
+* Select option `downgrade_octoprint` in add-on configuration; restart addon.
 * When you have access through Ingress:
     * Create a user with admin rights (or update password for user homeassistant).
     * Make a backup of OctoPrint.
