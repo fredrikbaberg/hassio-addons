@@ -2,11 +2,12 @@
 
 bashio::log.info "OctoPrint cont-init.d"
 
-if [  $(bashio::config.true 'downgrade_octoprint') ]; then
-    /scripts/downgrade_octoprint.sh 
-fi
-
 if bashio::config.true 'octoprint'; then
+
+    if bashio::config.true 'downgrade_octoprint'; then
+        /scripts/downgrade_octoprint.sh 
+    fi
+
     # Copy OctoPrint install to persistent storage, if missing.
     if [ ! -d /data/python/octoprint ]; then
         if [ -f /root/octoprint-python.tar.gz ]; then
@@ -48,8 +49,10 @@ if bashio::config.true 'octoprint'; then
 
     { # try
         bashio::log.notice "Ensure Ingress user (homeassistant) exist."
-        new_password=$(date +%s | sha256sum | base64 | head -c 32 ; echo)
-        octoprint --basedir /data/config/octoprint user add homeassistant --password "$new_password" --group users --group admins # 2> /dev/null
+        if ! octoprint --basedir /data/config/octoprint user list | grep -q 'homeassistant'; then
+            new_password=$(date +%s | sha256sum | base64 | head -c 32 ; echo)
+            octoprint --basedir /data/config/octoprint user add --password "$new_password" --admin homeassistant # 2> /dev/null
+        fi
     } || { # catch
         bashio::log.warning "Failed to ensure Ingress user exists, may not be able to launch."
     }
