@@ -16,9 +16,5 @@ bashio::log.warning "Check if OctoPrint version should be downgraded"
         echo "Version not available, won't do anything."
     fi
 } || {
-<<<<<<< HEAD
     echo "Unable to downgrade OctoPrint version."
-=======
-    echo "Not able to downgrade OctoPrint."
->>>>>>> 9bda4a649a76c81dd146620e5f335245544de7d2
 }
