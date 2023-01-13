@@ -20,7 +20,7 @@ If you have been locked out of accessing OctoPrint through Ingress, please read 
 * When you hopefully have access through Ingress again:
     * Create a user with admin rights.
     * Make a backup of OctoPrint.
-* Install newer version of the add-on, see [New repository](https://github.com/fredrikbaberg/3dprinter-addons). Note that this version also doesn't support Ingress.
+* Install newer version of the add-on, see [New repository](https://github.com/fredrikbaberg/ha-3dprinter-addons). Note that this version also doesn't support Ingress.
     * Restore the backup of OctoPrint OR make a clean install.
 * Make sure you have all the data you want from this addon before uninstalling it!
 
