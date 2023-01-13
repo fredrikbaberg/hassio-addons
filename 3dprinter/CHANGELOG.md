@@ -1,5 +1,11 @@
 # Changelog
 
+[2023.01.0]
+
+- Add mode to revert to previous OctoPrint version
+- Skip update of homeassistant user password each startup.
+- Bugfixes related to s6 update.
+
 [2021.11.7]
 
 - Add PIP_FLAGS to final image
