@@ -2,6 +2,10 @@
 
 bashio::log.info "OctoPrint cont-init.d"
 
+if [  $(bashio::config.true 'downgrade_octoprint') ]; then
+    /scripts/downgrade_octoprint.sh 
+fi
+
 if bashio::config.true 'octoprint'; then
     # Copy OctoPrint install to persistent storage, if missing.
     if [ ! -d /data/python/octoprint ]; then
