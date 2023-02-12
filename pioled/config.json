@@ -18,5 +18,6 @@
     ],
     "gpio": true,
     "uart": true,
-    "stage": "experimental"
+    "stage": "experimental",
+    "apparmor": false
 }
