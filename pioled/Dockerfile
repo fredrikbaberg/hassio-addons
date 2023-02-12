@@ -6,20 +6,20 @@ RUN apk add -U \
     build-base \
     py3-pillow \
     # Pillow
-    tiff-dev \
+    # tiff-dev \
     jpeg-dev \
-    openjpeg-dev \
-    zlib-dev \
-    freetype-dev \
-    lcms2-dev \
-    libwebp-dev \
-    tcl-dev \
-    tk-dev \
-    harfbuzz-dev \
-    fribidi-dev \
-    libimagequant-dev \
-    libxcb-dev \
-    libpng-dev
+    # openjpeg-dev \
+    zlib-dev
+    # freetype-dev \
+    # lcms2-dev \
+    # libwebp-dev \
+    # tcl-dev \
+    # tk-dev \
+    # harfbuzz-dev \
+    # fribidi-dev \
+    # libimagequant-dev \
+    # libxcb-dev \
+    # libpng-dev
 
 RUN pip install \
     RPi.GPIO \
