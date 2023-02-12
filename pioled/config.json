@@ -1,0 +1,21 @@
+{
+    "name": "PiOLED addon",
+    "version": "2023.02.0",
+    "slug": "pioled",
+    "description": "Add-on with support for PiOLED",
+    "arch": ["armhf", "armv7"],
+    "url": "https://github.com/fredrikbaberg/hassio-addons",
+    "boot": "manual",
+    "devices": [
+        "/dev/mem",
+        "/dev/gpiomem",
+        "/dev/i2c*"
+    ],
+    "homeassistant": "2021.4.0",
+    "privileged": [
+        "SYS_RAWIO"
+    ],
+    "gpio": true,
+    "uart": true,
+    "stage": "experimental"
+}
