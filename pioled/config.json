@@ -12,6 +12,7 @@
         "/dev/i2c*"
     ],
     "homeassistant": "2021.4.0",
+    "init": false,
     "privileged": [
         "SYS_RAWIO"
     ],

@@ -11,4 +11,6 @@ RUN pip install \
     adafruit-circuitpython-ssd1306
 
 COPY rootfs/ /
-WORKDIR /
+ RUN chmod a+x /run.sh
+
+ CMD [ "/run.sh "]
