@@ -1,6 +1,6 @@
 {
     "name": "PiOLED addon",
-    "version": "2023.02.02",
+    "version": "2023.02.03",
     "slug": "pioled",
     "description": "Add-on with support for PiOLED",
     "arch": ["armhf", "armv7","aarch64"],
