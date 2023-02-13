@@ -1,0 +1,7 @@
+{
+    "build_from": {
+        "armhf": "homeassistant/armhf-base-python:3.10-alpine3.16",
+        "armv7": "homeassistant/armv7-base-python:3.10-alpine3.16",
+        "aarch64": "homeassistant/aarch64-base-python:3.10-alpine3.16"
+    }
+}
