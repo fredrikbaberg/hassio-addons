@@ -13,3 +13,4 @@ RUN pip install \
     Pillow
 
 COPY rootfs/ /
+RUN chmod +x /etc/services.d/*/*

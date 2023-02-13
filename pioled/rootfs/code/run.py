@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # SPDX-FileCopyrightText: 2017 Tony DiCola for Adafruit Industries
 # SPDX-FileCopyrightText: 2017 James DeVito for Adafruit Industries
 # SPDX-License-Identifier: MIT
@@ -63,7 +64,7 @@ while True:
 
     # Shell scripts for system monitoring from here:
     # https://unix.stackexchange.com/questions/119126/command-to-display-memory-usage-disk-usage-and-cpu-load
-    cmd = "hostname -I | cut -d' ' -f1"
+    cmd = "hostname -i | cut -d' ' -f1"
     IP = subprocess.check_output(cmd, shell=True).decode("utf-8")
     cmd = 'cut -f 1 -d " " /proc/loadavg'
     CPU = subprocess.check_output(cmd, shell=True).decode("utf-8")
