@@ -19,6 +19,6 @@
     "gpio": true,
     "uart": true,
     "stage": "experimental",
-    "image": "fredrikbaberg/addon-pioled-{arch}",
+    "image": "ghcr.io/fredrikbaberg/addon-pioled-{arch}",
     "apparmor": false
 }
