@@ -83,3 +83,7 @@ while True:
     disp.image(image)
     disp.show()
     time.sleep(0.1)
+
+# Clear display.
+disp.fill(0)
+disp.show()
