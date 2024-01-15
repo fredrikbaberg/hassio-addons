@@ -1,5 +1,5 @@
 {
-    "name": "TSD",
+    "name": "TSD (Deprecated)",
     "version": "0.1.1",
     "slug": "tsd",
     "description": "TSD add-on for Home Assistant",
@@ -58,6 +58,6 @@
         "/data/app",
         "/data/web"
     ],
-    "stage": "experimental",
+    "stage": "deprecated",
     "image": "fredrikbaberg/addon-tsd-{arch}"
 }

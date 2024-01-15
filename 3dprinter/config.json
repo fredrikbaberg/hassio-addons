@@ -1,5 +1,5 @@
 {
-    "name": "3DPrinter",
+    "name": "3DPrinter (Deprecated)",
     "version": "2023.1.0",
     "slug": "3dprinter",
     "description": "3DPrinter add-on for Home Assistant. OctoPrint, Klipper and more.",
