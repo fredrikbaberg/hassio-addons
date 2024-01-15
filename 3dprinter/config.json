@@ -57,7 +57,7 @@
         "python/klipper",
         "python/moonraker"
     ],
-    "stage": "experimental",
+    "stage": "deprecated",
     "realtime": true,
     "init": false
 }
